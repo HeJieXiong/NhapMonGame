@@ -35,8 +35,8 @@
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
+#define SCREEN_WIDTH 400
+#define SCREEN_HEIGHT 400
 
 #define MAX_FRAME_RATE 120
 
@@ -47,7 +47,7 @@
 CGame *game;
 
 CMario *mario;
-CGoomba *goomba;
+//CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -135,31 +135,28 @@ void LoadResources()
 
 	sprites->Add(10002, 800, 4, 831, 62, texMario);		// walk
 	sprites->Add(10003, 921, 4, 954, 62, texMario);
-
-
-	
-
+	sprites->Add(10004, 681, 1, 714, 47, texMario);		//jump right
 
 	sprites->Add(10011, 195, 3, 220, 63, texMario); //idle left
 	sprites->Add(10012, 134, 4, 166, 63, texMario);		// walk
 	sprites->Add(10013, 11, 3, 45, 63, texMario);
-
+	sprites->Add(10014, 252, 1, 285, 47, texMario);		//jump left
 
 	//sprites->Add(10011, 186, 154, 200, 181, texMario);		// idle left
 	//sprites->Add(10012, 155, 154, 170, 181, texMario);		// walk
 	//sprites->Add(10013, 125, 154, 140, 181, texMario);
 
-	sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
+	//sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
 
-	// small
-	sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
-	sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
-	sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
+	//// small
+	//sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
+	//sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
+	//sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
 
-	sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
+	//sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
 
-	sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
-	sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
+	//sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
+	//sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
 
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -181,13 +178,13 @@ void LoadResources()
 	ani->Add(10011);
 	animations->Add(401, ani);
 
-	ani = new CAnimation(100);	// idle small right
-	ani->Add(10021);
-	animations->Add(402, ani);
+	//ani = new CAnimation(100);	// idle small right
+	//ani->Add(10021);
+	//animations->Add(402, ani);
 
-	ani = new CAnimation(100);	// idle small left
-	ani->Add(10031);
-	animations->Add(403, ani);
+	//ani = new CAnimation(100);	// idle small left
+	//ani->Add(10031);
+	//animations->Add(403, ani);
 
 	ani = new CAnimation(100);	// walk right big
 	ani->Add(10001);
@@ -201,90 +198,42 @@ void LoadResources()
 	ani->Add(10013);
 	animations->Add(501, ani);
 
-	ani = new CAnimation(100);	// walk right small
-	ani->Add(10021);
-	ani->Add(10022);
-	ani->Add(10023);
+	ani = new CAnimation(100);	// idle big left
+	ani->Add(10004);
 	animations->Add(502, ani);
 
-	ani = new CAnimation(100);	// walk left small
-	ani->Add(10031);
-	ani->Add(10032);
-	ani->Add(10033);
+	ani = new CAnimation(100);	// idle big left
+	ani->Add(10014);
 	animations->Add(503, ani);
-
-
-	ani = new CAnimation(100);		// Mario die
-	ani->Add(10099);
-	animations->Add(599, ani);
-
 	
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
 
-	ani = new CAnimation(300);		// Goomba walk
-	ani->Add(30001);
-	ani->Add(30002);
-	animations->Add(701, ani);
-
-	ani = new CAnimation(1000);		// Goomba dead
-	ani->Add(30003);
-	animations->Add(702, ani);
 
 	mario = new CMario();
 	mario->AddAnimation(400);		// idle right big
 	mario->AddAnimation(401);		// idle left big
 	mario->AddAnimation(402);		// idle right small
 	mario->AddAnimation(403);		// idle left small
-
 	mario->AddAnimation(500);		// walk right big
 	mario->AddAnimation(501);		// walk left big
-	mario->AddAnimation(502);		// walk right small
-	mario->AddAnimation(503);		// walk left big
+	mario->AddAnimation(502);		// jump right
+	mario->AddAnimation(503);		// jump left
 
-	mario->AddAnimation(599);		// die
+
 
 	mario->SetPosition(50.0f, 0);
 	objects.push_back(mario);
 
-	for (int i = 0; i < 5; i++) //Tạo thanh tường trên
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100 + i*48.0f, 74);
-		objects.push_back(brick);
-
-		brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(100 + i*48.0f, 90);
-		objects.push_back(brick);
-
-		brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(84 + i*48.0f, 90);
-		objects.push_back(brick);
-	}
-
-
+	
 	for (int i = 0; i < 30; i++) //Tạo nền đứng
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i*16.0f, 150);
 		objects.push_back(brick);
-	}
-
-	// and Goombas 
-	for (int i = 0; i < 4; i++)
-	{
-		goomba = new CGoomba();
-		goomba->AddAnimation(701);
-		goomba->AddAnimation(702);
-		goomba->SetPosition(200 + i*60, 135);
-		goomba->SetState(GOOMBA_STATE_WALKING);
-		objects.push_back(goomba);
 	}
 
 }
