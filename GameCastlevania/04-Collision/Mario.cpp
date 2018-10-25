@@ -30,12 +30,6 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}
 
-	// No collision occured, proceed normally
-	/*if (coEvents.size()==0)
-	{
-		x += dx; 
-		y += dy;
-	}*/
 	if (coEvents.size() == 0)//new code
 	{
 		x += dx;
@@ -57,44 +51,7 @@ void CMario::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		y += min_ty*dy + ny*0.4f;
 		
 		if (nx!=0) vx = 0;
-		if (ny!=0) vy = 0;
-
-		// Collision logic with Goombas
-		for (UINT i = 0; i < coEventsResult.size(); i++)
-		{
-			LPCOLLISIONEVENT e = coEventsResult[i];
-
-			if (dynamic_cast<CGoomba *>(e->obj))
-			{
-				CGoomba *goomba = dynamic_cast<CGoomba *>(e->obj);
-
-				// jump on top >> kill Goomba and deflect a bit 
-				if (e->ny < 0)
-				{
-					if (goomba->GetState()!= GOOMBA_STATE_DIE)
-					{
-						goomba->SetState(GOOMBA_STATE_DIE);
-						vy = -MARIO_JUMP_DEFLECT_SPEED;
-					}
-				}
-				else if (e->nx != 0)
-				{
-					/*if (untouchable==0)
-					{
-						if (goomba->GetState()!=GOOMBA_STATE_DIE)
-						{
-							if (level > MARIO_LEVEL_SMALL)
-							{
-								level = MARIO_LEVEL_SMALL;
-								StartUntouchable();
-							}
-							else 
-								SetState(MARIO_STATE_DIE);
-						}
-					}*/
-				}
-			}
-		}
+		if (ny!=0) vy = 0;	
 	}
 
 	// clean up collision events
@@ -124,18 +81,6 @@ void CMario::Render()
 
 			
 	}
-	/*else if (level == MARIO_LEVEL_SMALL)
-	{
-		if (vx == 0)
-		{
-			if (nx>0) ani = MARIO_ANI_SMALL_IDLE_RIGHT;
-			else ani = MARIO_ANI_SMALL_IDLE_LEFT;
-		}
-		else if (vx > 0)
-			ani = MARIO_ANI_SMALL_WALKING_RIGHT;
-		else ani = MARIO_ANI_SMALL_WALKING_LEFT;
-	}*/
-
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 	animations[ani]->Render(x, y, alpha);
@@ -177,11 +122,6 @@ void CMario::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	{
 		right = x + MARIO_BIG_BBOX_WIDTH;
 		bottom = y + MARIO_BIG_BBOX_HEIGHT;
-	}
-	else
-	{
-		right = x + MARIO_SMALL_BBOX_WIDTH;
-		bottom = y + MARIO_SMALL_BBOX_HEIGHT;
 	}
 }
 

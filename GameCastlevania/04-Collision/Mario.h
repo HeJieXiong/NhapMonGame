@@ -29,8 +29,8 @@
 #define	MARIO_LEVEL_SMALL	1
 #define	MARIO_LEVEL_BIG		2
 
-#define MARIO_BIG_BBOX_WIDTH  15
-#define MARIO_BIG_BBOX_HEIGHT 27
+#define MARIO_BIG_BBOX_WIDTH  25
+#define MARIO_BIG_BBOX_HEIGHT 55
 
 #define MARIO_SMALL_BBOX_WIDTH  13
 #define MARIO_SMALL_BBOX_HEIGHT 15
@@ -54,6 +54,5 @@ public:
 	void SetState(int state);
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };

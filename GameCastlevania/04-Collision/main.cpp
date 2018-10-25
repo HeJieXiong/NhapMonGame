@@ -117,9 +117,8 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MISC, L"textures\\misc.png", D3DCOLOR_XRGB(176, 224, 248));
-	textures->Add(ID_TEX_ENEMY, L"textures\\enemies.png", D3DCOLOR_XRGB(3, 26, 110));
+	textures->Add(ID_TEX_MARIO, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -131,80 +130,55 @@ void LoadResources()
 	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
 
 	// big
-	sprites->Add(10001, 745, 4, 770, 62, texMario);		// idle right
-
-	sprites->Add(10002, 800, 4, 831, 62, texMario);		// walk
-	sprites->Add(10003, 921, 4, 954, 62, texMario);
-	sprites->Add(10004, 681, 1, 714, 47, texMario);		//jump right
-
-	sprites->Add(10011, 195, 3, 220, 63, texMario); //idle left
-	sprites->Add(10012, 134, 4, 166, 63, texMario);		// walk
-	sprites->Add(10013, 11, 3, 45, 63, texMario);
-	sprites->Add(10014, 252, 1, 285, 47, texMario);		//jump left
-
-	//sprites->Add(10011, 186, 154, 200, 181, texMario);		// idle left
-	//sprites->Add(10012, 155, 154, 170, 181, texMario);		// walk
-	//sprites->Add(10013, 125, 154, 140, 181, texMario);
-
-	//sprites->Add(10099, 215, 120, 231, 135, texMario);		// die 
-
-	//// small
-	//sprites->Add(10021, 247, 0, 259, 15, texMario);			// idle small right
-	//sprites->Add(10022, 275, 0, 291, 15, texMario);			// walk 
-	//sprites->Add(10023, 306, 0, 320, 15, texMario);			// 
-
-	//sprites->Add(10031, 187, 0, 198, 15, texMario);			// idle small left
-
-	//sprites->Add(10032, 155, 0, 170, 15, texMario);			// walk
-	//sprites->Add(10033, 125, 0, 139, 15, texMario);			// 
-
-
+	int top = 0;
+	int bottom = 66;
+	int id = 10001;
+	for (int i=0;i <3; i++){
+		int left = 0;
+		int right = 60;
+		for (int j = 0; j < 16; j++) {
+			sprites->Add(id, left, top, right, bottom, texMario);
+			id++;
+			left += 60;
+			right += 60;
+		}
+		top += 65;
+		bottom += 65;
+	}
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(20001, 408, 225, 424, 241, texMisc);
-
-	LPDIRECT3DTEXTURE9 texEnemy = textures->Get(ID_TEX_ENEMY);
-	sprites->Add(30001, 5, 14, 21, 29, texEnemy);
-	sprites->Add(30002, 25, 14, 41, 29, texEnemy);
-
-	sprites->Add(30003, 45, 21, 61, 29, texEnemy); // die sprite
+	sprites->Add(20001, 0, 0, 31, 31, texMisc);
 
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);	// idle big right
-	ani->Add(10001);
+	ani->Add(10014);
 	animations->Add(400, ani);
 
 	ani = new CAnimation(100);	// idle big left
-	ani->Add(10011);
+	ani->Add(10003);
 	animations->Add(401, ani);
 
-	//ani = new CAnimation(100);	// idle small right
-	//ani->Add(10021);
-	//animations->Add(402, ani);
-
-	//ani = new CAnimation(100);	// idle small left
-	//ani->Add(10031);
-	//animations->Add(403, ani);
-
 	ani = new CAnimation(100);	// walk right big
-	ani->Add(10001);
-	ani->Add(10002);
-	ani->Add(10003);
-	animations->Add(500, ani);
+	ani->Add(10013);
+	ani->Add(10014);
+	ani->Add(10015);
+	ani->Add(10016);
+	animations->Add(404, ani);
 
 	ani = new CAnimation(100);	// // walk left big
-	ani->Add(10011);
-	ani->Add(10012);
-	ani->Add(10013);
-	animations->Add(501, ani);
-
-	ani = new CAnimation(100);	// idle big left
 	ani->Add(10004);
-	animations->Add(502, ani);
+	ani->Add(10003);
+	ani->Add(10002);
+	ani->Add(10001);
+	animations->Add(405, ani);
 
-	ani = new CAnimation(100);	// idle big left
-	ani->Add(10014);
-	animations->Add(503, ani);
+	ani = new CAnimation(100);	// idle jump right
+	ani->Add(10012);
+	animations->Add(406, ani);
+
+	ani = new CAnimation(100);	// idle jump left
+	ani->Add(10005);
+	animations->Add(407, ani);
 	
 
 	ani = new CAnimation(100);		// brick
@@ -217,10 +191,10 @@ void LoadResources()
 	mario->AddAnimation(401);		// idle left big
 	mario->AddAnimation(402);		// idle right small
 	mario->AddAnimation(403);		// idle left small
-	mario->AddAnimation(500);		// walk right big
-	mario->AddAnimation(501);		// walk left big
-	mario->AddAnimation(502);		// jump right
-	mario->AddAnimation(503);		// jump left
+	mario->AddAnimation(404);		// walk right big
+	mario->AddAnimation(405);		// walk left big
+	mario->AddAnimation(406);		// jump right
+	mario->AddAnimation(407);		// jump left
 
 
 
@@ -232,7 +206,7 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*16.0f, 150);
+		brick->SetPosition(0 + i*16.0f, 200);
 		objects.push_back(brick);
 	}
 
