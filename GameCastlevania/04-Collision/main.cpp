@@ -27,7 +27,7 @@
 #include "GameObject.h"
 #include "Textures.h"
 
-#include "Mario.h"
+#include "Simon.h"
 #include "Brick.h"
 #include "Goomba.h"
 
@@ -40,13 +40,13 @@
 
 #define MAX_FRAME_RATE 120
 
-#define ID_TEX_MARIO 0
+#define ID_TEX_SIMON 0
 #define ID_TEX_ENEMY 10
 #define ID_TEX_MISC 20
 
 CGame *game;
 
-CMario *mario;
+CSimon *Simon;
 //CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
@@ -66,13 +66,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
+		Simon->SetState(SIMON_STATE_JUMP);
 		break;
 	case DIK_A: // reset
-		mario->SetState(MARIO_STATE_IDLE);
-		mario->SetLevel(MARIO_LEVEL_BIG);
-		mario->SetPosition(50.0f,0.0f);
-		mario->SetSpeed(0, 0);
+		Simon->SetState(SIMON_STATE_IDLE);
+		Simon->SetLevel(SIMON_LEVEL_BIG);
+		Simon->SetPosition(50.0f,0.0f);
+		Simon->SetSpeed(0, 0);
 		break;
 	}
 }
@@ -84,14 +84,14 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
-	// disable control key when Mario die 
-	if (mario->GetState() == MARIO_STATE_DIE) return;
+	// disable control key when SIMON die 
+	if (Simon->GetState() == SIMON_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
-		mario->SetState(MARIO_STATE_WALKING_RIGHT);
+		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
-		mario->SetState(MARIO_STATE_WALKING_LEFT);
+		Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else
-		mario->SetState(MARIO_STATE_IDLE);
+		Simon->SetState(SIMON_STATE_IDLE);
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -109,7 +109,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 /*
 	Load all game resources 
-	In this example: load textures, sprites, animations and mario object
+	In this example: load textures, sprites, animations and SIMON object
 
 	TO-DO: Improve this function by loading texture,sprite,animation,object from file
 */
@@ -117,7 +117,7 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 
-	textures->Add(ID_TEX_MARIO, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
@@ -127,7 +127,7 @@ void LoadResources()
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	
-	LPDIRECT3DTEXTURE9 texMario = textures->Get(ID_TEX_MARIO);
+	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 
 	// big
 	int top = 0;
@@ -137,7 +137,7 @@ void LoadResources()
 		int left = 0;
 		int right = 60;
 		for (int j = 0; j < 16; j++) {
-			sprites->Add(id, left, top, right, bottom, texMario);
+			sprites->Add(id, left, top, right, bottom, texSIMON);
 			id++;
 			left += 60;
 			right += 60;
@@ -186,20 +186,20 @@ void LoadResources()
 	animations->Add(601, ani);
 
 
-	mario = new CMario();
-	mario->AddAnimation(400);		// idle right big
-	mario->AddAnimation(401);		// idle left big
-	mario->AddAnimation(402);		// idle right small
-	mario->AddAnimation(403);		// idle left small
-	mario->AddAnimation(404);		// walk right big
-	mario->AddAnimation(405);		// walk left big
-	mario->AddAnimation(406);		// jump right
-	mario->AddAnimation(407);		// jump left
+	Simon = new CSimon();
+	Simon->AddAnimation(400);		// idle right big
+	Simon->AddAnimation(401);		// idle left big
+	Simon->AddAnimation(402);		// idle right small
+	Simon->AddAnimation(403);		// idle left small
+	Simon->AddAnimation(404);		// walk right big
+	Simon->AddAnimation(405);		// walk left big
+	Simon->AddAnimation(406);		// jump right
+	Simon->AddAnimation(407);		// jump left
 
 
 
-	mario->SetPosition(50.0f, 0);
-	objects.push_back(mario);
+	Simon->SetPosition(50.0f, 0);
+	objects.push_back(Simon);
 
 	
 	for (int i = 0; i < 30; i++) //Tạo nền đứng
@@ -218,7 +218,7 @@ void LoadResources()
 */
 void Update(DWORD dt)
 {
-	// We know that Mario is the first object in the list hence we won't add him into the colliable object list
+	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
 	for (int i = 1; i < objects.size(); i++)
