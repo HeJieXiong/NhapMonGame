@@ -1,10 +1,8 @@
-#include <algorithm>
+﻿#include <algorithm>
 #include "debug.h"
 
-#include "SIMON.h"
+#include "Simon.h"
 #include "Game.h"
-
-#include "Goomba.h"
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
@@ -63,13 +61,17 @@ void CSimon::Render()
 	int ani;
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
-	else
+	if (state == SIMON_STATE_SIT_DOWN) {
+		ani = SIMON_ANI_SIT_DOWN;
+	}
+	else 
 	if (level == SIMON_LEVEL_BIG)
 	{
+		
 		if (vx == 0)
 		{
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
-			else ani = SIMON_ANI_BIG_IDLE_LEFT;
+			else if(nx<0) ani = SIMON_ANI_BIG_IDLE_LEFT;
 		}
 		else if (vx > 0) 
 			ani = SIMON_ANI_BIG_WALKING_RIGHT; 
@@ -77,15 +79,13 @@ void CSimon::Render()
 		if (vy < 0) {
 			if (nx>0) ani = SIMON_ANI_JUMP_RIGHT;
 			else ani = SIMON_ANI_JUMP_LEFT;
-		}
-
-			
+		}		
 	}
 	int alpha = 255;
 	if (untouchable) alpha = 128;
 	animations[ani]->Render(x, y, alpha);
 
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void CSimon::SetState(int state)
@@ -106,6 +106,10 @@ void CSimon::SetState(int state)
 		vy = -SIMON_JUMP_SPEED_Y;
 	case SIMON_STATE_IDLE: 
 		vx = 0;
+		break;
+	case SIMON_STATE_SIT_DOWN: //cài đặt việc ngồi cho Simon
+		vx = 0;
+		vy = 0;
 		break;
 	case SIMON_STATE_DIE:
 		vy = -SIMON_DIE_DEFLECT_SPEED;

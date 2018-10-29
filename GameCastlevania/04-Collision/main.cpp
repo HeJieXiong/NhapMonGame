@@ -29,24 +29,26 @@
 
 #include "Simon.h"
 #include "Brick.h"
+#include "BackGround.h"
 #include "Goomba.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255, 255, 200)
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 400
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
+#define SCREEN_WIDTH 280
+#define SCREEN_HEIGHT 240
 
 #define MAX_FRAME_RATE 120
 
 #define ID_TEX_SIMON 0
-#define ID_TEX_ENEMY 10
-#define ID_TEX_MISC 20
+#define ID_TEX_MISC 10
+#define ID_TEX_BACK_GROUND 20
 
 CGame *game;
 
 CSimon *Simon;
+CBackGround *background;
 //CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
@@ -90,6 +92,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
+	else if (game->IsKeyDown(DIK_DOWN))
+		Simon->SetState(SIMON_STATE_SIT_DOWN);
 	else
 		Simon->SetState(SIMON_STATE_IDLE);
 }
@@ -116,35 +120,40 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
-
+	
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
-
-
+	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	
+	LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
+	sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
+
+	
+
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 
 	// big
 	int top = 0;
-	int bottom = 66;
+	int bottom = 33;
 	int id = 10001;
 	for (int i=0;i <3; i++){
 		int left = 0;
-		int right = 60;
+		int right = 30;
 		for (int j = 0; j < 16; j++) {
 			sprites->Add(id, left, top, right, bottom, texSIMON);
 			id++;
-			left += 60;
-			right += 60;
+			left += 30;
+			right += 30;
 		}
-		top += 65;
-		bottom += 65;
+		top += 32;
+		bottom += 32;
 	}
+
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 31, 31, texMisc);
 
@@ -180,11 +189,24 @@ void LoadResources()
 	ani->Add(10005);
 	animations->Add(407, ani);
 	
+	ani = new CAnimation(100);	// idle sit down left
+	ani->Add(10033);
+	animations->Add(408, ani);
+	
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
 
+
+	ani = new CAnimation(100);		//background
+		ani->Add(30001);
+	animations->Add(602, ani);
+
+	background = new CBackGround();
+	background->AddAnimation(602);
+	background->SetPosition(-200, 0);
+	objects.push_back(background);
 
 	Simon = new CSimon();
 	Simon->AddAnimation(400);		// idle right big
@@ -195,6 +217,7 @@ void LoadResources()
 	Simon->AddAnimation(405);		// walk left big
 	Simon->AddAnimation(406);		// jump right
 	Simon->AddAnimation(407);		// jump left
+	Simon->AddAnimation(408);		// sit down
 
 
 
@@ -206,7 +229,7 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*16.0f, 200);
+		brick->SetPosition(0 + i*16.0f, 140);
 		objects.push_back(brick);
 	}
 
