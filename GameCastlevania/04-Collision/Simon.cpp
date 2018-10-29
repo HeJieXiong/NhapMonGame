@@ -62,7 +62,9 @@ void CSimon::Render()
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
 	if (state == SIMON_STATE_SIT_DOWN) {
-		ani = SIMON_ANI_SIT_DOWN;
+		if(nx<0)
+		ani = SIMON_ANI_SIT_DOWN_LEFT;
+		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
 	else 
 	if (level == SIMON_LEVEL_BIG)

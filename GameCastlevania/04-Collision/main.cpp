@@ -192,6 +192,10 @@ void LoadResources()
 	ani = new CAnimation(100);	// idle sit down left
 	ani->Add(10033);
 	animations->Add(408, ani);
+
+	ani = new CAnimation(100);	// idle sit down right
+	ani->Add(10048);
+	animations->Add(409, ani);
 	
 
 	ani = new CAnimation(100);		// brick
@@ -200,7 +204,7 @@ void LoadResources()
 
 
 	ani = new CAnimation(100);		//background
-		ani->Add(30001);
+	ani->Add(30001);
 	animations->Add(602, ani);
 
 	background = new CBackGround();
@@ -217,7 +221,8 @@ void LoadResources()
 	Simon->AddAnimation(405);		// walk left big
 	Simon->AddAnimation(406);		// jump right
 	Simon->AddAnimation(407);		// jump left
-	Simon->AddAnimation(408);		// sit down
+	Simon->AddAnimation(408);		// sit down left
+	Simon->AddAnimation(409);		// sit down right
 
 
 

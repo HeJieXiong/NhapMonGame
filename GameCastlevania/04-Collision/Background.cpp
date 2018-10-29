@@ -18,7 +18,6 @@ void CBackGround::Render()
 	int ani;
 	ani = BACK_GROUND_ANI;
 	int alpha = 255;
-	if (untouchable) alpha = 128;
 	animations[ani]->Render(x, y, alpha);
 }
 
