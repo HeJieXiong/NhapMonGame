@@ -30,25 +30,29 @@
 #include "Simon.h"
 #include "Brick.h"
 #include "BackGround.h"
+#include "Camera.h"
 #include "Goomba.h"
+#include "Fire.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
-#define SCREEN_WIDTH 280
+#define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 240
 
-#define MAX_FRAME_RATE 120
+#define MAX_FRAME_RATE 1000
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_MISC 10
 #define ID_TEX_BACK_GROUND 20
+#define ID_TEX_FIRE 30
 
 CGame *game;
 
 CSimon *Simon;
 CBackGround *background;
+CFire *fire;
 //CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
@@ -123,6 +127,7 @@ void LoadResources()
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(0, 0, 0));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
@@ -155,6 +160,10 @@ void LoadResources()
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 31, 31, texMisc);
+	
+	LPDIRECT3DTEXTURE9 textFire = textures->Get(ID_TEX_FIRE);
+	sprites->Add(4001, 0, 0, 17, 31, textFire);
+	sprites->Add(4002, 27, 0, 44, 31, textFire);
 
 	LPANIMATION ani;
 
@@ -206,10 +215,23 @@ void LoadResources()
 	ani->Add(30001);
 	animations->Add(602, ani);
 
+	ani = new CAnimation(100);		//fire
+	ani->Add(4001);
+	ani->Add(4002);
+	animations->Add(603, ani);
+
 	background = new CBackGround();
 	background->AddAnimation(602);
-	background->SetPosition(-200, 0);
+	background->SetPosition(0, 0);
 	objects.push_back(background);
+
+	for (int i = 0; i < 4; i++) {
+		fire = new CFire();
+		fire->AddAnimation(603);
+		fire->SetPosition(i*130+88, 110);
+		objects.push_back(fire);
+	}
+	
 
 	Simon = new CSimon();
 	Simon->AddAnimation(400);		// idle right big
@@ -225,11 +247,11 @@ void LoadResources()
 
 
 
-	Simon->SetPosition(50.0f, 0);
+	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 
 	
-	for (int i = 0; i < 35; i++) //Tạo nền đứng
+	for (int i = 0; i < 50; i++) //Tạo nền đứng
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
