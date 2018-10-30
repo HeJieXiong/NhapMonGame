@@ -63,8 +63,13 @@ void CSimon::Render()
 		ani = SIMON_ANI_DIE;
 	if (state == SIMON_STATE_SIT_DOWN) {
 		if(nx<0)
-		ani = SIMON_ANI_SIT_DOWN_LEFT;
+			ani = SIMON_ANI_SIT_DOWN_LEFT;
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
+	}
+	else if (state == SIMON_STATE_ATTACK) {
+		if (nx < 0)
+			ani = SIMON_ANI_ATTACK_LEFT;
+		else ani = SIMON_ANI_ATTACK_RIGHT;
 	}
 	else {		
 		if (vx == 0)
@@ -107,6 +112,10 @@ void CSimon::SetState(int state)
 		vx = 0;
 		break;
 	case SIMON_STATE_SIT_DOWN: //cài đặt việc ngồi cho Simon
+		vx = 0;
+		vy = 0;
+		break;
+	case SIMON_STATE_ATTACK://cài đặt việc đánh cho Simon
 		vx = 0;
 		vy = 0;
 		break;

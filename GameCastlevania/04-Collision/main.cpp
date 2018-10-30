@@ -38,10 +38,10 @@
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
-#define SCREEN_WIDTH 800
+#define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 240
 
-#define MAX_FRAME_RATE 1000
+#define MAX_FRAME_RATE 100
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_MISC 10
@@ -76,9 +76,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A: // reset
 		Simon->SetState(SIMON_STATE_IDLE);
-		Simon->SetPosition(50.0f,0.0f);
+		Simon->SetPosition(50.0f, 0.0f);
 		Simon->SetSpeed(0, 0);
 		break;
+	/*case DIK_Q:
+		Simon->SetState(SIMON_STATE_ATTACK);
+		break;*/
 	}
 }
 
@@ -97,6 +100,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else if (game->IsKeyDown(DIK_DOWN))
 		Simon->SetState(SIMON_STATE_SIT_DOWN);
+	else if (game->IsKeyDown(DIK_Q))
+		Simon->SetState(SIMON_STATE_ATTACK);
 	else
 		Simon->SetState(SIMON_STATE_IDLE);
 }
@@ -205,6 +210,17 @@ void LoadResources()
 	ani->Add(10048);
 	animations->Add(409, ani);
 	
+	ani = new CAnimation(70);	// idle attack left
+	ani->Add(10006);
+	ani->Add(10007);
+	ani->Add(10008);
+	animations->Add(410, ani);
+
+	ani = new CAnimation(70);	// idle attack right
+	ani->Add(10011);
+	ani->Add(10010);
+	ani->Add(10009);
+	animations->Add(411, ani);
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
@@ -244,6 +260,8 @@ void LoadResources()
 	Simon->AddAnimation(407);		// jump left
 	Simon->AddAnimation(408);		// sit down left
 	Simon->AddAnimation(409);		// sit down right
+	Simon->AddAnimation(410);		// attack left
+	Simon->AddAnimation(411);		// attack right
 
 
 
