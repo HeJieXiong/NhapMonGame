@@ -38,8 +38,6 @@ public:
 	float y;
 	float dx;	// dx = vx*dt
 	float dy;	// dy = vy*dt
-	float xcamera;
-	float ycamera;
 	float vx;
 	float vy;
 

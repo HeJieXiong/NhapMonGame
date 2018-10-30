@@ -72,7 +72,6 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_A: // reset
 		Simon->SetState(SIMON_STATE_IDLE);
-		Simon->SetLevel(SIMON_LEVEL_BIG);
 		Simon->SetPosition(50.0f,0.0f);
 		Simon->SetSpeed(0, 0);
 		break;
@@ -121,7 +120,7 @@ void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
 	
-	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(0, 0, 0));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
@@ -150,8 +149,8 @@ void LoadResources()
 			left += 30;
 			right += 30;
 		}
-		top += 32;
-		bottom += 32;
+		top += 33;
+		bottom += 33;
 	}
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -230,7 +229,7 @@ void LoadResources()
 	objects.push_back(Simon);
 
 	
-	for (int i = 0; i < 30; i++) //Tạo nền đứng
+	for (int i = 0; i < 35; i++) //Tạo nền đứng
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);

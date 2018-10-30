@@ -27,7 +27,7 @@ void CBackGround::GetBoundingBox(float &left, float &top, float &right, float &b
 {
 	left = x;
 	top = y;
-		right = x + BACK_GROUND_BBOX_WIDTH;
-		bottom = y + BACK_GROUND_BBOX_HEIGHT;
+	right = x + BACK_GROUND_BBOX_WIDTH;
+	bottom = y + BACK_GROUND_BBOX_HEIGHT;
 }
 

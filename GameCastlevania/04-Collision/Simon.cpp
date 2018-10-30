@@ -66,10 +66,7 @@ void CSimon::Render()
 		ani = SIMON_ANI_SIT_DOWN_LEFT;
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
-	else 
-	if (level == SIMON_LEVEL_BIG)
-	{
-		
+	else {		
 		if (vx == 0)
 		{
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
@@ -123,11 +120,7 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 {
 	left = x;
 	top = y; 
-
-	if (level==SIMON_LEVEL_BIG)
-	{
-		right = x + SIMON_BIG_BBOX_WIDTH;
-		bottom = y + SIMON_BIG_BBOX_HEIGHT;
-	}
+	right = x + SIMON_BIG_BBOX_WIDTH;
+	bottom = y + SIMON_BIG_BBOX_HEIGHT;
 }
 
