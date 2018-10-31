@@ -71,7 +71,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	switch (KeyCode)
 	{
-	case DIK_SPACE:
+	case DIK_X:
 		Simon->SetState(SIMON_STATE_JUMP);
 		break;
 	case DIK_A: // reset
@@ -79,9 +79,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetPosition(50.0f, 0.0f);
 		Simon->SetSpeed(0, 0);
 		break;
-	/*case DIK_Q:
+	case DIK_Z:
 		Simon->SetState(SIMON_STATE_ATTACK);
-		break;*/
+		break;
 	}
 }
 
@@ -98,10 +98,14 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	else if (game->IsKeyDown(DIK_LEFT))
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
-	else if (game->IsKeyDown(DIK_DOWN))
-		Simon->SetState(SIMON_STATE_SIT_DOWN);
-	else if (game->IsKeyDown(DIK_Q))
-		Simon->SetState(SIMON_STATE_ATTACK);
+	else if (game->IsKeyDown(DIK_DOWN)) {
+		if(game->IsKeyDown(DIK_Z))
+			Simon->SetState(SIMON_STATE_ATTACK);
+		else
+			Simon->SetState(SIMON_STATE_SIT_DOWN);
+	}
+	/*else if (game->IsKeyDown(DIK_Q))
+		Simon->SetState(SIMON_STATE_ATTACK);*/
 	else
 		Simon->SetState(SIMON_STATE_IDLE);
 }
@@ -210,17 +214,28 @@ void LoadResources()
 	ani->Add(10048);
 	animations->Add(409, ani);
 	
-	ani = new CAnimation(70);	// idle attack left
+	ani = new CAnimation(150);	// idle attack left
 	ani->Add(10006);
 	ani->Add(10007);
 	ani->Add(10008);
 	animations->Add(410, ani);
 
-	ani = new CAnimation(70);	// idle attack right
+	ani = new CAnimation(150);	// idle attack right
 	ani->Add(10011);
 	ani->Add(10010);
 	ani->Add(10009);
 	animations->Add(411, ani);
+
+	ani = new CAnimation(70);	// idle attack sit left
+	ani->Add(10033);
+	ani->Add(10034);
+	animations->Add(412, ani);
+
+	ani = new CAnimation(70);	// idle attack sit right
+	ani->Add(10048);
+	ani->Add(10047);
+	animations->Add(413, ani);
+
 
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
@@ -241,7 +256,7 @@ void LoadResources()
 	background->SetPosition(0, 0);
 	objects.push_back(background);
 
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		fire = new CFire();
 		fire->AddAnimation(603);
 		fire->SetPosition(i*130+88, 110);
@@ -262,6 +277,8 @@ void LoadResources()
 	Simon->AddAnimation(409);		// sit down right
 	Simon->AddAnimation(410);		// attack left
 	Simon->AddAnimation(411);		// attack right
+	Simon->AddAnimation(412);		// attack sit left
+	Simon->AddAnimation(413);		// attack sit right
 
 
 
