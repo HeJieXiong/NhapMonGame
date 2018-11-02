@@ -104,7 +104,7 @@ void CSimon::Render(float &xcam, float  &ycam)
 	if (untouchable) alpha = 128;
 	animations[ani]->Render(x-xcam, y-ycam, alpha);
 
-	RenderBoundingBox();
+	RenderBoundingBox(xcam,ycam);
 }
 
 void CSimon::SetState(int state)

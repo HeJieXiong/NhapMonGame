@@ -16,7 +16,7 @@ void CFire::Render(float &xcam, float &ycam)
 {
 	int ani = FIRE_ANI;
 	animations[ani]->Render(x-xcam, y-ycam);
-	RenderBoundingBox();
+	RenderBoundingBox(xcam,ycam);
 }
 
 void CFire::SetState(int state)
