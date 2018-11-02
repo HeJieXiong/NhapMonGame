@@ -140,7 +140,6 @@ void CGameObject::AddAnimation(int aniId)
 	animations.push_back(ani);
 }
 
-
 CGameObject::~CGameObject()
 {
 

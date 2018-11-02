@@ -12,11 +12,11 @@ void CFire::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt, coObjects);
 }
 
-void CFire::Render()
+void CFire::Render(float &xcam, float &ycam)
 {
 	int ani = FIRE_ANI;
-	animations[ani]->Render(x, y);
-	//RenderBoundingBox();
+	animations[ani]->Render(x-xcam, y-ycam);
+	RenderBoundingBox();
 }
 
 void CFire::SetState(int state)

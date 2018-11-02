@@ -6,13 +6,12 @@
 
 
 
-void CBackGround::Render()
+void CBackGround::Render(float &xcam, float &ycam)
 {
-	
 	int ani;
 	ani = BACK_GROUND_ANI;
 	int alpha = 255;
-	animations[ani]->Render(x, y, alpha);
+	animations[ani]->Render(x-xcam, y-ycam, alpha);
 }
 void CBackGround::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {

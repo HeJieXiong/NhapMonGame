@@ -54,10 +54,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	if ((xcam < 50 || xcam > 200)) {
+		xcam += 2;
+	}
 }
 
-void CSimon::Render()
+void CSimon::Render(float &xcam, float  &ycam)
 {
+	xcam = x - 100/2;
+	ycam = 0;
 	int ani;
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
@@ -68,6 +73,7 @@ void CSimon::Render()
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
 	else if (state == SIMON_STATE_ATTACK) {
+		StartUntouchable();
 		if (level == 1) {
 			if (nx < 0) {
 				ani = SIMON_ANI_SIT_ATTACK_LEFT;
@@ -96,9 +102,9 @@ void CSimon::Render()
 	}
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-	animations[ani]->Render(x, y, alpha);
+	animations[ani]->Render(x-xcam, y-ycam, alpha);
 
-	//RenderBoundingBox();
+	RenderBoundingBox();
 }
 
 void CSimon::SetState(int state)
@@ -116,14 +122,16 @@ void CSimon::SetState(int state)
 		nx = -1;
 		break;
 	case SIMON_STATE_JUMP: 
-		vy = -SIMON_JUMP_SPEED_Y;
+		if (y>100) {
+			vy = -SIMON_JUMP_SPEED_Y;
+		}
+		else vy = 0;
 	case SIMON_STATE_IDLE: 
 		vx = 0;
 		level = 0;
 		break;
 	case SIMON_STATE_SIT_DOWN: //cài đặt việc ngồi cho Simon
 		vx = 0;
-		vy = 0;
 		level = 1;
 		break;
 	case SIMON_STATE_ATTACK://cài đặt việc đánh cho Simon

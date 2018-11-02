@@ -9,7 +9,7 @@ class CBackGround : public CGameObject
 {
 public:
 
-	virtual void Render();
+	virtual void Render(float &xcam, float  &ycam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void SetCamera(Camera *camera);
 private:

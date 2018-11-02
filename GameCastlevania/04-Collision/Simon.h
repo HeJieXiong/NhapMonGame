@@ -37,8 +37,9 @@
 #define SIMON_BIG_BBOX_WIDTH  20
 #define SIMON_BIG_BBOX_HEIGHT 30
 
-#define SIMON_UNTOUCHABLE_TIME 5000
-
+#define SIMON_UNTOUCHABLE_TIME 1000
+#define SCREEN_WIDTH 400
+#define SCREEN_HEIGHT 240
 
 class CSimon : public CGameObject
 {
@@ -51,7 +52,7 @@ public:
 		untouchable = 0;
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
-	virtual void Render();
+	virtual void Render(float &xcam, float  &ycam);
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

@@ -38,8 +38,7 @@
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
-#define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 240
+
 
 #define MAX_FRAME_RATE 100
 
@@ -99,6 +98,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	else if (game->IsKeyDown(DIK_LEFT))
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else if (game->IsKeyDown(DIK_DOWN)) {
+		if (game->IsKeyDown(DIK_X))
+			Simon->SetState(SIMON_STATE_SIT_DOWN);
 		if(game->IsKeyDown(DIK_Z))
 			Simon->SetState(SIMON_STATE_ATTACK);
 		else
@@ -281,7 +282,6 @@ void LoadResources()
 	Simon->AddAnimation(413);		// attack sit right
 
 
-
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 
@@ -332,8 +332,11 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
-		for (int i = 0; i < objects.size(); i++)
-			objects[i]->Render();
+		for (int i = 0; i < objects.size(); i++) {
+			float x = Simon->x;
+			float y = 0;
+			objects[i]->Render(x,y);
+		}
 
 		spriteHandler->End();
 		d3ddv->EndScene();
