@@ -51,18 +51,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx!=0) vx = 0;
 		if (ny!=0) vy = 0;	
 	}
-
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
-	if ((xcam < 50 || xcam > 200)) {
-		xcam += 2;
-	}
 }
 
 void CSimon::Render(float &xcam, float  &ycam)
 {
-	xcam = x - 100/2;
-	ycam = 0;
 	int ani;
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
@@ -102,9 +96,10 @@ void CSimon::Render(float &xcam, float  &ycam)
 	}
 	int alpha = 255;
 	if (untouchable) alpha = 128;
-	animations[ani]->Render(x-xcam, y-ycam, alpha);
+		animations[ani]->Render(x - xcam, y - ycam, alpha);
 
-	RenderBoundingBox(xcam,ycam);
+		RenderBoundingBox(xcam, ycam);
+	
 }
 
 void CSimon::SetState(int state)

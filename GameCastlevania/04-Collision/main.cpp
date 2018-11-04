@@ -257,12 +257,12 @@ void LoadResources()
 	background->SetPosition(0, 0);
 	objects.push_back(background);
 
-	for (int i = 0; i < 5; i++) {
-		fire = new CFire();
-		fire->AddAnimation(603);
-		fire->SetPosition(i*130+88, 110);
-		objects.push_back(fire);
-	}
+	//for (int i = 0; i < 5; i++) {
+	//	fire = new CFire();
+	//	fire->AddAnimation(603);
+	//	fire->SetPosition(i*130+88, 110);
+	//	objects.push_back(fire);
+	//}
 	
 
 	Simon = new CSimon();
@@ -335,6 +335,11 @@ void Render()
 		for (int i = 0; i < objects.size(); i++) {
 			float x = Simon->x;
 			float y = 0;
+			if (x <= SCREEN_WIDTH / 2) {
+				x = 0;
+			}
+			else
+			x = Simon->x - SCREEN_WIDTH / 2;
 			objects[i]->Render(x,y);
 		}
 

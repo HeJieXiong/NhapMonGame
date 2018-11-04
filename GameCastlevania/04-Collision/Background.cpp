@@ -20,9 +20,6 @@ void CBackGround::GetBoundingBox(float &left, float &top, float &right, float &b
 	right = x + BACK_GROUND_BBOX_WIDTH;
 	bottom = y + BACK_GROUND_BBOX_HEIGHT;
 }
-void CBackGround::SetCamera(Camera * camera) {
-	this->mCamera = camera;
-}
 
 
 
