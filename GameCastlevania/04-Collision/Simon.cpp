@@ -22,15 +22,21 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CalcPotentialCollisions(coObjects, coEvents);
 
 	// reset untouchable timer if untouchable time has passed
-	if ( GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME) 
+	/*if ( GetTickCount() - untouchable_start > SIMON_UNTOUCHABLE_TIME) 
 	{
 		untouchable_start = 0;
 		untouchable = 0;
+	}*/
+	if (attacking == 1) {
+		if (GetTickCount() - attack_start >SIMON_ATTACK_TIME)
+		{
+			state = SIMON_STATE_ATTACK;
+			attack_time++;
+		}
 	}
-	if (GetTickCount() - attack_start > SIMON_ATTACK_TIME)
-	{
-		attack_start = 0;
+	if (attack_time > 25) {
 		attacking = 0;
+		attack_time = 0;
 	}
 	if (coEvents.size() == 0)//new code
 	{
@@ -55,15 +61,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx!=0) vx = 0;
 		if (ny!=0) vy = 0;	
 	}
-	for (UINT i = 0; i < coEventsResult.size(); i++)
+/*	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
-		LPCOLLISIONEVENT e = coEventsResult[i];
-		if (attacking == 0)
-		{	
+		LPCOLLISIONEVENT e = coEventsResult[i];	
+		if (attacking == 1) {
 			StarAttack();
 		}
-				
-	}
+	}*/
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -80,23 +84,20 @@ void CSimon::Render(float &xcam, float  &ycam)
 		}
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
-	/*else
-		if (state == SIMON_STATE_ATTACK) {
-			if (attacking) {
+	else if (state == SIMON_STATE_ATTACK) {
 				if (level == 1) {
 					if (nx < 0) {
 						ani = SIMON_ANI_SIT_ATTACK_LEFT;
 					}
 					else ani = SIMON_ANI_SIT_ATTACK_RIGHT;
-				}s
+				}
 				if (level == 0) {
 					if (nx < 0) {
 						ani = SIMON_ANI_ATTACK_LEFT;
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
 				}
-			}
-		}*/
+	}
 	else{		
 		if (vx == 0){
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
@@ -111,15 +112,8 @@ void CSimon::Render(float &xcam, float  &ycam)
 		}		
 	}
 	int alpha = 255;
-	//if (untouchable) alpha = 128;
-	if (attacking) {
-		if(state==SIMON_STATE_ATTACK)
-		ani = SIMON_ANI_ATTACK_LEFT;
-	}
-		animations[ani]->Render(x - xcam, y - ycam, alpha);
-
-		RenderBoundingBox(xcam, ycam);
-	
+	animations[ani]->Render(x - xcam, y - ycam, alpha);
+	RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)
@@ -150,6 +144,8 @@ void CSimon::SetState(int state)
 		level = 1;
 		break;
 	case SIMON_STATE_ATTACK://cài đặt việc đánh cho Simon
+		attacking = 1;
+		attack_start += 100000;
 		vx = 0;
 		vy = 0;
 		break;

@@ -46,6 +46,7 @@ class CSimon : public CGameObject
 {
 	int level;
 	int untouchable;
+	int attack_time = 0;
 	int attacking;
 	DWORD untouchable_start;
 	DWORD attack_start;

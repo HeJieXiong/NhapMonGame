@@ -100,13 +100,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	else if (game->IsKeyDown(DIK_DOWN)) {
 		if (game->IsKeyDown(DIK_X))
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
-		if(game->IsKeyDown(DIK_Z))
-			Simon->SetState(SIMON_STATE_ATTACK);
 		else
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
 	}
-	/*else if (game->IsKeyDown(DIK_Q))
-		Simon->SetState(SIMON_STATE_ATTACK);*/
 	else
 		Simon->SetState(SIMON_STATE_IDLE);
 }
@@ -155,7 +151,7 @@ void LoadResources()
 	int top = 0;
 	int bottom = 33;
 	int id = 10001;
-	for (int i=0;i <3; i++){
+	for (int i=0;i <4; i++){
 		int left = 0;
 		int right = 30;
 		for (int j = 0; j < 16; j++) {
@@ -228,11 +224,13 @@ void LoadResources()
 	animations->Add(411, ani);
 
 	ani = new CAnimation(70);	// idle attack sit left
+	ani->Add(10049);
 	ani->Add(10033);
 	ani->Add(10034);
 	animations->Add(412, ani);
 
 	ani = new CAnimation(70);	// idle attack sit right
+	ani->Add(10050);
 	ani->Add(10048);
 	ani->Add(10047);
 	animations->Add(413, ani);
