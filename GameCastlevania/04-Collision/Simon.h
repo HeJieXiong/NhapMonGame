@@ -38,6 +38,7 @@
 #define SIMON_BIG_BBOX_HEIGHT 30
 
 #define SIMON_UNTOUCHABLE_TIME 1000
+#define SIMON_ATTACK_TIME 2000
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 240
 
@@ -45,7 +46,9 @@ class CSimon : public CGameObject
 {
 	int level;
 	int untouchable;
+	int attacking;
 	DWORD untouchable_start;
+	DWORD attack_start;
 public: 
 	CSimon() : CGameObject()
 	{
@@ -55,5 +58,6 @@ public:
 	virtual void Render(float &xcam, float  &ycam);
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };
