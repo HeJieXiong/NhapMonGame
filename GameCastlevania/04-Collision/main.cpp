@@ -1,21 +1,21 @@
 ﻿/* =============================================================
-	INTRODUCTION TO GAME PROGRAMMING SE102
-	
-	SAMPLE 04 - COLLISION
+INTRODUCTION TO GAME PROGRAMMING SE102
 
-	This sample illustrates how to:
+SAMPLE 04 - COLLISION
 
-		1/ Implement SweptAABB algorithm between moving objects
-		2/ Implement a simple (yet effective) collision frame work
+This sample illustrates how to:
 
-	Key functions: 
-		CGame::SweptAABB
-		CGameObject::SweptAABBEx
-		CGameObject::CalcPotentialCollisions
-		CGameObject::FilterCollision
+1/ Implement SweptAABB algorithm between moving objects
+2/ Implement a simple (yet effective) collision frame work
 
-		CGameObject::GetBoundingBox
-		
+Key functions:
+CGame::SweptAABB
+CGameObject::SweptAABBEx
+CGameObject::CalcPotentialCollisions
+CGameObject::FilterCollision
+
+CGameObject::GetBoundingBox
+
 ================================================================ */
 
 #include <windows.h>
@@ -33,6 +33,7 @@
 #include "Camera.h"
 #include "Goomba.h"
 #include "Fire.h"
+#include "Morningstar.h"
 
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -46,24 +47,26 @@
 #define ID_TEX_MISC 10
 #define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
+#define ID_TEX_MORNINGSTAR 40
 
 CGame *game;
 
 CSimon *Simon;
 CBackGround *background;
 CFire *fire;
+CMorningstar  *morningstar;
 //CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
 
-class CSampleKeyHander: public CKeyEventHandler
+class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
 	virtual void OnKeyDown(int KeyCode);
 	virtual void OnKeyUp(int KeyCode);
 };
 
-CSampleKeyHander * keyHandler; 
+CSampleKeyHander * keyHandler;
 
 void CSampleKeyHander::OnKeyDown(int KeyCode)
 {
@@ -121,56 +124,71 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 }
 
 /*
-	Load all game resources 
-	In this example: load textures, sprites, animations and SIMON object
+Load all game resources
+In this example: load textures, sprites, animations and SIMON object
 
-	TO-DO: Improve this function by loading texture,sprite,animation,object from file
+TO-DO: Improve this function by loading texture,sprite,animation,object from file
 */
 void LoadResources()
 {
 	CTextures * textures = CTextures::GetInstance();
-	
-	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png",D3DCOLOR_XRGB(0, 0, 0));
+
+	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
 
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
-	
+
 	LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
 	sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
 
-	
+
 
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 
 	// big
-	int top = 0;
-	int bottom = 33;
-	int id = 10001;
-	for (int i=0;i <4; i++){
+	int top_simon = 0;
+	int bottom_simon = 33;
+	int id_simon = 10001;
+	for (int i = 0; i <4; i++) {
 		int left = 0;
 		int right = 30;
 		for (int j = 0; j < 16; j++) {
-			sprites->Add(id, left, top, right, bottom, texSIMON);
-			id++;
+			sprites->Add(id_simon, left, top_simon, right, bottom_simon, texSIMON);
+			id_simon++;
 			left += 30;
 			right += 30;
 		}
-		top += 33;
-		bottom += 33;
+		top_simon += 33;
+		bottom_simon += 33;
 	}
 
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 31, 31, texMisc);
-	
+
 	LPDIRECT3DTEXTURE9 textFire = textures->Get(ID_TEX_FIRE);
 	sprites->Add(4001, 0, 0, 17, 31, textFire);
 	sprites->Add(4002, 27, 0, 44, 31, textFire);
 
+	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
+	int top_morningstar = 0;
+	int bottom_morningstar = 68;
+	int id_morningstar = 50001;
+	for (int i = 0; i < 3; i++) {
+		int left = 100;
+		int right = 200;
+		for (int j = 0; j < 5; j++) {
+			sprites->Add(id_morningstar, left, top_morningstar, right, bottom_morningstar, textmorningstar);
+			id_morningstar++;
+			left += 100;
+			right += 100;
+		}
+	}
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);	// idle big right
@@ -202,7 +220,7 @@ void LoadResources()
 	ani = new CAnimation(100);	// idle jump left
 	ani->Add(10005);
 	animations->Add(407, ani);
-	
+
 	ani = new CAnimation(100);	// idle sit down left
 	ani->Add(10033);
 	animations->Add(408, ani);
@@ -210,7 +228,7 @@ void LoadResources()
 	ani = new CAnimation(100);	// idle sit down right
 	ani->Add(10048);
 	animations->Add(409, ani);
-	
+
 	ani = new CAnimation(150);	// idle attack left
 	ani->Add(10006);
 	ani->Add(10007);
@@ -250,6 +268,12 @@ void LoadResources()
 	ani->Add(4002);
 	animations->Add(603, ani);
 
+	ani = new CAnimation(100); //tie1 attack-right
+	ani->Add(50003);
+	ani->Add(50001);
+	ani->Add(50002);
+	animations->Add(701, ani);
+
 	background = new CBackGround();
 	background->AddAnimation(602);
 	background->SetPosition(0, 0);
@@ -261,7 +285,7 @@ void LoadResources()
 	//	fire->SetPosition(i*130+88, 110);
 	//	objects.push_back(fire);
 	//}
-	
+
 
 	Simon = new CSimon();
 	Simon->AddAnimation(400);		// idle right big
@@ -283,20 +307,24 @@ void LoadResources()
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 
-	
+
 	for (int i = 0; i < 50; i++) //Tạo nền đứng
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i*16.0f, 140);
+		brick->SetPosition(0 + i * 16.0f, 140);
 		objects.push_back(brick);
 	}
 
+	morningstar = new CMorningstar();
+	morningstar->AddAnimation(701);
+	morningstar->SetPosition(88, 101);
+	objects.push_back(morningstar);
 }
 
 /*
-	Update world status for this frame
-	dt: time period between beginning of last frame and beginning of this frame
+Update world status for this frame
+dt: time period between beginning of last frame and beginning of this frame
 */
 void Update(DWORD dt)
 {
@@ -310,12 +338,12 @@ void Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
-		objects[i]->Update(dt,&coObjects);
+		objects[i]->Update(dt, &coObjects);
 	}
 }
 
 /*
-	Render a frame 
+Render a frame
 */
 void Render()
 {
@@ -337,8 +365,8 @@ void Render()
 				x = 0;
 			}
 			else
-			x = Simon->x - SCREEN_WIDTH / 2;
-			objects[i]->Render(x,y);
+				x = Simon->x - SCREEN_WIDTH / 2;
+			objects[i]->Render(x, y);
 		}
 
 		spriteHandler->End();
@@ -383,7 +411,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 			hInstance,
 			NULL);
 
-	if (!hWnd) 
+	if (!hWnd)
 	{
 		OutputDebugString(L"[ERROR] CreateWindow failed");
 		DWORD ErrCode = GetLastError();
@@ -424,12 +452,12 @@ int Run()
 			frameStart = now;
 
 			game->ProcessKeyboard();
-			
+
 			Update(dt);
 			Render();
 		}
 		else
-			Sleep(tickPerFrame - dt);	
+			Sleep(tickPerFrame - dt);
 	}
 
 	return 1;
@@ -448,7 +476,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	LoadResources();
 
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH*2, SCREEN_HEIGHT*2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();
 
