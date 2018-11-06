@@ -177,16 +177,16 @@ void LoadResources()
 
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
 	int top_morningstar = 0;
-	int bottom_morningstar = 68;
+	int bottom_morningstar = 34;
 	int id_morningstar = 50001;
 	for (int i = 0; i < 3; i++) {
-		int left = 100;
-		int right = 200;
+		int left = 50;
+		int right = 100;
 		for (int j = 0; j < 5; j++) {
 			sprites->Add(id_morningstar, left, top_morningstar, right, bottom_morningstar, textmorningstar);
 			id_morningstar++;
-			left += 100;
-			right += 100;
+			left += 50;
+			right += 50;
 		}
 	}
 	LPANIMATION ani;
@@ -318,7 +318,7 @@ void LoadResources()
 
 	morningstar = new CMorningstar();
 	morningstar->AddAnimation(701);
-	morningstar->SetPosition(88, 101);
+	morningstar->SetPosition(80, 101);
 	objects.push_back(morningstar);
 }
 

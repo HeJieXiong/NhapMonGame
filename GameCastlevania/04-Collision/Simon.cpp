@@ -3,7 +3,7 @@
 
 #include "Simon.h"
 #include "Game.h"
-
+#include "Morningstar.h"
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
