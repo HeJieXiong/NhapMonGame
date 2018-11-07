@@ -50,10 +50,10 @@ void CGame::Init(HWND hWnd)
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
 	OutputDebugString(L"[INFO] InitGame done;\n");
-	font = NULL;
+	font1 = NULL;
 	font2 = NULL;
-	HRESULT hr1 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE,L"(Arial)", &font);
-	SetRect(&fRectangle, 15, 5, 400, 50);
+	HRESULT hr1 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE,L"(Arial)", &font1);
+	SetRect(&fRectangle1, 15, 5, 400, 50);
 	HRESULT hr2 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE, L"(Arial)", &font2);
 	SetRect(&fRectangle2, 200, 5, 400, 50);
 	message1 = "SCORE-00000\nPLAYER\nENEMY";
@@ -72,8 +72,8 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.right = right;
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-	if (font) {
-		font->DrawTextA(NULL, message1.c_str(), -1, &fRectangle, DT_LEFT, D3DCOLOR_XRGB(255,255, 255));
+	if (font1) {
+		font1->DrawTextA(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255,255, 255));
 	}
 	if (font2) {
 		font2->DrawTextA(NULL, message2.c_str(), -1, &fRectangle2, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
@@ -210,9 +210,13 @@ CGame::~CGame()
 	if (backBuffer != NULL) backBuffer->Release();
 	if (d3ddv != NULL) d3ddv->Release();
 	if (d3d != NULL) d3d->Release();
-	if (font) {
-		font->Release();
-		font = 0;
+	if (font1) {
+		font1->Release();
+		font1 = 0;
+	}
+	if (font2) {
+		font2->Release();
+		font2 = 0;
 	}
 }
 

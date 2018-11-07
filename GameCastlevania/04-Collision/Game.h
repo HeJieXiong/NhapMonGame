@@ -70,9 +70,9 @@ public:
 
 	~CGame();
 private:
-	ID3DXFont * font;
+	ID3DXFont * font1;
 	ID3DXFont * font2;
-	RECT fRectangle;
+	RECT fRectangle1;
 	RECT fRectangle2;
 	std::string message1;
 	std::string message2;

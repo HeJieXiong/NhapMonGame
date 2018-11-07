@@ -133,7 +133,7 @@ void CSimon::SetState(int state)
 		nx = -1;
 		break;
 	case SIMON_STATE_JUMP: 
-		if (y>100) {
+		if (y>140) {
 			vy = -SIMON_JUMP_SPEED_Y;
 		}
 		else vy = 0;
