@@ -73,7 +73,7 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render(float &xcam, float &ycam) = 0;
 	virtual void SetState(int state) { this->state = state; }
-
+	//virtual bool check()=0;
 
 	~CGameObject();
 };

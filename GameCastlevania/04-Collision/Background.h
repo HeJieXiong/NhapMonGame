@@ -10,4 +10,5 @@ class CBackGround : public CGameObject
 public:
 	virtual void Render(float &xcam, float  &ycam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	//virtual bool check();
 };

@@ -21,6 +21,8 @@ void CBackGround::GetBoundingBox(float &left, float &top, float &right, float &b
 	bottom = y + BACK_GROUND_BBOX_HEIGHT;
 }
 
-
+//bool CBackGround::check() {
+//	return FALSE;
+//}
 
 

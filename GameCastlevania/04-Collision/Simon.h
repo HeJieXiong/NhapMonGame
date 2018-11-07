@@ -61,4 +61,5 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	//virtual bool check();
 };

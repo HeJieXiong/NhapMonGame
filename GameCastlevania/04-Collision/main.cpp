@@ -138,7 +138,7 @@ void LoadResources()
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 255, 255));
 
 
 	CSprites * sprites = CSprites::GetInstance();
@@ -176,7 +176,7 @@ void LoadResources()
 	sprites->Add(4002, 27, 0, 44, 31, textFire);
 
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
-	int top_morningstar = 0;
+	/*int top_morningstar = 0;
 	int bottom_morningstar = 34;
 	int id_morningstar = 50001;
 	for (int i = 0; i < 3; i++) {
@@ -188,7 +188,10 @@ void LoadResources()
 			left += 50;
 			right += 50;
 		}
-	}
+	}*/
+	sprites->Add(5001, 52, 5, 67, 25, textmorningstar);
+	sprites->Add(5002, 80, 5, 130, 25, textmorningstar);
+	sprites->Add(5003, 150, 5, 160, 25, textmorningstar);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);	// idle big right
@@ -269,22 +272,22 @@ void LoadResources()
 	animations->Add(603, ani);
 
 	ani = new CAnimation(100); //tie1 attack-right
-	ani->Add(50003);
-	ani->Add(50001);
-	ani->Add(50002);
+	ani->Add(5003);
+	ani->Add(5001);
+	ani->Add(5002);
 	animations->Add(701, ani);
 
 	background = new CBackGround();
 	background->AddAnimation(602);
-	background->SetPosition(0, 0);
+	background->SetPosition(0, 40);
 	objects.push_back(background);
 
-	//for (int i = 0; i < 5; i++) {
-	//	fire = new CFire();
-	//	fire->AddAnimation(603);
-	//	fire->SetPosition(i*130+88, 110);
-	//	objects.push_back(fire);
-	//}
+	for (int i = 0; i < 5; i++) {
+		fire = new CFire();
+		fire->AddAnimation(603);
+		fire->SetPosition(i*130+88, 150);
+		objects.push_back(fire);
+	}
 
 
 	Simon = new CSimon();
@@ -312,13 +315,13 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i * 16.0f, 140);
+		brick->SetPosition(0 + i * 16.0f, 180);
 		objects.push_back(brick);
 	}
 
 	morningstar = new CMorningstar();
 	morningstar->AddAnimation(701);
-	morningstar->SetPosition(80, 101);
+	/*morningstar->SetPosition(Simon->x, Simon->y);*/
 	objects.push_back(morningstar);
 }
 
@@ -340,6 +343,7 @@ void Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
+	
 }
 
 /*
@@ -361,13 +365,15 @@ void Render()
 		for (int i = 0; i < objects.size(); i++) {
 			float x = Simon->x;
 			float y = 0;
-			if (x <= SCREEN_WIDTH / 2) {
-				x = 0;
-			}
-			else
-				x = Simon->x - SCREEN_WIDTH / 2;
-			objects[i]->Render(x, y);
+				if (x <= SCREEN_WIDTH / 2) {
+					x = 0;
+				}
+				else
+					x = Simon->x - SCREEN_WIDTH / 2;
+				objects[i]->Render(x, y);
+				//morningstar->SetPosition(Simon->x, Simon->y);
 		}
+
 
 		spriteHandler->End();
 		d3ddv->EndScene();

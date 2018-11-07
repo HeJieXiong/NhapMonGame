@@ -50,6 +50,10 @@ void CGame::Init(HWND hWnd)
 	D3DXCreateSprite(d3ddv, &spriteHandler);
 
 	OutputDebugString(L"[INFO] InitGame done;\n");
+	font = NULL;
+	HRESULT hr = D3DXCreateFont(d3ddv, 20, 0, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE,L"(Arial)", &font);
+	SetRect(&fRectangle, 0, 0, 100, 100);
+	message = "FUCK MY GAME";
 }
 
 /*
@@ -64,6 +68,9 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.right = right;
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
+	if (font) {
+		font->DrawTextA(NULL, message.c_str(), -1, &fRectangle, DT_LEFT, D3DCOLOR_XRGB(255, 0, 0));
+	}
 }
 
 int CGame::IsKeyDown(int KeyCode)
@@ -196,6 +203,10 @@ CGame::~CGame()
 	if (backBuffer != NULL) backBuffer->Release();
 	if (d3ddv != NULL) d3ddv->Release();
 	if (d3d != NULL) d3d->Release();
+	if (font) {
+		font->Release();
+		font = 0;
+	}
 }
 
 /*

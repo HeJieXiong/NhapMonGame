@@ -9,4 +9,5 @@ class CBrick : public CGameObject
 public:
 	virtual void Render(float &xcam, float &ycam);
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
+	//virtual bool check();
 };

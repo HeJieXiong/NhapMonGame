@@ -1,4 +1,5 @@
 #include "Morningstar.h"
+#include "Simon.h"
 
 void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
 	left = x;
@@ -14,8 +15,10 @@ void CMorningstar::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CMorningstar::Render(float &xcam, float &ycam)
 {
+
 	int ani = MORNINGSTAR_ANI;
-	animations[ani]->Render(x - xcam, y - ycam);
+	int alpha = 255;
+	animations[ani]->Render(x_simon, y_simon, alpha);
 	RenderBoundingBox(xcam, ycam);
 }
 
@@ -32,3 +35,6 @@ void CMorningstar::SetState(int state)
 		break;
 	}
 }
+//bool CMorningstar::check() {
+//	return TRUE;
+//}

@@ -4,6 +4,7 @@
 #include "Simon.h"
 #include "Game.h"
 #include "Morningstar.h"
+#include "Fire.h"
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
@@ -61,11 +62,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx!=0) vx = 0;
 		if (ny!=0) vy = 0;	
 	}
-/*	for (UINT i = 0; i < coEventsResult.size(); i++)
+	/*for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];	
-		if (attacking == 1) {
-			StarAttack();
+		if (dynamic_cast<CFire *> (e->obj)){
+			CFire *fire = dynamic_cast<CFire *> (e->obj);
+			
 		}
 	}*/
 
@@ -163,3 +165,7 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	bottom = y + SIMON_BIG_BBOX_HEIGHT;
 }
 
+
+//bool CSimon::check() {
+//	return FALSE;
+//}
