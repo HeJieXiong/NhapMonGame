@@ -129,6 +129,8 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="HeaderBar.h" />
+    <ClInclude Include="Item.h" />
     <ClInclude Include="Morningstar.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
@@ -142,6 +144,7 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="HeaderBar.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Morningstar.cpp" />
     <ClCompile Include="Simon.cpp" />

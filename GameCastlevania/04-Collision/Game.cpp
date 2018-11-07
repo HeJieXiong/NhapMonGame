@@ -51,9 +51,13 @@ void CGame::Init(HWND hWnd)
 
 	OutputDebugString(L"[INFO] InitGame done;\n");
 	font = NULL;
-	HRESULT hr = D3DXCreateFont(d3ddv, 20, 0, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE,L"(Arial)", &font);
-	SetRect(&fRectangle, 0, 0, 100, 100);
-	message = "FUCK MY GAME";
+	font2 = NULL;
+	HRESULT hr1 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE,L"(Arial)", &font);
+	SetRect(&fRectangle, 15, 5, 400, 50);
+	HRESULT hr2 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE, L"(Arial)", &font2);
+	SetRect(&fRectangle2, 200, 5, 400, 50);
+	message1 = "SCORE-00000\nPLAYER\nENEMY";
+	message2 = "TIME 000 STAGE 01";
 }
 
 /*
@@ -69,7 +73,10 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 	if (font) {
-		font->DrawTextA(NULL, message.c_str(), -1, &fRectangle, DT_LEFT, D3DCOLOR_XRGB(255, 0, 0));
+		font->DrawTextA(NULL, message1.c_str(), -1, &fRectangle, DT_LEFT, D3DCOLOR_XRGB(255,255, 255));
+	}
+	if (font2) {
+		font2->DrawTextA(NULL, message2.c_str(), -1, &fRectangle2, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 	}
 }
 

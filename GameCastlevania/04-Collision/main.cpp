@@ -34,7 +34,7 @@ CGameObject::GetBoundingBox
 #include "Goomba.h"
 #include "Fire.h"
 #include "Morningstar.h"
-
+#include "HeaderBar.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
@@ -48,6 +48,7 @@ CGameObject::GetBoundingBox
 #define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
 #define ID_TEX_MORNINGSTAR 40
+#define ID_TEX_HEADERBAR 50
 
 CGame *game;
 
@@ -55,6 +56,9 @@ CSimon *Simon;
 CBackGround *background;
 CFire *fire;
 CMorningstar  *morningstar;
+CHeaderBar *headerbar;
+CHeaderBar *health;
+CHeaderBar *enemy;
 //CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
@@ -139,6 +143,7 @@ void LoadResources()
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png",D3DCOLOR_XRGB(255,255,255));
 
 
 	CSprites * sprites = CSprites::GetInstance();
@@ -147,6 +152,10 @@ void LoadResources()
 	LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
 	sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
 
+	LPDIRECT3DTEXTURE9 texHeaderBar = textures->Get(ID_TEX_HEADERBAR);
+	sprites->Add(8001, 0, 0, 49, 26, texHeaderBar); //heart,p bar
+	sprites->Add(8002, 50, 0, 54, 8, texHeaderBar); //health
+	sprites->Add(8003, 61, 0, 65, 8, texHeaderBar); //enemy
 
 
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
@@ -277,10 +286,29 @@ void LoadResources()
 	ani->Add(5002);
 	animations->Add(701, ani);
 
+	ani = new CAnimation(100);//heart&pbar
+	ani->Add(8001);
+	animations->Add(801, ani);
+
+	ani = new CAnimation(100);//health
+	ani->Add(8002);
+	animations->Add(802, ani);
+
+	ani = new CAnimation(100);//enemy
+	ani->Add(8003);
+	animations->Add(803, ani);
+
+
 	background = new CBackGround();
 	background->AddAnimation(602);
 	background->SetPosition(0, 40);
 	objects.push_back(background);
+	
+
+	headerbar = new CHeaderBar();
+	headerbar->AddAnimation(801);
+	headerbar->SetPosition(200, 15);
+	objects.push_back(headerbar);
 
 	for (int i = 0; i < 5; i++) {
 		fire = new CFire();
@@ -289,6 +317,18 @@ void LoadResources()
 		objects.push_back(fire);
 	}
 
+	for (int i = 0; i < 15; i++) { //healthbar
+		health = new CHeaderBar();
+		health->AddAnimation(802);
+		health->SetPosition(i*5+80, 16);
+		objects.push_back(health);
+	}
+	for (int i = 0; i < 15; i++) {//enemybar
+		enemy = new CHeaderBar();
+		enemy->AddAnimation(803);
+		enemy->SetPosition(i * 5 + 80, 26);
+		objects.push_back(enemy);
+	}
 
 	Simon = new CSimon();
 	Simon->AddAnimation(400);		// idle right big
@@ -319,10 +359,10 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-	morningstar = new CMorningstar();
-	morningstar->AddAnimation(701);
-	/*morningstar->SetPosition(Simon->x, Simon->y);*/
-	objects.push_back(morningstar);
+	//morningstar = new CMorningstar();
+	//morningstar->AddAnimation(701);
+	///*morningstar->SetPosition(Simon->x, Simon->y);*/
+	//objects.push_back(morningstar);
 }
 
 /*
