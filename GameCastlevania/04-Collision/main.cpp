@@ -105,8 +105,11 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	else if (game->IsKeyDown(DIK_LEFT))
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		if (game->IsKeyDown(DIK_X))
+		if (game->IsKeyDown(DIK_X)) {
+			Simon->vy = 0;
+			Simon->y = 149.9999;
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
+		}
 		else
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
 	}

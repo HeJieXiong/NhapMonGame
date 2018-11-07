@@ -57,7 +57,8 @@ void CGame::Init(HWND hWnd)
 	HRESULT hr2 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE, L"(Arial)", &font2);
 	SetRect(&fRectangle2, 200, 5, 400, 50);
 	message1 = "SCORE-00000\nPLAYER\nENEMY";
-	message2 = "TIME 000 STAGE 01";
+	message2 = "TIME 000 STAGE 01" + std::to_string(time);
+	
 }
 
 /*
@@ -66,19 +67,22 @@ void CGame::Init(HWND hWnd)
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
 	D3DXVECTOR3 p(x, y, 0);
-	RECT r; 
+	RECT r;
 	r.left = left;
 	r.top = top;
 	r.right = right;
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 	if (font1) {
-		font1->DrawTextA(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255,255, 255));
+		font1->DrawTextA(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 	}
 	if (font2) {
-		font2->DrawTextA(NULL, message2.c_str(), -1, &fRectangle2, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+			font2->DrawTextA(NULL, message2.c_str(), -1, &fRectangle2, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 	}
+	
 }
+	
+
 
 int CGame::IsKeyDown(int KeyCode)
 {

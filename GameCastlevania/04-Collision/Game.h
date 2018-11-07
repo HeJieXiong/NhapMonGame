@@ -70,13 +70,13 @@ public:
 
 	~CGame();
 private:
+	int time=10;
 	ID3DXFont * font1;
 	ID3DXFont * font2;
 	RECT fRectangle1;
 	RECT fRectangle2;
 	std::string message1;
 	std::string message2;
-
 };
 
 
