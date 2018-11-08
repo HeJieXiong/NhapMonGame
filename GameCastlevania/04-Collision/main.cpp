@@ -21,7 +21,7 @@ CGameObject::GetBoundingBox
 #include <windows.h>
 #include <d3d9.h>
 #include <d3dx9.h>
-
+#include <string.h>
 #include "debug.h"
 #include "Game.h"
 #include "GameObject.h"
@@ -59,7 +59,6 @@ CMorningstar  *morningstar;
 CHeaderBar *headerbar;
 CHeaderBar *health;
 CHeaderBar *enemy;
-//CGoomba *goomba;
 
 vector<LPGAMEOBJECT> objects;
 
@@ -313,30 +312,33 @@ void LoadResources()
 	objects.push_back(background);
 	
 
-	headerbar = new CHeaderBar();
+	headerbar = new CHeaderBar(game->GetDirect3DDevice());
 	headerbar->AddAnimation(801);
+	headerbar->tag = 3;
 	headerbar->SetPosition(200, 15);
 	objects.push_back(headerbar);
 
-	/*for (int i = 0; i < 5; i++) {  //fire
+	for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
 		fire->AddAnimation(603);
 		fire->SetPosition(i*130+88, 150);
+		fire->tag = 0;
 		objects.push_back(fire);
-	}*/
+	}
 
-	for (int i = 0; i < 15; i++) { //healthbar
-		health = new CHeaderBar();
-		health->AddAnimation(802);
-		health->SetPosition(i*5+80, 16);
-		objects.push_back(health);
-	}
-	for (int i = 0; i < 14; i++) {//enemybar
-		enemy = new CHeaderBar();
-		enemy->AddAnimation(803);
-		enemy->SetPosition(i * 5 + 80, 26);
-		objects.push_back(enemy);
-	}
+	//for (int i = 0; i < 15; i++) { //healthbar
+	//	health = new CHeaderBar();
+	//	health->AddAnimation(802);
+	//	health->SetPosition(i*5+80, 16);
+	//	health->tag = 0;
+	//	objects.push_back(health);
+	//}
+	//for (int i = 0; i < 14; i++) {//enemybar
+	//	enemy = new CHeaderBar();
+	//	enemy->AddAnimation(803);
+	//	enemy->SetPosition(i * 5 + 80, 26);
+	//	objects.push_back(enemy);
+	//}
 
 	Simon = new CSimon();
 	Simon->AddAnimation(400);		// idle right big
@@ -353,6 +355,7 @@ void LoadResources()
 	Simon->AddAnimation(411);		// attack right
 	Simon->AddAnimation(412);		// attack sit left
 	Simon->AddAnimation(413);		// attack sit right
+	Simon->tag = 1;
 
 
 	Simon->SetPosition(40.0f, 0);
@@ -364,6 +367,7 @@ void LoadResources()
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i * 16.0f, 180);
+		brick->tag = 1;
 		objects.push_back(brick);
 	}
 
@@ -384,6 +388,7 @@ void Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	for (int i = 1; i < objects.size(); i++)
 	{
+		if(objects[i]->tag==1)
 		coObjects.push_back(objects[i]);
 	}
 
@@ -399,10 +404,11 @@ Render a frame
 */
 void Render()
 {
+	
+	
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
-
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
@@ -422,7 +428,7 @@ void Render()
 				//morningstar->SetPosition(Simon->x, Simon->y);
 		}
 
-
+		headerbar->DrawHeaderbar();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -519,11 +525,12 @@ int Run()
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
+	std::string a="dcm";
+	std::string b="game";
 	HWND hWnd = CreateGameWindow(hInstance, nCmdShow, SCREEN_WIDTH, SCREEN_HEIGHT);
 
 	game = CGame::GetInstance();
 	game->Init(hWnd);
-
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
 

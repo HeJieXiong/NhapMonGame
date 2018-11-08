@@ -43,7 +43,6 @@ public:
 	void InitKeyboard(LPKEYEVENTHANDLER handler);
 	void Init(HWND hWnd);
 	void Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha = 255);
-
 	int IsKeyDown(int KeyCode);
 	void ProcessKeyboard();
 
@@ -70,13 +69,13 @@ public:
 
 	~CGame();
 private:
-	int time=10;
-	ID3DXFont * font1;
-	ID3DXFont * font2;
-	RECT fRectangle1;
+	/*s
+	/*LPD3DXFONT pFont;*/
+	/*RECT fRectangle1;
 	RECT fRectangle2;
 	std::string message1;
-	std::string message2;
+	std::string message2;*/
+	int i = 0;
 };
 
 

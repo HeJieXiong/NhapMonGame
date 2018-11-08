@@ -43,7 +43,7 @@ public:
 	int nx;	 
 
 	int state;
-
+	int tag;
 	DWORD dt; 
 
 	vector<LPANIMATION> animations;

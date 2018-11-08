@@ -35,11 +35,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			attack_time += dt;
 		}
 	}
-	if (attack_time > dt*25) {
+	if (attack_time > dt * 25) {
 		attacking = 0;
 		attack_time = 0;
-		/*state = SIMON_STATE_ATTACK;*/
-		//animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 	}
 	if (coEvents.size() == 0)//new code
 	{

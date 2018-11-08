@@ -7,7 +7,15 @@
 #define HEADER_BAR_BBOX_HEIGHT 20
 class CHeaderBar : public CGameObject
 {
+private:
+	ID3DXFont * font1;
+	RECT fRectangle1;
+	std::string message1;
+	//LPDIRECT3DDEVICE9 d3ddv;
+	HRESULT hr1;
 public:
+	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);
 	virtual void Render(float &xcam, float  &ycam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	void DrawHeaderbar();
 };
