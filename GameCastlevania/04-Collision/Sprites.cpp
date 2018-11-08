@@ -89,3 +89,7 @@ LPANIMATION CAnimations::Get(int id)
 {
 	return animations[id];
 }
+
+void CAnimations::resetAnimation(int Ani) {
+	animations[Ani]->Reset();
+}

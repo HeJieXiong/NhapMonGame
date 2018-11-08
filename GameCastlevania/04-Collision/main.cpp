@@ -86,7 +86,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetSpeed(0, 0);
 		break;
 	case DIK_Z:
-		Simon->SetState(SIMON_STATE_ATTACK);
+		//Simon->SetState(SIMON_STATE_ATTACK);
+		//Simon->animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
+		Simon->Attack();
 		break;
 	}
 }
@@ -102,8 +104,11 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	if (Simon->GetState() == SIMON_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT))
 		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
-	else if (game->IsKeyDown(DIK_LEFT))
+	else if (game->IsKeyDown(DIK_LEFT)) {
+		if (game->IsKeyDown(DIK_Z))
 		Simon->SetState(SIMON_STATE_WALKING_LEFT);
+		else Simon->SetState(SIMON_STATE_WALKING_LEFT);
+	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
 		if (game->IsKeyDown(DIK_X)) {
 			Simon->vy = 0;
@@ -313,12 +318,12 @@ void LoadResources()
 	headerbar->SetPosition(200, 15);
 	objects.push_back(headerbar);
 
-	for (int i = 0; i < 5; i++) {
+	/*for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
 		fire->AddAnimation(603);
 		fire->SetPosition(i*130+88, 150);
 		objects.push_back(fire);
-	}
+	}*/
 
 	for (int i = 0; i < 15; i++) { //healthbar
 		health = new CHeaderBar();
@@ -326,7 +331,7 @@ void LoadResources()
 		health->SetPosition(i*5+80, 16);
 		objects.push_back(health);
 	}
-	for (int i = 0; i < 15; i++) {//enemybar
+	for (int i = 0; i < 14; i++) {//enemybar
 		enemy = new CHeaderBar();
 		enemy->AddAnimation(803);
 		enemy->SetPosition(i * 5 + 80, 26);

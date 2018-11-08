@@ -60,6 +60,8 @@ public:
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
+	void Attack();
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+
 	//virtual bool check();
 };

@@ -32,12 +32,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (GetTickCount() - attack_start >SIMON_ATTACK_TIME)
 		{
 			state = SIMON_STATE_ATTACK;
-			attack_time++;
+			attack_time += dt;
 		}
 	}
-	if (attack_time > 25) {
+	if (attack_time > dt*25) {
 		attacking = 0;
 		attack_time = 0;
+		/*state = SIMON_STATE_ATTACK;*/
+		//animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 	}
 	if (coEvents.size() == 0)//new code
 	{
@@ -99,6 +101,7 @@ void CSimon::Render(float &xcam, float  &ycam)
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
 				}
+				/*animations[SIMON_ANI_ATTACK_RIGHT]->Reset();*/
 	}
 	else{		
 		if (vx == 0){
@@ -147,7 +150,7 @@ void CSimon::SetState(int state)
 		break;
 	case SIMON_STATE_ATTACK://cài đặt việc đánh cho Simon
 		attacking = 1;
-		attack_start += 100000;
+		/*attack_start += 100000;*/
 		vx = 0;
 		vy = 0;
 		break;
@@ -163,6 +166,17 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	top = y; 
 	right = x + SIMON_BIG_BBOX_WIDTH;
 	bottom = y + SIMON_BIG_BBOX_HEIGHT;
+}
+
+void CSimon::Attack() {
+	if (!attacking) {
+		attacking = 1;
+		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
+		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
+		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
+		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
+	}
+	
 }
 
 
