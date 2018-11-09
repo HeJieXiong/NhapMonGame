@@ -1,5 +1,13 @@
 #include "Morningstar.h"
-#include "Simon.h"
+
+
+CMorningstar * CMorningstar::_instance = NULL;
+
+CMorningstar * CMorningstar::GetInstance()
+{
+	if (_instance == NULL) _instance = new CMorningstar();
+	return _instance;
+}
 
 void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
 	left = x;

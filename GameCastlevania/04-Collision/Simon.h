@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Morningstar.h"
 
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
@@ -50,11 +51,14 @@ class CSimon : public CGameObject
 	int attacking;
 	DWORD untouchable_start;
 	DWORD attack_start;
+	CMorningstar *morningstar;
 public: 
 	CSimon() : CGameObject()
 	{
 		untouchable = 0;
+		morningstar = CMorningstar::GetInstance();
 	}
+	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render(float &xcam, float  &ycam);
 	void SetState(int state);

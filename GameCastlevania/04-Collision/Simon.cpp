@@ -100,7 +100,7 @@ void CSimon::Render(float &xcam, float  &ycam)
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
 				}
-				/*animations[SIMON_ANI_ATTACK_RIGHT]->Reset();*/
+				//morningstar->Render(x, y);
 	}
 	else{		
 		if (vx == 0){

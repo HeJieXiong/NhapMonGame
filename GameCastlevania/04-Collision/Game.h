@@ -6,7 +6,8 @@
 
 #define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
-
+#define SCREEN_WIDTH 400
+#define SCREEN_HEIGHT 240
 #define KEYBOARD_BUFFER_SIZE 1024
 /*
 Abstract class to define keyboard event handlers
@@ -29,7 +30,8 @@ class CGame
 	LPDIRECT3D9 d3d = NULL;						// Direct3D handle
 	LPDIRECT3DDEVICE9 d3ddv = NULL;				// Direct3D device object
 	LPDIRECT3DSURFACE9 backBuffer = NULL;		
-	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the screen 
+	LPD3DXSPRITE spriteHandler = NULL;			// Sprite helper library to help us draw 2D image on the 
+
 
 	LPDIRECTINPUT8       di;		// The DirectInput object         
 	LPDIRECTINPUTDEVICE8 didv;		// The keyboard device 
