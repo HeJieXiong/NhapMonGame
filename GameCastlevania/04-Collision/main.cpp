@@ -101,11 +101,15 @@ void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
 	if (Simon->GetState() == SIMON_STATE_DIE) return;
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (game->IsKeyDown(DIK_RIGHT)) {
+		if (game->IsKeyDown(DIK_Z))
+			Simon->vx = 0;
+		else
 		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
 		if (game->IsKeyDown(DIK_Z))
-		Simon->SetState(SIMON_STATE_WALKING_LEFT);
+			Simon->vx = 0;
 		else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {

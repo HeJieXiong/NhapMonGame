@@ -32,6 +32,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (GetTickCount() - attack_start >SIMON_ATTACK_TIME)
 		{
 			state = SIMON_STATE_ATTACK;
+			vx = 0;
 			attack_time += dt;
 		}
 	}
@@ -148,7 +149,6 @@ void CSimon::SetState(int state)
 		break;
 	case SIMON_STATE_ATTACK://cài đặt việc đánh cho Simon
 		attacking = 1;
-		/*attack_start += 100000;*/
 		vx = 0;
 		vy = 0;
 		break;
@@ -177,7 +177,3 @@ void CSimon::Attack() {
 	
 }
 
-
-//bool CSimon::check() {
-//	return FALSE;
-//}

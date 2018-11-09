@@ -26,7 +26,7 @@ void CHeaderBar::GetBoundingBox(float &left, float &top, float &right, float &bo
 }
 void CHeaderBar::DrawHeaderbar() {
 	message1 = "SCORE-00000\nPLAYER\nENEMY";
-	font1->DrawText(NULL, L"message1", -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+	font1->DrawTextA(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 }
 
 
