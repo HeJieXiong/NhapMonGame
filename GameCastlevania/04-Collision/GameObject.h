@@ -55,6 +55,8 @@ public:
 	void GetSpeed(float &vx, float &vy) { vx = this->vx; vy = this->vy; }
 	int GetState() { return this->state; }
 	void RenderBoundingBox(float &xcam, float &ycam);
+	float GetX() { return x; }
+	float GetY() { return y; }
 	LPCOLLISIONEVENT SweptAABBEx(LPGAMEOBJECT coO);
 	void CalcPotentialCollisions(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coEvents);
 	void FilterCollision(

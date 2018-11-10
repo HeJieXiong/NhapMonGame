@@ -212,16 +212,6 @@ CGame::~CGame()
 	if (backBuffer != NULL) backBuffer->Release();
 	if (d3ddv != NULL) d3ddv->Release();
 	if (d3d != NULL) d3d->Release();
-	/*if (font1 != NULL) font1->Release();
-	if (font2 != NULL) font2->Release();*/
-	//if (font1) {
-	//	font1->Release();
-	//	font1 = 0;
-	//}
-	//if (font2) {
-	//	font2->Release();
-	//	font2 = 0;
-	//}
 }
 
 /*

@@ -63,14 +63,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx!=0) vx = 0;
 		if (ny!=0) vy = 0;	
 	}
-	/*for (UINT i = 0; i < coEventsResult.size(); i++)
+	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];	
 		if (dynamic_cast<CFire *> (e->obj)){
 			CFire *fire = dynamic_cast<CFire *> (e->obj);
 			
 		}
-	}*/
+	}
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
@@ -103,8 +103,8 @@ void CSimon::Render(float &xcam, float  &ycam)
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
 				}
-			/*	morningstar->SetState(MORNINGSTAR_STATE);
-				morningstar->Render(x, y);*/
+			
+				morningstar->Render(x, y);
 	}
 	else{		
 		if (vx == 0){
@@ -121,8 +121,8 @@ void CSimon::Render(float &xcam, float  &ycam)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam, y - ycam, alpha);
-	
 	RenderBoundingBox(xcam, ycam);
+	//morningstar->Render(this->GetX, this->GetY);
 }
 
 void CSimon::SetState(int state)
@@ -174,15 +174,11 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 void CSimon::Attack(CMorningstar *morningstar, float &x_cam, float &y_cam) {
 	if (!attacking) {
 		attacking = 1;
-		float a=x_cam + 10;
-		float b=y_cam + 10;
 		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
-		animations[MORNINGSTAR_ANI]->Render(a, b);
-		morningstar->Render(a, b);
-		animations[MORNINGSTAR_ANI]->Reset();
+		animations[MORNINGSTAR_NORMAL]->Reset();
 	}
 	
 }

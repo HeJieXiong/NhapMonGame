@@ -47,7 +47,7 @@ CGameObject::GetBoundingBox
 #define ID_TEX_MISC 10
 #define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
-#define ID_TEX_MORNINGSTAR 40
+
 #define ID_TEX_HEADERBAR 50
 
 CGame *game;
@@ -85,8 +85,6 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetSpeed(0, 0);
 		break;
 	case DIK_Z:
-		//Simon->SetState(SIMON_STATE_ATTACK);
-		//Simon->animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	}
@@ -153,7 +151,7 @@ void LoadResources()
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 255, 255));
+	
 	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png",D3DCOLOR_XRGB(255,255,255));
 
 
@@ -291,11 +289,7 @@ void LoadResources()
 	ani->Add(4002);
 	animations->Add(603, ani);
 
-	ani = new CAnimation(100); //tie1 attack-right
-	ani->Add(5003);
-	ani->Add(5001);
-	ani->Add(5002);
-	animations->Add(701, ani);
+	
 
 	ani = new CAnimation(100);//heart&pbar
 	ani->Add(8001);
@@ -374,12 +368,6 @@ void LoadResources()
 		brick->tag = 1;
 		objects.push_back(brick);
 	}
-
-	morningstar = new CMorningstar();
-	morningstar->AddAnimation(701);
-	morningstar->SetPosition(Simon->x, Simon->y);
-	morningstar->tag = 3;
-	objects.push_back(morningstar);
 }
 
 /*
@@ -431,18 +419,7 @@ void Render()
 					x = Simon->x - SCREEN_WIDTH / 2;
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y);
-				//morningstar->SetPosition(Simon->x, Simon->y);
 		}
-		if (Simon->GetState() == SIMON_STATE_ATTACK) {
-			float x = Simon->x + 50;
-			float y = 1000;
-			for (int i = 0; i < objects.size(); i++) {
-				if (objects[i]->tag == 3)
-					objects[i]->Render(x,y);
-				//morningstar->SetPosition(Simon->x, Simon->y);
-			}
-		}
-
 		headerbar->DrawHeaderbar();
 		spriteHandler->End();
 		d3ddv->EndScene();
