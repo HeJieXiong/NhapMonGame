@@ -79,6 +79,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CSimon::Render(float &xcam, float  &ycam)
 {
 	int ani;
+	int ani_2;
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
 	if (state == SIMON_STATE_SIT_DOWN) {
@@ -88,6 +89,8 @@ void CSimon::Render(float &xcam, float  &ycam)
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
 	else if (state == SIMON_STATE_ATTACK) {
+		float a = x + 10;
+		float b = y + 10;
 				if (level == 1) {
 					if (nx < 0) {
 						ani = SIMON_ANI_SIT_ATTACK_LEFT;
@@ -100,7 +103,8 @@ void CSimon::Render(float &xcam, float  &ycam)
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
 				}
-				//morningstar->Render(x, y);
+			/*	morningstar->SetState(MORNINGSTAR_STATE);
+				morningstar->Render(x, y);*/
 	}
 	else{		
 		if (vx == 0){
@@ -117,6 +121,7 @@ void CSimon::Render(float &xcam, float  &ycam)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam, y - ycam, alpha);
+	
 	RenderBoundingBox(xcam, ycam);
 }
 
@@ -166,13 +171,18 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	bottom = y + SIMON_BIG_BBOX_HEIGHT;
 }
 
-void CSimon::Attack() {
+void CSimon::Attack(CMorningstar *morningstar, float &x_cam, float &y_cam) {
 	if (!attacking) {
 		attacking = 1;
+		float a=x_cam + 10;
+		float b=y_cam + 10;
 		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
+		animations[MORNINGSTAR_ANI]->Render(a, b);
+		morningstar->Render(a, b);
+		animations[MORNINGSTAR_ANI]->Reset();
 	}
 	
 }

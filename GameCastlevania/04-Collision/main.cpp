@@ -87,7 +87,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Z:
 		//Simon->SetState(SIMON_STATE_ATTACK);
 		//Simon->animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
-		Simon->Attack();
+		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	}
 }
@@ -320,7 +320,7 @@ void LoadResources()
 	headerbar->AddAnimation(801);
 	headerbar->tag = 3;
 	headerbar->SetPosition(200, 15);
-	objects.push_back(headerbar);
+	/*objects.push_back(headerbar);*/
 
 	for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
@@ -375,10 +375,11 @@ void LoadResources()
 		objects.push_back(brick);
 	}
 
-	//morningstar = new CMorningstar();
-	//morningstar->AddAnimation(701);
-	///*morningstar->SetPosition(Simon->x, Simon->y);*/
-	//objects.push_back(morningstar);
+	morningstar = new CMorningstar();
+	morningstar->AddAnimation(701);
+	morningstar->SetPosition(Simon->x, Simon->y);
+	morningstar->tag = 3;
+	objects.push_back(morningstar);
 }
 
 /*
@@ -428,8 +429,18 @@ void Render()
 				}
 				else
 					x = Simon->x - SCREEN_WIDTH / 2;
-				objects[i]->Render(x, y);
+				if(objects[i]->tag!=3)
+					objects[i]->Render(x, y);
 				//morningstar->SetPosition(Simon->x, Simon->y);
+		}
+		if (Simon->GetState() == SIMON_STATE_ATTACK) {
+			float x = Simon->x + 50;
+			float y = 1000;
+			for (int i = 0; i < objects.size(); i++) {
+				if (objects[i]->tag == 3)
+					objects[i]->Render(x,y);
+				//morningstar->SetPosition(Simon->x, Simon->y);
+			}
 		}
 
 		headerbar->DrawHeaderbar();

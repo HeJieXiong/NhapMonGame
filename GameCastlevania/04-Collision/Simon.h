@@ -34,7 +34,6 @@
 #define SIMON_ANI_SIT_ATTACK_LEFT	12
 #define SIMON_ANI_SIT_ATTACK_RIGHT	13
 #define SIMON_ANI_DIE				14
-
 #define SIMON_BIG_BBOX_WIDTH  20
 #define SIMON_BIG_BBOX_HEIGHT 30
 
@@ -64,8 +63,7 @@ public:
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
-	void Attack();
+	void Attack(CMorningstar *morningstar, float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 
-	//virtual bool check();
 };
