@@ -30,9 +30,9 @@ void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &
 void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	x = x_simon-xcam;
-	y = y_simon-ycam;
+	y = y_simon-ycam+10;
 	int ani = 0;
-	animations[ani]->Render(x_simon - xcam, y_simon - ycam);
+	animations[ani]->Render(x_simon - xcam-5, y_simon - ycam+6);
 	RenderBoundingBox_MoringStar(x, y);
 }
 
@@ -42,8 +42,8 @@ void CMorningstar::LoadResource() {
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
-	sprites->Add(5001, 52, 5, 67, 25, textmorningstar);
-	sprites->Add(5002, 80, 5, 130, 25, textmorningstar);
+	sprites->Add(5001, 51, 5, 67, 25, textmorningstar);
+	sprites->Add(5002, 80, 5, 132, 25, textmorningstar);
 	sprites->Add(5003, 150, 5, 160, 25, textmorningstar);
 	LPANIMATION ani;
 	ani = new CAnimation(100);
