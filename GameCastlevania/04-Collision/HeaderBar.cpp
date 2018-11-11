@@ -10,7 +10,7 @@ CHeaderBar::CHeaderBar(LPDIRECT3DDEVICE9 d3ddv)
 	SetRect(&fRectangle1, 0, 0, 400, 150);
 }
 
-void CHeaderBar::Render(float &xcam, float &ycam)
+void CHeaderBar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
 	ani = HEADER_BAR_ANI;

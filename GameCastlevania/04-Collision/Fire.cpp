@@ -12,7 +12,7 @@ void CFire::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt, coObjects);
 }
 
-void CFire::Render(float &xcam, float &ycam)
+void CFire::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani = FIRE_ANI;
 	animations[ani]->Render(x-xcam, y-ycam);

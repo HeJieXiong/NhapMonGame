@@ -38,7 +38,7 @@ CGameObject::GetBoundingBox
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(255,255,255)
 
 
 #define MAX_FRAME_RATE 100
@@ -49,7 +49,6 @@ CGameObject::GetBoundingBox
 #define ID_TEX_FIRE 30
 
 #define ID_TEX_HEADERBAR 50
-
 CGame *game;
 
 CSimon *Simon;
@@ -307,7 +306,7 @@ void LoadResources()
 	background = new CBackGround();
 	background->AddAnimation(602);
 	background->SetPosition(0, 40);
-	objects.push_back(background);
+	//objects.push_back(background);
 	
 
 	headerbar = new CHeaderBar(game->GetDirect3DDevice());
@@ -316,13 +315,13 @@ void LoadResources()
 	headerbar->SetPosition(200, 15);
 	/*objects.push_back(headerbar);*/
 
-	for (int i = 0; i < 5; i++) {  //fire
+	//for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
 		fire->AddAnimation(603);
-		fire->SetPosition(i*130+88, 150);
-		fire->tag = 0;
+		fire->SetPosition(4*130+88, 150);
+		fire->tag = 1;
 		objects.push_back(fire);
-	}
+	//}
 
 	//for (int i = 0; i < 15; i++) { //healthbar
 	//	health = new CHeaderBar();
@@ -418,9 +417,9 @@ void Render()
 				else
 					x = Simon->x - SCREEN_WIDTH / 2;
 				if(objects[i]->tag!=3)
-					objects[i]->Render(x, y);
+					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar();
+		//headerbar->DrawHeaderbar();
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
@@ -528,7 +527,6 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 
 	LoadResources();
-
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 
 	Run();

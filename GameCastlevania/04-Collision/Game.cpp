@@ -74,11 +74,17 @@ void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top
 	r.right = right;
 	r.bottom = bottom;
 	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
-	/*pFont->Begin()*/
-	//font1->DrawText(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
-	//font2->DrawText(NULL, L"message1.c_str()", -1, &fRectangle2, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
-	//font1->Release();
-	//font2->Release();
+}
+
+void CGame::Draw_MorningStar(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
+{
+	D3DXVECTOR3 p(x, y, 0);
+	RECT r;
+	r.left = left;
+	r.top = top;
+	r.right = right;
+	r.bottom = bottom;
+	spriteHandler->Draw(texture, &r, NULL, &p, D3DCOLOR_ARGB(alpha, 255, 255, 255));
 }
 
 

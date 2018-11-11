@@ -33,7 +33,6 @@ struct CCollisionEvent
 class CGameObject
 {
 public:
-
 	float x; 
 	float y;
 	float dx;	// dx = vx*dt
@@ -72,10 +71,10 @@ public:
 	CGameObject();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom) = 0;
+	virtual void RenderBoundingBox_MoringStar(float &xcam, float &ycam);
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
-	virtual void Render(float &xcam, float &ycam) = 0;
+	virtual void Render(float &xcam, float &ycam,float &x_simon, float &y_simon) = 0;
 	virtual void SetState(int state) { this->state = state; }
-	//virtual bool check()=0;
 
 	~CGameObject();
 };

@@ -27,16 +27,18 @@ void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &
 	bottom = y + MORNINGSTAR_BOX_HEIGHT;
 }
 
-void CMorningstar::Render(float &xcam, float &ycam)
+void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
+	x = x_simon-xcam;
+	y = y_simon-ycam;
 	int ani = 0;
-	animations[ani]->Render(xcam, ycam);
-	RenderBoundingBox(xcam, ycam); 
+	animations[ani]->Render(x_simon - xcam, y_simon - ycam);
+	RenderBoundingBox_MoringStar(x, y);
 }
 
 void CMorningstar::LoadResource() {
 	CTextures * textures = CTextures::GetInstance();
-	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255,0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);

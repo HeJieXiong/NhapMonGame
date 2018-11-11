@@ -6,7 +6,7 @@
 
 
 
-void CBackGround::Render(float &xcam, float &ycam)
+void CBackGround::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
 	ani = BACK_GROUND_ANI;

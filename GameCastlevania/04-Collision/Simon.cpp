@@ -76,7 +76,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 
-void CSimon::Render(float &xcam, float  &ycam)
+void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
 	int ani_2;
@@ -89,8 +89,6 @@ void CSimon::Render(float &xcam, float  &ycam)
 		else ani= SIMON_ANI_SIT_DOWN_RIGHT;
 	}
 	else if (state == SIMON_STATE_ATTACK) {
-		float a = x + 10;
-		float b = y + 10;
 				if (level == 1) {
 					if (nx < 0) {
 						ani = SIMON_ANI_SIT_ATTACK_LEFT;
@@ -102,9 +100,9 @@ void CSimon::Render(float &xcam, float  &ycam)
 						ani = SIMON_ANI_ATTACK_LEFT;
 					}
 					else ani = SIMON_ANI_ATTACK_RIGHT;
-				}
-			
-				morningstar->Render(x, y);
+				}	
+				
+				morningstar->Render(xcam, ycam,x,y);
 	}
 	else{		
 		if (vx == 0){

@@ -59,7 +59,7 @@ public:
 	}
 	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
-	virtual void Render(float &xcam, float  &ycam);
+	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
