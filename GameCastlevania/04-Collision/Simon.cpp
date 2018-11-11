@@ -92,17 +92,27 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				if (level == 1) {
 					if (nx < 0) {
 						ani = SIMON_ANI_SIT_ATTACK_LEFT;
+						morningstar->state = 0;
+						morningstar->Render(xcam, ycam, x, y);
 					}
-					else ani = SIMON_ANI_SIT_ATTACK_RIGHT;
+					else {
+						ani = SIMON_ANI_SIT_ATTACK_RIGHT;
+						morningstar->state = 1;
+						morningstar->Render(xcam, ycam, x, y);
+					}
 				}
 				if (level == 0) {
 					if (nx < 0) {
 						ani = SIMON_ANI_ATTACK_LEFT;
+						morningstar->state = 2;
+						morningstar->Render(xcam, ycam, x, y);
 					}
-					else ani = SIMON_ANI_ATTACK_RIGHT;
+					else {
+						ani = SIMON_ANI_ATTACK_RIGHT;
+						morningstar->state = 3;
+						morningstar->Render(xcam, ycam, x, y);
+					}
 				}	
-				
-				morningstar->Render(xcam, ycam,x,y);
 	}
 	else{		
 		if (vx == 0){
@@ -120,7 +130,6 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	int alpha = 255;
 	animations[ani]->Render(x - xcam, y - ycam, alpha);
 	RenderBoundingBox(xcam, ycam);
-	//morningstar->Render(this->GetX, this->GetY);
 }
 
 void CSimon::SetState(int state)

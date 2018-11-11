@@ -38,7 +38,7 @@ CGameObject::GetBoundingBox
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(255,255,255)
 
 
 #define MAX_FRAME_RATE 100
@@ -307,7 +307,7 @@ void LoadResources()
 	background = new CBackGround();
 	background->AddAnimation(602);
 	background->SetPosition(0, 40);
-	objects.push_back(background);
+	//objects.push_back(background);
 	
 
 	headerbar = new CHeaderBar(game->GetDirect3DDevice());

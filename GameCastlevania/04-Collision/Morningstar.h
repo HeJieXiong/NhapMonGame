@@ -16,6 +16,7 @@ public:
 	CMorningstar();
 	~CMorningstar();
 	static CMorningstar * GetInstance();
+	int state;
 	void LoadResource();
 	virtual void SetType(int type);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
