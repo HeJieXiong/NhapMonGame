@@ -55,7 +55,7 @@ CGame *game;
 CSimon *Simon;
 CBackGround *background;
 CFire *fire;
-CMorningstar  *morningstar;
+//CMorningstar  *morningstar;
 CHeaderBar *headerbar;
 CHeaderBar *health;
 CHeaderBar *enemy;
@@ -85,7 +85,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetSpeed(0, 0);
 		break;
 	case DIK_Z:
-		Simon->Attack(morningstar,Simon->x,Simon->y);
+		Simon->Attack(Simon->x,Simon->y);
 		break;
 	}
 }
@@ -192,24 +192,6 @@ void LoadResources()
 	LPDIRECT3DTEXTURE9 textFire = textures->Get(ID_TEX_FIRE);
 	sprites->Add(4001, 0, 0, 17, 31, textFire);
 	sprites->Add(4002, 27, 0, 44, 31, textFire);
-
-	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
-	/*int top_morningstar = 0;
-	int bottom_morningstar = 34;
-	int id_morningstar = 50001;
-	for (int i = 0; i < 3; i++) {
-		int left = 50;
-		int right = 100;
-		for (int j = 0; j < 5; j++) {
-			sprites->Add(id_morningstar, left, top_morningstar, right, bottom_morningstar, textmorningstar);
-			id_morningstar++;
-			left += 50;
-			right += 50;
-		}
-	}*/
-	sprites->Add(5001, 52, 5, 67, 25, textmorningstar);
-	sprites->Add(5002, 80, 5, 130, 25, textmorningstar);
-	sprites->Add(5003, 150, 5, 160, 25, textmorningstar);
 	LPANIMATION ani;
 
 	ani = new CAnimation(100);	// idle big right
