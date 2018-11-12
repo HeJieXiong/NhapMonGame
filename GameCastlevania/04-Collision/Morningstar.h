@@ -17,6 +17,7 @@ public:
 	~CMorningstar();
 	static CMorningstar * GetInstance();
 	int state;
+	void Update_colison(vector<LPGAMEOBJECT> *coObjects);
 	virtual void SetType(int type);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

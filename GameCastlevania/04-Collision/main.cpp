@@ -59,6 +59,7 @@ CHeaderBar *headerbar;
 CHeaderBar *health;
 CHeaderBar *enemy;
 vector<LPGAMEOBJECT> objects;
+vector<LPGAMEOBJECT> objects_morningstar;
 
 class CSampleKeyHander : public CKeyEventHandler
 {
@@ -328,6 +329,7 @@ void LoadResources()
 		fire->SetPosition(i*130+88, 150);
 		fire->tag = 0;
 		objects.push_back(fire);
+		objects_morningstar.push_back(fire);
 	}
 
 	for (int i = 0; i < 15; i++) { //healthbar
@@ -385,12 +387,18 @@ void Update(DWORD dt)
 	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
+	vector<LPGAMEOBJECT> coObjects_morningstar;
 	for (int i = 1; i < objects.size(); i++)
 	{
 		if(objects[i]->tag==1)
 		coObjects.push_back(objects[i]);
 	}
-
+	for (int i = 0; i < objects_morningstar.size(); i++)
+	{
+		if (objects[i]->tag == 1)
+			coObjects_morningstar.push_back(objects_morningstar[i]);
+	}
+	morningstar->Update_colison(&coObjects_morningstar);
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);

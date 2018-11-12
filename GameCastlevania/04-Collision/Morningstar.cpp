@@ -8,7 +8,7 @@ CMorningstar::CMorningstar() {
 }
 
 CMorningstar::~CMorningstar() {
-
+	
 }
 
 CMorningstar * CMorningstar::_instance = NULL;
@@ -19,6 +19,22 @@ CMorningstar *CMorningstar::GetInstance()
 	return _instance;
 }
 
+void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
+	float top = y;
+	float left = x;
+	float bottom = y + MORNINGSTAR_BOX_HEIGHT;
+	float right = x + MORNINGSTAR_BOX_WIDTH;
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		coObjects->at(i);
+		float top_co;
+		float left_co;
+		float bottom_co;
+		float right_co;
+		coObjects->at(i)->GetBoundingBox(left_co, top, right_co, bottom_co);
+		coObjects->at(i)->y = 100;
+	}
+}
 void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
 	left = x;
 	top = y;
