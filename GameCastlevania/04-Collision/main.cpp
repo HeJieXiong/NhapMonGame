@@ -47,19 +47,17 @@ CGameObject::GetBoundingBox
 #define ID_TEX_MISC 10
 #define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
-
+#define ID_TEX_MORNINGSTAR 40
 #define ID_TEX_HEADERBAR 50
 
 CGame *game;
-
+CMorningstar *morningstar;
 CSimon *Simon;
 CBackGround *background;
 CFire *fire;
-//CMorningstar  *morningstar;
 CHeaderBar *headerbar;
 CHeaderBar *health;
 CHeaderBar *enemy;
-
 vector<LPGAMEOBJECT> objects;
 
 class CSampleKeyHander : public CKeyEventHandler
@@ -151,7 +149,7 @@ void LoadResources()
 	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
-	
+	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png",D3DCOLOR_XRGB(255,255,255));
 
 
@@ -166,6 +164,15 @@ void LoadResources()
 	sprites->Add(8002, 50, 0, 54, 8, texHeaderBar); //health
 	sprites->Add(8003, 61, 0, 65, 8, texHeaderBar); //enemy
 
+	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
+
+	sprites->Add(5001, 4, 6, 68, 38, textmorningstar);//NORMAL ATTACK LEFT
+	sprites->Add(5002, 88, 6, 151, 38, textmorningstar);
+	sprites->Add(5003, 175, 6, 239, 38, textmorningstar);
+
+	sprites->Add(5004, 431, 6, 495, 38, textmorningstar);//NORMAL ATTACK RIGHT
+	sprites->Add(5005, 348, 6, 411, 38, textmorningstar);
+	sprites->Add(5006, 260, 6, 324, 38, textmorningstar);
 
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 
@@ -285,6 +292,23 @@ void LoadResources()
 	ani->Add(8003);
 	animations->Add(803, ani);
 
+	ani = new CAnimation(100); //NORMAL ATTACK LEFT
+	ani->Add(5001);
+	ani->Add(5002);
+	ani->Add(5003);
+	animations->Add(701, ani);
+	
+
+	ani = new CAnimation(101); //NORMAL ATTACK RIGHT
+	ani->Add(5004);
+	ani->Add(5005);
+	ani->Add(5006);
+	animations->Add(702, ani);
+	
+
+	morningstar = new CMorningstar();
+	morningstar->AddAnimation(701);
+	morningstar->AddAnimation(702);
 
 	background = new CBackGround();
 	background->AddAnimation(602);
@@ -320,7 +344,7 @@ void LoadResources()
 		objects.push_back(enemy);
 	}
 
-	Simon = new CSimon();
+	Simon = new CSimon(morningstar);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
 	Simon->AddAnimation(402);		// idle right small

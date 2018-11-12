@@ -11,7 +11,6 @@ private:
 	ID3DXFont * font1;
 	RECT fRectangle1;
 	std::string message1;
-	//LPDIRECT3DDEVICE9 d3ddv;
 	HRESULT hr1;
 public:
 	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);

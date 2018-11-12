@@ -52,10 +52,10 @@ class CSimon : public CGameObject
 	DWORD attack_start;
 	CMorningstar *morningstar;
 public: 
-	CSimon() : CGameObject()
+	CSimon(CMorningstar *a) : CGameObject()
 	{
+		morningstar = a;
 		untouchable = 0;
-		morningstar = CMorningstar::GetInstance();
 	}
 	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
