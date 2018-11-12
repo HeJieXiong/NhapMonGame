@@ -327,7 +327,7 @@ void LoadResources()
 		fire = new CFire();
 		fire->AddAnimation(603);
 		fire->SetPosition(i*130+88, 150);
-		fire->tag = 0;
+		fire->tag = 1;
 		objects.push_back(fire);
 		objects_morningstar.push_back(fire);
 	}
@@ -395,7 +395,6 @@ void Update(DWORD dt)
 	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
-		if (objects[i]->tag == 1)
 			coObjects_morningstar.push_back(objects_morningstar[i]);
 	}
 	morningstar->Update_colison(&coObjects_morningstar);

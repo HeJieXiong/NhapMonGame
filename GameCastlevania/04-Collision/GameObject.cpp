@@ -130,7 +130,7 @@ void CGameObject::RenderBoundingBox(float &xcam, float &ycam)
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
 
-	CGame::GetInstance()->Draw(x-xcam,y-ycam, bbox, rect.left, rect.top, rect.right, rect.bottom, 32);
+	CGame::GetInstance()->Draw(x-xcam,y-ycam, bbox, rect.left, rect.top, rect.right, rect.bottom, 255);
 }
 
 void CGameObject::RenderBoundingBox_MoringStar(float &xcam, float &ycam)
