@@ -321,7 +321,7 @@ void LoadResources()
 	headerbar->AddAnimation(801);
 	headerbar->tag = 3;
 	headerbar->SetPosition(200, 15);
-	/*objects.push_back(headerbar);*/
+	objects.push_back(headerbar);
 
 	for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
@@ -433,7 +433,7 @@ void Render()
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar();
+		headerbar->DrawHeaderbar(Simon->x, morningstar->x);
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

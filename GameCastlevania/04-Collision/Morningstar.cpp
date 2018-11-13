@@ -46,32 +46,36 @@ void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &
 void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	if (state == 0) {
-		x = x_simon - xcam - 22;
-		y = y_simon - ycam + 15;
+		x = x_simon-22;
+		y = y_simon+15;
 		int ani = 0;
-		animations[ani]->Render(x_simon - xcam - 26, y_simon - ycam + 5);
-		RenderBoundingBox_MoringStar(x, y);
+		animations[ani]->Render(x_simon-xcam, y_simon);
+		//RenderBoundingBox_MoringStar(x, y);
+		RenderBoundingBox_MoringStar(xcam, ycam);
 	}
 	if (state == 1) {
-		x = x_simon - xcam;
-		y = y_simon - ycam + 15;
+		x = x_simon;
+		y = y_simon+15;
 		int ani = 1;
-		animations[ani]->Render(x_simon - xcam - 8, y_simon - ycam + 5);
-		RenderBoundingBox_MoringStar(x, y);
+		animations[ani]->Render(x_simon - xcam, y_simon);
+		//RenderBoundingBox_MoringStar(x, y);
+		RenderBoundingBox_MoringStar(xcam,ycam);
 	}
 	if (state == 2) {
 		int ani = 0;
-		x = x_simon - xcam - 22;
-		y = y_simon - ycam + 10;
-		animations[ani]->Render(x_simon - xcam - 26, y_simon - ycam);
-		RenderBoundingBox_MoringStar(x, y);
+		x = x_simon-22;
+		y = y_simon+10;
+		animations[ani]->Render(x_simon - xcam, y_simon );
+		//RenderBoundingBox_MoringStar(x, y);
+		RenderBoundingBox_MoringStar(xcam, ycam);
 	}
 	if (state == 3) {
-		x = x_simon - xcam;
-		y = y_simon - ycam + 10;
+		x = x_simon;
+		y = y_simon+10;
 		int ani = 1;
-		animations[ani]->Render(x_simon - xcam - 8, y_simon - ycam);
-		RenderBoundingBox_MoringStar(x, y);
+		animations[ani]->Render(x - xcam, y);
+		//RenderBoundingBox_MoringStar(x, y);
+		RenderBoundingBox_MoringStar(xcam, ycam);
 	}
 	
 }

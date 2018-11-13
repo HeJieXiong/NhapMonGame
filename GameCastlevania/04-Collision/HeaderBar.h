@@ -11,10 +11,11 @@ private:
 	ID3DXFont * font1;
 	RECT fRectangle1;
 	std::string message1;
+	std::string message2;
 	HRESULT hr1;
 public:
 	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void DrawHeaderbar();
+	void DrawHeaderbar(float &x,float &y);
 };
