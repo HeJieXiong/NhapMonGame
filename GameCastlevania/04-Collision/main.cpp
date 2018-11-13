@@ -327,7 +327,7 @@ void LoadResources()
 		fire = new CFire();
 		fire->AddAnimation(603);
 		fire->SetPosition(i*130+88, 150);
-		fire->tag = 1;
+		fire->tag = 0;
 		objects.push_back(fire);
 		objects_morningstar.push_back(fire);
 	}
@@ -433,7 +433,7 @@ void Render()
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar(Simon->x, morningstar->x);
+		headerbar->DrawHeaderbar(Simon->y, morningstar->y);
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}
