@@ -270,13 +270,68 @@ void LoadResources()
 	
 	
 	//ITEM-START
-	//LPDIRECT3DTEXTURE9 textItem = textures->Get(ID_ITEM);
-	//sprites->Add(9000, 43, 43, 61, 59, textItem);
-	//ani = new CAnimation(100);
-	//ani->Add(9000);
-	//animations->Add(900, ani);
-	//item = new CItem();
-	//item->AddAnimation(900);
+	LPDIRECT3DTEXTURE9 textItem = textures->Get(ID_ITEM);
+	sprites->Add(9000, 43, 43, 61, 59, textItem);//WHIP UPGRAGDE
+	sprites->Add(9001, 125, 39, 134, 47, textItem);//HEART
+	sprites->Add(9002, 124, 59, 136, 69, textItem);//HEART BIG
+	sprites->Add(9003, 176, 40, 194, 49, textItem);//KNIFE
+	sprites->Add(9004, 225, 40, 240, 53, textItem);//AXE_1
+	sprites->Add(9005, 225, 62, 240, 77, textItem);//AXE_2
+	sprites->Add(9006, 225, 89, 240, 103, textItem);//AXE_3
+	sprites->Add(9007, 225, 113, 240, 127, textItem);//AXE_4
+	sprites->Add(9008, 264, 39, 280, 53, textItem);//BOOMERANG_1
+	sprites->Add(9009, 290, 39, 305, 53, textItem);//BOOMERANG_2
+	sprites->Add(9010, 316, 39, 330, 53, textItem);//BOOMERANG_3
+	sprites->Add(9011, 379, 43, 392, 58, textItem);//BAG_100
+	sprites->Add(9012, 379, 68, 392, 83, textItem);//BAG_400
+	sprites->Add(9013, 379, 92, 392, 107, textItem);//BAG_700
+	ani = new CAnimation(100); //WHIP UPGRADE
+	ani->Add(9000);
+	animations->Add(900, ani);
+
+	ani = new CAnimation(100); //HEART
+	ani->Add(9001);
+	animations->Add(901, ani);
+
+	ani = new CAnimation(100); //HEART BIG
+	ani->Add(9002);
+	animations->Add(902, ani);
+
+	ani = new CAnimation(100); //HEART BIG
+	ani->Add(9003);
+	animations->Add(903, ani);
+
+	ani = new CAnimation(100); //AXE
+	ani->Add(9004);
+	ani->Add(9005);
+	ani->Add(9006);
+	ani->Add(9007);
+	animations->Add(904, ani);
+
+	ani = new CAnimation(100); //BOOMERANG
+	ani->Add(9010);
+	ani->Add(9009);
+	ani->Add(9008);
+	animations->Add(905, ani);
+
+	ani = new CAnimation(100); //BAG_100
+	ani->Add(9011);
+	animations->Add(906, ani);
+
+	ani = new CAnimation(100); //BAG_400
+	ani->Add(9012);
+	animations->Add(907, ani);
+
+	ani = new CAnimation(100); //BAG_700
+	ani->Add(9013);
+	animations->Add(908, ani);
+
+	for (int i = 0; i < 9; i++) {
+		item = new CItem();
+		item->AddAnimation(900 + i);
+		item->SetPosition(100+i*30, 100);
+		objects.push_back(item);
+	}
 	//ITEM-END
 
 	//SIMON-START
