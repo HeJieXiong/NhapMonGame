@@ -1,10 +1,12 @@
 #include "Morningstar.h"
 #include "Textures.h"
 #include "Sprites.h"
+#include <chrono>
+#include <thread>
 
 
 CMorningstar::CMorningstar() {
-	type_morningstar = MORNINGSTAR_NORMAL;
+//	type_morningstar = MORNINGSTAR_NORMAL;
 }
 
 CMorningstar::~CMorningstar() {
@@ -34,7 +36,7 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 		coObjects->at(i)->GetBoundingBox(left_co, top_co, right_co, bottom_co);
 		if (bottom > top_co) {
 			if ((right > left_co&&right < right_co) || (left > left_co&&left < right_co) || (left < left_co) && (right > right_co))
-				coObjects->at(i)->y = 100;
+				coObjects->at(i)->y = 9999;
 		}
 	}
 }
@@ -51,6 +53,7 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 		x = x_simon-25;
 		y = y_simon+15;
 		int ani = 0;
+		
 		animations[ani]->Render(x-xcam-2, y-ycam-10);
 		//RenderBoundingBox_MoringStar(x, y);
 		RenderBoundingBox_MoringStar(xcam, ycam);

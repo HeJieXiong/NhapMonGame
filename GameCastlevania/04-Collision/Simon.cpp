@@ -5,6 +5,8 @@
 #include "Game.h"
 #include "Morningstar.h"
 #include "Fire.h"
+
+
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
@@ -185,7 +187,8 @@ void CSimon::Attack(float &x_cam, float &y_cam) {
 		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
-		animations[MORNINGSTAR_NORMAL]->Reset();
+		animations[MORNINGSTAR_NORMAL_LEFT]->Reset();
+		animations[MORNINGSTAR_NORMAL_RIGHT]->Reset();
 	}
 	
 }

@@ -1,0 +1,34 @@
+#include "Item.h"
+
+void CItem::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
+	left = x;
+	top = y;
+	right = x ;
+	bottom = y;
+}
+
+void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
+{
+	CGameObject::Update(dt, coObjects);
+}
+
+void CItem::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
+{
+	int ani = 0;
+	animations[ani]->Render(x - xcam, y - ycam);
+	RenderBoundingBox(xcam, ycam);
+}
+
+void CItem::SetState(int state)
+{
+	CGameObject::SetState(state);
+	//switch (state)
+	//{
+	//case FIRE_STATE:
+	//	x += 100;
+	//	y = 100;
+	//	vx = 0;
+	//	vy = 0;
+	//	break;
+	//}
+}

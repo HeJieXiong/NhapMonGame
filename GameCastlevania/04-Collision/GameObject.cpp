@@ -146,7 +146,6 @@ void CGameObject::RenderBoundingBox_MoringStar(float &xcam, float &ycam)
 	rect.top = 0;
 	rect.right = (int)r - (int)l;
 	rect.bottom = (int)b - (int)t;
-
 	CGame::GetInstance()->Draw_MorningStar(x-xcam, y-ycam, bbox, rect.left, rect.top, rect.right, rect.bottom, 100);
 }
 
