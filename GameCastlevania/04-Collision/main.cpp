@@ -326,12 +326,10 @@ void LoadResources()
 	ani->Add(9013);
 	animations->Add(908, ani);
 
-	for (int i = 0; i < 9; i++) {
-		item = new CItem();
-		item->AddAnimation(900 + i);
-		item->SetPosition(100+i*30, 100);
-		objects.push_back(item);
-	}
+	//item = new CItem();
+	//item->AddAnimation(901);
+	//item->SetPosition(130, 100);
+	//objects.push_back(item);
 	//ITEM-END
 
 	//SIMON-START

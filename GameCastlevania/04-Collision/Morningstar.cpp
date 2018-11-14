@@ -26,29 +26,42 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 	float left = x;
 	float bottom = y + MORNINGSTAR_BOX_HEIGHT;
 	float right = x + MORNINGSTAR_BOX_WIDTH;
-	for (UINT i = 0; i < coObjects->size(); i++)
-	{
-		coObjects->at(i);
-		float top_co;
-		float left_co;
-		float bottom_co;
-		float right_co;
-		coObjects->at(i)->GetBoundingBox(left_co, top_co, right_co, bottom_co);
-		if (bottom > top_co) {
-			if ((right > left_co&&right < right_co) || (left > left_co&&left < right_co) || (left < left_co) && (right > right_co))
-				coObjects->at(i)->SetState(100);
+	if (GetTickCount() - attack_start > MORNINGSTAR_ATTACK_TIME) {
+		attack_time +=1;
+	}
+	if (attack_time > 15) {
+		for (UINT i = 0; i < coObjects->size(); i++)
+		{
+			coObjects->at(i);
+			float top_co;
+			float left_co;
+			float bottom_co;
+			float right_co;
+			coObjects->at(i)->GetBoundingBox(left_co, top_co, right_co, bottom_co);
+			if (bottom > top_co) {
+				if ((right > left_co&&right < right_co) || (left > left_co&&left < right_co) || (left < left_co) && (right > right_co))
+					coObjects->at(i)->SetState(100);
+			}
 		}
+		attack_time = 0;
 	}
 }
 void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
-	left = x;
-	top = y;
-	right = x + MORNINGSTAR_BOX_WIDTH;
-	bottom = y + MORNINGSTAR_BOX_HEIGHT;
+	//if (GetTickCount() - attack_start > MORNINGSTAR_ATTACK_TIME) {
+	//	attack_time += dt;
+	//}
+	//if(attack_time> 200*dt) {
+		left = x;
+		top = y;
+		right = x + MORNINGSTAR_BOX_WIDTH;
+		bottom = y + MORNINGSTAR_BOX_HEIGHT;
+		attack_time = 0;
+	//}
 }
 
 void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
+	float check = 0;
 	if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
 		x = x_simon-25;
 		y = y_simon+15;

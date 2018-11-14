@@ -25,7 +25,13 @@ void CFire::SetState(int state)
 	switch (state)
 	{
 	case FIRE_STATE:
-		x = 9999;
+		y = 100;
+		float a = 200;	
+		CItem *Item;
+		Item = new CItem();
+		Item->AddAnimation(901);
+		Item->AddAnimation(902);
+		Item->Render(x, y, a, a);
 		break;
 	}
 }

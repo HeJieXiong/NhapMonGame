@@ -12,11 +12,12 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt, coObjects);
 }
 
-void CItem::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
+void CItem::Render(float &xcam, float &ycam, float &x_, float &y_)
 {
-	int ani = 0;
-	animations[ani]->Render(x - xcam, y - ycam);
-	RenderBoundingBox(xcam, ycam);
+	int ani = 1;
+	float a = 50;
+	animations[ani]->Render(a,a);
+	//RenderBoundingBox(xcam, ycam);
 }
 
 void CItem::SetState(int state)

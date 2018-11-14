@@ -7,12 +7,14 @@
 #define MORNINGSTAR_TYPE_LONG	3
 #define MORNINGSTAR_BOX_WIDTH	46
 #define MORNINGSTAR_BOX_HEIGHT	8
-
+#define MORNINGSTAR_ATTACK_TIME 60
 
 class CMorningstar : public CGameObject {
 private:
 	static CMorningstar * _instance;	
 	int type_morningstar;
+	DWORD attack_start;
+	int attack_time = 0;
 public:
 	CMorningstar();
 	~CMorningstar();
