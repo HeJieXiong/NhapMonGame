@@ -180,15 +180,15 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	bottom = y + SIMON_BIG_BBOX_HEIGHT;
 }
 
-void CSimon::Attack(float &x_cam, float &y_cam) {
+void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 	if (!attacking) {
 		attacking = 1;
 		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
-		animations[MORNINGSTAR_NORMAL_LEFT]->Reset();
-		animations[MORNINGSTAR_NORMAL_RIGHT]->Reset();
+		morningstar->animations[MORNINGSTAR_NORMAL_LEFT]->Reset();
+		morningstar->animations[MORNINGSTAR_NORMAL_RIGHT]->Reset();
 	}
 	
 }

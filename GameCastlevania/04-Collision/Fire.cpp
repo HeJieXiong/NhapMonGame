@@ -25,10 +25,7 @@ void CFire::SetState(int state)
 	switch (state)
 	{
 	case FIRE_STATE:
-		x += 100;
-		y = 100;
-		vx = 0;
-		vy = 0;
+		x = 9999;
 		break;
 	}
 }

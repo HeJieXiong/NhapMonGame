@@ -38,7 +38,7 @@
 #define SIMON_BIG_BBOX_HEIGHT 30
 
 #define SIMON_UNTOUCHABLE_TIME 1000
-#define SIMON_ATTACK_TIME 2000
+#define SIMON_ATTACK_TIME 300
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 240
 
@@ -63,7 +63,7 @@ public:
 	void SetState(int state);
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
-	void Attack(float &x_cam, float &y_cam);
+	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 
 };

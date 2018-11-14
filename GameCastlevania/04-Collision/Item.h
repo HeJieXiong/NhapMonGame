@@ -1,9 +1,7 @@
 #pragma once
 #include "GameObject.h"
-//#define FIRE_STATE 100
-//#define FIRE_ANI 0
-//#define FIRE_BOX_WIDTH 17
-//#define FIRE_BOX_HEIGHT 31
+#define ITEM_HEART 1
+#define ITEM_HEART_BIG 2
 class CItem : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

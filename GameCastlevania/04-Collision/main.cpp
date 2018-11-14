@@ -87,7 +87,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetSpeed(0, 0);
 		break;
 	case DIK_Z:
-		Simon->Attack(Simon->x,Simon->y);
+		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	}
 }
