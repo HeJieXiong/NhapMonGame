@@ -60,10 +60,10 @@ CFire		*fire;
 CHeaderBar	*headerbar;
 CHeaderBar	*health;
 CHeaderBar	*enemy;
-CItem		*item;
+
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
-
+vector<LPGAMEOBJECT> obejects_item;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -159,7 +159,69 @@ void LoadResources()
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
+	//ITEM-START
+	LPDIRECT3DTEXTURE9 textItem = textures->Get(ID_ITEM);
+	sprites->Add(9000, 43, 43, 61, 59, textItem);//WHIP UPGRAGDE
+	sprites->Add(9001, 125, 39, 134, 47, textItem);//HEART
+	sprites->Add(9002, 124, 59, 136, 69, textItem);//HEART BIG
+	sprites->Add(9003, 176, 40, 194, 49, textItem);//KNIFE
+	sprites->Add(9004, 225, 40, 240, 53, textItem);//AXE_1
+	sprites->Add(9005, 225, 62, 240, 77, textItem);//AXE_2
+	sprites->Add(9006, 225, 89, 240, 103, textItem);//AXE_3
+	sprites->Add(9007, 225, 113, 240, 127, textItem);//AXE_4
+	sprites->Add(9008, 264, 39, 280, 53, textItem);//BOOMERANG_1
+	sprites->Add(9009, 290, 39, 305, 53, textItem);//BOOMERANG_2
+	sprites->Add(9010, 316, 39, 330, 53, textItem);//BOOMERANG_3
+	sprites->Add(9011, 379, 43, 392, 58, textItem);//BAG_100
+	sprites->Add(9012, 379, 68, 392, 83, textItem);//BAG_400
+	sprites->Add(9013, 379, 92, 392, 107, textItem);//BAG_700
+	ani = new CAnimation(100); //WHIP UPGRADE
+	ani->Add(9000);
+	animations->Add(900, ani);
+	ani = new CAnimation(100); //HEART
+	ani->Add(9001);
+	animations->Add(901, ani);
 
+	ani = new CAnimation(100); //HEART BIG
+	ani->Add(9002);
+	animations->Add(902, ani);
+	ani = new CAnimation(100); //HEART BIG
+	ani->Add(9003);
+	animations->Add(903, ani);
+	ani = new CAnimation(100); //AXE
+	ani->Add(9004);
+	ani->Add(9005);
+	ani->Add(9006);
+	ani->Add(9007);
+	animations->Add(904, ani);
+	ani = new CAnimation(100); //BOOMERANG
+	ani->Add(9010);
+	ani->Add(9009);
+	ani->Add(9008);
+	animations->Add(905, ani);
+	ani = new CAnimation(100); //BAG_100
+	ani->Add(9011);
+	animations->Add(906, ani);
+	ani = new CAnimation(100); //BAG_400
+	ani->Add(9012);
+	animations->Add(907, ani);
+	ani = new CAnimation(100); //BAG_700
+	ani->Add(9013);
+	animations->Add(908, ani);
+
+	
+
+	/*item = new CItem();
+	item->AddAnimation(902);
+	item->tag = 0;
+	item->SetPosition(220, 165);
+	objects.push_back(item);
+	obejects_item.push_back(item);*/
+	
+	//ITEM-END
+
+
+	//ITEM-END
 	//MORNING-STAR-START
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
 	sprites->Add(5001, 4, 6, 68, 38, textmorningstar);//NORMAL ATTACK LEFT
@@ -269,68 +331,7 @@ void LoadResources()
 	
 	
 	
-	//ITEM-START
-	LPDIRECT3DTEXTURE9 textItem = textures->Get(ID_ITEM);
-	sprites->Add(9000, 43, 43, 61, 59, textItem);//WHIP UPGRAGDE
-	sprites->Add(9001, 125, 39, 134, 47, textItem);//HEART
-	sprites->Add(9002, 124, 59, 136, 69, textItem);//HEART BIG
-	sprites->Add(9003, 176, 40, 194, 49, textItem);//KNIFE
-	sprites->Add(9004, 225, 40, 240, 53, textItem);//AXE_1
-	sprites->Add(9005, 225, 62, 240, 77, textItem);//AXE_2
-	sprites->Add(9006, 225, 89, 240, 103, textItem);//AXE_3
-	sprites->Add(9007, 225, 113, 240, 127, textItem);//AXE_4
-	sprites->Add(9008, 264, 39, 280, 53, textItem);//BOOMERANG_1
-	sprites->Add(9009, 290, 39, 305, 53, textItem);//BOOMERANG_2
-	sprites->Add(9010, 316, 39, 330, 53, textItem);//BOOMERANG_3
-	sprites->Add(9011, 379, 43, 392, 58, textItem);//BAG_100
-	sprites->Add(9012, 379, 68, 392, 83, textItem);//BAG_400
-	sprites->Add(9013, 379, 92, 392, 107, textItem);//BAG_700
-	ani = new CAnimation(100); //WHIP UPGRADE
-	ani->Add(9000);
-	animations->Add(900, ani);
 
-	ani = new CAnimation(100); //HEART
-	ani->Add(9001);
-	animations->Add(901, ani);
-
-	ani = new CAnimation(100); //HEART BIG
-	ani->Add(9002);
-	animations->Add(902, ani);
-
-	ani = new CAnimation(100); //HEART BIG
-	ani->Add(9003);
-	animations->Add(903, ani);
-
-	ani = new CAnimation(100); //AXE
-	ani->Add(9004);
-	ani->Add(9005);
-	ani->Add(9006);
-	ani->Add(9007);
-	animations->Add(904, ani);
-
-	ani = new CAnimation(100); //BOOMERANG
-	ani->Add(9010);
-	ani->Add(9009);
-	ani->Add(9008);
-	animations->Add(905, ani);
-
-	ani = new CAnimation(100); //BAG_100
-	ani->Add(9011);
-	animations->Add(906, ani);
-
-	ani = new CAnimation(100); //BAG_400
-	ani->Add(9012);
-	animations->Add(907, ani);
-
-	ani = new CAnimation(100); //BAG_700
-	ani->Add(9013);
-	animations->Add(908, ani);
-
-	//item = new CItem();
-	//item->AddAnimation(901);
-	//item->SetPosition(130, 100);
-	//objects.push_back(item);
-	//ITEM-END
 
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
@@ -442,6 +443,7 @@ void Update(DWORD dt)
 	// TO-DO: This is a "dirty" way, need a more organized way 
 	vector<LPGAMEOBJECT> coObjects;
 	vector<LPGAMEOBJECT> coObjects_morningstar;
+	vector<LPGAMEOBJECT> coObjects_item;
 	for (int i = 1; i < objects.size(); i++)
 	{
 		if(objects[i]->tag==1)
@@ -450,11 +452,24 @@ void Update(DWORD dt)
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 			coObjects_morningstar.push_back(objects_morningstar[i]);
+			if (objects_morningstar[i]->state == 100) {				
+						CItem		*item;
+						item = new CItem();
+						int rand_no;
+						rand_no = rand() % 5 + 900;
+						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y,rand_no);
+						objects.push_back(item);
+						obejects_item.push_back(item);
+				}
 	}
 	morningstar->Update_colison(&coObjects_morningstar);
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+	}
+	for (int i = 0; i < obejects_item.size(); i++)
+	{
+		obejects_item[i]->Update(dt, &coObjects_item);
 	}
 	
 }

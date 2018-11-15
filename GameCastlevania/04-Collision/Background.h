@@ -1,6 +1,5 @@
 #pragma once
 #include "GameObject.h"
-#include "Camera.h"
 #define BACK_GROUND_STATE 100
 #define BACK_GROUND_ANI 0
 #define BACK_GROUND_BBOX_WIDTH  400

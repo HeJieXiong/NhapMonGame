@@ -1,4 +1,6 @@
 #include "Item.h"
+#include <cstdlib> 
+#include <ctime> 
 
 void CItem::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
 	left = x;
@@ -14,10 +16,22 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CItem::Render(float &xcam, float &ycam, float &x_, float &y_)
 {
-	int ani = 1;
-	float a = 50;
-	animations[ani]->Render(a,a);
-	//RenderBoundingBox(xcam, ycam);
+	int ani = 0;
+	animations[ani]->Render(x - xcam, y - ycam);
+	RenderBoundingBox(xcam, ycam);
+
+}
+
+void CItem::Item_setting(CItem * Item, float & x, float & y,int ani)
+{
+
+		
+		Item->x = x;
+		Item->y = y;
+		Item->AddAnimation(ani);
+		Item->check = 0;
+	
+	
 }
 
 void CItem::SetState(int state)

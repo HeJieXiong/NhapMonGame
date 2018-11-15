@@ -2,15 +2,14 @@
 #include <d3dx9.h>
 #include <string.h>
 #include "Sprites.h"
-
+#include "Textures.h"
+#define TILE_WIDTH = 60;
+#define TILE_HEIGHT = 60;
+#define SCREEN_WIDTH 400
+#define SCREEN_HEIGHT 240
 class TileMap {
 private:
-	int **matrix;
-	int columns;
-	int rows;
-	int tileWidth, tileHeight;
-
-	CSprite * tileSet;
+	
 
 public:
 	TileMap();
@@ -18,5 +17,6 @@ public:
 	~TileMap();
 	void InitTileSet(CSprite * _tileSet);
 	void LoadMatrixMap(LPCSTR fileSource);
+	void LoadRescoure();
 	void Draw(float &xcam, float &ycam);
 };

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #define ITEM_HEART 0
 #define ITEM_HEART_BIG 1
+#define ITEM_GRAVITY 0,002f
 class CItem : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
@@ -12,4 +13,6 @@ class CItem : public CGameObject
 public:
 	virtual void SetState(int state);
 	virtual void Render(float &xcam, float &ycam, float &x_, float &y_);
+	void Item_setting(CItem *Item, float &x, float &y, int ani);
+	int check;
 };
