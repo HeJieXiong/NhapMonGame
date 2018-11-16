@@ -64,6 +64,7 @@ CHeaderBar	*enemy;
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
 vector<LPGAMEOBJECT> obejects_item;
+float vy = 0;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -84,7 +85,6 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_A: // reset
 		Simon->SetState(SIMON_STATE_IDLE);
 		Simon->SetPosition(50.0f, 0.0f);
-		Simon->SetSpeed(0, 0);
 		break;
 	case DIK_Z:
 		Simon->Attack(morningstar,Simon->x,Simon->y);
@@ -452,25 +452,32 @@ void Update(DWORD dt)
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 			coObjects_morningstar.push_back(objects_morningstar[i]);
-			if (objects_morningstar[i]->state == 100) {				
+			if (objects_morningstar[i]->state == 100 && objects_morningstar[i]->tag==0) {				
 						CItem		*item;
 						item = new CItem();
 						int rand_no;
 						rand_no = rand() % 5 + 900;
-						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y,rand_no);
+						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y,rand_no);		
+						vy = item->vy;
 						objects.push_back(item);
 						obejects_item.push_back(item);
+						objects_morningstar[i]->tag = 4;
 				}
 	}
 	morningstar->Update_colison(&coObjects_morningstar);
-	for (int i = 0; i < objects.size(); i++)
-	{
-		objects[i]->Update(dt, &coObjects);
-	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
 		obejects_item[i]->Update(dt, &coObjects_item);
 	}
+	for (int i = 0; i < objects.size(); i++)
+	{
+		objects[i]->Update(dt, &coObjects);
+	}
+	for (int i = 1; i < obejects_item.size(); i++)
+	{
+		coObjects_item.push_back(obejects_item[i]);
+	}
+
 	
 }
 
@@ -502,7 +509,7 @@ void Render()
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar(Simon->y, morningstar->y);
+		headerbar->DrawHeaderbar(vy, morningstar->y);
 		spriteHandler->End();
 		d3ddv->EndScene();
 	}

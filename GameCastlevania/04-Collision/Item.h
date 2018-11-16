@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #define ITEM_HEART 0
 #define ITEM_HEART_BIG 1
-#define ITEM_GRAVITY 0,002f
+#define ITEM_GRAVITY 0.0002f
 class CItem : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

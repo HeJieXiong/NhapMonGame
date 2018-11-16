@@ -12,6 +12,8 @@ void CItem::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt, coObjects);
+	vy += ITEM_GRAVITY * dt;
+	y += dy;
 }
 
 void CItem::Render(float &xcam, float &ycam, float &x_, float &y_)
@@ -30,7 +32,8 @@ void CItem::Item_setting(CItem * Item, float & x, float & y,int ani)
 		Item->y = y;
 		Item->AddAnimation(ani);
 		Item->check = 0;
-	
+		/*Item->vy += 500;
+		Item->vx += 400;*/
 	
 }
 
