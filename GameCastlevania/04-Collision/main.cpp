@@ -271,6 +271,7 @@ void LoadResources()
 		brick->SetPosition(0 + i * 16.0f, 180);
 		brick->tag = 1;
 		objects.push_back(brick);
+		obejects_item.push_back(brick);
 	}
 	//BRICK-END
 
@@ -448,6 +449,11 @@ void Update(DWORD dt)
 	{
 		if(objects[i]->tag==1)
 		coObjects.push_back(objects[i]);
+	}
+	for (int i = 1; i < obejects_item.size(); i++)
+	{
+		if (obejects_item[i]->tag == 1|| obejects_item[i]->tag == 4)
+			coObjects_item.push_back(obejects_item[i]);
 	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{

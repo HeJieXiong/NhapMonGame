@@ -3,7 +3,7 @@
 void CBrick::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	animations[0]->Render(x-xcam, y-ycam);
-	//RenderBoundingBox();
+	RenderBoundingBox(xcam,ycam);
 }
 
 void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
