@@ -68,10 +68,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];	
-		if (dynamic_cast<CFire *> (e->obj)){
-			CFire *fire = dynamic_cast<CFire *> (e->obj);
-			
-		}
+	
 	}
 
 	// clean up collision events

@@ -16,6 +16,11 @@ CGameObject::FilterCollision
 
 CGameObject::GetBoundingBox
 
+NOTE: Ý tưởng cho việc Tạo item và nhặt item của Simon , va chạm giữa roi và vật tĩnh
+Tạo 1 mảng để chứa các vật thể mà roi có thể va chạm rớt item (A1),  nếu roi va chạm với thì set vị trí x=9999
+Dùng vòng for để kiểm tra mảng vật thể (A1) nếu thỏa x==9999 và tag vật thể  =0 thì sẽ tạo 1 item mới và set tag vật thể về 4
+Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây sẽ có hàm xét va chạm giữa item và nền đất , Simon
+
 ================================================================ */
 
 #include <windows.h>
@@ -428,7 +433,7 @@ void LoadResources()
 	Simon->AddAnimation(411);		// attack right
 	Simon->AddAnimation(412);		// attack sit left
 	Simon->AddAnimation(413);		// attack sit right
-	Simon->tag = 1;
+	Simon->tag = 10;
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
@@ -445,14 +450,16 @@ void Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
-	for (int i = 1; i < objects.size(); i++)
+	for (int i = 0; i < objects.size(); i++)
 	{
 		if(objects[i]->tag==1)
 		coObjects.push_back(objects[i]);
+		if (objects[i]->tag == 5)
+			coObjects.push_back(objects[i]);
 	}
-	for (int i = 1; i < obejects_item.size(); i++)
+	for (int i = 0; i < obejects_item.size(); i++)
 	{
-		if (obejects_item[i]->tag == 1|| obejects_item[i]->tag == 4)
+		if (obejects_item[i]->tag == 1|| obejects_item[i]->tag == 5)
 			coObjects_item.push_back(obejects_item[i]);
 	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
@@ -464,25 +471,26 @@ void Update(DWORD dt)
 						int rand_no;
 						rand_no = rand() % 5 + 900;
 						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y,rand_no);		
-						vy = item->vy;
 						objects.push_back(item);
 						obejects_item.push_back(item);
-						objects_morningstar[i]->tag = 4;
+						objects_morningstar[i]->tag = 5;
 				}
 	}
 	morningstar->Update_colison(&coObjects_morningstar);
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
+		coObjects_item.push_back(obejects_item[i]);
+	}
+	for (int i = 0; i < obejects_item.size(); i++)
+	{
+
 		obejects_item[i]->Update(dt, &coObjects_item);
 	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-	for (int i = 1; i < obejects_item.size(); i++)
-	{
-		coObjects_item.push_back(obejects_item[i]);
-	}
+	
 
 	
 }

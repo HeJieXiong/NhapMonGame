@@ -39,7 +39,7 @@ public:
 	float dy;	// dy = vy*dt
 	float vx;
 	float vy;
-	int nx;	 
+	float nx;	 
 
 	int state;
 	int tag;

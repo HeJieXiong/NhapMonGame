@@ -67,7 +67,8 @@ void CItem::Item_setting(CItem * Item, float & x, float & y,int ani)
 		Item->x = x;
 		Item->y = y;
 		Item->AddAnimation(ani);
-		Item->check = 0;
+		Item->tag = 5;
+		//Item->check = 0;
 		/*Item->vy += 500;
 		Item->vx += 400;*/
 	
