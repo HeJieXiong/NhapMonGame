@@ -514,17 +514,17 @@ void Render()
 		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-
+		float x = Simon->x;
+		float y = 0;
+		if (x <= SCREEN_WIDTH / 2) {
+			x = 0;
+		}
+		else
+			x = Simon->x - SCREEN_WIDTH / 2;
 		map = new TileMap();
-		map->DrawMap(1);
+		map->DrawMap(1,x,y);
 		for (int i = 0; i < objects.size(); i++) {
-			float x = Simon->x;
-			float y = 0;
-				if (x <= SCREEN_WIDTH / 2) {
-					x = 0;
-				}
-				else
-					x = Simon->x - SCREEN_WIDTH / 2;
+			
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}

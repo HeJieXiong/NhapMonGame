@@ -27,7 +27,7 @@ TileMap::TileMap(int levelmap)
 	
 }
 
-void TileMap::DrawMap(int level)
+void TileMap::DrawMap(int level,float &xcam, float &ycam)
 {
 	if (level == 1) {
 		int MAP[25*6] = {
@@ -42,7 +42,7 @@ void TileMap::DrawMap(int level)
 			CSprite *tile = sprites->Get(MAP[i]);
 			int x = i % 25;
 			int y = i / 25;
-			tile->Draw(x * 32, y * 32);
+			tile->Draw(x * 31-xcam, y * 31-ycam);
 		}
 	}
 }
