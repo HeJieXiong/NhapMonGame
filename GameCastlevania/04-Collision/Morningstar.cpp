@@ -93,7 +93,6 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 		y = y_simon+10;
 		int ani = 1;
 		animations[ani]->Render(x - xcam-15, y-ycam-10);
-		//RenderBoundingBox_MoringStar(x, y);
 		RenderBoundingBox_MoringStar(xcam, ycam);
 	}
 	

@@ -41,6 +41,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Morningstar.h"
 #include "HeaderBar.h"
 #include "Item.h"
+#include "TileMap.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
@@ -51,7 +52,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_MISC 10
-#define ID_TEX_BACK_GROUND 20
+//#define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
 #define ID_TEX_MORNINGSTAR 40
 #define ID_TEX_HEADERBAR 50
@@ -60,11 +61,13 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 CGame		*game;
 CMorningstar*morningstar;
 CSimon		*Simon;
-CBackGround	*background;
+//CBackGround	*background;
 CFire		*fire;
 CHeaderBar	*headerbar;
 CHeaderBar	*health;
 CHeaderBar	*enemy;
+TileMap		*map;
+//map = new TileMap();
 
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
@@ -155,7 +158,7 @@ void LoadResources()
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
 	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
-	textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
+	//textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
 	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
@@ -251,17 +254,17 @@ void LoadResources()
 	//MORNING-STAR-END
 	
 
-	//BACK-GROUND-STAR
-	LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
-	sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
-	ani = new CAnimation(100);		//background
-	ani->Add(30001);
-	animations->Add(602, ani);
-	background = new CBackGround();
-	background->AddAnimation(602);
-	background->SetPosition(0, 40);
-	//objects.push_back(background);
-	//BACK-GROUND-END
+	////BACK-GROUND-STAR
+	//LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
+	//sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
+	//ani = new CAnimation(100);		//background
+	//ani->Add(30001);
+	//animations->Add(602, ani);
+	//background = new CBackGround();
+	//background->AddAnimation(602);
+	//background->SetPosition(0, 40);
+	////objects.push_back(background);
+	////BACK-GROUND-END
 
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -273,7 +276,7 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i * 16.0f, 180);
+		brick->SetPosition(0 + i * 16.0f, 190);
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
@@ -291,7 +294,7 @@ void LoadResources()
 	for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
 		fire->AddAnimation(603);
-		fire->SetPosition(i * 130 + 88, 150);
+		fire->SetPosition(i * 130 + 88, 160);
 		fire->tag = 0;
 		objects.push_back(fire);
 		objects_morningstar.push_back(fire);
@@ -512,6 +515,8 @@ void Render()
 
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 
+		map = new TileMap();
+		map->DrawMap(1);
 		for (int i = 0; i < objects.size(); i++) {
 			float x = Simon->x;
 			float y = 0;
@@ -524,8 +529,10 @@ void Render()
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
 		headerbar->DrawHeaderbar(vy, morningstar->y);
+		
 		spriteHandler->End();
 		d3ddv->EndScene();
+		
 	}
 
 	// Display back buffer content to the screen
