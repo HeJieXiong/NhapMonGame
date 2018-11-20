@@ -16,5 +16,5 @@ public:
 	virtual void SetState(int state);
 	virtual void Render(float &xcam, float &ycam, float &x_, float &y_);
 	void Item_setting(CItem *Item, float &x, float &y, int ani);
-	int check;
+	int check_taken;
 };

@@ -67,7 +67,7 @@ CHeaderBar	*headerbar;
 CHeaderBar	*health;
 CHeaderBar	*enemy;
 TileMap		*map;
-//map = new TileMap();
+
 
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
@@ -216,19 +216,6 @@ void LoadResources()
 	ani = new CAnimation(100); //BAG_700
 	ani->Add(9013);
 	animations->Add(908, ani);
-
-	
-
-	/*item = new CItem();
-	item->AddAnimation(902);
-	item->tag = 0;
-	item->SetPosition(220, 165);
-	objects.push_back(item);
-	obejects_item.push_back(item);*/
-	
-	//ITEM-END
-
-
 	//ITEM-END
 	//MORNING-STAR-START
 	LPDIRECT3DTEXTURE9 textmorningstar = textures->Get(ID_TEX_MORNINGSTAR);
@@ -252,20 +239,6 @@ void LoadResources()
 	morningstar->AddAnimation(701);
 	morningstar->AddAnimation(702);
 	//MORNING-STAR-END
-	
-
-	////BACK-GROUND-STAR
-	//LPDIRECT3DTEXTURE9 texBACKGROUND = textures->Get(ID_TEX_BACK_GROUND);
-	//sprites->Add(30001, 0, 0, 770, 145, texBACKGROUND);
-	//ani = new CAnimation(100);		//background
-	//ani->Add(30001);
-	//animations->Add(602, ani);
-	//background = new CBackGround();
-	//background->AddAnimation(602);
-	//background->SetPosition(0, 40);
-	////objects.push_back(background);
-	////BACK-GROUND-END
-
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 31, 31, texMisc);
@@ -276,7 +249,7 @@ void LoadResources()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i * 16.0f, 190);
+		brick->SetPosition(0 + i * 16.0f, 186);
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
@@ -294,7 +267,7 @@ void LoadResources()
 	for (int i = 0; i < 5; i++) {  //fire
 		fire = new CFire();
 		fire->AddAnimation(603);
-		fire->SetPosition(i * 130 + 88, 160);
+		fire->SetPosition(i * 130 + 88, 156);
 		fire->tag = 0;
 		objects.push_back(fire);
 		objects_morningstar.push_back(fire);
@@ -390,11 +363,11 @@ void LoadResources()
 	animations->Add(407, ani);
 
 	ani = new CAnimation(100);	// idle sit down left
-	ani->Add(10033);
+	ani->Add(10005);
 	animations->Add(408, ani);
 
 	ani = new CAnimation(100);	// idle sit down right
-	ani->Add(10048);
+	ani->Add(10012);
 	animations->Add(409, ani);
 
 	ani = new CAnimation(150);	// idle attack left
@@ -455,10 +428,8 @@ void Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_item;
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if(objects[i]->tag==1)
+		if(objects[i]->tag==1|| objects[i]->tag == 5)
 		coObjects.push_back(objects[i]);
-		if (objects[i]->tag == 5)
-			coObjects.push_back(objects[i]);
 	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{

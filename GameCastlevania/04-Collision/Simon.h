@@ -40,7 +40,7 @@
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 300
 #define SCREEN_WIDTH 400
-#define SCREEN_HEIGHT 300
+#define SCREEN_HEIGHT 260
 
 class CSimon : public CGameObject
 {

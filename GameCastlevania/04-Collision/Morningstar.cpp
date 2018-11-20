@@ -41,6 +41,7 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 			if (bottom > top_co) {
 				if ((right > left_co&&right < right_co) || (left > left_co&&left < right_co) || (left < left_co) && (right > right_co)) {
 					coObjects->at(i)->SetState(100);
+					coObjects->at(i)->y = 0;
 				}
 			}
 		}

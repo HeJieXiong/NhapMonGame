@@ -64,6 +64,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		
 		if (nx!=0) vx = 0;
 		if (ny!=0) vy = 0;	
+		// Collision logic with Goombas
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
+			if (dynamic_cast<CItem *>(e->obj))
+			{
+				CItem *item = dynamic_cast<CItem *>(e->obj);
+				if (e->nx != 0)
+				{									
+					item->check_taken = 1;
+					item->y = 50;
+					item->vy = 0;
+				}
+			}
+		}
 	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{

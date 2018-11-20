@@ -33,6 +33,7 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}*/
 	if (coEvents.size() == 0)//new code
 	{
+		if(check_taken==0)
 		y += dy;
 	}
 	else
