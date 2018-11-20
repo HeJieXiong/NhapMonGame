@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Morningstar.h"
+#include "HeaderBar.h"
 
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
@@ -51,10 +52,12 @@ class CSimon : public CGameObject
 	DWORD untouchable_start;
 	DWORD attack_start;
 	CMorningstar *morningstar;
+	CHeaderBar *headerbar;
 public: 
-	CSimon(CMorningstar *a) : CGameObject()
+	CSimon(CMorningstar *a, CHeaderBar *b) : CGameObject()
 	{
 		morningstar = a;
+		headerbar = b;
 		untouchable = 0;
 	}
 	

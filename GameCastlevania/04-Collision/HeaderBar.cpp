@@ -24,11 +24,13 @@ void CHeaderBar::GetBoundingBox(float &left, float &top, float &right, float &bo
 	right = x + HEADER_BAR_BBOX_WIDTH;
 	bottom = y + HEADER_BAR_BBOX_HEIGHT;
 }
-void CHeaderBar::DrawHeaderbar(float &x, float &y) {
-	message1 = to_string(x);
-	message2 = to_string(y);
-	message1 += message2;
-	font1->DrawTextA(NULL, message1.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 0, 255));
+void CHeaderBar::DrawHeaderbar(int &x, int &y, int &a, int  &b) {
+	score = to_string(x);
+	time = to_string(y);
+	score = to_string(a);
+	time = to_string(b);
+	
+	font1->DrawTextA(NULL, score.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 0, 255));
 }
 
 

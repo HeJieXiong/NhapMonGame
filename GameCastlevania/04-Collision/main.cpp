@@ -225,19 +225,39 @@ void LoadResources()
 	sprites->Add(5004, 431, 6, 495, 38, textmorningstar);//NORMAL ATTACK RIGHT
 	sprites->Add(5005, 348, 6, 411, 38, textmorningstar);
 	sprites->Add(5006, 260, 6, 324, 38, textmorningstar);
-	ani = new CAnimation(100); //NORMAL ATTACK LEFT
+	sprites->Add(5007, 431, 93, 495, 121, textmorningstar);//TYPE_1 ATTACK RIGHT
+	sprites->Add(5008, 348, 93, 411, 121, textmorningstar);
+	sprites->Add(5009, 260, 93, 336, 121, textmorningstar);
+	sprites->Add(5010, 4, 93, 82, 121, textmorningstar);//TYPE_1 ATTACK LEFT
+	sprites->Add(5011, 88, 93, 165, 121, textmorningstar);
+	sprites->Add(5012, 178, 93, 242, 121, textmorningstar);
+	ani = new CAnimation(150); //NORMAL ATTACK LEFT
 	ani->Add(5001);
 	ani->Add(5002);
 	ani->Add(5003);
 	animations->Add(701, ani);
-	ani = new CAnimation(100); //NORMAL ATTACK RIGHT
+	ani = new CAnimation(150); //NORMAL ATTACK RIGHT
 	ani->Add(5004);
 	ani->Add(5005);
 	ani->Add(5006);
 	animations->Add(702, ani);
+	ani = new CAnimation(150); //TYPE_1 ATTACK LEFT
+	ani->Add(5010);
+	ani->Add(5011);
+	ani->Add(5012);
+	animations->Add(703, ani);
+	
+	ani = new CAnimation(150); //TYPE_1 ATTACK RIGHT
+	ani->Add(5009);
+	ani->Add(5007);
+	ani->Add(5008);
+	animations->Add(704, ani);
 	morningstar = new CMorningstar();
 	morningstar->AddAnimation(701);
 	morningstar->AddAnimation(702);
+	morningstar->AddAnimation(703);
+	morningstar->AddAnimation(704);
+	//objects.push_back(morningstar);
 	//MORNING-STAR-END
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
@@ -382,19 +402,19 @@ void LoadResources()
 	ani->Add(10009);
 	animations->Add(411, ani);
 
-	ani = new CAnimation(70);	// idle attack sit left
+	ani = new CAnimation(150);	// idle attack sit left
 	ani->Add(10049);
 	ani->Add(10033);
 	ani->Add(10034);
 	animations->Add(412, ani);
 
-	ani = new CAnimation(70);	// idle attack sit right
+	ani = new CAnimation(150);	// idle attack sit right
 	ani->Add(10050);
 	ani->Add(10048);
 	ani->Add(10047);
 	animations->Add(413, ani);
 
-	Simon = new CSimon(morningstar);
+	Simon = new CSimon(morningstar,headerbar);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
 	Simon->AddAnimation(402);		// idle right small
@@ -444,7 +464,7 @@ void Update(DWORD dt)
 						item = new CItem();
 						int rand_no;
 						rand_no = rand() % 5 + 900;
-						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y,rand_no);		
+						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 						objects.push_back(item);
 						obejects_item.push_back(item);
 						objects_morningstar[i]->tag = 5;
@@ -499,7 +519,7 @@ void Render()
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar(vy, morningstar->y);
+		headerbar->DrawHeaderbar(headerbar->score_, headerbar->time_, headerbar->heart_, headerbar->p_);
 		
 		spriteHandler->End();
 		d3ddv->EndScene();

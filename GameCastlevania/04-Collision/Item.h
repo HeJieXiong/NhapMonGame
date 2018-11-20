@@ -13,8 +13,9 @@ class CItem : public CGameObject
 
 
 public:
+	int ani;
 	virtual void SetState(int state);
 	virtual void Render(float &xcam, float &ycam, float &x_, float &y_);
-	void Item_setting(CItem *Item, float &x, float &y, int ani);
+	void Item_setting(CItem *Item, float &x, float &y, int a);
 	int check_taken;
 };

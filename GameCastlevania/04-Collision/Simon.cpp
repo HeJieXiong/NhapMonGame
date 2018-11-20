@@ -79,6 +79,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						item->y = 50;
 						item->vy = 0;
 						item->dt = 0;
+						if (item->ani == 900) {
+							morningstar->SetType(1);
+						}
+						if (item->ani == 901 || item->ani == 902)
+							headerbar->score_ += 100;
 				}
 			}
 		}
@@ -96,7 +101,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
-	int ani_2;
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
 	if (state == SIMON_STATE_SIT_DOWN) {

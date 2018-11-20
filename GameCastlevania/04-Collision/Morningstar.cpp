@@ -6,7 +6,7 @@
 
 
 CMorningstar::CMorningstar() {
-//	type_morningstar = MORNINGSTAR_NORMAL;
+	type_morningstar = 0;
 }
 
 CMorningstar::~CMorningstar() {
@@ -24,8 +24,20 @@ CMorningstar *CMorningstar::GetInstance()
 void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 	float top = y;
 	float left = x;
-	float bottom = y + MORNINGSTAR_BOX_HEIGHT;
-	float right = x + MORNINGSTAR_BOX_WIDTH;
+	float bottom ;
+	float right ;
+	if (type_morningstar == 0) {
+		 top = y;
+		 left = x;
+		 bottom = y + MORNINGSTAR_BOX_HEIGHT;
+		 right = x + MORNINGSTAR_BOX_WIDTH;
+	}
+	if (type_morningstar == 1) {
+		 top = y;
+		 left = x;
+		 bottom = y + TYPE_1_BOX_HEIGHT;
+		 right = x + TYPE_1_BOX_WIDTH;
+	}
 	if (GetTickCount() - attack_start > MORNINGSTAR_ATTACK_TIME) {
 		attack_time +=1;
 	}
@@ -49,54 +61,94 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 	}
 }
 void CMorningstar::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
-	//if (GetTickCount() - attack_start > MORNINGSTAR_ATTACK_TIME) {
-	//	attack_time += dt;
-	//}
-	//if(attack_time> 200*dt) {
-		left = x;
+	if (type_morningstar == 0) {
 		top = y;
-		right = x + MORNINGSTAR_BOX_WIDTH;
+		left = x;
 		bottom = y + MORNINGSTAR_BOX_HEIGHT;
+		right = x + MORNINGSTAR_BOX_WIDTH;
+	}
+	if (type_morningstar == 1) {
+		top = y;
+		left = x;
+		bottom = y + TYPE_1_BOX_HEIGHT;
+		right = x + TYPE_1_BOX_WIDTH;
+	}
 		attack_time = 0;
-	//}
+
 }
 
 void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-	float check = 0;
-	if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
-		x = x_simon-25;
-		y = y_simon+15;
-		int ani = 0;
-		
-		animations[ani]->Render(x-xcam-2, y-ycam-10);
-		//RenderBoundingBox_MoringStar(x, y);
-		RenderBoundingBox_MoringStar(xcam, ycam);
+	if (type_morningstar == 0) {
+		float check = 0;
+		if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
+			x = x_simon - 25;
+			y = y_simon + 15;
+			int ani = 0;
+
+			animations[ani]->Render(x - xcam - 2, y - ycam - 10);
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 1) {//SIMON_ANI_SIT_ATTACK_RIGHT
+			x = x_simon;
+			y = y_simon + 15;
+			int ani = 1;
+			animations[ani]->Render(x - xcam - 15, y - ycam - 10);
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
+			int ani = 0;
+			x = x_simon - 26;
+			y = y_simon + 10;
+			animations[ani]->Render(x - xcam - 4, y - ycam - 10);
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
+			x = x_simon;
+			y = y_simon + 10;
+			int ani = 1;
+			animations[ani]->Render(x - xcam - 15, y - ycam - 10);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
 	}
-	if (state == 1) {//SIMON_ANI_SIT_ATTACK_RIGHT
-		x = x_simon;
-		y = y_simon+15;
-		int ani = 1;
-		animations[ani]->Render(x - xcam-15, y-ycam-10);
-		//RenderBoundingBox_MoringStar(x, y);
-		RenderBoundingBox_MoringStar(xcam,ycam);
+	if (type_morningstar == 1) {
+		float check = 0;
+		if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
+			x = x_simon - 25;
+			y = y_simon + 15;
+			int ani = 2;
+
+			animations[ani]->Render(x - xcam - 13, y - ycam-5 );
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 1) {//SIMON_ANI_SIT_ATTACK_RIGHT
+			x = x_simon;
+			y = y_simon + 15;
+			int ani = 3;
+			animations[ani]->Render(x - xcam - 16, y - ycam - 5);
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
+			int ani = 2;
+			x = x_simon - 26;
+			y = y_simon + 10;
+			animations[ani]->Render(x - xcam - 13, y - ycam - 5);
+			//RenderBoundingBox_MoringStar(x, y);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
+		if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
+			x = x_simon;
+			y = y_simon + 10;
+			int ani = 3;
+			animations[ani]->Render(x - xcam - 16, y - ycam - 5);
+			RenderBoundingBox_MoringStar(xcam, ycam);
+		}
 	}
-	if (state == 2) {//SIMON_ANI_ATTACK_LEFT
-		int ani = 0;
-		x = x_simon-26;
-		y = y_simon+10;
-		animations[ani]->Render(x - xcam-4, y-ycam-10 );
-		//RenderBoundingBox_MoringStar(x, y);
-		RenderBoundingBox_MoringStar(xcam, ycam);
-	}
-	if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
-		x = x_simon;
-		y = y_simon+10;
-		int ani = 1;
-		animations[ani]->Render(x - xcam-15, y-ycam-10);
-		RenderBoundingBox_MoringStar(xcam, ycam);
-	}
-	
 }
 
 //void CMorningstar::LoadResource() {
@@ -111,6 +163,6 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 //}
 
 
-void CMorningstar::SetType(int type) {
-	type_morningstar = type;
+void CMorningstar::SetType(int a) {
+	type_morningstar = a;
 }
