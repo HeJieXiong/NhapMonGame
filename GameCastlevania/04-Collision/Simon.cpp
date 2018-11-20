@@ -72,11 +72,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<CItem *>(e->obj))
 			{
 				CItem *item = dynamic_cast<CItem *>(e->obj);
-				if (e->nx != 0)
-				{									
-					item->check_taken = 1;
-					item->y = 50;
-					item->vy = 0;
+
+				if (e->nx != 0|| e->ny <0)
+				{		
+						item->check_taken = 1;
+						item->y = 50;
+						item->vy = 0;
+						item->dt = 0;
 				}
 			}
 		}
