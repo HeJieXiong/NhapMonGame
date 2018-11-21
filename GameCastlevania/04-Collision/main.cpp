@@ -42,6 +42,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "HeaderBar.h"
 #include "Item.h"
 #include "TileMap.h"
+#include "Knife.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
@@ -52,26 +53,26 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_MISC 10
-//#define ID_TEX_BACK_GROUND 20
 #define ID_TEX_FIRE 30
 #define ID_TEX_MORNINGSTAR 40
 #define ID_TEX_HEADERBAR 50
 #define ID_ITEM			60
-
+#define ID_TEX_KNIFE		70
 CGame		*game;
 CMorningstar*morningstar;
 CSimon		*Simon;
-//CBackGround	*background;
 CFire		*fire;
 CHeaderBar	*headerbar;
 CHeaderBar	*health;
 CHeaderBar	*enemy;
+CKnife		*knife;
 TileMap		*map;
 
 
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
 vector<LPGAMEOBJECT> obejects_item;
+vector<LPGAMEOBJECT> objects_weapons;
 float vy = 0;
 class CSampleKeyHander : public CKeyEventHandler
 {
@@ -96,6 +97,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_Z:
 		Simon->Attack(morningstar,Simon->x,Simon->y);
+		break;
+	case DIK_C:
+		knife = new CKnife();
+		knife->AddAnimation(1100);
+		knife->SetPosition(50, 50);
+		objects_weapons.push_back(knife);
 		break;
 	}
 }
@@ -157,13 +164,13 @@ void LoadResources()
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
-	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 255, 255));
-	//textures->Add(ID_TEX_BACK_GROUND, L"textures\\back_ground.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png",D3DCOLOR_XRGB(255,255,255));
-	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 255, 255));
+	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png",D3DCOLOR_XRGB(255,0,255));
+	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -248,9 +255,9 @@ void LoadResources()
 	animations->Add(703, ani);
 	
 	ani = new CAnimation(150); //TYPE_1 ATTACK RIGHT
-	ani->Add(5009);
 	ani->Add(5007);
 	ani->Add(5008);
+	ani->Add(5009);
 	animations->Add(704, ani);
 	morningstar = new CMorningstar();
 	morningstar->AddAnimation(701);
@@ -265,7 +272,7 @@ void LoadResources()
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
-	for (int i = 0; i < 50; i++)
+	for (int i = 0; i < 48; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -294,6 +301,15 @@ void LoadResources()
 	}
 	//FIRE-END
 
+	
+	//KNIFE-STAR
+	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
+	sprites->Add(11000, 177, 40, 194, 48, textKnife);
+	ani = new CAnimation(100);
+	ani->Add(11000);
+	animations->Add(1100, ani);
+	
+	//KNIFE-END
 
 	//HEAD-BAR-START
 	LPDIRECT3DTEXTURE9 texHeaderBar = textures->Get(ID_TEX_HEADERBAR);
@@ -331,7 +347,7 @@ void LoadResources()
 	}
 	//HEAD-BAR-END
 	
-	
+
 	
 
 
@@ -414,7 +430,16 @@ void LoadResources()
 	ani->Add(10047);
 	animations->Add(413, ani);
 
-	Simon = new CSimon(morningstar,headerbar);
+
+	ani = new CAnimation(150);	// idle disappear
+	ani->Add(10051);
+	ani->Add(10052);
+	ani->Add(10053);
+	ani->Add(10054);
+	ani->Add(10055);
+	animations->Add(414, ani);
+
+	Simon = new CSimon(morningstar,headerbar,knife );
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
 	Simon->AddAnimation(402);		// idle right small
@@ -429,7 +454,7 @@ void LoadResources()
 	Simon->AddAnimation(411);		// attack right
 	Simon->AddAnimation(412);		// attack sit left
 	Simon->AddAnimation(413);		// attack sit right
-	Simon->tag = 10;
+	Simon->AddAnimation(414);		// attack disappear
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
@@ -463,7 +488,7 @@ void Update(DWORD dt)
 						CItem		*item;
 						item = new CItem();
 						int rand_no;
-						rand_no = rand() % 5 + 900;
+						rand_no = rand() % 2 + 900;
 						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 						objects.push_back(item);
 						obejects_item.push_back(item);
@@ -510,6 +535,9 @@ void Render()
 		if (x <= SCREEN_WIDTH / 2) {
 			x = 0;
 		}
+		else if (x > 550) {
+			x = 350;
+		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		map = new TileMap();
@@ -519,7 +547,7 @@ void Render()
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar(headerbar->score_, headerbar->time_, headerbar->heart_, headerbar->p_);
+		headerbar->DrawHeaderbar(Simon->x, headerbar->time_, headerbar->heart_, headerbar->p_);
 		
 		spriteHandler->End();
 		d3ddv->EndScene();
@@ -603,9 +631,34 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-
-			game->ProcessKeyboard();
-
+			
+			if ((Simon->x < 650) &&( game->unablekeyboard == 0)) {
+				
+				game->ProcessKeyboard();
+			}
+			else {
+				if (Simon->GetState() != SIMON_STATE_IDLE && Simon->is_walking!=1) {
+					Simon->SetState(SIMON_STATE_WALKING_LEFT);
+					Simon->vx = -0.02;
+				}
+				if (Simon->x <= 610) {
+					Simon->vx = 0;
+					Simon->nx = 1;
+					Simon->SetState(SIMON_STATE_IDLE);
+				}
+				if (Simon->x <= 630 && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
+						Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+						Simon->vx = 0.02;
+						Simon->is_walking = 1;
+				}
+				if (Simon->x >= 660 && Simon->GetState() == SIMON_STATE_WALKING_RIGHT) {
+					Simon->SetState(SIMON_STATE_DISAPPEAR);
+					Simon->vx = 0;
+				}
+				
+				
+				game->unablekeyboard = 1;
+			}
 			Update(dt);
 			Render();
 		}
@@ -626,7 +679,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
-
+	
 
 	LoadResources();
 

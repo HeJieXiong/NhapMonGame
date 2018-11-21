@@ -16,22 +16,10 @@ void CFire::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani = FIRE_ANI;
 	animations[ani]->Render(x-xcam, y-ycam);
-	RenderBoundingBox(xcam,ycam);
+	//RenderBoundingBox(xcam,ycam);
 }
 
 void CFire::SetState(int state)
 {
 	CGameObject::SetState(state);
-	switch (state)
-	{
-	case FIRE_STATE:
-		y = 100;
-		float a = 200;	
-		CItem *Item;
-		Item = new CItem();
-		Item->AddAnimation(901);
-		Item->AddAnimation(902);
-		Item->Render(x, y, a, a);
-		break;
-	}
 }

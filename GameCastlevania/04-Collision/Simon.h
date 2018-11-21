@@ -1,6 +1,7 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Morningstar.h"
+#include "Knife.h"
 #include "HeaderBar.h"
 
 #define SIMON_WALKING_SPEED		0.1f 
@@ -18,6 +19,7 @@
 #define SIMON_STATE_DIE				400
 #define SIMON_STATE_SIT_DOWN		500
 #define SIMON_STATE_ATTACK			600
+#define SIMON_STATE_DISAPPEAR		700
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
 #define SIMON_ANI_BIG_IDLE_LEFT		1
@@ -34,12 +36,14 @@
 #define SIMON_ANI_ATTACK_RIGHT		11
 #define SIMON_ANI_SIT_ATTACK_LEFT	12
 #define SIMON_ANI_SIT_ATTACK_RIGHT	13
-#define SIMON_ANI_DIE				14
+#define SIMON_ANI_DISAPPEAR			14
+#define SIMON_ANI_DIE				15
 #define SIMON_BIG_BBOX_WIDTH  20
 #define SIMON_BIG_BBOX_HEIGHT 30
 
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 300
+#define SIMON_WALKING_TIME 400
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 260
 
@@ -48,16 +52,21 @@ class CSimon : public CGameObject
 	int level;
 	int untouchable;
 	int attack_time = 0;
+	int walking_time = 0;
 	int attacking;
 	DWORD untouchable_start;
 	DWORD attack_start;
+	DWORD walking_start;
 	CMorningstar *morningstar;
+	CKnife	*knife;
 	CHeaderBar *headerbar;
 public: 
-	CSimon(CMorningstar *a, CHeaderBar *b) : CGameObject()
+	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
+	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
 		headerbar = b;
+		knife = c;
 		untouchable = 0;
 	}
 	

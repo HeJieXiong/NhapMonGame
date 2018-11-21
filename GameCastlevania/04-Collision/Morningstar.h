@@ -22,8 +22,6 @@ public:
 	~CMorningstar();
 	static CMorningstar * GetInstance();
 	int state;
-	float x_current;
-	float y_current;
 	void Update_colison(vector<LPGAMEOBJECT> *coObjects);
 	virtual void SetType(int a);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);

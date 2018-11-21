@@ -17,13 +17,13 @@ private:
 	std::string p;
 	HRESULT hr1;
 public:
-	int score_=0;
-	int time_ = 0;
-	int stage_ = 1;
-	int heart_ = 3;
-	int p_ = 0;
+	int score_;
+	int time_ ;
+	int stage_ ;
+	int heart_ ;
+	int p_ ;
 	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void DrawHeaderbar(int &x,int &y, int &a, int  &b);
+	void DrawHeaderbar(float &x,int &y, int &a, int  &b);
 };

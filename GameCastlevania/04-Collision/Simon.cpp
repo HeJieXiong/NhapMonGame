@@ -42,6 +42,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		attacking = 0;
 		attack_time = 0;
 	}
+	if (is_walking == 1 &&state== SIMON_STATE_DISAPPEAR) {
+		if (GetTickCount() - walking_start >SIMON_WALKING_TIME)
+		{
+			state = SIMON_STATE_DISAPPEAR;
+			walking_time += dt;
+		}
+	}
+	if (walking_time > dt * 30) {
+		y = -9999;
+		walking_time = 0;
+	}
 	if (coEvents.size() == 0)//new code
 	{
 		x += dx;
@@ -76,14 +87,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				if (e->nx != 0|| e->ny <0)
 				{		
 						item->check_taken = 1;
-						item->y = 50;
+						item->y = -9850;
 						item->vy = 0;
 						item->dt = 0;
 						if (item->ani == 900) {
 							morningstar->SetType(1);
 						}
-						if (item->ani == 901 || item->ani == 902)
-							headerbar->score_ += 100;
 				}
 			}
 		}
@@ -135,6 +144,9 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					}
 				}	
 	}
+	else if (state == SIMON_STATE_DISAPPEAR) {
+		ani = SIMON_ANI_DISAPPEAR;
+	}
 	else{		
 		if (vx == 0){
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
@@ -150,7 +162,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam-2.5, y - ycam, alpha);
-	RenderBoundingBox(xcam, ycam);
+	//RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)
@@ -208,7 +220,10 @@ void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 		animations[SIMON_ANI_SIT_ATTACK_LEFT ]->Reset();
 		morningstar->animations[MORNINGSTAR_NORMAL_LEFT]->Reset();
 		morningstar->animations[MORNINGSTAR_NORMAL_RIGHT]->Reset();
+		morningstar->animations[MORNINGSTAR_TYPE_1_LEFT]->Reset();
+		morningstar->animations[MORNINGSTAR_TYPE_1_RIGHT]->Reset();
 	}
 	
 }
+
 

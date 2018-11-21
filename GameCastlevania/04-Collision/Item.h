@@ -3,8 +3,12 @@
 #define ITEM_HEART 0
 #define ITEM_HEART_BIG 1
 #define ITEM_GRAVITY 0.0002f
-#define ITEM_HEIGHT 16
-#define ITEM_WIDTH 12
+#define WEAPONS_HEIGHT 16
+#define WEAPONS_WIDTH 16
+#define SMALL_HEART_HEIGHT 8
+#define SMALL_HEART_WIDTH 10
+#define HEART_HEIGHT 10
+#define HEART_WIDTH 12
 class CItem : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
