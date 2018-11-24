@@ -161,6 +161,7 @@ TO-DO: Improve this function by loading texture,sprite,animation,object from fil
 */
 void LoadResources()
 {
+	map = new TileMap();
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -540,7 +541,7 @@ void Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		map = new TileMap();
+		//map = new TileMap();
 		map->DrawMap(1,x,y);
 		for (int i = 0; i < objects.size(); i++) {
 			
