@@ -21,44 +21,39 @@ CKnife *CKnife::GetInstance()
 	return _instance;
 }
 
-void CKnife::Update_colison(vector<LPGAMEOBJECT> *coObjects) {
-	float top = y;
-	float left = x;
-	float bottom;
-	float right;
-	if (type_morningstar == 0) {
-		top = y;
-		left = x;
-		bottom = y + KNIFE_BOX_HEIGHT;
-		right = x + KNIFE_BOX_WIDTH;
-	}
-	if (type_morningstar == 1) {
-		top = y;
-		left = x;
-		bottom = y + KNIFE_BOX_HEIGHT;
-		right = x + KNIFE_BOX_WIDTH;
-	}
-	if (GetTickCount() - attack_start > KNIFE_ATTACK_TIME) {
-		attack_time += 1;
-	}
-	if (attack_time > 15) {
-		for (UINT i = 0; i < coObjects->size(); i++)
+void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
+	// Calculate dx, dy 
+	CGameObject::Update(dt);
+	// Simple fall down
+		vx += KNIFE_GRAVITY * dt;
+		vector<LPCOLLISIONEVENT> coEvents;
+		vector<LPCOLLISIONEVENT> coEventsResult;
+
+		coEvents.clear();
+
+		// turn off collision when die 
+		CalcPotentialCollisions(coObjects, coEvents);
+		if (coEvents.size() == 0)//new code
 		{
-			coObjects->at(i);
-			float top_co;
-			float left_co;
-			float bottom_co;
-			float right_co;
-			coObjects->at(i)->GetBoundingBox(left_co, top_co, right_co, bottom_co);
-			if (bottom > top_co) {
-				if ((right > left_co&&right < right_co) || (left > left_co&&left < right_co) || (left < left_co) && (right > right_co)) {
-					coObjects->at(i)->SetState(100);
-					coObjects->at(i)->y = 0;
-				}
-			}
+
+			x += dx;
 		}
-		attack_time = 0;
-	}
+		else
+		{
+			float min_tx, min_ty, nx = 0, ny;
+
+			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+
+			// block 
+			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			y += min_ty * dy + ny * 0.4f;
+
+			if (nx != 0) vx = 0;
+			if (ny != 0) vy = 0;
+		}
+
+		// clean up collision events
+		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }
 void CKnife::GetBoundingBox(float &left, float &top, float &right, float &bottom) {
 	
@@ -74,7 +69,7 @@ void CKnife::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-		animations[0]->Render(50,50);
+		animations[0]->Render(x,y);
 		//RenderBoundingBox_MoringStar(xcam, ycam);
 		//if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
 		//	x = x_simon - 25;

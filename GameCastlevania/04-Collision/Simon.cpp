@@ -211,6 +211,8 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	bottom = y + SIMON_BIG_BBOX_HEIGHT;
 }
 
+
+
 void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 	if (!attacking) {
 		attacking = 1;
@@ -224,6 +226,15 @@ void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 		morningstar->animations[MORNINGSTAR_TYPE_1_RIGHT]->Reset();
 	}
 	
+}
+
+void CSimon::Attack_Weapons(vector<LPGAMEOBJECT>* colliable_objects)
+{
+	knife = new CKnife();
+	knife->AddAnimation(1100);
+	//knife->SetPosition(100, 100);
+	//knife->Render(x, y,x,y);
+	colliable_objects->push_back(knife);
 }
 
 

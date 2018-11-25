@@ -6,7 +6,7 @@
 #define KNIFE_ATTACK_TIME 60
 #define KNIFE_BOX_HEIGHT 8
 #define KNIFE_BOX_WIDTH 60
-
+#define KNIFE_GRAVITY 0.002f
 class CKnife : public CGameObject {
 private:
 	static CKnife * _instance;
@@ -18,7 +18,7 @@ public:
 	~CKnife();
 	static CKnife * GetInstance();
 	int state;
-	void Update_colison(vector<LPGAMEOBJECT> *coObjects);
+	void Update(DWORD dt,vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };

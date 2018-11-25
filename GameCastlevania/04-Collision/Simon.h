@@ -77,5 +77,5 @@ public:
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
 	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-
+	void Attack_Weapons(vector<LPGAMEOBJECT> *colliable_objects);
 };

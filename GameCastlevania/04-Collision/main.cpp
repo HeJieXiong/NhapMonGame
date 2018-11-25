@@ -99,10 +99,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
-		knife = new CKnife();
-		knife->AddAnimation(1100);
-		knife->SetPosition(50, 50);
-		objects_weapons.push_back(knife);
+		Simon->Attack_Weapons(&objects_weapons);
 		break;
 	}
 }
@@ -283,7 +280,14 @@ void LoadResources()
 		obejects_item.push_back(brick);
 	}
 	//BRICK-END
+	//KNIFE-STAR
+	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
+	sprites->Add(11000, 177, 40, 194, 48, textKnife);
+	ani = new CAnimation(100);
+	ani->Add(11000);
+	animations->Add(1100, ani);
 
+	//KNIFE-END
 	//FIRE-START
 	LPDIRECT3DTEXTURE9 textFire = textures->Get(ID_TEX_FIRE);
 	sprites->Add(4001, 0, 0, 17, 31, textFire);
@@ -303,14 +307,7 @@ void LoadResources()
 	//FIRE-END
 
 	
-	//KNIFE-STAR
-	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
-	sprites->Add(11000, 177, 40, 194, 48, textKnife);
-	ani = new CAnimation(100);
-	ani->Add(11000);
-	animations->Add(1100, ani);
 	
-	//KNIFE-END
 
 	//HEAD-BAR-START
 	LPDIRECT3DTEXTURE9 texHeaderBar = textures->Get(ID_TEX_HEADERBAR);
@@ -472,10 +469,15 @@ void Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects;
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
+	vector<LPGAMEOBJECT> coObjects_weapons;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if(objects[i]->tag==1|| objects[i]->tag == 5)
 		coObjects.push_back(objects[i]);
+	}
+	for (int i = 0; i < objects_weapons.size(); i++)
+	{
+		coObjects_weapons.push_back(objects_weapons[i]);
 	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
@@ -492,7 +494,7 @@ void Update(DWORD dt)
 						rand_no = rand() % 2 + 900;
 						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 						objects.push_back(item);
-						obejects_item.push_back(item);
+						//obejects_item.push_back(item);
 						objects_morningstar[i]->tag = 5;
 				}
 	}
@@ -503,14 +505,16 @@ void Update(DWORD dt)
 	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
-
 		obejects_item[i]->Update(dt, &coObjects_item);
 	}
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-	
+	for (int i = 0; i < objects_weapons.size(); i++)
+	{
+		objects_weapons[i]->Update(dt, &coObjects_weapons);
+	}
 
 	
 }
@@ -542,13 +546,18 @@ void Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		//map = new TileMap();
-		map->DrawMap(1,x,y);
+		//map->DrawMap(1,x,y);
 		for (int i = 0; i < objects.size(); i++) {
 			
 				if(objects[i]->tag!=3)
 					objects[i]->Render(x, y,Simon->x,Simon->y);
 		}
-		headerbar->DrawHeaderbar(Simon->x, headerbar->time_, headerbar->heart_, headerbar->p_);
+		for (int i = 0; i < objects_weapons.size(); i++) {
+				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+		}
+		float i = objects_weapons.size();
+			headerbar->DrawHeaderbar(i, headerbar->time_, headerbar->heart_, headerbar->p_);
+		
 		
 		spriteHandler->End();
 		d3ddv->EndScene();
