@@ -61,6 +61,7 @@ class CSimon : public CGameObject
 	CKnife	*knife;
 	CHeaderBar *headerbar;
 public: 
+	int attack_wp;
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{

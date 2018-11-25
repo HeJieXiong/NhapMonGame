@@ -25,7 +25,6 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
 	// Simple fall down
-		vx += KNIFE_GRAVITY * dt;
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -69,8 +68,13 @@ void CKnife::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-		animations[0]->Render(x,y);
-		//RenderBoundingBox_MoringStar(xcam, ycam);
+	if (state == 0) {
+		x = x_simon;
+		y = y_simon;
+		state = 1;
+	}
+		animations[0]->Render(x-xcam,y-ycam);
+		RenderBoundingBox(xcam, ycam);
 		//if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
 		//	x = x_simon - 25;
 		//	y = y_simon + 15;

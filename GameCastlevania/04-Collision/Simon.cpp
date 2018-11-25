@@ -122,25 +122,33 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				if (level == 1) {
 					if (nx < 0) {
 						ani = SIMON_ANI_SIT_ATTACK_LEFT;
-						morningstar->state = 0;
-						morningstar->Render(xcam, ycam, x, y);
+						if (attack_wp == 0) {
+							morningstar->state = 0;
+							morningstar->Render(xcam, ycam, x, y);
+						}
 					}
 					else {
 						ani = SIMON_ANI_SIT_ATTACK_RIGHT;
-						morningstar->state = 1;
-						morningstar->Render(xcam, ycam, x, y);
+						if (attack_wp == 0) {
+							morningstar->state = 1;
+							morningstar->Render(xcam, ycam, x, y);
+						}
 					}
 				}
 				if (level == 0) {
 					if (nx < 0) {
 						ani = SIMON_ANI_ATTACK_LEFT;
-						morningstar->state = 2;
-						morningstar->Render(xcam, ycam, x, y);
+						if (attack_wp == 0) {
+							morningstar->state = 2;
+							morningstar->Render(xcam, ycam, x, y);
+						}
 					}
 					else {
 						ani = SIMON_ANI_ATTACK_RIGHT;
-						morningstar->state = 3;
-						morningstar->Render(xcam, ycam, x, y);
+						if (attack_wp == 0) {
+							morningstar->state = 3;
+							morningstar->Render(xcam, ycam, x, y);
+						}
 					}
 				}	
 	}
@@ -230,11 +238,24 @@ void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 
 void CSimon::Attack_Weapons(vector<LPGAMEOBJECT>* colliable_objects)
 {
-	knife = new CKnife();
-	knife->AddAnimation(1100);
-	//knife->SetPosition(100, 100);
-	//knife->Render(x, y,x,y);
-	colliable_objects->push_back(knife);
+	if (!attacking) {
+		attacking = 1;
+		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
+		animations[SIMON_ANI_ATTACK_LEFT]->Reset();
+		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
+		animations[SIMON_ANI_SIT_ATTACK_LEFT]->Reset();
+		knife = new CKnife();
+		if (nx == 1) {
+			knife->vx = KNIFE_GRAVITY * dt;
+			knife->AddAnimation(1100);
+		}
+		else {
+			knife->vx = -KNIFE_GRAVITY * dt;
+			knife->AddAnimation(1101);
+		}
+		colliable_objects->push_back(knife);
+	}
+	
 }
 
 

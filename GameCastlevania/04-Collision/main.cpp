@@ -96,9 +96,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->SetPosition(50.0f, 0.0f);
 		break;
 	case DIK_Z:
+		Simon->attack_wp = 0;
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
+		Simon->attack_wp = 1;
 		Simon->Attack_Weapons(&objects_weapons);
 		break;
 	}
@@ -283,9 +285,13 @@ void LoadResources()
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
 	sprites->Add(11000, 177, 40, 194, 48, textKnife);
+	sprites->Add(11001, 177, 60, 194, 69, textKnife);
 	ani = new CAnimation(100);
 	ani->Add(11000);
 	animations->Add(1100, ani);
+	ani = new CAnimation(100);
+	ani->Add(11001);
+	animations->Add(1101, ani);
 
 	//KNIFE-END
 	//FIRE-START
@@ -556,7 +562,8 @@ void Render()
 				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
 		float i = objects_weapons.size();
-			headerbar->DrawHeaderbar(i, headerbar->time_, headerbar->heart_, headerbar->p_);
+		if(i>0)
+			headerbar->DrawHeaderbar(objects_weapons[0]->y, headerbar->time_, headerbar->heart_, headerbar->p_);
 		
 		
 		spriteHandler->End();

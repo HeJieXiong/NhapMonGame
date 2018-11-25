@@ -5,8 +5,8 @@
 #define KNIFE_NORMAL_RIGHT	1
 #define KNIFE_ATTACK_TIME 60
 #define KNIFE_BOX_HEIGHT 8
-#define KNIFE_BOX_WIDTH 60
-#define KNIFE_GRAVITY 0.002f
+#define KNIFE_BOX_WIDTH 20
+#define KNIFE_GRAVITY 0.02f
 class CKnife : public CGameObject {
 private:
 	static CKnife * _instance;
