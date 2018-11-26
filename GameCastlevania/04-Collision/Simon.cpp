@@ -170,7 +170,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam-2.5, y - ycam, alpha);
-	//RenderBoundingBox(xcam, ycam);
+	RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)
@@ -213,10 +213,12 @@ void CSimon::SetState(int state)
 
 void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
-	left = x;
-	top = y; 
-	right = x + SIMON_BIG_BBOX_WIDTH;
-	bottom = y + SIMON_BIG_BBOX_HEIGHT;
+	
+		left = x;
+		top = y;
+		right = x + SIMON_BIG_BBOX_WIDTH;
+		bottom = y + SIMON_BIG_BBOX_HEIGHT;
+	
 }
 
 

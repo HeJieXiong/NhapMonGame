@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Fire.h"
 
 #define KNIFE_NORMAL_LEFT		0
 #define KNIFE_NORMAL_RIGHT	1

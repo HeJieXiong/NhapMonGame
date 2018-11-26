@@ -29,8 +29,6 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 		vector<LPCOLLISIONEVENT> coEventsResult;
 
 		coEvents.clear();
-
-		// turn off collision when die 
 		CalcPotentialCollisions(coObjects, coEvents);
 		if (coEvents.size() == 0)//new code
 		{
@@ -49,6 +47,22 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 
 			if (nx != 0) vx = 0;
 			if (ny != 0) vy = 0;
+		}
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			
+			if (dynamic_cast<CFire *>(e->obj))
+			{
+				CFire *fire = dynamic_cast<CFire *>(e->obj);
+
+				if (e->nx != 0 || e->ny <0)
+				{
+					fire->state = 100;
+					fire->y = -9850;
+					y = -9999;
+				}
+			}
 		}
 
 		// clean up collision events

@@ -122,7 +122,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		if (game->IsKeyDown(DIK_Z))
+		if (game->IsKeyDown(DIK_Z)|| game->IsKeyDown(DIK_C))
 			Simon->vx = 0;
 		else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 	}
@@ -309,6 +309,7 @@ void LoadResources()
 		fire->tag = 0;
 		objects.push_back(fire);
 		objects_morningstar.push_back(fire);
+		objects_weapons.push_back(fire);
 	}
 	//FIRE-END
 
@@ -481,15 +482,17 @@ void Update(DWORD dt)
 		if(objects[i]->tag==1|| objects[i]->tag == 5)
 		coObjects.push_back(objects[i]);
 	}
-	for (int i = 0; i < objects_weapons.size(); i++)
-	{
-		coObjects_weapons.push_back(objects_weapons[i]);
-	}
+	
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
 		if (obejects_item[i]->tag == 1|| obejects_item[i]->tag == 5)
 			coObjects_item.push_back(obejects_item[i]);
 	}
+	for (int i = 0; i < objects_weapons.size(); i++)
+	{
+		coObjects_weapons.push_back(objects_weapons[i]);
+	}
+
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 			coObjects_morningstar.push_back(objects_morningstar[i]);
@@ -500,11 +503,25 @@ void Update(DWORD dt)
 						rand_no = rand() % 2 + 900;
 						item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 						objects.push_back(item);
-						//obejects_item.push_back(item);
+						obejects_item.push_back(item);
 						objects_morningstar[i]->tag = 5;
 				}
 	}
 	morningstar->Update_colison(&coObjects_morningstar);
+	for (int i = 0; i < objects_weapons.size(); i++)
+	{
+		objects_weapons[i]->Update(dt, &coObjects_weapons);
+		if (objects_weapons[i]->y==-9850 && objects_weapons[i]->tag == 0) {
+			CItem		*item;
+			item = new CItem();
+			int rand_no;
+			rand_no = rand() % 2 + 900;
+			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
+			objects.push_back(item);
+			obejects_item.push_back(item);
+			objects_weapons[i]->tag = 5;
+		}
+	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
 		coObjects_item.push_back(obejects_item[i]);
@@ -513,14 +530,12 @@ void Update(DWORD dt)
 	{
 		obejects_item[i]->Update(dt, &coObjects_item);
 	}
+	
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
-	for (int i = 0; i < objects_weapons.size(); i++)
-	{
-		objects_weapons[i]->Update(dt, &coObjects_weapons);
-	}
+	
 
 	
 }
@@ -561,9 +576,8 @@ void Render()
 		for (int i = 0; i < objects_weapons.size(); i++) {
 				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		float i = objects_weapons.size();
-		if(i>0)
-			headerbar->DrawHeaderbar(objects_weapons[0]->y, headerbar->time_, headerbar->heart_, headerbar->p_);
+		float i = objects_weapons[1]->x;
+			headerbar->DrawHeaderbar(i, headerbar->time_, headerbar->heart_, headerbar->p_);
 		
 		
 		spriteHandler->End();
