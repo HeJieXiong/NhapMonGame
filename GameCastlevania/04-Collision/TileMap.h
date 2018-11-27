@@ -9,7 +9,8 @@ private:
 	CSprites *sprites;
 	
 public:
-	int map[6][24];
+	int column, row;
+	int **map;
 	int level;
 	TileMap();
 	
