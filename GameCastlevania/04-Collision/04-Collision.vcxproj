@@ -136,6 +136,7 @@
     <ClInclude Include="Morningstar.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
+    <ClInclude Include="Stage.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>
@@ -154,6 +155,7 @@
     <ClCompile Include="Morningstar.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Sprites.cpp" />
+    <ClCompile Include="Stage.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TileMap.cpp" />
   </ItemGroup>

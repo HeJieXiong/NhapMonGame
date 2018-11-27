@@ -35,7 +35,6 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Simon.h"
 #include "Brick.h"
 #include "BackGround.h"
-#include "Camera.h"
 #include "Goomba.h"
 #include "Fire.h"
 #include "Morningstar.h"
@@ -43,6 +42,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Item.h"
 #include "TileMap.h"
 #include "Knife.h"
+#include "Stage.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 
@@ -67,13 +67,12 @@ CHeaderBar	*health;
 CHeaderBar	*enemy;
 CKnife		*knife;
 TileMap		*map;
-
+CStage		*stage;
 
 vector<LPGAMEOBJECT> objects;
 vector<LPGAMEOBJECT> objects_morningstar;
 vector<LPGAMEOBJECT> obejects_item;
 vector<LPGAMEOBJECT> objects_weapons;
-float vy = 0;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -161,6 +160,7 @@ TO-DO: Improve this function by loading texture,sprite,animation,object from fil
 void LoadResources()
 {
 	map = new TileMap();
+	
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -463,6 +463,10 @@ void LoadResources()
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
+	
+	
+	stage = new CStage(1,Simon,map,morningstar);
+	
 }
 
 /*
@@ -558,6 +562,7 @@ void Render()
 		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
 		float x = Simon->x;
 		float y = 0;
+		
 		if (x <= SCREEN_WIDTH / 2) {
 			x = 0;
 		}
@@ -566,8 +571,7 @@ void Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		//map = new TileMap();
-		//map->DrawMap(1,x,y);
+		stage->SetStage(x, y);
 		for (int i = 0; i < objects.size(); i++) {
 			
 				if(objects[i]->tag!=3)

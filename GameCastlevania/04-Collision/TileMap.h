@@ -11,9 +11,9 @@ private:
 public:
 	int map[6][24];
 	int level;
-	TileMap(int levelmap=1);
+	TileMap();
 	
-	void DrawMap(int level, float &xcam, float &ycam);
+	void DrawMap(float &xcam, float &ycam);
 	CSprite *GETTILE(int ID) { return sprites->Get(ID); };
 	~TileMap();
 };
