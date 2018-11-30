@@ -239,6 +239,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
+	morningstar = new CMorningstar();
+	knife = new CKnife();
 	Simon = new CSimon(morningstar, headerbar, knife);
 	stage1 = new CStage1(Simon,morningstar,objects_weapons);
 	stage1->SetGame(game);

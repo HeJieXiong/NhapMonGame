@@ -102,7 +102,7 @@ void CStage1::LoadStage1()
 	ani->Add(5008);
 	ani->Add(5009);
 	animations->Add(704, ani);
-	morningstar = new CMorningstar();
+	//morningstar = new CMorningstar();
 	morningstar->AddAnimation(701);
 	morningstar->AddAnimation(702);
 	morningstar->AddAnimation(703);
