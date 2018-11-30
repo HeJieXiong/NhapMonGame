@@ -43,7 +43,13 @@ CGame		*game;
 CSimon		*Simon;
 
 CStage1		*stage1;
+CMorningstar*morningstar;
 
+
+CHeaderBar	*headerbar;
+
+CKnife		*knife;
+vector<LPGAMEOBJECT> objects_weapons;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -67,11 +73,11 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_Z:
 		Simon->attack_wp = 0;
-		//Simon->Attack(morningstar,Simon->x,Simon->y);
+		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
 		Simon->attack_wp = 1;
-		//Simon->Attack_Weapons(&objects_weapons);
+		Simon->Attack_Weapons(&objects_weapons);
 		break;
 	}
 }
@@ -121,6 +127,13 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 	return 0;
 }
+
+
+void  LoadStage() {
+	
+	stage1->LoadStage1();
+}
+
 void  Updatestage(DWORD dt) {
 	stage1->Update(dt);
 }
@@ -129,9 +142,6 @@ void  Renderstage() {
 	stage1->Render();
 }
 
-void  LoadStage() {
-	stage1->LoadStage1();
-}
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
@@ -181,13 +191,12 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 }
 
 
-int Run()
+int RunStage1()
 {
 	MSG msg;
-	int done = 0;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-
+	int done=0;
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -197,6 +206,7 @@ int Run()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
+		
 
 		DWORD now = GetTickCount();
 
@@ -207,10 +217,11 @@ int Run()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			
-			game->ProcessKeyboard();
-			Updatestage(dt);
-			Renderstage();
+
+				game->ProcessKeyboard();
+
+				Updatestage(dt);
+				Renderstage();
 		}
 		else
 			Sleep(tickPerFrame - dt);
@@ -228,13 +239,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	game->Init(hWnd);
 	keyHandler = new CSampleKeyHander();
 	game->InitKeyboard(keyHandler);
-	stage1 = new CStage1(Simon);
+	Simon = new CSimon(morningstar, headerbar, knife);
+	stage1 = new CStage1(Simon,morningstar,objects_weapons);
 	stage1->SetGame(game);
 	LoadStage();
-	Run();
-	
-	
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage1();
+	
+	
+	
 	
 
 	return 0;

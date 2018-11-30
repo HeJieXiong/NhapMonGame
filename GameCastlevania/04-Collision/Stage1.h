@@ -45,8 +45,10 @@ class  CStage1 {
 
 public:
 	bool is_running;
-	CStage1(CSimon *a) {
+	CStage1(CSimon *a,CMorningstar *b, vector<LPGAMEOBJECT> c) {
 		Simon = a;
+		morningstar = b;
+		objects_weapons = c;
 	};
 	void LoadStage1();
 	void Update(DWORD dt);
@@ -54,6 +56,5 @@ public:
 	void SetGame(CGame *g) { game = CGame::GetInstance();
 	game = g;
 	}
-	int Run(DWORD dt , DWORD now , DWORD tickPerFrame, DWORD frameStart);
 	~CStage1();
 };

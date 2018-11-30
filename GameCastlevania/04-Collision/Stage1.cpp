@@ -287,7 +287,7 @@ void CStage1::LoadStage1()
 	ani->Add(10055);
 	animations->Add(414, ani);
 
-	Simon = new CSimon(morningstar, headerbar, knife);
+	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
 	Simon->AddAnimation(402);		// idle right small
@@ -424,8 +424,4 @@ void CStage1::Render()
 	d3ddv->Present(NULL, NULL, NULL, NULL);
 }
 
-int CStage1::Run(DWORD dt, DWORD now, DWORD tickPerFrame, DWORD frameStart)
-{
-	return 1;
-}
 
