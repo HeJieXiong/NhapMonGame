@@ -21,7 +21,7 @@ TileMap::TileMap()
 		}
 }
 
-void TileMap::DrawMap(float &xcam, float &ycam)
+void TileMap::DrawMap(int &level, float &xcam, float &ycam)
 {
 	int a = int(xcam);
 	int b = int(ycam);

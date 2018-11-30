@@ -14,7 +14,7 @@ public:
 	int level;
 	TileMap();
 	
-	void DrawMap(float &xcam, float &ycam);
+	void DrawMap(int &level,float &xcam, float &ycam);
 	CSprite *GETTILE(int ID) { return sprites->Get(ID); };
 	~TileMap();
 };

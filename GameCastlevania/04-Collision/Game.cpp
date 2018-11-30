@@ -164,7 +164,6 @@ void CGame::InitKeyboard(LPKEYEVENTHANDLER handler)
 
 void CGame::ProcessKeyboard()
 {
-	if (unablekeyboard == 0) {
 		HRESULT hr;
 
 		// Collect all key states first
@@ -211,7 +210,6 @@ void CGame::ProcessKeyboard()
 			else
 				keyHandler->OnKeyUp(KeyCode);
 		}
-	}
 }
 
 CGame::~CGame()
