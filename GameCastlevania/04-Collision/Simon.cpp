@@ -126,12 +126,20 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 							morningstar->state = 0;
 							morningstar->Render(xcam, ycam, x, y);
 						}
+						else if (attack_wp == 1) {
+							knife->vx = -KNIFE_GRAVITY * dt;
+							knife->AddAnimation(1101);
+						}
 					}
 					else {
 						ani = SIMON_ANI_SIT_ATTACK_RIGHT;
 						if (attack_wp == 0) {
 							morningstar->state = 1;
 							morningstar->Render(xcam, ycam, x, y);
+						}
+						else if (attack_wp == 1) {
+							knife->vx = KNIFE_GRAVITY * dt;
+							knife->AddAnimation(1100);
 						}
 					}
 				}
@@ -142,6 +150,10 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 							morningstar->state = 2;
 							morningstar->Render(xcam, ycam, x, y);
 						}
+						else if (attack_wp == 1) {
+							knife->vx = -KNIFE_GRAVITY * dt;
+							knife->AddAnimation(1101);
+						}
 					}
 					else {
 						ani = SIMON_ANI_ATTACK_RIGHT;
@@ -149,11 +161,9 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 							morningstar->state = 3;
 							morningstar->Render(xcam, ycam, x, y);
 						}
-						else {
+						else if (attack_wp == 1) {
 							knife->vx = KNIFE_GRAVITY * dt;
-							knife->AddAnimation(1101);
-							knife->Render(xcam, ycam, x, y);
-							
+							knife->AddAnimation(1100);						
 						}
 					}
 				}	
@@ -254,18 +264,10 @@ void CSimon::Attack_Weapons()
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT]->Reset();
 		knife = new CKnife();
-		if (nx == 1) {
-			knife->vx = KNIFE_GRAVITY * dt;
-			knife->AddAnimation(1100);
-		}
-		else {
-			knife->vx = -KNIFE_GRAVITY * dt;
-			knife->AddAnimation(1101);
-		}
+		
 		objects_weapons.push_back(knife);
 		count = objects_weapons.size();
 		combine_array = 1;
-	
 	}
 	
 }

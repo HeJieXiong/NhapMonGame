@@ -137,6 +137,7 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stage1.h" />
+    <ClInclude Include="Stage2.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="TileMap.h" />
   </ItemGroup>

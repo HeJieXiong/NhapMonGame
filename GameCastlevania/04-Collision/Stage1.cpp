@@ -314,11 +314,11 @@ void CStage1::Update(DWORD dt)
 {
 	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
+	count1 = dt;
 	vector<LPGAMEOBJECT> coObjects;
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
-	count1 = 0;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->tag == 1 || objects[i]->tag == 5)
@@ -335,11 +335,9 @@ void CStage1::Update(DWORD dt)
 		coObjects_weapons.push_back(objects_weapons[i]);
 	}
 	if (Simon->combine_array == 1) {
-		for (int i = 0; i < Simon->objects_weapons.size(); i++)
-		{
-			objects_weapons.push_back(Simon->objects_weapons[i]);
-			count1++;
-		}
+		
+			objects_weapons.push_back(Simon->objects_weapons[Simon->objects_weapons.size()-1]);
+		
 		Simon->combine_array = 0;
 	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
@@ -415,11 +413,16 @@ void CStage1::Render()
 			if (objects[i]->tag != 3)
 				objects[i]->Render(x, y, Simon->x, Simon->y);
 		}
+		for (int i = 0; i < objects_weapons.size(); i++) {
+				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+		}
 		
 		float i = objects_weapons.size();
-		int v = Simon->objects_weapons.size();
+		int v = Simon->nx;
 		//float i = count1;
-		headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
+		if (i > 5) {
+			headerbar->DrawHeaderbar(objects_weapons[5]->vx, v, count1, headerbar->p_);
+		}
 
 
 		spriteHandler->End();

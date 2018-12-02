@@ -89,39 +89,6 @@ void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 		animations[0]->Render(x-xcam,y-ycam);
 		RenderBoundingBox(xcam, ycam);
-		//if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
-		//	x = x_simon - 25;
-		//	y = y_simon + 15;
-		//	int ani = 0;
-
-		//	animations[ani]->Render(x - xcam - 2, y - ycam - 10);
-		//	//RenderBoundingBox_MoringStar(x, y);
-		//	RenderBoundingBox_MoringStar(xcam, ycam);
-		//}
-		//if (state == 1) {//SIMON_ANI_SIT_ATTACK_RIGHT
-		//	x = x_simon;
-		//	y = y_simon + 15;
-		//	int ani = 0;
-		//	animations[ani]->Render(x - xcam - 15, y - ycam - 10);
-		//	//RenderBoundingBox_MoringStar(x, y);
-		//	RenderBoundingBox_MoringStar(xcam, ycam);
-		//}
-		//if (state == 2) {//SIMON_ANI_ATTACK_LEFT
-		//	int ani = 0;
-		//	x = x_simon - 26;
-		//	y = y_simon + 10;
-		//	animations[ani]->Render(x - xcam - 4, y - ycam - 10);
-		//	//RenderBoundingBox_MoringStar(x, y);
-		//	RenderBoundingBox_MoringStar(xcam, ycam);
-		//}
-		//if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
-		//	x = x_simon;
-		//	y = y_simon + 10;
-		//	int ani = 0;
-		//	animations[ani]->Render(x - xcam - 15, y - ycam - 10);
-		//	RenderBoundingBox_MoringStar(xcam, ycam);
-		//}
-	
 }
 
 
