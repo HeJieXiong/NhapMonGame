@@ -149,6 +149,12 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 							morningstar->state = 3;
 							morningstar->Render(xcam, ycam, x, y);
 						}
+						else {
+							knife->vx = KNIFE_GRAVITY * dt;
+							knife->AddAnimation(1101);
+							knife->Render(xcam, ycam, x, y);
+							
+						}
 					}
 				}	
 	}
@@ -238,8 +244,9 @@ void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 	
 }
 
-void CSimon::Attack_Weapons(vector<LPGAMEOBJECT>* colliable_objects)
+void CSimon::Attack_Weapons()
 {
+	
 	if (!attacking) {
 		attacking = 1;
 		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
@@ -255,7 +262,10 @@ void CSimon::Attack_Weapons(vector<LPGAMEOBJECT>* colliable_objects)
 			knife->vx = -KNIFE_GRAVITY * dt;
 			knife->AddAnimation(1101);
 		}
-		colliable_objects->push_back(knife);
+		objects_weapons.push_back(knife);
+		count = objects_weapons.size();
+		combine_array = 1;
+	
 	}
 	
 }

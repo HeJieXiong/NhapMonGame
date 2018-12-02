@@ -50,6 +50,7 @@ CHeaderBar	*headerbar;
 
 CKnife		*knife;
 vector<LPGAMEOBJECT> objects_weapons;
+int i ;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -77,7 +78,8 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_C:
 		Simon->attack_wp = 1;
-		Simon->Attack_Weapons(&objects_weapons);
+		Simon->Attack_Weapons();
+		//i = Simon->objects_weapons.size();
 		break;
 	}
 }
@@ -135,6 +137,7 @@ void  LoadStage() {
 }
 
 void  Updatestage(DWORD dt) {
+	i = objects_weapons.size();
 	stage1->Update(dt);
 }
 
@@ -242,7 +245,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	morningstar = new CMorningstar();
 	knife = new CKnife();
 	Simon = new CSimon(morningstar, headerbar, knife);
-	stage1 = new CStage1(Simon,morningstar,objects_weapons);
+	stage1 = new CStage1(Simon,morningstar, knife,i);
 	stage1->SetGame(game);
 	LoadStage();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

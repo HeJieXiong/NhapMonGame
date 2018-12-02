@@ -27,7 +27,9 @@ void CHeaderBar::GetBoundingBox(float &left, float &top, float &right, float &bo
 void CHeaderBar::DrawHeaderbar(float &x, int &y, int &a, int  &b) {
 	score = to_string(x);
 	time = to_string(y);
+	score+=to_string(y);
 	heart = to_string(a);
+	score += to_string(a);
 	time = to_string(b);
 	
 	font1->DrawTextA(NULL, score.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(0, 0, 0));

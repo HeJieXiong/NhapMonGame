@@ -318,6 +318,7 @@ void CStage1::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
+	count1 = 0;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->tag == 1 || objects[i]->tag == 5)
@@ -333,7 +334,14 @@ void CStage1::Update(DWORD dt)
 	{
 		coObjects_weapons.push_back(objects_weapons[i]);
 	}
-
+	if (Simon->combine_array == 1) {
+		for (int i = 0; i < Simon->objects_weapons.size(); i++)
+		{
+			objects_weapons.push_back(Simon->objects_weapons[i]);
+			count1++;
+		}
+		Simon->combine_array = 0;
+	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 		coObjects_morningstar.push_back(objects_morningstar[i]);
@@ -401,18 +409,17 @@ void CStage1::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 1;
-		map->DrawMap(a, x, y);
+		//map->DrawMap(a, x, y);
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)
 				objects[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		for (int i = 0; i < objects_weapons.size(); i++) {
-			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
-		}
-		float i = objects_weapons[1]->x;
-
-		headerbar->DrawHeaderbar(i, headerbar->time_, headerbar->heart_, headerbar->p_);
+		
+		float i = objects_weapons.size();
+		int v = Simon->objects_weapons.size();
+		//float i = count1;
+		headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
 
 
 		spriteHandler->End();

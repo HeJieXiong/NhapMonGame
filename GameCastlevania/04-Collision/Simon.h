@@ -63,7 +63,10 @@ class CSimon : public CGameObject
 	CKnife	*knife;
 	CHeaderBar *headerbar;
 public: 
+	vector<LPGAMEOBJECT> objects_weapons;
 	int attack_wp;
+	int combine_array = 0;
+	int count=0;
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
@@ -71,6 +74,7 @@ public:
 		headerbar = b;
 		knife = c;
 		untouchable = 0;
+
 	}
 	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
@@ -80,5 +84,5 @@ public:
 	void StarAttack() { attacking = 1; attack_start = GetTickCount(); }
 	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void Attack_Weapons(vector<LPGAMEOBJECT> *colliable_objects);
+	void Attack_Weapons();
 };

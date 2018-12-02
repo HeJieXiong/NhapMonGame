@@ -42,13 +42,12 @@ class  CStage1 {
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;
 	vector<LPGAMEOBJECT> objects_weapons;
-
+	int count1;
 public:
 	bool is_running;
-	CStage1(CSimon *a,CMorningstar *b, vector<LPGAMEOBJECT> c) {
+	CStage1(CSimon *a,CMorningstar *b, CKnife *d, int e) {
 		Simon = a;
 		morningstar = b;
-		objects_weapons = c;
 	};
 	void LoadStage1();
 	void Update(DWORD dt);
