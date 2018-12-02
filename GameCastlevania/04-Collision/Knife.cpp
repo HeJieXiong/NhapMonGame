@@ -63,6 +63,17 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					y = -9999;
 				}
 			}
+			if (dynamic_cast<CCandle *>(e->obj))
+			{
+				CCandle *Candle = dynamic_cast<CCandle *>(e->obj);
+
+				if (e->nx != 0 || e->ny <0)
+				{
+					Candle->state = 100;
+					Candle->y = -9850;
+					y = -9999;
+				}
+			}
 		}
 
 		// clean up collision events

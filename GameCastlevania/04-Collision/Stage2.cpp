@@ -1,19 +1,20 @@
-#include "Stage1.h"
+#include "Stage2.h"
 
-void CStage1::LoadStage1()
+void CStage2::LoadStage2()
 {
 	map = new TileMap();
 
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
-	textures->Add(ID_TEX_MISC, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_MISC, L"textures\\ground\\2-4.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -111,15 +112,54 @@ void CStage1::LoadStage1()
 	//MORNING-STAR-END
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
-	sprites->Add(20001, 0, 0, 31, 31, texMisc);
+	sprites->Add(20001, 0, 0, 16, 14, texMisc);
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
-	for (int i = 0; i < 48; i++)
+	for (int i = 0; i < 100; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(0 + i * 16.0f, 186);
+		brick->SetPosition(i * 15.5f, 203);
+		brick->tag = 1;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+
+	for (int i = 0; i < 3; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f+667, 141);
+		brick->tag = 1;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+	for (int i = 0; i < 10; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f+730, 110);
+		brick->tag = 1;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+
+	for (int i = 0; i < 6; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f + 900, 141);
+		brick->tag = 1;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+
+	for (int i = 0; i < 9; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f + 1350, 110);
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
@@ -150,9 +190,9 @@ void CStage1::LoadStage1()
 		fire->AddAnimation(603);
 		fire->SetPosition(i * 130 + 88, 156);
 		fire->tag = 0;
-		objects.push_back(fire);
+		/*objects.push_back(fire);
 		objects_morningstar.push_back(fire);
-		objects_weapons.push_back(fire);
+		objects_weapons.push_back(fire);*/
 	}
 	//FIRE-END
 
@@ -196,7 +236,24 @@ void CStage1::LoadStage1()
 	//HEAD-BAR-END
 
 
-
+	//CANLDE-START
+	LPDIRECT3DTEXTURE9 textCandle = textures->Get(ID_TEX_CANDLE);
+	sprites->Add(9001, 0, 0, 8, 15, textCandle);
+	sprites->Add(9002, 8, 0, 16, 15, textCandle);
+	ani = new CAnimation(100);		//fire
+	ani->Add(9001);
+	ani->Add(9002);
+	animations->Add(903, ani);
+	for (int i = 0; i < 5; i++) {  //fire
+		candle = new CCandle();
+		candle->AddAnimation(903);
+		candle->SetPosition(i * 130 + 88, 156);
+		candle->tag = 0;
+		objects.push_back(candle);
+		objects_morningstar.push_back(candle);
+		objects_weapons.push_back(candle);
+	}
+	//CANLDE-END
 
 
 	//SIMON-START
@@ -310,7 +367,7 @@ void CStage1::LoadStage1()
 
 }
 
-void CStage1::Update(DWORD dt)
+void CStage2::Update(DWORD dt)
 {
 	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
@@ -335,9 +392,9 @@ void CStage1::Update(DWORD dt)
 		coObjects_weapons.push_back(objects_weapons[i]);
 	}
 	if (Simon->combine_array == 1) {
-		
-			objects_weapons.push_back(Simon->objects_weapons[Simon->objects_weapons.size()-1]);
-		
+
+		objects_weapons.push_back(Simon->objects_weapons[Simon->objects_weapons.size() - 1]);
+
 		Simon->combine_array = 0;
 	}
 	for (int i = 0; i < objects_morningstar.size(); i++)
@@ -384,7 +441,7 @@ void CStage1::Update(DWORD dt)
 	}
 }
 
-void CStage1::Render()
+void CStage2::Render()
 {
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
@@ -401,28 +458,25 @@ void CStage1::Render()
 		if (x <= SCREEN_WIDTH / 2) {
 			x = 0;
 		}
-		else if (x > 550) {
-			x = 350;
-		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		int a = 1;
-		map->DrawMap(a, x, y);
+		int a = 2;
+		//map->DrawMap(a, x, y);
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)
 				objects[i]->Render(x, y, Simon->x, Simon->y);
 		}
 		for (int i = 0; i < objects_weapons.size(); i++) {
-				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		
+
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-		if (i > 5) {
-			headerbar->DrawHeaderbar(objects_weapons[5]->vx, v, count1, headerbar->p_);
-		}
+
+			headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
+		
 
 
 		spriteHandler->End();
