@@ -1,9 +1,31 @@
 #include "Stage2.h"
-
+#include <fstream>
 void CStage2::LoadStage2()
 {
 	map = new TileMap();
+	column = 3;
+	row;
+	ifstream FILE;
+	string sLine;
+	FILE.open("location2.txt");
+	
 
+	if (FILE.good())
+	{
+		
+		getline(FILE, sLine);
+	}
+	row = stoi(sLine);
+	location2 = new int *[row];
+	for (int i = 0; i < row; i++) {
+		location2[i] = new int[column];
+	}
+	
+	for (int i = 0; i < row; i++) {
+		for (int j = 0; j < column; j++) {
+			FILE >> location2[i][j];
+		}
+	}
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -244,15 +266,26 @@ void CStage2::LoadStage2()
 	ani->Add(9001);
 	ani->Add(9002);
 	animations->Add(903, ani);
-	for (int i = 0; i < 5; i++) {  //fire
-		candle = new CCandle();
-		candle->AddAnimation(903);
-		candle->SetPosition(i * 130 + 88, 156);
-		candle->tag = 0;
-		objects.push_back(candle);
-		objects_morningstar.push_back(candle);
-		objects_weapons.push_back(candle);
+	for (int i = 0; i < 5; i++) {
+		if (location2[i][0] == 100001) {
+			candle = new CCandle();
+			candle->AddAnimation(903);
+			candle->SetPosition(location2[i][1], location2[i][2]);
+			candle->tag = 0;
+			objects.push_back(candle);
+			objects_morningstar.push_back(candle);
+			objects_weapons.push_back(candle);
+		}
 	}
+	//for (int i = 0; i < 5; i++) {  //fire
+	//	candle = new CCandle();
+	//	candle->AddAnimation(903);
+	//	candle->SetPosition(i * 130 + 88, 156);
+	//	candle->tag = 0;
+	//	objects.push_back(candle);
+	//	objects_morningstar.push_back(candle);
+	//	objects_weapons.push_back(candle);
+	//}
 	//CANLDE-END
 
 
@@ -461,7 +494,7 @@ void CStage2::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 2;
-		//map->DrawMap(a, x, y);
+		map->DrawMap(a, x, y);
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)

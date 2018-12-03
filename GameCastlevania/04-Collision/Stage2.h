@@ -59,5 +59,7 @@ public:
 		game = CGame::GetInstance();
 		game = g;
 	}
+	int column, row;
+	int **location2;
 	~CStage2();
 };
