@@ -37,6 +37,7 @@ void CStage2::LoadStage2()
 	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -272,22 +273,32 @@ void CStage2::LoadStage2()
 			candle->AddAnimation(903);
 			candle->SetPosition(location2[i][1], location2[i][2]);
 			candle->tag = 0;
-			objects.push_back(candle);
+			/*objects.push_back(candle);
 			objects_morningstar.push_back(candle);
-			objects_weapons.push_back(candle);
+			objects_weapons.push_back(candle);*/
 		}
 	}
-	//for (int i = 0; i < 5; i++) {  //fire
-	//	candle = new CCandle();
-	//	candle->AddAnimation(903);
-	//	candle->SetPosition(i * 130 + 88, 156);
-	//	candle->tag = 0;
-	//	objects.push_back(candle);
-	//	objects_morningstar.push_back(candle);
-	//	objects_weapons.push_back(candle);
-	//}
 	//CANLDE-END
 
+	//GHOST-START
+	LPDIRECT3DTEXTURE9 textGhost = textures->Get(ID_TEX_GHOST);
+	sprites->Add(11001, 0, 0, 17, 31, textGhost);
+	sprites->Add(11002, 17, 0, 34, 31, textGhost);
+	ani = new CAnimation(100);	
+	ani->Add(11001);
+	ani->Add(11002);
+	animations->Add(1103, ani);
+	for (int i = 0; i < 8; i++) {
+		if (location2[i][0] == 100002) {
+			ghost = new CGhost();
+			ghost->AddAnimation(1103);
+			ghost->SetPosition(location2[i][1], location2[i][2]);
+			objects.push_back(ghost);
+			objects_morningstar.push_back(ghost);
+			objects_weapons.push_back(ghost);
+		}
+	}
+	//GHOST-END
 
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
@@ -494,7 +505,7 @@ void CStage2::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 2;
-		map->DrawMap(a, x, y);
+		//map->DrawMap(a, x, y);
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)
