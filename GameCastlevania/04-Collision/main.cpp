@@ -53,6 +53,7 @@ CHeaderBar	*headerbar;
 CKnife		*knife;
 vector<LPGAMEOBJECT> objects_weapons;
 int i ;
+int current_stage;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -209,45 +210,6 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	return hWnd;
 }
 
-
-int RunStage1()
-{
-	MSG msg;
-	DWORD frameStart = GetTickCount();
-	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-	int done=0;
-	while (!done)
-	{
-		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
-		{
-			if (msg.message == WM_QUIT) done = 1;
-
-			TranslateMessage(&msg);
-			DispatchMessage(&msg);
-		}
-		
-
-		DWORD now = GetTickCount();
-
-		// dt: the time between (beginning of last frame) and now
-		// this frame: the frame we are about to render
-		DWORD dt = now - frameStart;
-
-		if (dt >= tickPerFrame)
-		{
-			frameStart = now;
-
-				game->ProcessKeyboard();
-
-				Updatestage1(dt);
-				Renderstage1();
-		}
-		else
-			Sleep(tickPerFrame - dt);
-	}
-
-	return 1;
-}
 int RunStage2()
 {
 	MSG msg;
@@ -286,6 +248,78 @@ int RunStage2()
 
 	return 1;
 }
+int RunStage1()
+{
+	MSG msg;
+	DWORD frameStart = GetTickCount();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+	int done=0;
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+		
+
+		DWORD now = GetTickCount();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = now - frameStart;
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+			if ((Simon->x < 650) && (game->unablekeyboard == 0)) {
+
+				game->ProcessKeyboard();
+			}
+			else {
+				if (Simon->GetState() != SIMON_STATE_IDLE && Simon->is_walking != 1) {
+					Simon->SetState(SIMON_STATE_WALKING_LEFT);
+					Simon->vx = -0.02;
+				}
+				if (Simon->x <= 610) {
+					Simon->vx = 0;
+					Simon->nx = 1;
+					Simon->SetState(SIMON_STATE_IDLE);
+				}
+				if (Simon->x <= 630 && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
+					Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+					Simon->vx = 0.02;
+					Simon->is_walking = 1;
+				}
+				if (Simon->x >= 650 && Simon->GetState() == SIMON_STATE_WALKING_RIGHT) {
+					Simon->SetState(SIMON_STATE_DISAPPEAR);
+					Simon->vx = 0;
+					stage2->SetGame(game);
+					LoadStage2();
+					RunStage2();
+
+				}
+
+
+				game->unablekeyboard = 1;
+			}
+
+				Updatestage1(dt);
+				Renderstage1();
+		}
+		else
+			Sleep(tickPerFrame - dt);
+	}
+
+	return 1;
+}
+
+int currentstage(CStage1 *a) {
+	current_stage = a->stage_id;
+	return current_stage;
+}
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
 	/*std::string a="dcm";
@@ -301,16 +335,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Simon = new CSimon(morningstar, headerbar, knife);
 	stage1 = new CStage1(Simon,morningstar, knife,i);
 	stage2 = new CStage2(Simon, morningstar, knife, i);
-	/*stage1->SetGame(game);
+	stage1->SetGame(game);
 	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage1();*/
+	RunStage1();
+	currentstage(stage1);
 	
 
-	stage2->SetGame(game);
-	LoadStage2();
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
+		
 	
 	
 	

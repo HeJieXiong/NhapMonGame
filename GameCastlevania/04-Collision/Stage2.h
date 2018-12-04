@@ -50,6 +50,7 @@ class  CStage2 {
 	vector<LPGAMEOBJECT> objects_weapons;
 	int count1;
 public:
+	int stage_id = 2;
 	bool is_running;
 	CStage2(CSimon *a, CMorningstar *b, CKnife *d, int e) {
 		Simon = a;

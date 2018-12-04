@@ -16,6 +16,10 @@ void CGrid::GetBoundingBox(float & left, float & top, float & right, float & bot
 {
 }
 
+void CGrid::Render(float & xcam, float & ycam, float & x_simon, float & y_simon)
+{
+}
+
 void CGrids::Add(int id, LPCGrid tex)
 {
 	grids[id] = tex;
