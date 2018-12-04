@@ -3,29 +3,28 @@
 void CStage2::LoadStage2()
 {
 	map = new TileMap();
-	column = 3;
-	row;
-	ifstream FILE;
-	string sLine;
-	FILE.open("location2.txt");
-	
+	//column = 3;
+	//row;
+	//ifstream FILE;
+	//string sLine;
+	//FILE.open("location2.txt");
+	//
 
-	if (FILE.good())
-	{
-		
-		getline(FILE, sLine);
-	}
-	row = stoi(sLine);
-	location2 = new int *[row];
-	for (int i = 0; i < row; i++) {
-		location2[i] = new int[column];
-	}
-	
-	for (int i = 0; i < row; i++) {
-		for (int j = 0; j < column; j++) {
-			FILE >> location2[i][j];
-		}
-	}
+	//if (FILE.good())
+	//{		
+	//	getline(FILE, sLine);
+	//}
+	//row = stoi(sLine);
+	//location2 = new int *[row];
+	//for (int i = 0; i < row; i++) {
+	//	location2[i] = new int[column];
+	//}
+	//
+	//for (int i = 0; i < row; i++) {
+	//	for (int j = 0; j < column; j++) {
+	//		FILE >> location2[i][j];
+	//	}
+	//}
 	CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -267,17 +266,17 @@ void CStage2::LoadStage2()
 	ani->Add(9001);
 	ani->Add(9002);
 	animations->Add(903, ani);
-	for (int i = 0; i < 5; i++) {
+	/*for (int i = 0; i < 5; i++) {
 		if (location2[i][0] == 100001) {
 			candle = new CCandle();
 			candle->AddAnimation(903);
 			candle->SetPosition(location2[i][1], location2[i][2]);
 			candle->tag = 0;
-			/*objects.push_back(candle);
+			objects.push_back(candle);
 			objects_morningstar.push_back(candle);
-			objects_weapons.push_back(candle);*/
+			objects_weapons.push_back(candle);
 		}
-	}
+	}*/
 	//CANLDE-END
 
 	//GHOST-START
@@ -288,16 +287,17 @@ void CStage2::LoadStage2()
 	ani->Add(11001);
 	ani->Add(11002);
 	animations->Add(1103, ani);
-	for (int i = 0; i < 8; i++) {
-		if (location2[i][0] == 100002) {
-			ghost = new CGhost();
-			ghost->AddAnimation(1103);
-			ghost->SetPosition(location2[i][1], location2[i][2]);
-			objects.push_back(ghost);
-			objects_morningstar.push_back(ghost);
-			objects_weapons.push_back(ghost);
-		}
-	}
+	//for (int i = 0; i < 8; i++) {
+	//	if (location2[i][0] == 100002) {
+	//		ghost = new CGhost();
+	//		ghost->AddAnimation(1103);
+	//		ghost->SetPosition(location2[i][1], location2[i][2]);
+	//		ghost->SetState(GHOST_STATE_WALKING);
+	//		objects.push_back(ghost);
+	//		objects_morningstar.push_back(ghost);
+	//		objects_weapons.push_back(ghost);
+	//	}
+	//}
 	//GHOST-END
 
 	//SIMON-START
@@ -490,6 +490,7 @@ void CStage2::Render()
 	LPDIRECT3DDEVICE9 d3ddv = game->GetDirect3DDevice();
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
+
 	if (d3ddv->BeginScene())
 	{
 		// Clear back buffer with a color
@@ -505,7 +506,10 @@ void CStage2::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 2;
-		//map->DrawMap(a, x, y);
+		map->DrawMap(a, x, y);
+		float i = objects_weapons.size();
+		int v = Simon->nx;
+		
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)
@@ -515,13 +519,11 @@ void CStage2::Render()
 			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
 
-		float i = objects_weapons.size();
-		int v = Simon->nx;
+		headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
 		//float i = count1;
-
-			headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
 		
-
+		
+			
 
 		spriteHandler->End();
 		d3ddv->EndScene();

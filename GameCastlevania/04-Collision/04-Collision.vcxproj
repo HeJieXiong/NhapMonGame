@@ -132,6 +132,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Goomba.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="HeaderBar.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Knife.h" />
@@ -153,6 +154,7 @@
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Goomba.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HeaderBar.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Knife.cpp" />
