@@ -69,6 +69,7 @@ public:
 	float test_val;
 	int has_wp=0; //Dùng để kiểm tra Simon đã nhặt được item phóng được chưa.
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
+	int is_on_stair; //Kiểm tra Simon có va chạm với các box cầu thang chưa.
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

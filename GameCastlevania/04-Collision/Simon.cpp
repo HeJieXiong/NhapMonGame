@@ -93,7 +93,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						test_val = item->ani;
 						if (item->ani == 900) {
 							morningstar->SetType(1);
-							has_wp = 1;
 						}
 						if (item->ani == 903) {
 							has_wp = 1;

@@ -303,13 +303,16 @@ int RunStage1()
 					RunStage2();
 
 				}
+	
+					
 
 
 				game->unablekeyboard = 1;
 			}
 
-				Updatestage1(dt);
-				Renderstage1();
+			Updatestage1(dt);
+			Renderstage1();
+
 		}
 		else
 			Sleep(tickPerFrame - dt);
