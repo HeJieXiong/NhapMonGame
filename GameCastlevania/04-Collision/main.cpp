@@ -80,10 +80,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
-		Simon->attack_wp = 1;
-		Simon->Attack_Weapons();
-		//i = Simon->objects_weapons.size();
-		break;
+		if (Simon->has_wp == 1) {
+			Simon->attack_wp = 1;
+			Simon->Attack_Weapons();
+			break;
+		}
+		
 	}
 }
 
@@ -288,7 +290,7 @@ int RunStage1()
 					Simon->nx = 1;
 					Simon->SetState(SIMON_STATE_IDLE);
 				}
-				if (Simon->x <= 630 && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
+				if (Simon->x <= 610 && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
 					Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 					Simon->vx = 0.02;
 					Simon->is_walking = 1;

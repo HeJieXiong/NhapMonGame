@@ -66,7 +66,8 @@ public:
 	vector<LPGAMEOBJECT> objects_weapons;
 	int attack_wp;
 	int combine_array = 0;
-	int count=0;
+	float test_val;
+	int has_wp=0; //Dùng để kiểm tra Simon đã nhặt được item phóng được chưa.
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{

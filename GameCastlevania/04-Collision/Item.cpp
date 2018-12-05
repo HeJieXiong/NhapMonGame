@@ -15,6 +15,11 @@ void CItem::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 		right = x + HEART_WIDTH;
 		bottom = y + HEART_HEIGHT;
 	}
+	else if (ani == 903)//HEART
+	{
+		right = x + HEART_WIDTH;
+		bottom = y + HEART_HEIGHT;
+	}
 	else//WEAPONS
 	{
 		right = x + WEAPONS_WIDTH;
@@ -74,7 +79,7 @@ void CItem::Item_setting(CItem * Item, float & x, float & y,int a)
 		ani = a;
 		Item->x = x;
 		Item->y = y+9999;
-		Item->AddAnimation(a);
+		Item->AddAnimation(ani);
 		Item->tag = 5;
 	
 }

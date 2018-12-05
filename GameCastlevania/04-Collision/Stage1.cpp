@@ -43,7 +43,7 @@ void CStage1::LoadStage1()
 	ani = new CAnimation(100); //HEART BIG
 	ani->Add(9002);
 	animations->Add(902, ani);
-	ani = new CAnimation(100); //HEART BIG
+	ani = new CAnimation(100); //KNIFE
 	ani->Add(9003);
 	animations->Add(903, ani);
 	ani = new CAnimation(100); //AXE
@@ -347,7 +347,7 @@ void CStage1::Update(DWORD dt)
 			CItem		*item;
 			item = new CItem();
 			int rand_no;
-			rand_no = rand() % 2 + 900;
+			rand_no = 100;
 			item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 			objects.push_back(item);
 			obejects_item.push_back(item);
@@ -362,7 +362,7 @@ void CStage1::Update(DWORD dt)
 			CItem		*item;
 			item = new CItem();
 			int rand_no;
-			rand_no = rand() % 2 + 900;
+			rand_no = rand() % 4 + 900;
 			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
 			objects.push_back(item);
 			obejects_item.push_back(item);
@@ -420,9 +420,9 @@ void CStage1::Render()
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-		if (i > 5) {
-			headerbar->DrawHeaderbar(objects_weapons[5]->vx, v, count1, headerbar->p_);
-		}
+	
+			headerbar->DrawHeaderbar(Simon->test_val, v, count1, headerbar->p_);
+		
 
 
 		spriteHandler->End();

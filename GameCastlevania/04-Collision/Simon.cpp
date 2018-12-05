@@ -90,9 +90,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						item->y = -9850;
 						item->vy = 0;
 						item->dt = 0;
+						test_val = item->ani;
 						if (item->ani == 900) {
 							morningstar->SetType(1);
+							has_wp = 1;
 						}
+						if (item->ani == 903) {
+							has_wp = 1;
+						}
+						
 				}
 			}
 		}
@@ -266,7 +272,6 @@ void CSimon::Attack_Weapons()
 		knife = new CKnife();
 		
 		objects_weapons.push_back(knife);
-		count = objects_weapons.size();
 		combine_array = 1;
 	}
 	

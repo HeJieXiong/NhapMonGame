@@ -1,7 +1,14 @@
 #pragma once
 #include "GameObject.h"
-#define ITEM_HEART 0
-#define ITEM_HEART_BIG 1
+#define ITEM_WHIP 0
+#define ITEM_HEART 1
+#define ITEM_HEART_BIG 2
+#define ITEM_KNIFE 3
+#define ITEM_AXE 4
+#define ITEM_BOOMERANG 5
+#define ITEM_BAG_100 6
+#define ITEM_BAG_400 7
+#define ITEM_BAG_700 8
 #define ITEM_GRAVITY 0.0002f
 #define WEAPONS_HEIGHT 16
 #define WEAPONS_WIDTH 16
