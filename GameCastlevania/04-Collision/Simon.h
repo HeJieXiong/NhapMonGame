@@ -3,12 +3,13 @@
 #include "Morningstar.h"
 #include "Knife.h"
 #include "HeaderBar.h"
-
+#include "Stair.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.002f
+#define SIMON_GRAVITY_ON_STAIR			0.0002f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 #define SIMON_SIT_LOCATION 100
 
@@ -20,12 +21,12 @@
 #define SIMON_STATE_SIT_DOWN		500
 #define SIMON_STATE_ATTACK			600
 #define SIMON_STATE_DISAPPEAR		700
+#define SIMON_STATE_ON_STAIR		800
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
 #define SIMON_ANI_BIG_IDLE_LEFT		1
 #define SIMON_ANI_SMALL_IDLE_RIGHT	2
 #define SIMON_ANI_SMALL_IDLE_LEFT	3
-
 #define SIMON_ANI_BIG_WALKING_RIGHT	4
 #define SIMON_ANI_BIG_WALKING_LEFT	5
 #define SIMON_ANI_JUMP_RIGHT		6
@@ -37,7 +38,9 @@
 #define SIMON_ANI_SIT_ATTACK_LEFT	12
 #define SIMON_ANI_SIT_ATTACK_RIGHT	13
 #define SIMON_ANI_DISAPPEAR			14
-#define SIMON_ANI_DIE				15
+#define SIMON_ANI_ON_STAIR_LEFT		15
+#define SIMON_ANI_ON_STAIR_RIGHT	16
+#define SIMON_ANI_DIE				17
 #define SIMON_BIG_BBOX_WIDTH  20
 #define SIMON_BIG_BBOX_HEIGHT 31
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -87,4 +90,5 @@ public:
 	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Attack_Weapons();
+	void Walking_on_stair();
 };

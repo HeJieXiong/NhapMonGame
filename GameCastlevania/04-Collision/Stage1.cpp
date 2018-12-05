@@ -287,6 +287,16 @@ void CStage1::LoadStage1()
 	ani->Add(10055);
 	animations->Add(414, ani);
 
+	ani = new CAnimation(150);	// idle on stair left
+	ani->Add(10020);
+	ani->Add(10021);
+	animations->Add(415, ani);
+
+	ani = new CAnimation(150);	// idle on stair right
+	ani->Add(10027);
+	ani->Add(10028);
+	animations->Add(416, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -303,6 +313,8 @@ void CStage1::LoadStage1()
 	Simon->AddAnimation(412);		// attack sit left
 	Simon->AddAnimation(413);		// attack sit right
 	Simon->AddAnimation(414);		// attack disappear
+	Simon->AddAnimation(415);		// on stair left
+	Simon->AddAnimation(416);		// on stair right
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
@@ -363,7 +375,7 @@ void CStage1::Update(DWORD dt)
 			item = new CItem();
 			int rand_no;
 			rand_no = rand() % 4 + 900;
-			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
+			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, 903);
 			objects.push_back(item);
 			obejects_item.push_back(item);
 			objects_weapons[i]->tag = 5;

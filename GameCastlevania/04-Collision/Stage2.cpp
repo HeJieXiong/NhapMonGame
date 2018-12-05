@@ -218,9 +218,6 @@ void CStage2::LoadStage2()
 	}
 	//FIRE-END
 
-
-
-
 	//HEAD-BAR-START
 	LPDIRECT3DTEXTURE9 texHeaderBar = textures->Get(ID_TEX_HEADERBAR);
 	sprites->Add(8001, 0, 0, 49, 26, texHeaderBar); //heart,p bar
@@ -266,7 +263,7 @@ void CStage2::LoadStage2()
 	ani->Add(9001);
 	ani->Add(9002);
 	animations->Add(903, ani);
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100001) {
 			candle = new CCandle();
 			candle->AddAnimation(903);
@@ -287,19 +284,42 @@ void CStage2::LoadStage2()
 	ani->Add(11001);
 	ani->Add(11002);
 	animations->Add(1103, ani);
-	for (int i = 0; i < 9; i++) {
+	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100002) {
 			ghost = new CGhost();
 			ghost->AddAnimation(1103);
 			ghost->SetPosition(location2[i][1], location2[i][2]);
 			ghost->SetState(GHOST_STATE_WALKING);
-			objects.push_back(ghost);
+			/*objects.push_back(ghost);
 			objects_morningstar.push_back(ghost);
-			objects_weapons.push_back(ghost);
+			objects_weapons.push_back(ghost);*/
 		}
 	}
 	//GHOST-END
+	//STAIR-1-STAR
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100003) {
+			stair = new CStair();
+			stair->SetPosition(location2[i][1], location2[i][2]);
+			stair->tag = 1;
+			objects.push_back(stair);
+			objects_stair_1.push_back(stair);
+		}
+	}
+	
+	//STAIR-1-END
+	//STAIR-2-STAR
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100004) {
+			stair = new CStair();
+			stair->SetPosition(location2[i][1], location2[i][2]);
+			stair->tag = 1;
+			objects.push_back(stair);
+			objects_stair_2.push_back(stair);
+		}
+	}
 
+	//STAIR-2-END
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 	int top_simon = 0;
@@ -388,6 +408,16 @@ void CStage2::LoadStage2()
 	ani->Add(10055);
 	animations->Add(414, ani);
 
+	ani = new CAnimation(150);	// idle on stair left
+	ani->Add(10020);
+	ani->Add(10021);
+	animations->Add(415, ani);
+
+	ani = new CAnimation(150);	// idle on stair right
+	ani->Add(10027);
+	ani->Add(10028);
+	animations->Add(416, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -404,6 +434,8 @@ void CStage2::LoadStage2()
 	Simon->AddAnimation(412);		// attack sit left
 	Simon->AddAnimation(413);		// attack sit right
 	Simon->AddAnimation(414);		// attack disappear
+	Simon->AddAnimation(415);		// on stair left
+	Simon->AddAnimation(416);		// on stair right
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
@@ -507,7 +539,7 @@ void CStage2::Render()
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 2;
 		map->DrawMap(a, x, y);
-		float i = objects_weapons.size();
+		float i = Simon->is_on_stair;
 		int v = Simon->nx;
 		
 		for (int i = 0; i < objects.size(); i++) {

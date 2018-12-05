@@ -118,6 +118,12 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		else
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
 	}
+	else if (game->IsKeyDown(DIK_UP)) {
+		if (Simon->is_on_stair ==1) {
+			Simon->Walking_on_stair();
+			Simon->SetState(SIMON_STATE_ON_STAIR);
+		}
+	}
 	else
 		Simon->SetState(SIMON_STATE_IDLE);
 }
@@ -298,9 +304,7 @@ int RunStage1()
 				if (Simon->x >= 650 && Simon->GetState() == SIMON_STATE_WALKING_RIGHT) {
 					Simon->SetState(SIMON_STATE_DISAPPEAR);
 					Simon->vx = 0;
-					stage2->SetGame(game);
-					LoadStage2();
-					RunStage2();
+					
 
 				}
 	
@@ -340,12 +344,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Simon = new CSimon(morningstar, headerbar, knife);
 	stage1 = new CStage1(Simon,morningstar, knife,i);
 	stage2 = new CStage2(Simon, morningstar, knife, i);
-	stage1->SetGame(game);
+	/*stage1->SetGame(game);
 	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
-	currentstage(stage1);
-	
+	currentstage(stage1);*/
+	stage2->SetGame(game);
+	LoadStage2();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage2();
 
 		
 	

@@ -13,6 +13,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
+	if (is_on_stair==0)
 	vy += SIMON_GRAVITY*dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -100,6 +101,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						
 				}
 			}
+			if (dynamic_cast<CStair *>(e->obj))
+			{
+				CStair *stair = dynamic_cast<CStair *>(e->obj);
+
+				if (e->nx != 0 || e->ny <0)
+				{
+					is_on_stair = 1;
+					
+				}
+			}
 		}
 	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
@@ -175,6 +186,11 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	else if (state == SIMON_STATE_DISAPPEAR) {
 		ani = SIMON_ANI_DISAPPEAR;
+	}
+	if (state == SIMON_STATE_ON_STAIR) {
+		if (nx > 0)
+			ani = SIMON_ANI_ON_STAIR_RIGHT;
+		else ani = SIMON_ANI_ON_STAIR_LEFT;
 	}
 	else{		
 		if (vx == 0){
@@ -274,6 +290,13 @@ void CSimon::Attack_Weapons()
 		combine_array = 1;
 	}
 	
+}
+
+void CSimon::Walking_on_stair()
+{
+	vy -= SIMON_GRAVITY_ON_STAIR * dt;
+	vx += SIMON_GRAVITY_ON_STAIR *dt;
+	x += dx;
 }
 
 
