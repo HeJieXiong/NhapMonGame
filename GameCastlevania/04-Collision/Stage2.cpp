@@ -3,7 +3,7 @@
 void CStage2::LoadStage2()
 {
 	map = new TileMap();
-	column = 3;
+	column = 4;
 	row;
 	ifstream FILE;
 	string sLine;
@@ -268,7 +268,7 @@ void CStage2::LoadStage2()
 			candle = new CCandle();
 			candle->AddAnimation(903);
 			candle->SetPosition(location2[i][1], location2[i][2]);
-			candle->tag = 0;
+			candle->tag = location2[i][3];
 			objects.push_back(candle);
 			objects_morningstar.push_back(candle);
 			objects_weapons.push_back(candle);
@@ -289,6 +289,7 @@ void CStage2::LoadStage2()
 			ghost = new CGhost();
 			ghost->AddAnimation(1103);
 			ghost->SetPosition(location2[i][1], location2[i][2]);
+			ghost->tag = location2[i][3];
 			ghost->SetState(GHOST_STATE_WALKING);
 			/*objects.push_back(ghost);
 			objects_morningstar.push_back(ghost);
@@ -301,7 +302,8 @@ void CStage2::LoadStage2()
 		if (location2[i][0] == 100003) {
 			stair = new CStair();
 			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->tag = 1;
+			stair->tag = location2[i][3];
+			stair->type_stair = 1;
 			objects.push_back(stair);
 			objects_stair_1.push_back(stair);
 		}
@@ -313,7 +315,8 @@ void CStage2::LoadStage2()
 		if (location2[i][0] == 100004) {
 			stair = new CStair();
 			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->tag = 1;
+			stair->tag = location2[i][3];
+			stair->type_stair = 2;
 			objects.push_back(stair);
 			objects_stair_2.push_back(stair);
 		}

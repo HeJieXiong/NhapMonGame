@@ -13,7 +13,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	if (is_on_stair==0)
+	if (is_on_stair == 0)
 	vy += SIMON_GRAVITY*dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -107,8 +107,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 				if (e->nx != 0 || e->ny <0)
 				{
-					is_on_stair = 1;
-					
+					if (is_on_stair == 0&& stair ->type_stair==1) {
+						is_on_stair = 1;
+					}
+					if (is_on_stair == 1&& stair->type_stair == 2) {
+						vy += SIMON_GRAVITY * dt;
+						vx += SIMON_GRAVITY * dt;
+						is_on_stair = 0;
+					}
 				}
 			}
 		}
