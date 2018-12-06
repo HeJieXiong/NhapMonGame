@@ -187,7 +187,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	else if (state == SIMON_STATE_DISAPPEAR) {
 		ani = SIMON_ANI_DISAPPEAR;
 	}
-	if (state == SIMON_STATE_ON_STAIR) {
+	else if (state == SIMON_STATE_ON_STAIR) {
 		if (nx > 0)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
 		else ani = SIMON_ANI_ON_STAIR_LEFT;
