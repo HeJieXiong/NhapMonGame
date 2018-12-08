@@ -99,7 +99,7 @@ void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		state = 1;
 	}
 		animations[0]->Render(x-xcam,y-ycam);
-		RenderBoundingBox(xcam, ycam);
+		//RenderBoundingBox(xcam, ycam);
 }
 
 

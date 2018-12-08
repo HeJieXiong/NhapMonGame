@@ -20,16 +20,13 @@ TileMap::TileMap()
 			sprites->Add(ID++, i * 32, 32 * 7, 32 * (i + 1), 32 * 8, textures->Get(1));
 		}
 }
-
-void TileMap::DrawMap(int &level, float &xcam, float &ycam)
-{
-	int a = int(xcam);
-	int b = int(ycam);
+void TileMap::LoadMap(int **&map, int level) {
 	ifstream FILE;
 	if (level == 1) {
 		column = 24;
 		row = 6;
 		map = new int *[row];
+		
 		for (int i = 0; i < row; i++) {
 			map[i] = new int[column];
 		}
@@ -37,14 +34,6 @@ void TileMap::DrawMap(int &level, float &xcam, float &ycam)
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
 				FILE >> map[i][j];
-			}
-		}
-		for (int i = 0; i < row; i++) {
-			for (int j = 0; j < column; j++) {
-				CSprite *tile = sprites->Get(map[i][j]);
-				int x = j % 24;
-				int y = j / 24 + i;
-				tile->Draw(x * 31 - a, y * 31 - b);
 			}
 		}
 	}
@@ -61,14 +50,22 @@ void TileMap::DrawMap(int &level, float &xcam, float &ycam)
 				FILE >> map[i][j];
 			}
 		}
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 48; j++) {
+	}
+}
+void TileMap::DrawMap(int **map, float &xcam, float &ycam)
+{
+	int a = int(xcam);
+	int b = int(ycam);
+	
+	
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
 				CSprite *tile = sprites->Get(map[i][j]);
-				int x = j % 49;
-				int y = j / 49 + i;
+				int x = j % column;
+				int y = j / column + i;
 				tile->Draw(x * 31 - a, y * 31 - b);
 			}
 		}
 	}
-}
+
 

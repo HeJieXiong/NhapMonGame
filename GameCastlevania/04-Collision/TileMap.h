@@ -10,11 +10,11 @@ private:
 	
 public:
 	int column, row;
-	int **map;
+	
 	int level;
 	TileMap();
-	
-	void DrawMap(int &level,float &xcam, float &ycam);
+	void LoadMap(int **&map, int level);
+	void DrawMap(int **map,float &xcam, float &ycam);
 	CSprite *GETTILE(int ID) { return sprites->Get(ID); };
 	~TileMap();
 };

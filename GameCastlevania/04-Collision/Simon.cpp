@@ -213,7 +213,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam-2.5, y - ycam, alpha);
-	RenderBoundingBox(xcam, ycam);
+	//RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)

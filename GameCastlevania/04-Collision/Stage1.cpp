@@ -320,6 +320,9 @@ void CStage1::LoadStage1()
 	//SIMON-END
 
 
+	//LOAD-MAP
+	map->LoadMap(stagemap, 1);
+
 }
 
 void CStage1::Update(DWORD dt)
@@ -375,7 +378,7 @@ void CStage1::Update(DWORD dt)
 			item = new CItem();
 			int rand_no;
 			rand_no = rand() % 4 + 900;
-			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, 903);
+			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
 			objects.push_back(item);
 			obejects_item.push_back(item);
 			objects_weapons[i]->tag = 5;
@@ -419,7 +422,7 @@ void CStage1::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 1;
-		map->DrawMap(a, x, y);
+		map->DrawMap(stagemap, x, y);
 		for (int i = 0; i < objects.size(); i++) {
 
 			if (objects[i]->tag != 3)

@@ -443,7 +443,7 @@ void CStage2::LoadStage2()
 	objects.push_back(Simon);
 	//SIMON-END
 
-
+	map->LoadMap(stagemap, 2);
 }
 
 void CStage2::Update(DWORD dt)
@@ -541,7 +541,7 @@ void CStage2::Render()
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
 		int a = 2;
-		map->DrawMap(a, x, y);
+		map->DrawMap(stagemap, x, y);
 		float i = Simon->is_on_stair;
 		int v = Simon->nx;
 		

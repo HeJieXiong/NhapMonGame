@@ -52,6 +52,7 @@ class  CStage2 {
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
 	int count1;
+	int **stagemap;
 public:
 	int stage_id = 2;
 	bool is_running;
