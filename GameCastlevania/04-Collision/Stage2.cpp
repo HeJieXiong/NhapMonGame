@@ -1,4 +1,4 @@
-#include "Stage2.h"
+﻿#include "Stage2.h"
 #include <fstream>
 void CStage2::LoadStage2()
 {
@@ -132,6 +132,48 @@ void CStage2::LoadStage2()
 	morningstar->AddAnimation(704);
 	//objects.push_back(morningstar);
 	//MORNING-STAR-END
+	//STAIR-1-STAR
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100003) {
+			stair = new CStair();
+			stair->SetPosition(location2[i][1], location2[i][2]);
+			stair->stair_direction = location2[i][3];
+			stair->tag = 1;
+			stair->type_stair = 1;
+			objects.push_back(stair);
+			objects_stair_1.push_back(stair);
+		}
+	}
+
+	//STAIR-1-END
+	//STAIR-2-STAR
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100004) {
+			stair = new CStair();
+			stair->SetPosition(location2[i][1], location2[i][2]);
+			stair->stair_direction = location2[i][3];
+			stair->tag = 1;
+			stair->type_stair = 2;
+			objects.push_back(stair);
+			objects_stair_2.push_back(stair);
+		}
+	}
+
+	//STAIR-2-END
+	//STAIR-3-STAR
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100005) {
+			stair = new CStair();
+			stair->SetPosition(location2[i][1], location2[i][2]);
+			stair->stair_direction = location2[i][3];
+			stair->tag = 1;
+			stair->type_stair = 3;
+			objects.push_back(stair);
+			objects_stair_2.push_back(stair);
+		}
+	}
+
+	//STAIR-3-END
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 16, 14, texMisc);
@@ -297,32 +339,8 @@ void CStage2::LoadStage2()
 		}
 	}
 	//GHOST-END
-	//STAIR-1-STAR
-	for (int i = 0; i < row; i++) {
-		if (location2[i][0] == 100003) {
-			stair = new CStair();
-			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->tag = location2[i][3];
-			stair->type_stair = 1;
-			objects.push_back(stair);
-			objects_stair_1.push_back(stair);
-		}
-	}
-	
-	//STAIR-1-END
-	//STAIR-2-STAR
-	for (int i = 0; i < row; i++) {
-		if (location2[i][0] == 100004) {
-			stair = new CStair();
-			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->tag = location2[i][3];
-			stair->type_stair = 2;
-			objects.push_back(stair);
-			objects_stair_2.push_back(stair);
-		}
-	}
 
-	//STAIR-2-END
+	
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 	int top_simon = 0;
@@ -442,7 +460,22 @@ void CStage2::LoadStage2()
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
-
+	//GRID-STAR
+	/*gridsSys = new CGrids();
+	int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
+	float posX, posY, cellX, cellY;
+	for (int i = 0; i < numOfCell; i++)	
+	{
+		gridsSys->Add(i, i*SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
+		for (int k = 0; k < objects.size(); k++)
+		{	
+			objects.at(k)->GetPosition(posX, posY);
+			gridsSys->GetGrid(i)->GetPosition(cellX, cellY);
+			if (posX >= cellX && posX <= cellX + SCREEN_WIDTH)
+				gridsSys->GetGrid(i)->AddGrid(objects.at(k));
+		}
+	}*/
+	//GRID-END
 	map->LoadMap(stagemap, 2);
 }
 
@@ -450,7 +483,6 @@ void CStage2::Update(DWORD dt)
 {
 	// We know that SIMON is the first object in the list hence we won't add him into the colliable object list
 	// TO-DO: This is a "dirty" way, need a more organized way 
-	count1 = dt;
 	vector<LPGAMEOBJECT> coObjects;
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
@@ -540,7 +572,6 @@ void CStage2::Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		int a = 2;
 		map->DrawMap(stagemap, x, y);
 		float i = Simon->is_on_stair;
 		int v = Simon->nx;
@@ -554,7 +585,7 @@ void CStage2::Render()
 			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
 
-		headerbar->DrawHeaderbar(i, v, count1, headerbar->p_);
+		headerbar->DrawHeaderbar(i, v,v, headerbar->p_);
 		//float i = count1;
 		
 		

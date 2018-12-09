@@ -92,6 +92,15 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 void CSampleKeyHander::OnKeyUp(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	switch (KeyCode)
+	{
+	case DIK_UP:
+		if (Simon->is_on_stair == 1) {
+			Simon->vy = 0;
+			break;
+		}
+
+	}
 }
 
 void CSampleKeyHander::KeyState(BYTE *states)
@@ -345,10 +354,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	stage1 = new CStage1(Simon,morningstar, knife,i);
 	stage2 = new CStage2(Simon, morningstar, knife, i);
 	stage1->SetGame(game);
-	//LoadStage1();
-	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	//RunStage1();
-	//currentstage(stage1);
+	/*LoadStage1();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage1();
+	currentstage(stage1);*/
 	stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

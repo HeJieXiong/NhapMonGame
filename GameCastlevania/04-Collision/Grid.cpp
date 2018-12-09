@@ -20,9 +20,10 @@ void CGrid::Render(float & xcam, float & ycam, float & x_simon, float & y_simon)
 {
 }
 
-void CGrids::Add(int id, LPCGrid tex)
+void CGrids::Add(int id_grid, float x, float y, float scr_width, float scr_height)
 {
-	grids[id] = tex;
+	CGrid *grid = new  CGrid(id_grid,x,y,scr_width,scr_height);
+	grids.push_back(grid);
 }
 
 LPCGrid CGrids::GetGrid(int id)

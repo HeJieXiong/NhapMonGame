@@ -22,7 +22,7 @@ class CGrids {
 public:
 	vector<LPCGrid> grids;
 	CGrids();
-	void Add(int id, LPCGrid tex);
+	void Add(int id_grid, float x, float y, float scr_width, float scr_height);
 	LPCGrid GetGrid(int id);
 	~CGrids();
 };

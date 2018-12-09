@@ -15,6 +15,7 @@
 #include "Candle.h"
 #include "Ghost.h"
 #include "Stair.h"
+#include "Grid.h"
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(255,255,255)
 
 
@@ -29,6 +30,7 @@
 #define ID_TEX_KNIFE		70
 #define	ID_TEX_CANDLE		80
 #define ID_TEX_GHOST	90
+#define MAP_LENGTH	4608
 
 class  CStage2 {
 
@@ -44,14 +46,14 @@ class  CStage2 {
 	CGhost		*ghost;
 	CStair		*stair;
 	TileMap		*map;
-
+	CGrids		*gridsSys;
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;
 	vector<LPGAMEOBJECT> objects_weapons;
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
-	int count1;
+	vector<LPGAMEOBJECT> objects_stair_3;
 	int **stagemap;
 public:
 	int stage_id = 2;
