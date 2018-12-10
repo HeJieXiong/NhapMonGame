@@ -101,22 +101,33 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						
 				}
 			}
+
+			/*if (dynamic_cast<CGhost *>(e->obj))
+			{
+				CGhost *ghost = dynamic_cast<CGhost *>(e->obj);
+
+				if (e->nx != 0 || e->ny <0)
+				{
+					vx=-100;
+				}
+			}*/
 			if (dynamic_cast<CStair *>(e->obj))
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 
-				if (e->nx != 0 || e->ny <0)
+				if (e->nx != 0 || e->ny <0||e->ny>0)
 				{
 					if (is_on_stair == 0&& stair ->type_stair==1) {
 						is_on_stair = 1;
 					}
 					if (is_on_stair == 1&& stair->type_stair == 2) {
-						vy += SIMON_GRAVITY * dt;
-						vx += SIMON_GRAVITY * dt;
+						has_g = 1;
 						is_on_stair = 0;
 					}
-					if (is_on_stair == 1 && stair->type_stair == 3)
+					if (is_on_stair == 1 && stair->type_stair == 3) {
 						is_on_stair = 0;
+						has_g = 1;
+					}
 				}
 			}
 		}
@@ -215,7 +226,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam-2.5, y - ycam, alpha);
-	//RenderBoundingBox(xcam, ycam);
+	RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)
@@ -302,8 +313,8 @@ void CSimon::Attack_Weapons()
 
 void CSimon::Walking_on_stair()
 {
-	vy -= SIMON_GRAVITY_ON_STAIR * dt;
-	vx += SIMON_GRAVITY_ON_STAIR *dt;
+	vy -= SIMON_GRAVITY_ON_STAIR_Y * dt;
+	vx += SIMON_GRAVITY_ON_STAIR_X *dt;
 	x += dx;
 	has_g = 0;
 }

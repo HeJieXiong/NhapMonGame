@@ -4,12 +4,14 @@
 #include "Knife.h"
 #include "HeaderBar.h"
 #include "Stair.h"
+#include "Ghost.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.002f
-#define SIMON_GRAVITY_ON_STAIR			0.00005f
+#define SIMON_GRAVITY_ON_STAIR_Y			0.00009f
+#define SIMON_GRAVITY_ON_STAIR_X			0.00005f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 #define SIMON_SIT_LOCATION 100
 

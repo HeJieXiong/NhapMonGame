@@ -69,6 +69,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
+		if(Simon->is_on_stair!=1)
 		Simon->SetState(SIMON_STATE_JUMP);
 		break;
 	case DIK_A: // reset

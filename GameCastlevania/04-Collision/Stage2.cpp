@@ -15,9 +15,9 @@ void CStage2::LoadStage2()
 		getline(FILE, sLine);
 	}
 	row = stoi(sLine);
-	location2 = new int *[row];
+	location2 = new float *[row];
 	for (int i = 0; i < row; i++) {
-		location2[i] = new int[column];
+		location2[i] = new float[column];
 	}
 	
 	for (int i = 0; i < row; i++) {
@@ -333,9 +333,9 @@ void CStage2::LoadStage2()
 			ghost->SetPosition(location2[i][1], location2[i][2]);
 			ghost->tag = location2[i][3];
 			ghost->SetState(GHOST_STATE_WALKING);
-			/*objects.push_back(ghost);
+			objects.push_back(ghost);
 			objects_morningstar.push_back(ghost);
-			objects_weapons.push_back(ghost);*/
+			objects_weapons.push_back(ghost);
 		}
 	}
 	//GHOST-END
@@ -572,9 +572,9 @@ void CStage2::Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		map->DrawMap(stagemap, x, y);
+		//map->DrawMap(stagemap, x, y);
 		float i = Simon->is_on_stair;
-		int v = Simon->nx;
+		int v = Simon->y;
 		
 		for (int i = 0; i < objects.size(); i++) {
 

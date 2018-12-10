@@ -70,6 +70,6 @@ public:
 		game = g;
 	}
 	int column, row;
-	int **location2;
+	float **location2;
 	~CStage2();
 };
