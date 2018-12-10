@@ -43,7 +43,7 @@
 #define SIMON_ANI_ON_STAIR_LEFT		15
 #define SIMON_ANI_ON_STAIR_RIGHT	16
 #define SIMON_ANI_DIE				17
-#define SIMON_BIG_BBOX_WIDTH  20
+#define SIMON_BIG_BBOX_WIDTH  15
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
 #define SIMON_SIT_BBOX_HEIGHT 30
@@ -76,6 +76,7 @@ public:
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	int is_on_stair; //Kiểm tra Simon có va chạm với các box cầu thang chưa.
 	int has_g=1;
+	int state_direction_on_stair;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
@@ -93,5 +94,5 @@ public:
 	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Attack_Weapons();
-	void Walking_on_stair();
+	void Walking_on_stair_up();
 };

@@ -117,6 +117,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 				if (e->nx != 0 || e->ny <0||e->ny>0)
 				{
+					state_direction_on_stair= stair->stair_direction;
 					if (is_on_stair == 0&& stair ->type_stair==1) {
 						is_on_stair = 1;
 					}
@@ -207,7 +208,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		ani = SIMON_ANI_DISAPPEAR;
 	}
 	else if (state == SIMON_STATE_ON_STAIR) {
-		if (nx > 0)
+		if (state_direction_on_stair ==1)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
 		else ani = SIMON_ANI_ON_STAIR_LEFT;
 	}
@@ -225,7 +226,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		}		
 	}
 	int alpha = 255;
-	animations[ani]->Render(x - xcam-2.5, y - ycam, alpha);
+	animations[ani]->Render(x - xcam-7, y - ycam, alpha);
 	RenderBoundingBox(xcam, ycam);
 }
 
@@ -311,10 +312,16 @@ void CSimon::Attack_Weapons()
 	
 }
 
-void CSimon::Walking_on_stair()
+void CSimon::Walking_on_stair_up()
 {
+			
+	if (state_direction_on_stair == 1) {
+		vx += SIMON_GRAVITY_ON_STAIR_X * dt;
+	}
+	else
+		vx -= SIMON_GRAVITY_ON_STAIR_X * dt;
 	vy -= SIMON_GRAVITY_ON_STAIR_Y * dt;
-	vx += SIMON_GRAVITY_ON_STAIR_X *dt;
+	
 	x += dx;
 	has_g = 0;
 }
