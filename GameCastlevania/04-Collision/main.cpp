@@ -143,7 +143,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		}
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
-		if (Simon->is_on_stair ==1) {
+		if (Simon->is_on_stair ==1&& (Simon->state_direction_on_stair==1 || Simon->state_direction_on_stair == 3)) {
 			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 		}

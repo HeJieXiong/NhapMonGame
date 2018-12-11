@@ -118,7 +118,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				if (e->nx != 0 || e->ny <0||e->ny>=0)
 				{
 					state_direction_on_stair= stair->stair_direction;
-					if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {
+					if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {//Bật is_on_stair khi Simon vào chỗ cầu thang
 						is_on_stair = 1;
 						has_g = 1;
 					}
@@ -130,7 +130,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						has_g = 1;
 						is_on_stair = 0;
 					}
-					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0)// Simon khi đi xuống
+					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 &&stair->type_stair==1)// Simon khi đi xuống
 					{
 						has_g = 1;	
 					}
@@ -217,10 +217,12 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
 		if (state_direction_on_stair == 2)
 			ani = SIMON_ANI_DOWN_STAIR_LEFT;
+		//else ani = SIMON_ANI_ON_STAIR_RIGHT; //Trường hợp Simon đi lên va chạm vào direc 2 khiến ani bị đưa về ani đi xuống
 		if (state_direction_on_stair == 3)
 			ani = SIMON_ANI_ON_STAIR_LEFT;
 		if (state_direction_on_stair == 4)
 			ani = SIMON_ANI_DOWN_STAIR_RIGHT;
+		//else ani = SIMON_ANI_ON_STAIR_LEFT;//Trường hợp Simon đi lên va chạm vào direc 4 khiến ani bị đưa về ani đi xuống
 		if (state_direction_on_stair == 0) {
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
 			else if (nx<0) ani = SIMON_ANI_BIG_IDLE_LEFT;

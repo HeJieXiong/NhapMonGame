@@ -1,7 +1,7 @@
 ﻿#pragma once
 #include "GameObject.h"
-#define STAIR_HEIGHT 14;
-#define STAIR_WIDTH	 8;
+#define STAIR_HEIGHT 12;
+#define STAIR_WIDTH	 12;
 class CStair : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
