@@ -115,19 +115,24 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 
-				if (e->nx != 0 || e->ny <0||e->ny>0)
+				if (e->nx != 0 || e->ny <0||e->ny>=0)
 				{
 					state_direction_on_stair= stair->stair_direction;
-					if (is_on_stair == 0&& stair ->type_stair==1) {
+					if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {
 						is_on_stair = 1;
+						has_g = 1;
 					}
-					if (is_on_stair == 1&& stair->type_stair == 2) {
+					if (is_on_stair == 1&& stair->type_stair == 2 &&stair->stair_direction==0) {
 						has_g = 1;
 						is_on_stair = 0;
 					}
 					if (is_on_stair == 1 && stair->type_stair == 3) {
-						is_on_stair = 0;
 						has_g = 1;
+						is_on_stair = 0;
+					}
+					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0)// Simon khi đi xuống
+					{
+						has_g = 1;	
 					}
 				}
 			}
@@ -210,7 +215,16 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	else if (state == SIMON_STATE_ON_STAIR) {
 		if (state_direction_on_stair ==1)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
-		else ani = SIMON_ANI_ON_STAIR_LEFT;
+		if (state_direction_on_stair == 2)
+			ani = SIMON_ANI_DOWN_STAIR_LEFT;
+		if (state_direction_on_stair == 3)
+			ani = SIMON_ANI_ON_STAIR_LEFT;
+		if (state_direction_on_stair == 4)
+			ani = SIMON_ANI_DOWN_STAIR_RIGHT;
+		if (state_direction_on_stair == 0) {
+			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
+			else if (nx<0) ani = SIMON_ANI_BIG_IDLE_LEFT;
+		}
 	}
 	else{		
 		if (vx == 0){
@@ -312,18 +326,35 @@ void CSimon::Attack_Weapons()
 	
 }
 
-void CSimon::Walking_on_stair_up()
+void CSimon::Walking_on_stair()
 {
 			
 	if (state_direction_on_stair == 1) {
 		vx += SIMON_GRAVITY_ON_STAIR_X * dt;
+		has_g = 0;
 	}
-	else
+	if (state_direction_on_stair == 3) {
 		vx -= SIMON_GRAVITY_ON_STAIR_X * dt;
-	vy -= SIMON_GRAVITY_ON_STAIR_Y * dt;
-	
+		has_g = 0;
+	}
+	vy -= SIMON_GRAVITY_ON_STAIR_Y * dt;	
 	x += dx;
-	has_g = 0;
+	
+}
+void CSimon::Walking_down_stair()
+{
+
+	if (state_direction_on_stair == 4) {
+		vx += SIMON_GRAVITY_DOWN_STAIR_X * dt;
+		has_g = 0;
+	}
+	if (state_direction_on_stair == 2) {
+		vx -= SIMON_GRAVITY_DOWN_STAIR_X * dt;
+		has_g = 0;
+	}
+	vy += SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+	x += dx;
+	
 }
 
 

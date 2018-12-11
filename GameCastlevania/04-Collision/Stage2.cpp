@@ -439,6 +439,16 @@ void CStage2::LoadStage2()
 	ani->Add(10028);
 	animations->Add(416, ani);
 
+	ani = new CAnimation(150);	// idle down stair left
+	ani->Add(10020);
+	ani->Add(10019);
+	animations->Add(417, ani);
+
+	ani = new CAnimation(150);	// idle down stair right
+	ani->Add(10029);
+	ani->Add(10030);
+	animations->Add(418, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -457,6 +467,8 @@ void CStage2::LoadStage2()
 	Simon->AddAnimation(414);		// attack disappear
 	Simon->AddAnimation(415);		// on stair left
 	Simon->AddAnimation(416);		// on stair right
+	Simon->AddAnimation(417);		// down stair left
+	Simon->AddAnimation(418);		// down stair right
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
@@ -572,9 +584,10 @@ void CStage2::Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		map->DrawMap(stagemap, x, y);
-		float i = Simon->is_on_stair;
-		int v = Simon->y;
+		//map->DrawMap(stagemap, x, y);
+		float i = Simon->state_direction_on_stair;
+		int v = Simon->is_on_stair;
+		int k = Simon->has_g;
 		
 		for (int i = 0; i < objects.size(); i++) {
 
@@ -585,7 +598,7 @@ void CStage2::Render()
 			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
 
-		headerbar->DrawHeaderbar(i, v,v, headerbar->p_);
+		headerbar->DrawHeaderbar(i, v,k, headerbar->p_);
 		//float i = count1;
 		
 		

@@ -69,7 +69,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if(Simon->is_on_stair!=1)
+		if(Simon->has_g!=0)
 		Simon->SetState(SIMON_STATE_JUMP);
 		break;
 	case DIK_A: // reset
@@ -96,11 +96,15 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_UP:
-		if (Simon->is_on_stair == 1) {
+		if (Simon->is_on_stair == 1&&Simon->has_g==0) {
 			Simon->vy = 0;
 			break;
 		}
-
+	case DIK_DOWN:
+		if (Simon->is_on_stair == 1 && Simon->has_g == 0) {
+			Simon->vy = 0;
+			break;
+		}
 	}
 }
 
@@ -109,28 +113,38 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	// disable control key when SIMON die 
 	if (Simon->GetState() == SIMON_STATE_DIE) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
-		if (game->IsKeyDown(DIK_Z))
-			Simon->vx = 0;
-		else
-		Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+		if (Simon->has_g == 1) {
+			if (game->IsKeyDown(DIK_Z))
+				Simon->vx = 0;
+			else
+				Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		if (game->IsKeyDown(DIK_Z)|| game->IsKeyDown(DIK_C))
-			Simon->vx = 0;
-		else Simon->SetState(SIMON_STATE_WALKING_LEFT);
+		if (Simon->has_g == 1) {
+			if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C))
+				Simon->vx = 0;
+			else Simon->SetState(SIMON_STATE_WALKING_LEFT);
+		}
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		if (game->IsKeyDown(DIK_X)) {
-			Simon->vy = 0;
-			Simon->y = 149.9999;
-			Simon->SetState(SIMON_STATE_SIT_DOWN);
+		if (Simon->is_on_stair == 1&& (Simon->state_direction_on_stair==4|| Simon->state_direction_on_stair == 2)) {
+			Simon->Walking_down_stair();
+			Simon->SetState(SIMON_STATE_ON_STAIR);
 		}
-		else
-			Simon->SetState(SIMON_STATE_SIT_DOWN);
+		else {
+			if (game->IsKeyDown(DIK_X)) {
+				Simon->vy = 0;
+				Simon->y = 149.9999;
+				Simon->SetState(SIMON_STATE_SIT_DOWN);
+			}
+			else
+				Simon->SetState(SIMON_STATE_SIT_DOWN);
+		}
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
 		if (Simon->is_on_stair ==1) {
-			Simon->Walking_on_stair_up();
+			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 		}
 	}

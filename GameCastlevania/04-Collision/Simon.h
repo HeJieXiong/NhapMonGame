@@ -12,6 +12,8 @@
 #define SIMON_GRAVITY			0.002f
 #define SIMON_GRAVITY_ON_STAIR_Y			0.00009f
 #define SIMON_GRAVITY_ON_STAIR_X			0.00005f
+#define SIMON_GRAVITY_DOWN_STAIR_Y			0.0002f
+#define SIMON_GRAVITY_DOWN_STAIR_X			0.00006f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 #define SIMON_SIT_LOCATION 100
 
@@ -42,7 +44,9 @@
 #define SIMON_ANI_DISAPPEAR			14
 #define SIMON_ANI_ON_STAIR_LEFT		15
 #define SIMON_ANI_ON_STAIR_RIGHT	16
-#define SIMON_ANI_DIE				17
+#define SIMON_ANI_DOWN_STAIR_LEFT	17
+#define SIMON_ANI_DOWN_STAIR_RIGHT	18
+#define SIMON_ANI_DIE				19
 #define SIMON_BIG_BBOX_WIDTH  15
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -75,7 +79,7 @@ public:
 	int has_wp=0; //Dùng để kiểm tra Simon đã nhặt được item phóng được chưa.
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	int is_on_stair; //Kiểm tra Simon có va chạm với các box cầu thang chưa.
-	int has_g=1;
+	int has_g=1; //1 có trọng lực 0 ko có trọng lực
 	int state_direction_on_stair;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
@@ -94,5 +98,6 @@ public:
 	void Attack(CMorningstar *monringstar,float &x_cam, float &y_cam);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	void Attack_Weapons();
-	void Walking_on_stair_up();
+	void Walking_on_stair();
+	void Walking_down_stair();
 };
