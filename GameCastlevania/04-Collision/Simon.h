@@ -14,8 +14,8 @@
 #define SIMON_GRAVITY			0.002f
 #define SIMON_GRAVITY_ON_STAIR_Y			0.0035f
 #define SIMON_GRAVITY_ON_STAIR_X			0.0025f
-#define SIMON_GRAVITY_DOWN_STAIR_Y			0.0002f
-#define SIMON_GRAVITY_DOWN_STAIR_X			0.00006f
+#define SIMON_GRAVITY_DOWN_STAIR_Y			0.0035f
+#define SIMON_GRAVITY_DOWN_STAIR_X			0.0025f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 #define SIMON_SIT_LOCATION 100
 
@@ -86,6 +86,7 @@ public:
 	int is_on_stair; //Kiểm tra Simon có va chạm với các box cầu thang chưa.
 	int has_g=1; //1 có trọng lực 0 ko có trọng lực
 	int state_direction_on_stair;
+	int between_stair = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

@@ -137,6 +137,7 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="Morningstar.h" />
+    <ClInclude Include="Panther.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stage1.h" />
