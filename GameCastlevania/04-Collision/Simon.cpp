@@ -133,10 +133,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_on_stair = 1;
 						has_g = 1;
 					}
-					if (is_on_stair == 1&& stair->type_stair == 2 &&stair->stair_direction==0) {
-					
+					if (is_on_stair == 1&& stair->type_stair ==2&&has_g==0) {					
 						has_g = 1;
-						is_on_stair = 0;
+						x += dx;
+						//y += dy;
+					}
+					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
+						is_on_stair = 1;
 						x += dx;
 						//y += dy;
 					}
@@ -167,6 +170,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		DebugOut(L"Dir %d\n", this->state_direction_on_stair);
 		DebugOut(L"Between %d\n", this->between_stair);
+		DebugOut(L"has_g %d\n", this->has_g);
+		DebugOut(L"on_stair %d\n", this->is_on_stair);
 
 
 }
@@ -412,8 +417,9 @@ void CSimon::Walking_down_stair()
 	}
 	if (state_direction_on_stair == 2) {
 		vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-		has_g = 0;
+		
 		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+		has_g = 0;
 	}
 	if (state_direction_on_stair == 1) {
 		vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
