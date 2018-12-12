@@ -69,9 +69,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if(Simon->has_g!=0)
-		Simon->SetState(SIMON_STATE_JUMP);
-		break;
+		if (Simon->has_g != 0) {
+			Simon->SetState(SIMON_STATE_JUMP);
+			
+			Simon->isFalling = 1;
+			break;
+		}
 	case DIK_A: // reset
 		Simon->SetState(SIMON_STATE_IDLE);
 		Simon->SetPosition(50.0f, 0.0f);
