@@ -5,13 +5,15 @@
 #include "HeaderBar.h"
 #include "Stair.h"
 #include "Ghost.h"
+#include"debug.h"
+#include "Brick.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.002f
-#define SIMON_GRAVITY_ON_STAIR_Y			0.00009f
-#define SIMON_GRAVITY_ON_STAIR_X			0.00005f
+#define SIMON_GRAVITY_ON_STAIR_Y			0.0035f
+#define SIMON_GRAVITY_ON_STAIR_X			0.0025f
 #define SIMON_GRAVITY_DOWN_STAIR_Y			0.0002f
 #define SIMON_GRAVITY_DOWN_STAIR_X			0.00006f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
@@ -71,11 +73,14 @@ class CSimon : public CGameObject
 	CMorningstar *morningstar;
 	CKnife	*knife;
 	CHeaderBar *headerbar;
+
+
 public: 
 	vector<LPGAMEOBJECT> objects_weapons;
 	int attack_wp;
 	int combine_array = 0;
 	float test_val;
+	bool isFalling=true;
 	int has_wp=0; //Dùng để kiểm tra Simon đã nhặt được item phóng được chưa.
 	int is_walking; //Biến dùng để kiểm tra xem Simon có đang trong trạng thái tự động đi chưa
 	int is_on_stair; //Kiểm tra Simon có va chạm với các box cầu thang chưa.

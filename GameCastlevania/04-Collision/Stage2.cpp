@@ -3,7 +3,7 @@
 void CStage2::LoadStage2()
 {
 	map = new TileMap();
-	column = 4;
+	column = 5;
 	row;
 	ifstream FILE;
 	string sLine;
@@ -136,8 +136,9 @@ void CStage2::LoadStage2()
 	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100003) {
 			stair = new CStair();
-			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->stair_direction = location2[i][3];
+			stair->id = location2[i][1];
+			stair->SetPosition(location2[i][2], location2[i][3]);
+			stair->stair_direction = location2[i][4];
 			stair->tag = 1;
 			stair->type_stair = 1;
 			objects.push_back(stair);
@@ -150,8 +151,9 @@ void CStage2::LoadStage2()
 	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100004) {
 			stair = new CStair();
-			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->stair_direction = location2[i][3];
+			stair->id = location2[i][1];
+			stair->SetPosition(location2[i][2], location2[i][3]);
+			stair->stair_direction = location2[i][4];
 			stair->tag = 1;
 			stair->type_stair = 2;
 			objects.push_back(stair);
@@ -164,8 +166,9 @@ void CStage2::LoadStage2()
 	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100005) {
 			stair = new CStair();
-			stair->SetPosition(location2[i][1], location2[i][2]);
-			stair->stair_direction = location2[i][3];
+			stair->id = location2[i][1];
+			stair->SetPosition(location2[i][2], location2[i][3]);
+			stair->stair_direction = location2[i][4];
 			stair->tag = 1;
 			stair->type_stair = 3;
 			objects.push_back(stair);
@@ -333,9 +336,9 @@ void CStage2::LoadStage2()
 			ghost->SetPosition(location2[i][1], location2[i][2]);
 			ghost->tag = location2[i][3];
 			ghost->SetState(GHOST_STATE_WALKING);
-			objects.push_back(ghost);
-			objects_morningstar.push_back(ghost);
-			objects_weapons.push_back(ghost);
+			//objects.push_back(ghost);
+			//objects_morningstar.push_back(ghost);
+			//objects_weapons.push_back(ghost);
 		}
 	}
 	//GHOST-END

@@ -10,6 +10,7 @@ class CStair : public CGameObject
 
 
 public:
+	int id; 
 	bool check_stair;
 	int type_stair; //Dùng để kiểm tra xem nếu là stair 1 sẽ là đi lên còn stair 2 sẽ là đi xuống
 	int stair_direction; //Dùng để kiểm tra hướng cầu thang mà Simon đang đứng: 1 là phải lên 2 là phải xuống 3 trái lên 4 trái lên 

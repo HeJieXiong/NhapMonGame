@@ -13,7 +13,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	CGameObject::Update(dt);
 
 	// Simple fall down
-	if (has_g == 1)
+	if (!is_on_stair)
 	vy += SIMON_GRAVITY*dt;
 
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -80,6 +80,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
+			if (dynamic_cast<CBrick *>(e->obj))
+			{
+				CBrick *brick = dynamic_cast<CBrick *>(e->obj);
+
+				if (e->nx != 0 || e->ny <0)
+				{
+					isFalling = false;
+					//break;
+				}
+			}
 
 			if (dynamic_cast<CItem *>(e->obj))
 			{
@@ -123,13 +133,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						has_g = 1;
 					}
 					if (is_on_stair == 1&& stair->type_stair == 2 &&stair->stair_direction==0) {
+					
 						has_g = 1;
 						is_on_stair = 0;
+						x += dx;
+						y += dy;
 					}
-					if (is_on_stair == 1 && stair->type_stair == 3) {
-						has_g = 1;
-						is_on_stair = 0;
-					}
+					//if (is_on_stair == 1 && stair->type_stair == 3) {
+					//	has_g = 1;
+					//	is_on_stair = 0;
+					//}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 &&stair->type_stair==1)// Simon khi đi xuống
 					{
 						has_g = 1;	
@@ -146,6 +159,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
+	DebugOut(L"vy %f\n", this->vy);
+	
+		DebugOut(L"dang roi %d\n", this->isFalling);
+
 }
 
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
@@ -253,18 +270,32 @@ void CSimon::SetState(int state)
 	switch (state)
 	{
 	case SIMON_STATE_WALKING_RIGHT:
-		vx = SIMON_WALKING_SPEED;
-		nx = 1;
-		break;
-	case SIMON_STATE_WALKING_LEFT: 
-		vx = -SIMON_WALKING_SPEED;
-		nx = -1;
-		break;
-	case SIMON_STATE_JUMP: 
-		if (y>140) {
-			vy = -SIMON_JUMP_SPEED_Y;
+
+		{
+			vx = SIMON_WALKING_SPEED;
+			nx = 1;
+			break;
 		}
-		else vy = 0;
+	case SIMON_STATE_WALKING_LEFT: 
+		{
+			vx = -SIMON_WALKING_SPEED;
+			nx = -1;
+			break;
+		}
+	case SIMON_STATE_JUMP: 
+		if(!is_on_stair)
+		{
+			//if(has_g)
+			//if(vy==0)
+			//if(vy<0)
+			if(!isFalling)
+			/*if (y > 140)*/ {
+				//isFalling = true;
+				vy = -SIMON_JUMP_SPEED_Y;
+			}
+			//return;
+			//else vy = 0;
+		}
 	case SIMON_STATE_IDLE: 
 		vx = 0;
 		level = 0;
@@ -332,30 +363,30 @@ void CSimon::Walking_on_stair()
 {
 			
 	if (state_direction_on_stair == 1) {
-		vx += SIMON_GRAVITY_ON_STAIR_X * dt;
+		vx = +SIMON_GRAVITY_ON_STAIR_X * dt;
 		has_g = 0;
 	}
 	if (state_direction_on_stair == 3) {
-		vx -= SIMON_GRAVITY_ON_STAIR_X * dt;
+		vx = -SIMON_GRAVITY_ON_STAIR_X * dt;
 		has_g = 0;
 	}
-	vy -= SIMON_GRAVITY_ON_STAIR_Y * dt;	
-	x += dx;
+	vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;	
+	x += 0;
 	
 }
 void CSimon::Walking_down_stair()
 {
 
 	if (state_direction_on_stair == 4) {
-		vx += SIMON_GRAVITY_DOWN_STAIR_X * dt;
+		vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
 		has_g = 0;
 	}
 	if (state_direction_on_stair == 2) {
-		vx -= SIMON_GRAVITY_DOWN_STAIR_X * dt;
+		vx = +SIMON_GRAVITY_DOWN_STAIR_X * dt;
 		has_g = 0;
 	}
-	vy += SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-	x += dx;
+	vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+	x += 0;
 	
 }
 
