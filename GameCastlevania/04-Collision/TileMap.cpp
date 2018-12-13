@@ -24,7 +24,7 @@ void TileMap::LoadMap(int **&map, int level) {
 	ifstream FILE;
 	if (level == 1) {
 		column = 24;
-		row = 6;
+		row = 5;
 		map = new int *[row];
 		
 		for (int i = 0; i < row; i++) {
@@ -39,14 +39,28 @@ void TileMap::LoadMap(int **&map, int level) {
 	}
 	if (level == 2) {
 		column = 48;
-		row = 7;
+		row = 6;
 		map = new int *[row];
 		for (int i = 0; i < row; i++) {
 			map[i] = new int[column];
 		}
-		FILE.open("map2.txt");
-		for (int i = 0; i < 7; i++) {
-			for (int j = 0; j < 48; j++) {
+		FILE.open("map3.txt");
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> map[i][j];
+			}
+		}
+	}
+	if (level == 3) {
+		column = 17;
+		row = 6;
+		map = new int *[row];
+		for (int i = 0; i < row; i++) {
+			map[i] = new int[column];
+		}
+		FILE.open("map3.txt");
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
 				FILE >> map[i][j];
 			}
 		}
@@ -63,7 +77,7 @@ void TileMap::DrawMap(int **map, float &xcam, float &ycam)
 				CSprite *tile = sprites->Get(map[i][j]);
 				int x = j % column;
 				int y = j / column + i;
-				tile->Draw(x * 31 - a, y * 31 - b);
+				tile->Draw(x * 31 - a, y * 31 - b+31);
 			}
 		}
 	}

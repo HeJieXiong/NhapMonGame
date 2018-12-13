@@ -149,5 +149,8 @@
     <ClCompile Include="Stair.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Panther.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

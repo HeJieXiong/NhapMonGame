@@ -32,7 +32,7 @@ void CHeaderBar::DrawHeaderbar(float &x, int &y, int &a, int  &b) {
 	score += to_string(a);
 	time = to_string(b);
 	
-	font1->DrawTextA(NULL, score.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(0, 0, 0));
+	font1->DrawTextA(NULL, score.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
 }
 
 

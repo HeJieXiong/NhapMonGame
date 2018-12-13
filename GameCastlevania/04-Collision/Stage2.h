@@ -16,7 +16,7 @@
 #include "Ghost.h"
 #include "Stair.h"
 #include "Grid.h"
-#define BACKGROUND_COLOR D3DCOLOR_XRGB(255,255,255)
+#define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 
 
 #define MAX_FRAME_RATE 100
