@@ -587,7 +587,7 @@ void CStage2::Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		//map->DrawMap(stagemap, x, y);
+		map->DrawMap(stagemap, x, y);
 		float i = Simon->state_direction_on_stair;
 		int v = Simon->is_on_stair;
 		int k = Simon->has_g;
