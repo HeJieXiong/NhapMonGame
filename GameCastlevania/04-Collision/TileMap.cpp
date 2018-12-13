@@ -79,6 +79,20 @@ void TileMap::LoadMap(int **&map, int level) {
 			}
 		}
 	}
+	if (level == 5) {
+		column = 24;
+		row = 6;
+		map = new int *[row];
+		for (int i = 0; i < row; i++) {
+			map[i] = new int[column];
+		}
+		FILE.open("map5.txt");
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> map[i][j];
+			}
+		}
+	}
 }
 void TileMap::DrawMap(int **map, float &xcam, float &ycam)
 {

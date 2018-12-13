@@ -193,7 +193,7 @@ void CStage2::LoadStage2()
 		obejects_item.push_back(brick);
 	}
 
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 3; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -201,8 +201,8 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
-	}
-	for (int i = 0; i < 10; i++)
+	}*/
+	/*for (int i = 0; i < 10; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -210,9 +210,9 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
-	}
+	}*/
 
-	for (int i = 0; i < 6; i++)
+	/*for (int i = 0; i < 6; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -220,9 +220,9 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
-	}
+	}*/
 
-	for (int i = 0; i < 9; i++)
+	/*for (int i = 0; i < 9; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -230,7 +230,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
-	}
+	}*/
 	//BRICK-END
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
