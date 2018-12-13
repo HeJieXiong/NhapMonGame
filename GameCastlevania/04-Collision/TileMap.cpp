@@ -44,7 +44,7 @@ void TileMap::LoadMap(int **&map, int level) {
 		for (int i = 0; i < row; i++) {
 			map[i] = new int[column];
 		}
-		FILE.open("map3.txt");
+		FILE.open("map2.txt");
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
 				FILE >> map[i][j];
@@ -52,13 +52,27 @@ void TileMap::LoadMap(int **&map, int level) {
 		}
 	}
 	if (level == 3) {
-		column = 17;
+		column = 16;
 		row = 6;
 		map = new int *[row];
 		for (int i = 0; i < row; i++) {
 			map[i] = new int[column];
 		}
 		FILE.open("map3.txt");
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> map[i][j];
+			}
+		}
+	}
+	if (level == 4) {
+		column = 16;
+		row = 6;
+		map = new int *[row];
+		for (int i = 0; i < row; i++) {
+			map[i] = new int[column];
+		}
+		FILE.open("map4.txt");
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
 				FILE >> map[i][j];
