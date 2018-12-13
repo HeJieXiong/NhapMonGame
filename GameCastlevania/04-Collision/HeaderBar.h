@@ -10,12 +10,17 @@ class CHeaderBar : public CGameObject
 private:
 	ID3DXFont * font1;
 	RECT fRectangle1;
+	RECT fRectangle2;
 	std::string score;
+	std::string player;
+	std::string enemy;
 	std::string time;
 	std::string stage;
 	std::string heart;	
 	std::string p;
+	std::string space;
 	HRESULT hr1;
+	HRESULT hr2;
 public:
 	int score_;
 	int time_ ;
@@ -25,5 +30,5 @@ public:
 	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
-	void DrawHeaderbar(float &x,int &y, int &a, int  &b);
+	void DrawHeaderbar();
 };
