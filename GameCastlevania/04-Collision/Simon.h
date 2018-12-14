@@ -95,7 +95,6 @@ public:
 		untouchable = 0;
 
 	}
-	
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	void SetState(int state);
