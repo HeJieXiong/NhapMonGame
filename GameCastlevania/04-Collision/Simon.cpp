@@ -168,10 +168,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//	DebugOut(L"dang roi %d\n", this->isFalling);
 	//	DebugOut(L"X %f\n", this->x);
 
-		DebugOut(L"Dir %d\n", this->state_direction_on_stair);
+		/*DebugOut(L"Dir %d\n", this->state_direction_on_stair);
 		DebugOut(L"Between %d\n", this->between_stair);
 		DebugOut(L"has_g %d\n", this->has_g);
-		DebugOut(L"on_stair %d\n", this->is_on_stair);
+		DebugOut(L"on_stair %d\n", this->is_on_stair);*/
 
 
 }

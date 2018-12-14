@@ -43,6 +43,8 @@ public:
 
 	int state;
 	int tag;
+	bool is_active;
+	int point;
 	DWORD dt; 
 
 	vector<LPANIMATION> animations;

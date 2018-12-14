@@ -33,6 +33,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Textures.h"
 #include "Stage1.h"
 #include "Stage2.h"
+#include "Stage3.h"
 #include "Simon.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -45,6 +46,7 @@ CSimon		*Simon;
 
 CStage1		*stage1;
 CStage2		*stage2;
+CStage3		*stage3;
 CMorningstar*morningstar;
 
 
@@ -208,6 +210,20 @@ void  Renderstage2() {
 	stage2->Render();
 }
 
+void  LoadStage3() {
+
+	stage3->LoadStage3();
+}
+
+void  Updatestage3(DWORD dt) {
+	i = objects_weapons.size();
+	stage3->Update(dt);
+}
+
+void  Renderstage3() {
+	stage3->Render();
+}
+
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
@@ -254,6 +270,45 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	UpdateWindow(hWnd);
 
 	return hWnd;
+}
+
+int RunStage3()
+{
+	MSG msg;
+	DWORD frameStart = GetTickCount();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+	int done = 0;
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+
+		DWORD now = GetTickCount();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = now - frameStart;
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+
+			game->ProcessKeyboard();
+
+			Updatestage3(dt);
+			Renderstage3();
+		}
+		else
+			Sleep(tickPerFrame - dt);
+	}
+
+	return 1;
 }
 
 int RunStage2()
@@ -382,14 +437,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	Simon = new CSimon(morningstar, headerbar, knife);
 	stage1 = new CStage1(Simon,morningstar, knife,i);
 	stage2 = new CStage2(Simon, morningstar, knife, i);
+	stage3 = new CStage3(Simon, morningstar, knife, i);
 	stage1->SetGame(game);
 	/*LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
 	currentstage(stage1);*/
-	stage2->SetGame(game);
+	/*stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
+	RunStage2();*/
+	stage3->SetGame(game);
+	LoadStage3();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage3();
 	return 0;
 }
