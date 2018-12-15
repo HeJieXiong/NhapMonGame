@@ -16,6 +16,7 @@
 #include "Ghost.h"
 #include "Stair.h"
 #include "Grid.h"
+#include "Panther.h"
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 
 
@@ -30,6 +31,7 @@
 #define ID_TEX_KNIFE		70
 #define	ID_TEX_CANDLE		80
 #define ID_TEX_GHOST	90
+#define ID_TEX_PANTHER_LEFT	100
 #define MAP_LENGTH	4608
 
 class  CStage2 {
@@ -47,6 +49,7 @@ class  CStage2 {
 	CStair		*stair;
 	TileMap		*map;
 	CGrids		*gridsSys;
+	CPanther	*panther;
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;

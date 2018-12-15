@@ -166,7 +166,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	//DebugOut(L"vy %f\n", this->vy);
 	//
 	//	DebugOut(L"dang roi %d\n", this->isFalling);
-	//	DebugOut(L"X %f\n", this->x);
+		DebugOut(L"X %f\n", this->x);
 
 		/*DebugOut(L"Dir %d\n", this->state_direction_on_stair);
 		DebugOut(L"Between %d\n", this->between_stair);

@@ -37,6 +37,7 @@ void CStage2::LoadStage2()
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_PANTHER_LEFT, L"textures\\enemy\\2.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -342,7 +343,7 @@ void CStage2::LoadStage2()
 		}
 	}
 	//GHOST-END
-
+	
 	
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
@@ -475,6 +476,42 @@ void CStage2::LoadStage2()
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
+	//PANTHER-STAR
+	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER_LEFT);
+	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
+	sprites->Add(12002, 32, 0, 64, 16, texPan);//WALKING
+	sprites->Add(12003, 64, 0, 96, 16, texPan);
+	sprites->Add(12004, 96, 0, 128, 16, texPan);
+	ani = new CAnimation(100);		//PANTHER SLEEP
+	ani->Add(12001);
+	animations->Add(1201, ani);
+	ani = new CAnimation(100);		//PANTHER WALKING LEFT
+	ani->Add(12004);
+	ani->Add(12002);
+	ani->Add(12003);
+	animations->Add(1202, ani);
+	ani = new CAnimation(100);		//PANTHER JUMP (LEFT)
+	ani->Add(12004);
+	animations->Add(1203, ani);
+
+
+	//ani = new CAnimation(100);		//PANTHER WALKING RIGHT
+	//ani->Add(10);
+	//ani->Add(11);
+	//animations->Add(9, ani);
+	//texDog = textures->Get(ID_TEX_DOG_RIGHT);
+	//sprites->Add(10, 64, 0, 128, 32, texDog);
+	//sprites->Add(11, 128, 0, 192, 32, texDog);
+	//PANTHER-END
+	panther = new CPanther(Simon);
+	panther->AddAnimation(1202);
+	//panther->AddAnimation(9);
+	panther->AddAnimation(1203);
+	panther->AddAnimation(703);
+	panther->AddAnimation(1201);
+	panther->SetPosition(250, 50);
+	panther->SetState(PANTHER_STATE_SLEEP);
+	objects.push_back(panther);
 	//GRID-STAR
 	/*gridsSys = new CGrids();
 	int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
