@@ -18,23 +18,26 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CGameObject::Update(dt, coObjects);
 	vy += PANTHER_GRAVITY * dt;
 	float a = abs(simon->x - this->x);
-	if (abs(simon->x - this->x) <= 200)
+	if (abs(simon->x - this->x) <= 100&& simon->x - this->x>0)
 	{
 		is_standing = false;
+		state = PANTHER_STATE_JUMP;
 		is_active = true;
 	}
-	if (is_standing == false)
-	{
+	/*if (is_standing == false)
+	{*/
+		//if(is_jump==1)
+		
 		vector<LPCOLLISIONEVENT> coEvents;
 		vector<LPCOLLISIONEVENT> coEventsResult;
 
 		coEvents.clear();
-		if (state != PANTHER_STATE_DIE)
+		
 			CalcPotentialCollisions(coObjects, coEvents);
-		else
-		{
-			simon->point += this->point;
-		}
+
+		
+			//simon->point += this->point;
+		
 
 		if (coEvents.size() == 0)
 		{
@@ -46,7 +49,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			float min_tx, min_ty, nx = 0, ny;
 
 			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
+			x += min_tx * dx + nx * 0.4f;	
 			y += min_ty * dy + ny * 0.4f;
 
 			if (nx != 0) vx = 0;
@@ -54,10 +57,10 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 
 			// Collision logic with Goombas
-			/*for (UINT i = 0; i < coEventsResult.size(); i++)
+			for (UINT i = 0; i < coEventsResult.size(); i++)
 			{
 				LPCOLLISIONEVENT e = coEventsResult[i];
-				if (dynamic_cast<StartPoint *>(e->obj))
+				/*if (dynamic_cast<StartPoint *>(e->obj))
 				{
 					StartPoint *start = dynamic_cast<StartPoint *>(e->obj);
 					if (jumped != true)
@@ -65,50 +68,62 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						SetState(DOG_STATE_JUMP);
 						return;
 					}
-				}
-				if (dynamic_cast<CCastleGround *>(e->obj))
+				}*/
+				if (dynamic_cast<CBrick *>(e->obj))
 				{
-					CCastleGround *ground = dynamic_cast<CCastleGround *>(e->obj);
-					if (jumped == true)
-					{
-						SetState(DOG_STATE_WALKING_RIGHT);
+					CBrick *ground = dynamic_cast<CBrick *>(e->obj);
+					if (is_standing == 0) {
+						if (ground->y <=200)
+						{
+							SetState(PANTHER_STATE_WALKING_LEFT);
+						}
+						else SetState(PANTHER_STATE_WALKING_RIGHT);
 					}
-					else SetState(DOG_STATE_WALKING_LEFT);
+					else SetState(PANTHER_STATE_SLEEP);
+				}
+				if (dynamic_cast<CStair *>(e->obj))
+				{
+					CStair *stair = dynamic_cast<CStair *>(e->obj);
+					if (is_jump == 1 && nx==-1)
+					{
+						SetState(PANTHER_STATE_WALKING_LEFT);
+					}
+					else SetState(PANTHER_STATE_WALKING_RIGHT);
 				}
 			}
 		}
-		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];*/
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+
 		}
-	}
+	
 	DebugOut(L"Panther_a %f\n", a);
 	DebugOut(L"Panther_act %f\n", this->is_active);
+	DebugOut(L"state %f\n", this->state);
+	DebugOut(L"Jump %f\n", this->is_jump);
+	DebugOut(L"vx %f\n", this->vx);
 }
 
 void CPanther::Render(float & xcam, float & ycam, float & x_simon, float & y_simon)
 {
-	
+	/*
 	if (is_active == true)
-	{
+	{*/
 		int ani = 0;
-		if (state == PANTHER_STATE_DIE)
-		{
-			ani = PANTHER_ANI_DIE;
-		}
-		else
-		{
 			if (vx == 0)
 				ani = PANTHER_ANI_SLEEP;
 			if (state == PANTHER_STATE_JUMP)
 				ani = PANTHER_ANI_JUMP_LEFT;
 			if (vx > 0)
-				ani = PANTHER_ANI_WALKING_LEFT;
+				ani = PANTHER_ANI_WALKING_RIGHT;
 			if (vx < 0)
 				ani = PANTHER_ANI_WALKING_LEFT;
-		}
+		
 
 		animations[ani]->Render(x - xcam, y - ycam);
 		RenderBoundingBox(xcam, ycam);
-	}
+	/*}*/
 }
 
 void CPanther::SetState(int state)
@@ -116,30 +131,24 @@ void CPanther::SetState(int state)
 	CGameObject::SetState(state);
 		switch (state)
 		{
-		case PANTHER_STATE_DIE:
-			is_active = false;
-			break;
 		case PANTHER_STATE_JUMP:
-			vy = -PANTHER_WALKING_SPEED_Y;
+			//vy = -PANTHER_WALKING_SPEED_Y;
 			vx = -PANTHER_WALKING_SPEED_X;
-			is_jump = true;
+			is_jump = 1;
 			break;
 		case PANTHER_STATE_SLEEP:
 			nx = -1;
-			is_standing = true;
+			is_standing = 1;
 			vx = 0;
 			break;
 		case PANTHER_STATE_WALKING_LEFT:
 			nx = -1;
 			vx = -PANTHER_WALKING_SPEED_X;
 			break;
+		case PANTHER_STATE_WALKING_RIGHT:
+			nx = 1;
+			vx = +PANTHER_WALKING_SPEED_X;
+			break;
 		}
 	}
 
-void CPanther::Jump()
-{
-}
-
-void CPanther::Move()
-{
-}

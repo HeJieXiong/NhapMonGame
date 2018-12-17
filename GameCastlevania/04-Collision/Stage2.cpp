@@ -37,7 +37,7 @@ void CStage2::LoadStage2()
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_PANTHER_LEFT, L"textures\\enemy\\2.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_PANTHER, L"textures\\enemy\\10.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -192,6 +192,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
 	}
 
 	for (int i = 0; i < 3; i++)
@@ -202,6 +203,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
 	}
 	for (int i = 0; i < 10; i++)
 	{
@@ -211,6 +213,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
 	}
 
 	for (int i = 0; i < 6; i++)
@@ -221,6 +224,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
 	}
 
 	for (int i = 0; i < 9; i++)
@@ -231,6 +235,7 @@ void CStage2::LoadStage2()
 		brick->tag = 1;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
 	}
 	//BRICK-END
 	//KNIFE-STAR
@@ -477,11 +482,14 @@ void CStage2::LoadStage2()
 	objects.push_back(Simon);
 	//SIMON-END
 	//PANTHER-STAR
-	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER_LEFT);
+	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
-	sprites->Add(12002, 32, 0, 64, 16, texPan);//WALKING
+	sprites->Add(12002, 32, 0, 64, 16, texPan);//WALKING_LEFT
 	sprites->Add(12003, 64, 0, 96, 16, texPan);
 	sprites->Add(12004, 96, 0, 128, 16, texPan);
+	sprites->Add(12005, 128, 0, 160, 16, texPan);//WALKING_RIGHT
+	sprites->Add(12006, 160, 0, 192, 16, texPan);
+	sprites->Add(12007, 192, 0, 224, 16, texPan);
 	ani = new CAnimation(100);		//PANTHER SLEEP
 	ani->Add(12001);
 	animations->Add(1201, ani);
@@ -494,24 +502,27 @@ void CStage2::LoadStage2()
 	ani->Add(12004);
 	animations->Add(1203, ani);
 
-
-	//ani = new CAnimation(100);		//PANTHER WALKING RIGHT
-	//ani->Add(10);
-	//ani->Add(11);
-	//animations->Add(9, ani);
-	//texDog = textures->Get(ID_TEX_DOG_RIGHT);
-	//sprites->Add(10, 64, 0, 128, 32, texDog);
-	//sprites->Add(11, 128, 0, 192, 32, texDog);
-	//PANTHER-END
-	panther = new CPanther(Simon);
-	panther->AddAnimation(1202);
-	//panther->AddAnimation(9);
-	panther->AddAnimation(1203);
-	panther->AddAnimation(703);
-	panther->AddAnimation(1201);
-	panther->SetPosition(250, 50);
-	panther->SetState(PANTHER_STATE_SLEEP);
-	objects.push_back(panther);
+	ani = new CAnimation(100);		//PANTHER WALKING RIGHT
+	ani->Add(12005);
+	ani->Add(12007);
+	ani->Add(12006);
+	animations->Add(1204, ani);
+	ani = new CAnimation(100);		//PANTHER JUMP (RIGHT)
+	ani->Add(12005);
+	animations->Add(1205, ani);
+	for (int i = 0; i < 1; i++) {
+		panther = new CPanther(Simon);
+		panther->AddAnimation(1202);
+		panther->AddAnimation(1204);		
+		panther->AddAnimation(1203);
+		panther->AddAnimation(1205);
+		panther->AddAnimation(1201);
+		panther->SetPosition(670, 124);
+		//panther->SetPosition(50, 50);
+		panther->SetState(PANTHER_STATE_SLEEP);
+		//objects.push_back(panther);
+		objects_panther.push_back(panther);
+	}
 	//GRID-STAR
 	/*gridsSys = new CGrids();
 	int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
@@ -539,12 +550,16 @@ void CStage2::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
+	vector<LPGAMEOBJECT> coObjects_panther;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->tag == 1 || objects[i]->tag == 5)
 			coObjects.push_back(objects[i]);
 	}
-
+	for (int i = 0; i < objects_panther.size(); i++)
+	{
+			coObjects_panther.push_back(objects_panther[i]);
+	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
 		if (obejects_item[i]->tag == 1 || obejects_item[i]->tag == 5)
@@ -602,6 +617,12 @@ void CStage2::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
+
+	for (int i = 0; i < objects_panther.size(); i++)
+	{
+		objects_panther[i]->Update(dt, &coObjects_panther);
+	}
+	DebugOut(L"size %d\n", objects_panther.size());
 }
 
 void CStage2::Render()
@@ -637,7 +658,9 @@ void CStage2::Render()
 		for (int i = 0; i < objects_weapons.size(); i++) {
 			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
-
+		for (int i = 0; i < objects_panther.size(); i++) {
+			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
+		}
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		

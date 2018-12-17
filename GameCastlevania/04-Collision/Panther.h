@@ -4,20 +4,21 @@
 
 #define PANTHER_WALKING_SPEED_X 0.05f
 #define PANTHER_WALKING_SPEED_Y 0.05f
-#define PANTHER_GRAVITY 0.05f
+#define PANTHER_GRAVITY 0.0002f
 
 #define PANTHER_BBOX_WIDTH 16
-#define PANTHER_BBOX_HEIGHT 31
+#define PANTHER_BBOX_HEIGHT 16
 
 #define PANTHER_STATE_WALKING_LEFT 100
-#define PANTHER_STATE_SLEEP			300
-#define PANTHER_STATE_JUMP 400
-#define PANTHER_STATE_DIE 500
+#define PANTHER_STATE_WALKING_RIGHT 200
+#define PANTHER_STATE_JUMP 300
+#define PANTHER_STATE_SLEEP			500
 
 #define PANTHER_ANI_WALKING_LEFT 0
-#define PANTHER_ANI_JUMP_LEFT			1
-#define PANTHER_ANI_DIE					2
-#define PANTHER_ANI_SLEEP				3
+#define PANTHER_ANI_WALKING_RIGHT 1
+#define PANTHER_ANI_JUMP_LEFT			2
+#define PANTHER_ANI_JUMP_RIGHT			3
+#define PANTHER_ANI_SLEEP				4
 class CPanther : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
@@ -32,10 +33,8 @@ public:
 	{
 		simon = a;
 		is_standing = 1;
-		is_jump = false;
+		is_jump = 0;
 		point = 100;
 	}
 	virtual void SetState(int state);
-	void Jump();
-	void Move();
 };

@@ -31,7 +31,7 @@
 #define ID_TEX_KNIFE		70
 #define	ID_TEX_CANDLE		80
 #define ID_TEX_GHOST	90
-#define ID_TEX_PANTHER_LEFT	100
+#define ID_TEX_PANTHER	100
 #define MAP_LENGTH	4608
 
 class  CStage2 {
@@ -54,6 +54,7 @@ class  CStage2 {
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;
 	vector<LPGAMEOBJECT> objects_weapons;
+	vector<LPGAMEOBJECT> objects_panther;
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
 	vector<LPGAMEOBJECT> objects_stair_3;

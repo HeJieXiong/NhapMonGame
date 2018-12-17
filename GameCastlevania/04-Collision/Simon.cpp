@@ -59,12 +59,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (coEvents.size() == 0)//new code
 	{
 		x += dx;
-		//if (y >0) {
-			y += dy;
-	//	}
-	//	else {
-	//		y += 0.4f;
-	//	}
+		y += dy;
+	
 	}
 	else
 	{
@@ -82,7 +78,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			if (dynamic_cast<CBrick *>(e->obj))
+			/*if (dynamic_cast<CBrick *>(e->obj))
 			{
 				CBrick *brick = dynamic_cast<CBrick *>(e->obj);
 
@@ -90,7 +86,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					isFalling = false;
 				}
-			}
+			}*/
 
 			if (dynamic_cast<CItem *>(e->obj))
 			{
