@@ -17,6 +17,7 @@
 #include "Stair.h"
 #include "Grid.h"
 #include "Bat.h"
+#include "Fish.h"
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 
 
@@ -33,6 +34,7 @@
 #define ID_TEX_GHOST	90
 #define ID_TEX_BAT	100
 #define ID_TEX_BIG_BRICK 110
+#define ID_TEX_FISH 120
 #define MAP_LENGTH	4608
 
 class  CStage4 {
@@ -49,6 +51,7 @@ class  CStage4 {
 	CGhost		*ghost;
 	CStair		*stair;
 	CBat		*bat;
+	CFish		*fish;
 	TileMap		*map;
 	CGrids		*gridsSys;
 	vector<LPGAMEOBJECT> objects;
@@ -56,6 +59,7 @@ class  CStage4 {
 	vector<LPGAMEOBJECT> obejects_item;
 	vector<LPGAMEOBJECT> objects_weapons;
 	vector<LPGAMEOBJECT> objects_bat;
+	vector<LPGAMEOBJECT> objects_fish;
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
 	vector<LPGAMEOBJECT> objects_stair_3;

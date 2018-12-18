@@ -129,6 +129,7 @@
     <ClInclude Include="Candle.h" />
     <ClInclude Include="debug.h" />
     <ClInclude Include="Fire.h" />
+    <ClInclude Include="Fish.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Ghost.h" />
@@ -156,6 +157,7 @@
     <ClCompile Include="Candle.cpp" />
     <ClCompile Include="debug.cpp" />
     <ClCompile Include="Fire.cpp" />
+    <ClCompile Include="Fish.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Ghost.cpp" />

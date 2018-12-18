@@ -39,6 +39,7 @@ void CStage4::LoadStage4()
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BAT, L"textures\\enemy\\11.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_FISH, L"textures\\enemy\\12.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	//ITEM-START
@@ -548,7 +549,66 @@ void CStage4::LoadStage4()
 	//}
 
 	//BAT-END
-
+	//FISH-STAR
+	LPDIRECT3DTEXTURE9 texFISH = textures->Get(ID_TEX_FISH);
+	sprites->Add(15001, 0, 0, 16, 32, texFISH);
+	sprites->Add(15002, 16, 0, 32, 32, texFISH);
+	sprites->Add(15003, 32, 0, 48, 32, texFISH);
+	sprites->Add(15004, 48, 0, 64, 32, texFISH);
+	sprites->Add(15005, 64, 0, 80, 32, texFISH);
+	sprites->Add(15006, 80, 0, 96,32, texFISH);
+	ani = new CAnimation(100);//WALKING_LEFT
+	ani->Add(15003);
+	ani->Add(15002);
+	animations->Add(1503, ani);
+	ani = new CAnimation(100);//WALKING_RIGHT
+	ani->Add(15004);
+	ani->Add(15005);
+	animations->Add(1504, ani);
+	ani = new CAnimation(100);//JUMP_LEFT
+	ani->Add(15003);
+	animations->Add(1505, ani);
+	ani = new CAnimation(100);//JUMP_RIGHT
+	ani->Add(15004);
+	animations->Add(1506, ani);
+	ani = new CAnimation(100);//ATTACK_LEFT
+	ani->Add(15001);
+	animations->Add(1507, ani);
+	ani = new CAnimation(100);//ATTACK_RIGHT
+	ani->Add(15006);
+	animations->Add(1508, ani);
+	//for (int i = 0; i < row; i++) {
+	//	if (location3[i][0] == 100008) {
+	//		fish = new CFish(Simon);
+	//		fish->AddAnimation(1503);
+	//		fish->AddAnimation(1504);
+	//		fish->AddAnimation(1505);
+	//		fish->AddAnimation(1506);
+	//		fish->AddAnimation(1507);
+	//		fish->AddAnimation(1508);
+	//		//fish->SetPosition(location3[i][2], location3[i][3]);
+	//		//fish->bat_x = location3[i][4];
+	//		fish->SetPosition(50, 50);
+	//		fish->SetState(FISH_STATE_WALKING_LEFT);
+	//		objects.push_back(bat);
+	//		objects_bat.push_back(bat);
+	//		//objects_weapons.push_back(ghost);
+	//	}
+	//}
+	fish = new CFish(Simon);
+	fish->AddAnimation(1503);
+	fish->AddAnimation(1504);
+	fish->AddAnimation(1505);
+	fish->AddAnimation(1506);
+	fish->AddAnimation(1507);
+	fish->AddAnimation(1508);
+	//fish->SetPosition(location3[i][2], location3[i][3]);
+	//fish->bat_x = location3[i][4];
+	fish->SetPosition(50, 50);
+	fish->SetState(FISH_STATE_WALKING_LEFT);
+	objects.push_back(fish);
+	objects_fish.push_back(fish);
+	//FISH-END
 	//GRID-STAR
 	/*gridsSys = new CGrids();
 	int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
