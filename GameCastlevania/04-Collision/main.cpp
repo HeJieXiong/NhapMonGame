@@ -35,6 +35,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Stage2.h"
 #include "Stage3.h"
 #include "Stage4.h"
+#include "Stage5.h"
 #include "Simon.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
@@ -49,6 +50,7 @@ CStage1		*stage1;
 CStage2		*stage2;
 CStage3		*stage3;
 CStage4		*stage4;
+CStage5		*stage5;
 CMorningstar*morningstar;
 
 
@@ -239,6 +241,20 @@ void  Renderstage4() {
 	stage4->Render();
 }
 
+void  LoadStage5() 
+{
+	stage5->LoadStage5();
+}
+
+void  Updatestage5(DWORD dt) {
+	i = objects_weapons.size();
+	stage5->Update(dt);
+}
+
+void  Renderstage5() {
+	stage5->Render();
+}
+
 HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int ScreenHeight)
 {
 	WNDCLASSEX wc;
@@ -285,6 +301,45 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 	UpdateWindow(hWnd);
 
 	return hWnd;
+}
+
+int RunStage5()
+{
+	MSG msg;
+	DWORD frameStart = GetTickCount();
+	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
+	int done = 0;
+	while (!done)
+	{
+		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
+		{
+			if (msg.message == WM_QUIT) done = 1;
+
+			TranslateMessage(&msg);
+			DispatchMessage(&msg);
+		}
+
+
+		DWORD now = GetTickCount();
+
+		// dt: the time between (beginning of last frame) and now
+		// this frame: the frame we are about to render
+		DWORD dt = now - frameStart;
+
+		if (dt >= tickPerFrame)
+		{
+			frameStart = now;
+
+			game->ProcessKeyboard();
+
+			Updatestage5(dt);
+			Renderstage5();
+		}
+		else
+			Sleep(tickPerFrame - dt);
+	}
+
+	return 1;
 }
 
 int RunStage4()
@@ -493,8 +548,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	stage2 = new CStage2(Simon, morningstar, knife, i);
 	stage3 = new CStage3(Simon, morningstar, knife, i);
 	stage4 = new CStage4(Simon, morningstar, knife, i);
-	stage1->SetGame(game);
-	/*LoadStage1();
+	stage5 = new CStage5(Simon, morningstar, knife, i);
+	/*stage1->SetGame(game);
+	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
 	currentstage(stage1);*/
@@ -506,9 +562,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage3();*/
-	stage4->SetGame(game);
+	/*stage4->SetGame(game);
 	LoadStage4();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage4();
+	RunStage4();*/
+	stage5->SetGame(game);
+	LoadStage5();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage5();
 	return 0;
 }

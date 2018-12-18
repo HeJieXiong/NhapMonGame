@@ -24,6 +24,7 @@ public:
 	float bat_x;
 	CBat(CSimon *a) : CGameObject()
 	{
+		
 		simon = a;
 	}
 	virtual void SetState(int state);
