@@ -37,7 +37,7 @@ void CStage3::LoadStage3()
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
-	textures->Add(ID_TEX_BAT, L"textures\\enemy\\0.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_BAT, L"textures\\enemy\\11.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -389,31 +389,7 @@ void CStage3::LoadStage3()
 	//}
 	//GHOST-END
 
-	//BAT-STAR
-	LPDIRECT3DTEXTURE9 texBAT = textures->Get(ID_TEX_BAT);
-	sprites->Add(12001, 48, 0, 64, 16, texBAT);
-	sprites->Add(12002, 32, 0, 48, 16, texBAT);
-	sprites->Add(12003, 16, 0, 32, 16, texBAT);
-	ani = new CAnimation(100);
-	ani->Add(12001);
-	ani->Add(12002);
-	ani->Add(12003);
-	animations->Add(1203, ani);
-	for (int i = 0; i < row; i++) {
-		if (location3[i][0] == 100006) {
-			bat = new CBat();
-			bat->AddAnimation(1203);
-			//bat->SetPosition(location3[i][1], location3[i][2]);
-			bat->bat_x = location3[i][2];
-			bat->SetState(BAT_STATE_FLY);
-			objects.push_back(bat);
-			objects_bat.push_back(bat);
-			//objects_weapons.push_back(ghost);
-		}
-	}
 	
-	//BAT-END
-
 	
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
@@ -546,6 +522,40 @@ void CStage3::LoadStage3()
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
+	//BAT-STAR
+	LPDIRECT3DTEXTURE9 texBAT = textures->Get(ID_TEX_BAT);
+	sprites->Add(12001, 48, 0, 64, 16, texBAT);
+	sprites->Add(12002, 32, 0, 48, 16, texBAT);
+	sprites->Add(12003, 16, 0, 32, 16, texBAT);
+	sprites->Add(12004, 64, 0, 80, 16, texBAT);
+	sprites->Add(12005, 80, 0, 96, 16, texBAT);
+	sprites->Add(12006, 96, 0, 112, 16, texBAT);
+	ani = new CAnimation(100);//FLY_LEFT
+	ani->Add(12001);
+	ani->Add(12002);
+	ani->Add(12003);
+	animations->Add(1203, ani);
+	ani = new CAnimation(100);//FLY_RIGHT
+	ani->Add(12004);
+	ani->Add(12005);
+	ani->Add(12006);
+	animations->Add(1204, ani);
+	for (int i = 0; i < row; i++) {
+		if (location3[i][0] == 100006) {
+			bat = new CBat(Simon);
+			bat->AddAnimation(1203);
+			bat->AddAnimation(1204);
+			bat->SetPosition(location3[i][2], location3[i][3]);
+			bat->bat_x = location3[i][4];
+			bat->SetState(BAT_STATE_FLY_LEFT);
+			objects.push_back(bat);
+			objects_bat.push_back(bat);
+			//objects_weapons.push_back(ghost);
+		}
+	}
+
+	//BAT-END
+
 	//GRID-STAR
 	/*gridsSys = new CGrids();
 	int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
