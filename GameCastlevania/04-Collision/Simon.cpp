@@ -78,15 +78,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			/*if (dynamic_cast<CBrick *>(e->obj))
+			if (dynamic_cast<CBrick *>(e->obj))
 			{
 				CBrick *brick = dynamic_cast<CBrick *>(e->obj);
 
 				if (e->nx != 0 || e->ny <0)
 				{
-					isFalling = false;
+					isFalling = 0;
 				}
-			}*/
+			}
 
 			if (dynamic_cast<CItem *>(e->obj))
 			{
@@ -121,9 +121,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<CStair *>(e->obj))
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
-
+				isFalling = 0;
 				if (e->nx != 0 || e->ny <0||e->ny>0)
 				{
+
 					state_direction_on_stair= stair->stair_direction;
 					if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {//Bật is_on_stair khi Simon vào chỗ cầu thang
 						is_on_stair = 1;
@@ -300,19 +301,19 @@ void CSimon::SetState(int state)
 			break;
 		}
 	case SIMON_STATE_JUMP: 
-		if(!is_on_stair)
-		{
+	/*	if(!is_on_stair)
+		{*/
 			//if(has_g)
 			//if(vy==0)
 			//if(vy<0)
-			if(!isFalling)
+			if(isFalling!=1)
 			/*if (y > 140)*/ {
 				//isFalling = true;
 				vy = -SIMON_JUMP_SPEED_Y;
 			}
 			//return;
 			//else vy = 0;
-		}
+		//}
 	case SIMON_STATE_IDLE: 
 		vx = 0;
 		level = 0;
@@ -442,7 +443,6 @@ void CSimon::Walking_down_stair()
 	//	vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
 	//}
 
-	x += 0;
 }
 
 
