@@ -84,7 +84,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (dynamic_cast<CStair *>(e->obj))
 				{
 					CStair *stair = dynamic_cast<CStair *>(e->obj);
-					if (is_jump == 1 && nx==-1)
+					if (is_jump == 1)
 					{
 						SetState(PANTHER_STATE_WALKING_LEFT);
 					}

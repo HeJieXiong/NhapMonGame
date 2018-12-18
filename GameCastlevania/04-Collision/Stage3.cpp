@@ -38,7 +38,7 @@ void CStage3::LoadStage3()
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BAT, L"textures\\enemy\\0.png", D3DCOLOR_XRGB(255, 0, 255));
-
+	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	//ITEM-START
@@ -178,37 +178,89 @@ void CStage3::LoadStage3()
 	}
 
 	//STAIR-3-END
+	//BIG_BRICK_STAR
+	LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
+	sprites->Add(130001, 0, 0, 62, 94, texMisc_big);
+	ani = new CAnimation(100);		// brick
+	ani->Add(130001);
+	animations->Add(1301, ani);
+	for (int i = 0; i < row; i++)
+	{
+		if (location3[i][0] == 100007) {
+			CBrick *big_brick = new CBrick();
+			big_brick->AddAnimation(1301);
+			big_brick->SetPosition(location3[i][2], location3[i][3]);
+			big_brick->tag = 1;
+			big_brick->type = 1;
+			objects.push_back(big_brick);
+			obejects_item.push_back(big_brick);
+		}
+	}
+	//BIG_BRICK_END
 	//BRICK-START
 	LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC);
 	sprites->Add(20001, 0, 0, 16, 14, texMisc);
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 3; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f, 203);
 		brick->tag = 1;
+		brick->type = 0;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+	for (int i = 0; i < 97; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f+63, 203);
+		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 	}
 
+	for (int i = 0; i < 8; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f, 110);
+		brick->tag = 1;
+		brick->type = 0;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
 	for (int i = 0; i < 3; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 667, 141);
+		brick->SetPosition(i * 15.5f +124, 141);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 	}
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 730, 110);
+		brick->SetPosition(i * 15.5f + 310, 125);
 		brick->tag = 1;
+		brick->type = 0;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+	}
+	for (int i = 0; i < 3; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f + 341, 141);
+		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 	}
@@ -217,22 +269,15 @@ void CStage3::LoadStage3()
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 900, 141);
+		brick->SetPosition(i * 15.5f + 403, 110);
 		brick->tag = 1;
-		objects.push_back(brick);
-		obejects_item.push_back(brick);
-	}
-
-	for (int i = 0; i < 9; i++)
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 1350, 110);
-		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 	}
 	//BRICK-END
+
+	
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
 	sprites->Add(11000, 177, 40, 194, 48, textKnife);
@@ -354,14 +399,22 @@ void CStage3::LoadStage3()
 	ani->Add(12002);
 	ani->Add(12003);
 	animations->Add(1203, ani);
-	bat = new CBat();
-	bat->AddAnimation(1203);
-	bat->SetPosition(350,50);
-	bat->tag = 1;
-	//bat->is_active = true;
-	bat->SetState(BAT_STATE_FLY);
-	objects.push_back(bat);
+	for (int i = 0; i < row; i++) {
+		if (location3[i][0] == 100006) {
+			bat = new CBat();
+			bat->AddAnimation(1203);
+			//bat->SetPosition(location3[i][1], location3[i][2]);
+			bat->bat_x = location3[i][2];
+			bat->SetState(BAT_STATE_FLY);
+			objects.push_back(bat);
+			objects_bat.push_back(bat);
+			//objects_weapons.push_back(ghost);
+		}
+	}
+	
 	//BAT-END
+
+	
 	//SIMON-START
 	LPDIRECT3DTEXTURE9 texSIMON = textures->Get(ID_TEX_SIMON);
 	int top_simon = 0;
@@ -520,12 +573,16 @@ void CStage3::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_morningstar;
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
+	vector<LPGAMEOBJECT> coObjects_bat;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->tag == 1 || objects[i]->tag == 5)
 			coObjects.push_back(objects[i]);
 	}
-
+	for (int i = 0; i < objects_bat.size(); i++)
+	{
+			coObjects_bat.push_back(objects_bat[i]);
+	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
 		if (obejects_item[i]->tag == 1 || obejects_item[i]->tag == 5)
@@ -582,6 +639,11 @@ void CStage3::Update(DWORD dt)
 	for (int i = 0; i < objects.size(); i++)
 	{
 		objects[i]->Update(dt, &coObjects);
+	}
+	
+	for (int i = 0; i < objects_bat.size(); i++)
+	{
+		objects_bat[i]->Update(dt, &coObjects_bat);
 	}
 }
 

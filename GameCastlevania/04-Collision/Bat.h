@@ -1,25 +1,23 @@
 ﻿#pragma once
 #include "GameObject.h"
 #include <math.h>
-#define BAT_STATE_FLY 0.05f;
 
 #define BAT_BBOX_WIDTH 16
-#define BAT_BBOX_HEIGHT 31
+#define BAT_BBOX_HEIGHT 16
 
 #define BAT_STATE_FLY 100
 #define BAT_STATE_DIE 200
-#define BAT_SPEED 0.1f
+#define BAT_SPEED 0.03f
 #define BAT_ANI_FLY 0
-#define PI 3.14159265
+#define PI 3.14
 class CBat : public CGameObject
 {
 	int point;
-	double a=45.0;
-	double val = PI / 180;
-	double ret;
 	float flying_coordinate;//tọa độ được cộng thêm của dơi
+	
 	int startPoint;
 public:
+	float bat_x;
 	CBat();
 	~CBat();
 	virtual void SetState(int state);

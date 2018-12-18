@@ -190,6 +190,7 @@ void CStage2::LoadStage2()
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f,203);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 		objects_panther.push_back(brick);
@@ -201,6 +202,7 @@ void CStage2::LoadStage2()
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f+667, 141);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 		objects_panther.push_back(brick);
@@ -211,6 +213,7 @@ void CStage2::LoadStage2()
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f+730, 110);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 		objects_panther.push_back(brick);
@@ -222,6 +225,7 @@ void CStage2::LoadStage2()
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f + 900, 141);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 		objects_panther.push_back(brick);
@@ -233,6 +237,7 @@ void CStage2::LoadStage2()
 		brick->AddAnimation(601);
 		brick->SetPosition(i * 15.5f + 1350, 110);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 		objects_panther.push_back(brick);
@@ -510,18 +515,21 @@ void CStage2::LoadStage2()
 	ani = new CAnimation(100);		//PANTHER JUMP (RIGHT)
 	ani->Add(12005);
 	animations->Add(1205, ani);
-	for (int i = 0; i < 1; i++) {
-		panther = new CPanther(Simon);
-		panther->AddAnimation(1202);
-		panther->AddAnimation(1204);		
-		panther->AddAnimation(1203);
-		panther->AddAnimation(1205);
-		panther->AddAnimation(1201);
-		panther->SetPosition(670, 124);
-		//panther->SetPosition(50, 50);
-		panther->SetState(PANTHER_STATE_SLEEP);
-		//objects.push_back(panther);
-		objects_panther.push_back(panther);
+	for (int i = 0; i < row; i++) {
+		if (location2[i][0] == 100006) {
+			panther = new CPanther(Simon);
+			panther->AddAnimation(1202);
+			panther->AddAnimation(1204);
+			panther->AddAnimation(1203);
+			panther->AddAnimation(1205);
+			panther->AddAnimation(1201);
+			/*panther->SetPosition(670, 124);*/
+			panther->SetPosition(location2[i][2], location2[i][3]);
+			//panther->SetPosition(50, 50);
+			panther->SetState(PANTHER_STATE_SLEEP);
+			//objects.push_back(panther);
+			objects_panther.push_back(panther);
+		}
 	}
 	//GRID-STAR
 	/*gridsSys = new CGrids();

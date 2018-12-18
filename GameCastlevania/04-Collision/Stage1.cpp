@@ -121,6 +121,7 @@ void CStage1::LoadStage1()
 		brick->AddAnimation(601);
 		brick->SetPosition(0 + i * 16.0f, 186);
 		brick->tag = 1;
+		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
 	}

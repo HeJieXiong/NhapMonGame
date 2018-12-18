@@ -32,6 +32,7 @@
 #define	ID_TEX_CANDLE		80
 #define ID_TEX_GHOST	90
 #define ID_TEX_BAT	100
+#define ID_TEX_BIG_BRICK 110
 #define MAP_LENGTH	4608
 
 class  CStage3 {
@@ -54,6 +55,7 @@ class  CStage3 {
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;
 	vector<LPGAMEOBJECT> objects_weapons;
+	vector<LPGAMEOBJECT> objects_bat;
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
 	vector<LPGAMEOBJECT> objects_stair_3;
