@@ -185,7 +185,7 @@ void CStage5::LoadStage5()
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);
-	for (int i = 0; i < 100; i++)
+	for (int i = 0; i < 49; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
@@ -197,22 +197,34 @@ void CStage5::LoadStage5()
 		objects_panther.push_back(brick);
 	}
 
+	for (int i = 0; i < 7; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f , 110);
+		brick->tag = 1;
+		brick->type = 0;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
+	}
+	for (int i = 0; i < 11; i++)
+	{
+		CBrick *brick = new CBrick();
+		brick->AddAnimation(601);
+		brick->SetPosition(i * 15.5f + 124, 141);
+		brick->tag = 1;
+		brick->type = 0;
+		objects.push_back(brick);
+		obejects_item.push_back(brick);
+		objects_panther.push_back(brick);
+	}
+
 	for (int i = 0; i < 3; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 667, 141);
-		brick->tag = 1;
-		brick->type = 0;
-		objects.push_back(brick);
-		obejects_item.push_back(brick);
-		objects_panther.push_back(brick);
-	}
-	for (int i = 0; i < 10; i++)
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 730, 110);
+		brick->SetPosition(i * 15.5f + 700, 141);
 		brick->tag = 1;
 		brick->type = 0;
 		objects.push_back(brick);
@@ -220,23 +232,11 @@ void CStage5::LoadStage5()
 		objects_panther.push_back(brick);
 	}
 
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < 2; i++)
 	{
 		CBrick *brick = new CBrick();
 		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 900, 141);
-		brick->tag = 1;
-		brick->type = 0;
-		objects.push_back(brick);
-		obejects_item.push_back(brick);
-		objects_panther.push_back(brick);
-	}
-
-	for (int i = 0; i < 9; i++)
-	{
-		CBrick *brick = new CBrick();
-		brick->AddAnimation(601);
-		brick->SetPosition(i * 15.5f + 1350, 110);
+		brick->SetPosition(i * 15.5f + 651, 171);
 		brick->tag = 1;
 		brick->type = 0;
 		objects.push_back(brick);

@@ -87,6 +87,7 @@ public:
 	int has_g=1; //1 có trọng lực 0 ko có trọng lực
 	int state_direction_on_stair;
 	int between_stair = 0;
+	int point=0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

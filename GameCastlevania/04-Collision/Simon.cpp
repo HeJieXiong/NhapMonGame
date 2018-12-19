@@ -98,7 +98,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						item->y = -9850;
 						item->vy = 0;
 						item->dt = 0;
-						test_val = item->ani;
+						point += 100;
 						if (item->ani == 900) {
 							morningstar->SetType(1);
 						}
@@ -169,6 +169,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		DebugOut(L"Between %d\n", this->between_stair);
 		DebugOut(L"has_g %d\n", this->has_g);
 		DebugOut(L"on_stair %d\n", this->is_on_stair);*/
+		DebugOut(L"point %d\n", this->point);
 
 
 }

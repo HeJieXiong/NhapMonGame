@@ -19,12 +19,12 @@
 #define FISH_ANI_HIDE				6
 
 
-#define FISH_JUMP_SPEED				0.5f
+#define FISH_JUMP_SPEED				0.3f
 #define FISH_GRAVITY				0.002f
 #define FISH_WALKING_SPEED			0.05f
 
-#define FISH_BBOX_WIDTH				40
-#define FISH_BBOX_HEIGHT			60
+#define FISH_BBOX_WIDTH				15
+#define FISH_BBOX_HEIGHT			32
 #define BULLET_BBOX_WIDTH			14
 #define BULLET_BBOX_HEIGHT			12
 #define FISH_ATTACK_RANGE			400
@@ -44,19 +44,21 @@ class CFish :
 	public CGameObject
 {
 	CSimon *simon;
-	bool goingUp;
 	bool isAttacking;
 	CBullet *bullet;
 	LPGAMEOBJECT heart;
 	DWORD attackTime;
 	int attackStart;
 	int hitWater;
-	
+	int is_standing;
+	int is_walking;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{
 		simon = a;
 		bullet = NULL;
+		vy = 0;
+		is_standing = 0;
 	}
 	CFish();
 	virtual void SetState(int state);

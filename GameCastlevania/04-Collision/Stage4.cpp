@@ -216,6 +216,7 @@ void CStage4::LoadStage4()
 		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_fish.push_back(brick);
 	}
 	for (int i = 0; i < 2; i++)
 	{
@@ -236,6 +237,7 @@ void CStage4::LoadStage4()
 		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_fish.push_back(brick);
 	}
 	for (int i = 0; i < 9; i++)
 	{
@@ -246,6 +248,7 @@ void CStage4::LoadStage4()
 		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_fish.push_back(brick);
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -257,6 +260,7 @@ void CStage4::LoadStage4()
 		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		objects_fish.push_back(brick);
 	}
 
 	for (int i = 0; i < 2; i++)
@@ -268,6 +272,7 @@ void CStage4::LoadStage4()
 		brick->type = 0;
 		objects.push_back(brick);
 		obejects_item.push_back(brick);
+		//objects_fish.push_back(brick);
 	}
 	//BRICK-END
 
@@ -595,19 +600,22 @@ void CStage4::LoadStage4()
 	//		//objects_weapons.push_back(ghost);
 	//	}
 	//}
-	fish = new CFish(Simon);
-	fish->AddAnimation(1503);
-	fish->AddAnimation(1504);
-	fish->AddAnimation(1505);
-	fish->AddAnimation(1506);
-	fish->AddAnimation(1507);
-	fish->AddAnimation(1508);
-	//fish->SetPosition(location3[i][2], location3[i][3]);
-	//fish->bat_x = location3[i][4];
-	fish->SetPosition(50, 50);
-	fish->SetState(FISH_STATE_WALKING_LEFT);
-	objects.push_back(fish);
-	objects_fish.push_back(fish);
+	for (int i = 0; i < 2; i++) {
+		fish = new CFish(Simon);
+		fish->AddAnimation(1503);
+		fish->AddAnimation(1504);
+		fish->AddAnimation(1505);
+		fish->AddAnimation(1506);
+		fish->AddAnimation(1507);
+		fish->AddAnimation(1508);
+		fish->AddAnimation(1507);
+		//fish->SetPosition(location3[i][2], location3[i][3]);
+		//fish->bat_x = location3[i][4];
+		fish->SetPosition(180+i*50, 200);
+		fish->SetState(FISH_STATE_HIDE);
+		//objects.push_back(fish);
+		objects_fish.push_back(fish);
+	}
 	//FISH-END
 	//GRID-STAR
 	/*gridsSys = new CGrids();
@@ -637,6 +645,7 @@ void CStage4::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
 	vector<LPGAMEOBJECT> coObjects_bat;
+	vector<LPGAMEOBJECT> coObjects_fish;
 	for (int i = 0; i < objects.size(); i++)
 	{
 		if (objects[i]->tag == 1 || objects[i]->tag == 5)
@@ -645,6 +654,10 @@ void CStage4::Update(DWORD dt)
 	for (int i = 0; i < objects_bat.size(); i++)
 	{
 		coObjects_bat.push_back(objects_bat[i]);
+	}
+	for (int i = 0; i < objects_fish.size(); i++)
+	{
+		coObjects_fish.push_back(objects_fish[i]);
 	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
@@ -708,6 +721,11 @@ void CStage4::Update(DWORD dt)
 	{
 		objects_bat[i]->Update(dt, &coObjects_bat);
 	}
+	for (int i = 0; i < objects_fish.size(); i++)
+	{
+		objects_fish[i]->Update(dt, &coObjects_fish);
+	}
+	DebugOut(L"size %d\n", objects_fish.size());
 }
 
 void CStage4::Render()
@@ -743,7 +761,9 @@ void CStage4::Render()
 		for (int i = 0; i < objects_weapons.size(); i++) {
 			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 		}
-
+		for (int i = 0; i < objects_fish.size(); i++) {
+			objects_fish[i]->Render(x, y, Simon->x, Simon->y);
+		}
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 

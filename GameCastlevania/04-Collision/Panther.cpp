@@ -17,11 +17,9 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	vy += PANTHER_GRAVITY * dt;
-	float a = abs(simon->x - this->x);
 	if (abs(simon->x - this->x) <= 100&& simon->x - this->x>0)
 	{
 		is_standing = false;
-		state = PANTHER_STATE_JUMP;
 		is_active = true;
 	}
 	/*if (is_standing == false)
@@ -98,11 +96,11 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 		}
 	
-	DebugOut(L"Panther_a %f\n", a);
+	/*DebugOut(L"Panther_a %f\n", a);
 	DebugOut(L"Panther_act %f\n", this->is_active);
 	DebugOut(L"state %f\n", this->state);
 	DebugOut(L"Jump %f\n", this->is_jump);
-	DebugOut(L"vx %f\n", this->vx);
+	DebugOut(L"vx %f\n", this->vx);*/
 }
 
 void CPanther::Render(float & xcam, float & ycam, float & x_simon, float & y_simon)

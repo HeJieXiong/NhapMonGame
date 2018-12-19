@@ -437,7 +437,7 @@ void CStage1::Render()
 		int v = Simon->nx;
 		//float i = count1;
 	
-			headerbar->DrawHeaderbar();
+		headerbar->DrawHeaderbar();
 		
 
 

@@ -22,11 +22,11 @@ private:
 	HRESULT hr1;
 	HRESULT hr2;
 public:
-	int score_;
-	int time_ ;
-	int stage_ ;
-	int heart_ ;
-	int p_ ;
+	int score_=0;
+	int time_ =0;
+	int stage_=0 ;
+	int heart_=0 ;
+	int p_ =0;
 	CHeaderBar(LPDIRECT3DDEVICE9 d3ddv);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

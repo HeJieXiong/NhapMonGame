@@ -562,13 +562,13 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage3();*/
-	/*stage4->SetGame(game);
+	stage4->SetGame(game);
 	LoadStage4();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage4();*/
-	stage5->SetGame(game);
+	RunStage4();
+	/*stage5->SetGame(game);
 	LoadStage5();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage5();
+	RunStage5();*/
 	return 0;
 }
