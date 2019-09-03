@@ -336,20 +336,27 @@ void CStage2::LoadStage2()
 	LPDIRECT3DTEXTURE9 textGhost = textures->Get(ID_TEX_GHOST);
 	sprites->Add(11001, 0, 0, 17, 31, textGhost);
 	sprites->Add(11002, 17, 0, 34, 31, textGhost);
+	sprites->Add(11003, 33, 0, 50, 31, textGhost);
+	sprites->Add(11004, 53, 0, 68, 31, textGhost);
 	ani = new CAnimation(100);	
 	ani->Add(11001);
 	ani->Add(11002);
 	animations->Add(1103, ani);
+	ani = new CAnimation(100);
+	ani->Add(11003);
+	ani->Add(11004);
+	animations->Add(1104, ani);
 	for (int i = 0; i < row; i++) {
 		if (location2[i][0] == 100002) {
 			ghost = new CGhost();
 			ghost->AddAnimation(1103);
+			ghost->AddAnimation(1104);
 			ghost->SetPosition(location2[i][1], location2[i][2]);
 			ghost->tag = location2[i][3];
 			ghost->SetState(GHOST_STATE_WALKING);
-			//objects.push_back(ghost);
-			//objects_morningstar.push_back(ghost);
-			//objects_weapons.push_back(ghost);
+			objects.push_back(ghost);
+			objects_morningstar.push_back(ghost);
+			objects_weapons.push_back(ghost);
 		}
 	}
 	//GHOST-END
@@ -597,7 +604,7 @@ void CStage2::Update(DWORD dt)
 			objects_morningstar[i]->tag = 5;
 		}
 	}
-	morningstar->Update_colison(&coObjects_morningstar);
+	morningstar->Update_colison(&coObjects_morningstar); //Xét va chạm của roi với các vật thể
 	for (int i = 0; i < objects_weapons.size(); i++)
 	{
 		objects_weapons[i]->Update(dt, &coObjects_weapons);
@@ -653,13 +660,12 @@ void CStage2::Render()
 		}
 		else
 			x = Simon->x - SCREEN_WIDTH / 2;
-		map->DrawMap(stagemap, x, y);
+		map->DrawMap(stagemap, x, y); //vẽ background
 		float i = Simon->state_direction_on_stair;
 		int v = Simon->is_on_stair;
 		int k = Simon->has_g;
 		
 		for (int i = 0; i < objects.size(); i++) {
-
 			if (objects[i]->tag != 3)
 				objects[i]->Render(x, y, Simon->x, Simon->y);
 		}
@@ -669,7 +675,7 @@ void CStage2::Render()
 		for (int i = 0; i < objects_panther.size(); i++) {
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		headerbar->score_ = Simon->point;
+		headerbar->score_ = stair->x;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		

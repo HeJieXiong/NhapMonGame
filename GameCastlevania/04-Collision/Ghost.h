@@ -8,8 +8,10 @@
 
 #define GHOST_STATE_WALKING 100
 #define GHOST_STATE_DIE 200
+#define GHOST_STATE_WALKING_RIGHT 300
 
 #define GHOST_ANI_WALKING 0
+#define GHOST_ANI_WALKING_RIGHT 1
 class CGhost : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

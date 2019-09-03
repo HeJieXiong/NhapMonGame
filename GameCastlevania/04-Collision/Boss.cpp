@@ -85,7 +85,7 @@ void CBoss::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					check_fly = 0;
 				}
 			}
-			y = 10 * sin(flying_coordinate* PI / 180) + 110;
+			y = 20 * sin(flying_coordinate* PI / 180) + 110;
 			x += dx;
 			flying_coordinate += 5;
 		}

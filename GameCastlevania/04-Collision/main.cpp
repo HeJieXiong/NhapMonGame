@@ -159,16 +159,22 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
 		if (Simon->is_on_stair ==1&& (Simon->state_direction_on_stair==1 || Simon->state_direction_on_stair == 3)) {
+			if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT)&&Simon->between_stair==1) {
+				Simon->vy = 0;				
+			}
 			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 		}
 		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 4)) && Simon->has_g == 0) {
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
+			Simon->vy = 0;
 		}
 	}
-	else
+	else {
 		Simon->SetState(SIMON_STATE_IDLE);
+		Simon->between_stair = 0;
+	}
 }
 
 LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
@@ -455,7 +461,6 @@ int RunStage2()
 		else
 			Sleep(tickPerFrame - dt);
 	}
-
 	return 1;
 }
 int RunStage1()
@@ -485,7 +490,6 @@ int RunStage1()
 		{
 			frameStart = now;
 			if ((Simon->x < 650) && (game->unablekeyboard == 0)) {
-
 				game->ProcessKeyboard();
 			}
 			else {
@@ -509,10 +513,6 @@ int RunStage1()
 					
 
 				}
-	
-					
-
-
 				game->unablekeyboard = 1;
 			}
 
@@ -554,18 +554,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
 	currentstage(stage1);*/
-	/*stage2->SetGame(game);
+	stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();*/
+	RunStage2();
 	/*stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage3();*/
-	stage4->SetGame(game);
+	/*stage4->SetGame(game);
 	LoadStage4();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage4();
+	RunStage4();*/
 	/*stage5->SetGame(game);
 	LoadStage5();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

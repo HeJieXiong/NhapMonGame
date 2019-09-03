@@ -19,15 +19,26 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (vx < 0 && x < 0) {
 		x = 0; vx = -vx;
 	}
-
 	if (vx > 0 && x > 290) {
 		x = 290; vx = -vx;
+	}
+	if (x == 0) {
+		state = GHOST_STATE_WALKING_RIGHT;
+	}
+	if (x == 290) {
+		state = GHOST_STATE_WALKING;
 	}
 }
 
 void CGhost::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-	int ani = GHOST_ANI_WALKING;
+	int ani;
+	if (state== GHOST_STATE_WALKING_RIGHT) {
+		ani = GHOST_ANI_WALKING_RIGHT;
+	}
+	else {
+		ani = GHOST_ANI_WALKING;
+	};
 	animations[ani]->Render(x - xcam, y - ycam);
 	RenderBoundingBox(xcam, ycam);
 	//RenderBoundingBox();

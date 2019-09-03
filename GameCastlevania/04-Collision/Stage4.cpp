@@ -611,7 +611,7 @@ void CStage4::LoadStage4()
 		fish->AddAnimation(1507);
 		//fish->SetPosition(location3[i][2], location3[i][3]);
 		//fish->bat_x = location3[i][4];
-		fish->SetPosition(180+i*50, 200);
+		fish->SetPosition(180+i*50, 250);
 		fish->SetState(FISH_STATE_HIDE);
 		//objects.push_back(fish);
 		objects_fish.push_back(fish);

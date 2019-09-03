@@ -1,6 +1,5 @@
 ﻿#include <algorithm>
 #include "debug.h"
-
 #include "Simon.h"
 #include "Game.h"
 #include "Morningstar.h"
@@ -122,33 +121,37 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 				isFalling = 0;
-				if (e->nx != 0 || e->ny <0||e->ny>0)
-				{
-
 					state_direction_on_stair= stair->stair_direction;
-					if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {//Bật is_on_stair khi Simon vào chỗ cầu thang
+					//if (is_on_stair == 0&& (stair ->type_stair==1|| stair->type_stair == 2) && stair->stair_direction != 0) {//Bật is_on_stair khi Simon vào chỗ cầu thang
+					//	is_on_stair = 1;
+					//	//has_g = 1;
+					//}
+					//if (is_on_stair == 1&& stair->type_stair ==2&&has_g==0) { //Đi xuống 			
+					//	has_g = 1;
+					//	x += dx;
+					//	//y += dy;
+					//}
+					//if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
+					//	is_on_stair = 1;
+					//	x += dx;
+					//	//y += dy;
+					//}
+					//if (stair->type_stair == 3 && stair->stair_direction == 0) {
+					//	has_g = 1;
+					//	is_on_stair = 0;
+					//}
+					//if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 &&stair->type_stair==1)// Simon khi đi xuống
+					//{
+					//	has_g = 1;	
+					//}
+					if (is_on_stair == 0 && stair->type_stair != 0 && stair->stair_direction != 0) {
 						is_on_stair = 1;
-						has_g = 1;
 					}
-					if (is_on_stair == 1&& stair->type_stair ==2&&has_g==0) {					
-						has_g = 1;
-						x += dx;
-						//y += dy;
-					}
-					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
-						is_on_stair = 1;
-						x += dx;
-						//y += dy;
-					}
-					if (stair->type_stair == 3 && stair->stair_direction == 0) {
-						has_g = 1;
+					if (is_on_stair == 1 && stair->type_stair != 0 && stair->stair_direction != 0 && between_stair==1) {
 						is_on_stair = 0;
+						has_g = 1;
 					}
-					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 &&stair->type_stair==1)// Simon khi đi xuống
-					{
-						has_g = 1;	
-					}
-				}
+				
 			}
 		}
 	}
@@ -177,8 +180,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
-	if (state == SIMON_STATE_DIE)
+	if (state == SIMON_STATE_DIE) {
 		ani = SIMON_ANI_DIE;
+	}
 	if (state == SIMON_STATE_SIT_DOWN) {
 		if (nx < 0) {
 			ani = SIMON_ANI_SIT_DOWN_LEFT;
@@ -243,7 +247,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
 		if (state_direction_on_stair == 2 && between_stair == 0)
 			ani = SIMON_ANI_DOWN_STAIR_LEFT;
-		
+
 		if (state_direction_on_stair == 3 && between_stair == 0)
 			ani = SIMON_ANI_ON_STAIR_LEFT;
 		if (state_direction_on_stair == 4 && between_stair == 0)
@@ -257,8 +261,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		if (state_direction_on_stair == 3 && between_stair == 1)
 			ani = SIMON_ANI_DOWN_STAIR_RIGHT;
 		if (state_direction_on_stair == 4 && between_stair == 1)
-			ani = SIMON_ANI_ON_STAIR_LEFT;
-		
+			ani = SIMON_ANI_ON_STAIR_LEFT;		
 		if (state_direction_on_stair == 0) {
 			if (nx>0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
 			else if (nx<0) ani = SIMON_ANI_BIG_IDLE_LEFT;
@@ -378,7 +381,7 @@ void CSimon::Attack_Weapons()
 	
 }
 
-void CSimon::Walking_on_stair()
+void CSimon::Walking_on_stair() //Đang lên cầu thang
 {
 			
 	if (state_direction_on_stair == 1) {
@@ -427,7 +430,6 @@ void CSimon::Walking_down_stair()
 	}
 	if (state_direction_on_stair == 3) {
 		vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
 		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 		has_g = 0;
 		between_stair = 1;
