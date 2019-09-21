@@ -405,7 +405,10 @@ void CSimon::Walking_on_stair() //Đang lên cầu thang
 		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 	}
 	x += 0;
-	
+	if (between_stair == 1) {
+		walking_up = 1;
+	}
+	else walking_up = 0;
 }
 void CSimon::Walking_down_stair()
 {
@@ -445,7 +448,10 @@ void CSimon::Walking_down_stair()
 	//	has_g = 0;
 	//	vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
 	//}
-
+	if (between_stair == 1) {
+		walking_up = 2;
+	}
+	else walking_up = 0;
 }
 
 

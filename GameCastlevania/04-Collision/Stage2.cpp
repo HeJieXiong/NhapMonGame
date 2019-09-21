@@ -470,6 +470,16 @@ void CStage2::LoadStage2()
 	ani->Add(10030);
 	animations->Add(418, ani);
 
+	ani = new CAnimation(150);	// idle stay stair right
+	ani->Add(10029);
+	ani->Add(10030);
+	animations->Add(419, ani);
+
+	ani = new CAnimation(150);	// idle stay stair left
+	ani->Add(10029);
+	ani->Add(10030);
+	animations->Add(420, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
