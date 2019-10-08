@@ -685,7 +685,8 @@ void CStage2::Render()
 		for (int i = 0; i < objects_panther.size(); i++) {
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		headerbar->score_ = stair->x;
+		headerbar->score_ = Simon->walking_up;
+		headerbar->time_ = Simon->between_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		

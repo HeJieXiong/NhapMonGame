@@ -105,14 +105,14 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	{
 	case DIK_UP:
 		if (Simon->is_on_stair == 1&&Simon->has_g==0) {
-			Simon->vy = 0;
-			Simon->between_stair = 0;
+			Simon->vy = 0;	
+			//Simon->walking_up = 1;
 			break;
 		}
 	case DIK_DOWN:
 		if (Simon->is_on_stair == 1 && Simon->has_g == 0) {
 			Simon->vy = 0;
-			Simon->between_stair = 0;
+			//Simon->walking_up = 2;
 			break;
 		}
 	}
@@ -141,16 +141,21 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		if ((Simon->is_on_stair == 1&& (Simon->state_direction_on_stair==4|| Simon->state_direction_on_stair == 2))) {
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
+			Simon->walking_up = 2;
+			Simon->between_stair = 1;
 		}
 		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
+			Simon->walking_up = 2;
+			Simon->between_stair = 1;
 		}
 		else {
 			if (game->IsKeyDown(DIK_X)) {
 				Simon->vy = 0;
 				Simon->y = 149.9999;
 				Simon->SetState(SIMON_STATE_SIT_DOWN);
+				
 			}
 			else
 				Simon->SetState(SIMON_STATE_SIT_DOWN);
@@ -159,27 +164,32 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	else if (game->IsKeyDown(DIK_UP)) {
 		if (Simon->is_on_stair ==1&& (Simon->state_direction_on_stair==1 || Simon->state_direction_on_stair == 3)) {
 			if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT)&&Simon->between_stair==1) {
-				Simon->vy = 0;				
+				Simon->vy = 0;
+				
 			}
+			Simon->walking_up = 1;
 			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 		}
 		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 4)) && Simon->has_g == 0) {
-			Simon->Walking_down_stair();
+			Simon->walking_up = 1;
+			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 			Simon->vy = 0;
 		}
+		
 	}
 	else {
 		if (Simon->walking_up == 1) {
+			Simon->between_stair = 1;
 			Simon->SetState(SIMON_STATE_IDLE);
 		}
 		else if (Simon->walking_up == 2) {
+			Simon->between_stair = 1;
 			Simon->SetState(SIMON_STATE_IDLE);
 		}
 		else  {
-			Simon->SetState(SIMON_STATE_IDLE);
-			Simon->between_stair = 0;
+			Simon->SetState(SIMON_STATE_IDLE);			
 		}
 	}
 }

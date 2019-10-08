@@ -88,7 +88,7 @@ public:
 	int state_direction_on_stair;
 	int between_stair = 0;
 	int point=0;
-	int walking_up = 0;
+	int walking_up = 0; // giá trị 1 là đang đi lên
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
