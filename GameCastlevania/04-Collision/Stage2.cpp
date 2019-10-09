@@ -470,15 +470,21 @@ void CStage2::LoadStage2()
 	ani->Add(10030);
 	animations->Add(418, ani);
 
-	ani = new CAnimation(150);	// idle stay stair right
-	ani->Add(10029);
-	ani->Add(10030);
+	ani = new CAnimation(150);	// idle stay stair left down
+	ani->Add(10019);
 	animations->Add(419, ani);
 
-	ani = new CAnimation(150);	// idle stay stair left
-	ani->Add(10029);
-	ani->Add(10030);
+	ani = new CAnimation(150);	// idle stay stair left up
+	ani->Add(10028);
 	animations->Add(420, ani);
+
+	ani = new CAnimation(150);	// idle stay stair right up
+	ani->Add(10030);
+	animations->Add(421, ani);
+
+	ani = new CAnimation(150);	// idle stay stair right up
+	ani->Add(10021);
+	animations->Add(422, ani);
 
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
@@ -500,7 +506,11 @@ void CStage2::LoadStage2()
 	Simon->AddAnimation(416);		// on stair right
 	Simon->AddAnimation(417);		// down stair left
 	Simon->AddAnimation(418);		// down stair right
-	Simon->SetPosition(40.0f, 0);
+	Simon->AddAnimation(419);		// idle stay stair left down
+	Simon->AddAnimation(420);		// idle stay stair left up
+	Simon->AddAnimation(421);		// idle stay stair right down
+	Simon->AddAnimation(422);		// idle stay stair right up
+	Simon->SetPosition(800.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
 	//PANTHER-STAR
@@ -686,7 +696,7 @@ void CStage2::Render()
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
 		headerbar->score_ = Simon->walking_up;
-		headerbar->time_ = Simon->between_stair;
+		headerbar->time_ = Simon->state_direction_on_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		
