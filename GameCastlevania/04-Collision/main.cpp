@@ -168,14 +168,15 @@ void CSampleKeyHander::KeyState(BYTE *states)
 				
 			}
 			Simon->walking_up = 1;
-			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
+			Simon->Walking_on_stair();
+			
 		}
 		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 4)) && Simon->has_g == 0) {
 			Simon->walking_up = 1;
-			Simon->Walking_on_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
-			Simon->vy = 0;
+			Simon->Walking_on_stair();
+			//Simon->vy = 0;
 		}
 		
 	}
