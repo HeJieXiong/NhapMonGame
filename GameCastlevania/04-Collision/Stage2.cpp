@@ -451,13 +451,13 @@ void CStage2::LoadStage2()
 	animations->Add(414, ani);
 
 	ani = new CAnimation(150);	// idle on stair left
-	ani->Add(10020);
-	ani->Add(10021);
+	ani->Add(10027);
+	ani->Add(10028);
 	animations->Add(415, ani);
 
 	ani = new CAnimation(150);	// idle on stair right
-	ani->Add(10027);
-	ani->Add(10028);
+	ani->Add(10020);
+	ani->Add(10021);
 	animations->Add(416, ani);
 
 	ani = new CAnimation(150);	// idle down stair left
@@ -478,7 +478,7 @@ void CStage2::LoadStage2()
 	ani->Add(10028);
 	animations->Add(420, ani);
 
-	ani = new CAnimation(150);	// idle stay stair right up
+	ani = new CAnimation(150);	// idle stay stair right down
 	ani->Add(10030);
 	animations->Add(421, ani);
 
@@ -695,8 +695,9 @@ void CStage2::Render()
 		for (int i = 0; i < objects_panther.size(); i++) {
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		headerbar->score_ = Simon->is_on_stair;
-		headerbar->time_ = Simon->state_direction_on_stair;
+		headerbar->score_ = Simon->state_direction_on_stair;
+		headerbar->time_ = Simon->has_g;
+		headerbar->stage_ = Simon->between_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		

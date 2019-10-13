@@ -142,13 +142,19 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 			Simon->walking_up = 2;
+			if(Simon->state_direction_on_stair == 2)
 			Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 4)
+				Simon->between_stair = 2;
 		}
 		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 			Simon->walking_up = 2;
-			Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 1)
+				Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 3)
+				Simon->between_stair = 2;
 		}
 		else {
 			if (game->IsKeyDown(DIK_X)) {
@@ -163,7 +169,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
 		if (Simon->is_on_stair ==1&& (Simon->state_direction_on_stair==1 || Simon->state_direction_on_stair == 3)) {
-			if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT)&&Simon->between_stair==1) {
+			if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT)&&(Simon->between_stair==1||Simon->between_stair==2)) {
 				Simon->vy = 0;
 				
 			}
@@ -182,11 +188,17 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else {
 		if (Simon->walking_up == 1) {
-			Simon->between_stair = 1;
+			if(Simon->state_direction_on_stair ==1 || Simon->state_direction_on_stair == 2)
+				Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 4)
+				Simon->between_stair = 2;
 			Simon->SetState(SIMON_STATE_IDLE);
 		}
 		else if (Simon->walking_up == 2) {
-			Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 2)
+				Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 4)
+				Simon->between_stair = 2;
 			Simon->SetState(SIMON_STATE_IDLE);
 		}
 		else  {
