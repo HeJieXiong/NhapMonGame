@@ -8,6 +8,7 @@ CHeaderBar::CHeaderBar(LPDIRECT3DDEVICE9 d3ddv)
 	font1 = NULL;
 	hr1 = D3DXCreateFont(d3ddv, 10, 7, FW_NORMAL, 1, false, DEFAULT_CHARSET, OUT_DEFAULT_PRECIS, ANTIALIASED_QUALITY, FF_DONTCARE, L"(Arial)", &font1);
 	SetRect(&fRectangle1, 0, 0, 400, 150);
+	lasttick = GetTickCount();
 }
 
 void CHeaderBar::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
@@ -31,14 +32,30 @@ void CHeaderBar::DrawHeaderbar() {
 	time = "TIME ";
 	stage = "STAGE ";
 	space = "                        ";
+
+	string time_text = "TIME ";
+	string time_number = to_string(time_);
+	while (time_number.size() < 4) {
+		time_number.insert(0, "0");
+	}
+	time_text += time_number;
+	char* time = &time_text[0];
+
 	string a= to_string(score_);
 	string b = to_string(time_);
 	string c = to_string(stage_);
 	string d = to_string(heart_);
 	string e = to_string(p_);
-	score =score+a+ space +time+b+ space + stage+c + "\n"+player+"\n"+enemy;
+	score =score+a+ space +time_text+ space + stage+c + "\n"+player+"\n"+enemy;
 	
 	font1->DrawTextA(NULL, score.c_str(), -1, &fRectangle1, DT_LEFT, D3DCOLOR_XRGB(255, 255, 255));
+}
+
+void CHeaderBar::UpdateTime() {
+	if (GetTickCount() - lasttick > 1000) {
+		time_ -= 1;
+		lasttick = GetTickCount();
+	}
 }
 
 

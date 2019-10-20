@@ -658,6 +658,7 @@ void CStage2::Update(DWORD dt)
 		objects_panther[i]->Update(dt, &coObjects_panther);
 	}
 	DebugOut(L"size %d\n", objects_panther.size());
+	headerbar->UpdateTime();
 }
 
 void CStage2::Render()
@@ -696,7 +697,7 @@ void CStage2::Render()
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
 		headerbar->score_ = Simon->state_direction_on_stair;
-		headerbar->time_ = Simon->has_g;
+		
 		headerbar->stage_ = Simon->between_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
