@@ -89,7 +89,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
-		if (Simon->has_wp == 1) {
+		if (Simon->has_wp == 0) {
 			Simon->attack_wp = 1;
 			Simon->Attack_Weapons();
 			break;
@@ -532,7 +532,7 @@ int RunStage1()
 					Simon->nx = 1;
 					Simon->SetState(SIMON_STATE_IDLE);
 				}
-				if (Simon->x <= 610 && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
+				if ((Simon->x <= 610||Simon ->x >=625) && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
 					Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 					Simon->vx = 0.02;
 					Simon->is_walking = 1;
@@ -540,8 +540,6 @@ int RunStage1()
 				if (Simon->x >= 650 && Simon->GetState() == SIMON_STATE_WALKING_RIGHT) {
 					Simon->SetState(SIMON_STATE_DISAPPEAR);
 					Simon->vx = 0;
-					
-
 				}
 				game->unablekeyboard = 1;
 			}
@@ -579,15 +577,15 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	stage3 = new CStage3(Simon, morningstar, knife, i);
 	stage4 = new CStage4(Simon, morningstar, knife, i);
 	stage5 = new CStage5(Simon, morningstar, knife, i);
-	/*stage1->SetGame(game);
+	stage1->SetGame(game);
 	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
-	currentstage(stage1);*/
-	stage2->SetGame(game);
+	currentstage(stage1);
+	/*stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
+	RunStage2();*/
 	/*stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
