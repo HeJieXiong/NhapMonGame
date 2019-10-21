@@ -359,11 +359,11 @@ void CStage1::Update(DWORD dt)
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 		coObjects_morningstar.push_back(objects_morningstar[i]);
-		if (objects_morningstar[i]->state == 100 && objects_morningstar[i]->tag == 0) {
+		if (objects_morningstar[i]->y == -9850 && objects_morningstar[i]->tag == 0) {
 			CItem		*item;
 			item = new CItem();
 			int rand_no;
-			rand_no = 100;
+			rand_no = rand() % 4 + 900;
 			item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
 			objects.push_back(item);
 			obejects_item.push_back(item);
@@ -436,7 +436,7 @@ void CStage1::Render()
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-	
+		headerbar->score_ = Simon->nx;
 		headerbar->DrawHeaderbar();
 		
 

@@ -58,10 +58,10 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 						|| (left < left_co) && (right > right_co)) && ((top > top_co&& top < bottom_co)
 							|| (bottom > top_co &&bottom < bottom_co))) {
 						//coObjects->at(i)->SetState(200);
-						coObjects->at(i)->y = 1000;
+						coObjects->at(i)->y = -9850;
 					}
 				}
-				if (coObjects->at(i)->y == 1000) {
+				if (coObjects->at(i)->y == -9850) {
 					attacked = 1;
 					attack_time = 0;
 				}

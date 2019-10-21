@@ -75,9 +75,13 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0) {
+		if (Simon->has_g != 0 && Simon->state !=SIMON_STATE_SIT_DOWN) {
 			Simon->SetState(SIMON_STATE_JUMP);			
 			Simon->isFalling = 1;
+			break;
+		}
+		if (Simon->state == SIMON_STATE_SIT_DOWN) {
+			Simon->vy = 0;
 			break;
 		}
 	case DIK_A: // reset
@@ -157,13 +161,6 @@ void CSampleKeyHander::KeyState(BYTE *states)
 				Simon->between_stair = 2;
 		}
 		else {
-			if (game->IsKeyDown(DIK_X)) {
-				Simon->vy = 0;
-				Simon->y = 149.9999;
-				Simon->SetState(SIMON_STATE_SIT_DOWN);
-				
-			}
-			else
 				Simon->SetState(SIMON_STATE_SIT_DOWN);
 		}
 	}

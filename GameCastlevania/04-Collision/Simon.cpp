@@ -217,7 +217,8 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					morningstar->state = 2;
 					morningstar->Render(xcam, ycam, x, y);
 				}
-				else if (attack_wp == 1) {
+				else if (attack_wp == 1 && knife->is_fly == 0) {
+					knife->is_fly = 1;
 					knife->vx = -KNIFE_GRAVITY * dt;
 					knife->AddAnimation(1101);
 				}
@@ -228,7 +229,8 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					morningstar->state = 3;
 					morningstar->Render(xcam, ycam, x, y);
 				}
-				else if (attack_wp == 1) {
+				else if (attack_wp == 1 && knife->is_fly==0) {
+					knife->is_fly = 1;
 					knife->vx = KNIFE_GRAVITY * dt;
 					knife->AddAnimation(1100);
 				}

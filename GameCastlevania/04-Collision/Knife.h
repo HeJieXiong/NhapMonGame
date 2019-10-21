@@ -20,6 +20,7 @@ public:
 	~CKnife();
 	static CKnife * GetInstance();
 	int state;
+	int is_fly = 0;
 	void Update(DWORD dt,vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

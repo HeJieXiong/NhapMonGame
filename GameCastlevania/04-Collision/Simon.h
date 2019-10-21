@@ -72,6 +72,7 @@ class CSimon : public CGameObject
 	int attack_time = 0;
 	int walking_time = 0;
 	int attacking;
+
 	DWORD untouchable_start;
 	DWORD attack_start;
 	DWORD walking_start;
@@ -94,13 +95,15 @@ public:
 	int between_stair = 0;
 	int point=0;
 	int walking_up = 0; // giá trị 1 là đang đi lên
+	int is_sit = 1;
+	int nx_knife;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
 		headerbar = b;
 		knife = c;
 		untouchable = 0;
-
+		nx_knife = nx;
 	}
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
