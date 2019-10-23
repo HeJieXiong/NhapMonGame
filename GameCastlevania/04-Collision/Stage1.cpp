@@ -14,6 +14,7 @@ void CStage1::LoadStage1()
 	textures->Add(ID_TEX_HEADERBAR, L"textures\\ItemBoard.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_LIGHT, L"textures\\other\\light_die_1.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -197,7 +198,16 @@ void CStage1::LoadStage1()
 	//HEAD-BAR-END
 
 
+	//LIGHT_DIE-START
+	LPDIRECT3DTEXTURE9 texLightDie = textures->Get(ID_TEX_LIGHT);
+	sprites->Add(15001, 0, 0, 8, 19, texLightDie);
+	sprites->Add(15002, 12, 0, 23, 23, texLightDie);
+	ani = new CAnimation(100);
+	ani->Add(15001);
+	ani->Add(15002);
+	animations->Add(15001, ani);
 
+	//LIGHT_DIE-END
 
 
 	//SIMON-START
@@ -346,6 +356,10 @@ void CStage1::Update(DWORD dt)
 		if (obejects_item[i]->tag == 1 || obejects_item[i]->tag == 5)
 			coObjects_item.push_back(obejects_item[i]);
 	}
+	for (int i = 0; i < objects_morningstar.size(); i++)
+	{
+		coObjects_morningstar.push_back(objects_morningstar[i]);
+	}
 	for (int i = 0; i < objects_weapons.size(); i++)
 	{
 		coObjects_weapons.push_back(objects_weapons[i]);
@@ -356,33 +370,48 @@ void CStage1::Update(DWORD dt)
 		
 		Simon->combine_array = 0;
 	}
-	for (int i = 0; i < objects_morningstar.size(); i++)
-	{
-		coObjects_morningstar.push_back(objects_morningstar[i]);
-		if (objects_morningstar[i]->y == -9850 && objects_morningstar[i]->tag == 0) {
-			CItem		*item;
-			item = new CItem();
-			int rand_no;
-			rand_no = rand() % 4 + 900;
-			item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
-			objects.push_back(item);
-			obejects_item.push_back(item);
-			objects_morningstar[i]->tag = 5;
-		}
-	}
 	morningstar->Update_colison(&coObjects_morningstar);
+	//for (int i = 0; i < objects_morningstar.size(); i++)
+	//{
+	//	//coObjects_morningstar.push_back(objects_morningstar[i]);
+	//	//objects_morningstar[i]->Update(dt, &coObjects_morningstar);
+	//	
+	//	if (objects_morningstar[i]->y == -9850 && objects_morningstar[i]->tag == 0) {
+	//		CLight *light;
+	//		light = new CLight();
+	//		objects.push_back(light);
+	//		CItem		*item;
+	//		item = new CItem();
+	//		int rand_no;
+	//		rand_no = rand() % 4 + 900;
+	//		item->Item_setting(item, objects_morningstar[i]->x, objects_morningstar[i]->y, rand_no);
+	//		objects.push_back(item);
+	//		obejects_item.push_back(item);
+	//		objects_morningstar[i]->tag = 5;
+	//	}
+	//}
+
+		
+	
 	for (int i = 0; i < objects_weapons.size(); i++)
 	{
 		objects_weapons[i]->Update(dt, &coObjects_weapons);
 		if (objects_weapons[i]->y == -9850 && objects_weapons[i]->tag == 0) {
-			CItem		*item;
-			item = new CItem();
-			int rand_no;
-			rand_no = rand() % 4 + 900;
-			item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
-			objects.push_back(item);
-			obejects_item.push_back(item);
-			objects_weapons[i]->tag = 5;
+			light = new CLight();
+			light->AddAnimation(15001);
+			light->Light_setting(light, objects_weapons[i]->x, objects_weapons[i]->y);
+			light->tag = 10;
+			objects.push_back(light);
+			
+				CItem		*item;
+				item = new CItem();
+				int rand_no;
+				rand_no = rand() % 4 + 900;
+				item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
+				objects.push_back(item);
+				obejects_item.push_back(item);
+				objects_weapons[i]->tag = 5;
+			
 		}
 	}
 	for (int i = 0; i < obejects_item.size(); i++)

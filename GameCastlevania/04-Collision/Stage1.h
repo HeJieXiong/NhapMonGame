@@ -12,6 +12,7 @@
 #include "Item.h"
 #include "TileMap.h"
 #include "Knife.h"
+#include "Light_die.h"
 
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
@@ -26,6 +27,8 @@
 #define ID_TEX_HEADERBAR 50
 #define ID_ITEM			60
 #define ID_TEX_KNIFE		70
+#define ID_TEX_LIGHT		80
+
 class  CStage1 {
 
 	CGame		*game;
@@ -36,6 +39,7 @@ class  CStage1 {
 	CHeaderBar	*health;
 	CHeaderBar	*enemy;
 	CKnife		*knife;
+	CLight		*light;
 	TileMap		*map;
 
 	vector<LPGAMEOBJECT> objects;

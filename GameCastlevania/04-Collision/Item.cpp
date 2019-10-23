@@ -75,10 +75,10 @@ void CItem::Render(float &xcam, float &ycam, float &x_, float &y_)
 
 void CItem::Item_setting(CItem * Item, float & x, float & y,int a)
 {
-
+		
 		ani = a;
 		Item->x = x;
-		Item->y = y+9999;
+		Item->y = y+10010;
 		Item->AddAnimation(ani);
 		Item->tag = 5;
 	
