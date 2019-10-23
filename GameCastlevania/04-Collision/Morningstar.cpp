@@ -92,7 +92,7 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 	if (type_morningstar == 0) {
 		float check = 0;
 		if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
-			x = x_simon - 25;
+			x = x_simon - 30;
 			y = y_simon + 15;
 			int ani = 0;
 
@@ -108,7 +108,7 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 		}
 		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
 			int ani = 0;
-			x = x_simon - 26;
+			x = x_simon - 30;
 			y = y_simon + 10;
 			animations[ani]->Render(x - xcam - 4, y - ycam - 10);
 			//RenderBoundingBox_MoringStar(xcam, ycam);
@@ -118,13 +118,13 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 			y = y_simon + 10;
 			int ani = 1;
 			animations[ani]->Render(x - xcam - 15, y - ycam - 10);
-			RenderBoundingBox_MoringStar(xcam, ycam);
+			//RenderBoundingBox_MoringStar(xcam, ycam);
 		}
 	}
 	if (type_morningstar == 1) {
 		float check = 0;
 		if (state == 0) {//SIMON_ANI_SIT_ATTACK_LEFT
-			x = x_simon - 25;
+			x = x_simon - 30;
 			y = y_simon + 15;
 			int ani = 2;
 
@@ -140,7 +140,7 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 		}
 		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
 			int ani = 2;
-			x = x_simon - 26;
+			x = x_simon - 30;
 			y = y_simon + 10;
 			animations[ani]->Render(x - xcam - 13, y - ycam - 5);
 			//RenderBoundingBox_MoringStar(xcam, ycam);

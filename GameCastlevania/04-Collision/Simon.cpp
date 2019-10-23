@@ -33,6 +33,21 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}*/
+
+
+	if (on_jump == 1) {
+		if (GetTickCount() - jump_start > SIMON_JUMP_TIME)
+		{
+			//state = SIMON_STATE_JUMP;
+			vy = SIMON_STAY_JUMP_SPEED_Y;
+			jump_time += dt;
+		}
+	}
+	if (jump_time > dt*10) {
+		jump_time = 0;
+		on_jump = 0;
+		vy = SIMON_JUMP_SPEED_Y;
+	}
 	if (attacking == 1) {
 		if (GetTickCount() - attack_start > SIMON_ATTACK_TIME)
 		{
@@ -195,6 +210,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 				else if (attack_wp == 1) {
 					knife->vx = -KNIFE_GRAVITY * dt;
+					knife->attack_sit = 1;
 					knife->AddAnimation(1101);
 				}
 			}
@@ -206,6 +222,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 				else if (attack_wp == 1) {
 					knife->vx = KNIFE_GRAVITY * dt;
+					knife->attack_sit = 1;
 					knife->AddAnimation(1100);
 				}
 			}
@@ -309,9 +326,15 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}*/
 			}
 			else {
-				if (nx > 0 ) ani = SIMON_ANI_BIG_IDLE_RIGHT;
-				else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
-				walking_up = 0;
+				if (on_jump == 0) {
+					if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
+					else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
+					walking_up = 0;
+				}
+				else {
+					if (nx > 0) ani = SIMON_ANI_JUMP_RIGHT;
+					else if (nx < 0) ani = SIMON_ANI_JUMP_LEFT;
+				}
 			}
 
 		}
@@ -325,7 +348,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam - 7, y - ycam, alpha);
-	RenderBoundingBox(xcam, ycam);
+	//RenderBoundingBox(xcam, ycam);
 }
 
 void CSimon::SetState(int state)
@@ -357,6 +380,9 @@ void CSimon::SetState(int state)
 			/*if (y > 140)*/ {
 			//isFalling = true;
 			vy = -SIMON_JUMP_SPEED_Y;
+			on_jump = 1;
+			jump_start = GetTickCount();
+			
 		}
 		//return;
 		//else vy = 0;

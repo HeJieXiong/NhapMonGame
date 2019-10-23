@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "GameObject.h"
 #include "Fire.h"
 #include "Candle.h"
@@ -21,6 +21,8 @@ public:
 	static CKnife * GetInstance();
 	int state;
 	int is_fly = 0;
+	int attack_sit = 0;
+	float Simon_x; //Dùng để kiểm tra
 	void Update(DWORD dt,vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

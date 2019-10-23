@@ -10,6 +10,7 @@
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.4f
+#define SIMON_STAY_JUMP_SPEED_Y		0.1f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.002f
 #define SIMON_GRAVITY_ON_STAIR_Y			0.004f
@@ -61,6 +62,7 @@
 
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 300
+#define SIMON_JUMP_TIME 300
 #define SIMON_WALKING_TIME 400
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 260
@@ -72,13 +74,14 @@ class CSimon : public CGameObject
 	int attack_time = 0;
 	int walking_time = 0;
 	int attacking;
-
+	int jump_time = 0;
 	DWORD untouchable_start;
 	DWORD attack_start;
 	DWORD walking_start;
 	CMorningstar *morningstar;
 	CKnife	*knife;
 	CHeaderBar *headerbar;
+	DWORD jump_start;
 
 
 public: 
@@ -97,6 +100,7 @@ public:
 	int walking_up = 0; // giá trị 1 là đang đi lên
 	int is_sit = 1;
 	int nx_knife;
+	int on_jump;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

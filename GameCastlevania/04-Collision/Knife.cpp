@@ -34,6 +34,7 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 		{
 
 			x += dx;
+			
 		}
 		else
 		{
@@ -95,7 +96,10 @@ void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	if (state == 0) {
 		x = x_simon;
-		y = y_simon;
+		if(attack_sit==0)
+			y = y_simon+3;
+		else y = y_simon+10;
+		
 		state = 1;
 	}
 		animations[0]->Render(x-xcam,y-ycam);

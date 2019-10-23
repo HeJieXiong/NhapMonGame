@@ -16,7 +16,7 @@ void CCandle::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani = CANDLE_ANI;
 	animations[ani]->Render(x - xcam, y - ycam);
-	RenderBoundingBox(xcam,ycam);
+	//RenderBoundingBox(xcam,ycam);
 }
 
 void CCandle::SetState(int state)

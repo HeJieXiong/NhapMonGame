@@ -14,5 +14,5 @@ void CStair::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 void CStair::Render(float & xcam, float & ycam, float & x_, float & y_)
 {
-	RenderBoundingBox(xcam, ycam);
+	//RenderBoundingBox(xcam, ycam);
 }

@@ -93,7 +93,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		Simon->Attack(morningstar,Simon->x,Simon->y);
 		break;
 	case DIK_C:
-		if (Simon->has_wp == 0) {
+		if (Simon->has_wp == 1) {
 			Simon->attack_wp = 1;
 			Simon->Attack_Weapons();
 			break;

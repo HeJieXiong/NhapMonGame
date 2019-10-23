@@ -398,6 +398,7 @@ void CStage1::Update(DWORD dt)
 	{
 		objects[i]->Update(dt, &coObjects);
 	}
+	headerbar->UpdateTime();
 }
 
 void CStage1::Render()
@@ -436,7 +437,7 @@ void CStage1::Render()
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-		headerbar->score_ = Simon->nx;
+		headerbar->score_ = Simon->on_jump;
 		headerbar->DrawHeaderbar();
 		
 
