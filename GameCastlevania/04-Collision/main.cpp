@@ -75,8 +75,8 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0 && Simon->state !=SIMON_STATE_SIT_DOWN) {
-			Simon->SetState(SIMON_STATE_JUMP);			
+		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN) {
+			Simon->SetState(SIMON_STATE_JUMP);
 			Simon->isFalling = 1;
 			break;
 		}
@@ -90,7 +90,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_Z:
 		Simon->attack_wp = 0;
-		Simon->Attack(morningstar,Simon->x,Simon->y);
+		Simon->Attack(morningstar, Simon->x, Simon->y);
 		break;
 	case DIK_C:
 		if (Simon->has_wp == 1) {
@@ -98,8 +98,15 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 			Simon->Attack_Weapons();
 			break;
 		}
-		
 	}
+	/*case DIK_LEFT:
+		if (Simon->on_jump == 1) {
+			Simon->vx = 0;
+			
+			break;
+		}
+
+	}*/
 }
 
 void CSampleKeyHander::OnKeyUp(int KeyCode)
@@ -125,7 +132,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
-	if (Simon->GetState() == SIMON_STATE_DIE) return;
+	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState()==SIMON_STATE_JUMP) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
 			if (game->IsKeyDown(DIK_Z))
@@ -133,13 +140,26 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			else
 				Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 		}
+		if (game->IsKeyDown(DIK_X)) {
+			Simon->jump_walk = 2;
+			Simon->SetState(SIMON_STATE_JUMP);
+
+		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		if (Simon->has_g == 1) {
+		
+		 if (Simon->has_g == 1) {
 			if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C))
 				Simon->vx = 0;
 			else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 		}
+		 if (game->IsKeyDown(DIK_X)) {
+			 Simon->jump_walk = 1;
+			 Simon->SetState(SIMON_STATE_JUMP);
+			 
+		 }
+		
+		
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
 		if ((Simon->is_on_stair == 1&& (Simon->state_direction_on_stair==4|| Simon->state_direction_on_stair == 2))) {
@@ -183,6 +203,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		}
 		
 	}
+	
 	else {
 		if (Simon->walking_up == 1) {
 			if(Simon->state_direction_on_stair ==1 || Simon->state_direction_on_stair == 2)
