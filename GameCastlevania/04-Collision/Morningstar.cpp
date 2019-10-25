@@ -41,9 +41,9 @@ void CMorningstar::Update_colison( vector<LPGAMEOBJECT> *coObjects) {
 		
 	}
 	if (GetTickCount() - attack_start > MORNINGSTAR_ATTACK_TIME && attacked==0) {
-		attack_time +=1;
+		attack_time += MORNINGSTAR_TIME_COUNT;
 	}
-	if (attack_time > 25 && attacked==0) {
+	if (attack_time > MORNINGSTAR_TIME_CHECK && attacked==0) {
 		for (INT i = 0; i < coObjects->size(); i++)
 		{
 			
