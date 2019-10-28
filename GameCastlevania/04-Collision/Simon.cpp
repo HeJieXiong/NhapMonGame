@@ -80,6 +80,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		y = -9999;
 		walking_time = 0;
 	}
+	if (state==SIMON_STATE_EXTRA) {
+		if (GetTickCount() - take_item_start < SIMON_TAKING_TIME)
+		{	
+			state_extra = 1;
+			
+			taking_time += dt;
+			state = SIMON_STATE_EXTRA;
+		}
+		if (taking_time > dt*25 ) {	
+			state = SIMON_STATE_IDLE;
+			taking_time = 0;
+			state_extra = 0;
+			take_item_start = 0;
+		}
+		/*else {
+			state = SIMON_STATE_IDLE;
+			taking_time = 0;
+			state_extra = 0;
+			take_item_start = 0;
+		}*/
+	}
 	if (coEvents.size() == 0)//new code
 	{
 		x += dx;
@@ -125,6 +146,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					point += 100;
 					if (item->ani == 900) {
 						morningstar->SetType(1);
+						take_item_start = GetTickCount();
+						state = SIMON_STATE_EXTRA;
+						
 					}
 					if (item->ani == 903) {
 						has_wp = 1;
@@ -201,6 +225,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
 	int ani;
+	if (state == SIMON_STATE_EXTRA ) {
+		if (nx < 0) {
+			ani = SIMON_ANI_STAY_EXTRA_LEFT;
+		}
+		else ani = SIMON_ANI_STAY_EXTRA_RIGHT;
+			
+	}
 	if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
 	if (state == SIMON_STATE_SIT_DOWN) {
@@ -313,55 +344,57 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		}
 	}
 	else {
-		if (vx == 0) {
-			if (between_stair == 1|| between_stair==2) {
-				if (has_g == 0) {
-					if (walking_up == 1) {
-						if (state_direction_on_stair == 1 || state_direction_on_stair == 2)
-							ani = SIMON_ANI_STAY_STAIR_LEFT_UP;
-						else if (state_direction_on_stair == 3 || state_direction_on_stair == 4)
-							ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;
+		if (state_extra == 0) {
+			if (vx == 0) {
+				if (between_stair == 1 || between_stair == 2) {
+					if (has_g == 0) {
+						if (walking_up == 1) {
+							if (state_direction_on_stair == 1 || state_direction_on_stair == 2)
+								ani = SIMON_ANI_STAY_STAIR_LEFT_UP;
+							else if (state_direction_on_stair == 3 || state_direction_on_stair == 4)
+								ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;
+						}
+						if (walking_up == 2) {
+							if (state_direction_on_stair == 3 || state_direction_on_stair == 4)
+								ani = SIMON_ANI_STAY_STAIR_RIGHT_DOWN;
+							else ani = SIMON_ANI_STAY_STAIR_LEFT_DOWN;
+						}
 					}
-					if (walking_up == 2) {
-						if (state_direction_on_stair == 3 || state_direction_on_stair == 4)
-							ani = SIMON_ANI_STAY_STAIR_RIGHT_DOWN;
-						else ani = SIMON_ANI_STAY_STAIR_LEFT_DOWN;
-					}
-				}
-				/*else {
-					if (nx > 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
-					else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
-					
-				}*/
-			}
-			else {
-				if (on_jump == 0) {
-					if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
-					else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
-					walking_up = 0;
+					/*else {
+						if (nx > 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
+						else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
+
+					}*/
 				}
 				else {
-					if (nx > 0) ani = SIMON_ANI_JUMP_RIGHT;
-					else if (nx < 0) ani = SIMON_ANI_JUMP_LEFT;
+					if (on_jump == 0 && state_extra == 0) {
+						if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
+						else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
+						walking_up = 0;
+					}
+					else {
+						if (nx > 0) ani = SIMON_ANI_JUMP_RIGHT;
+						else if (nx < 0) ani = SIMON_ANI_JUMP_LEFT;
+					}
 				}
-			}
 
-		}
-		else if (vx > 0) {
-			if (on_jump == 0) {
-				
-				ani = SIMON_ANI_BIG_WALKING_RIGHT;
 			}
-			else ani = SIMON_ANI_JUMP_RIGHT;
-		}
-		else {
-			if(on_jump==0)
-				ani = SIMON_ANI_BIG_WALKING_LEFT;
-			else ani = SIMON_ANI_JUMP_LEFT;
-		}
-		if (vy < 0) {
-			if (nx > 0) ani = SIMON_ANI_JUMP_RIGHT;
-			else ani = SIMON_ANI_JUMP_LEFT;
+			else if (vx > 0) {
+				if (on_jump == 0 && state_extra == 0) {
+
+					ani = SIMON_ANI_BIG_WALKING_RIGHT;
+				}
+				else ani = SIMON_ANI_JUMP_RIGHT;
+			}
+			else {
+				if (on_jump == 0 && state_extra == 0)
+					ani = SIMON_ANI_BIG_WALKING_LEFT;
+				else ani = SIMON_ANI_JUMP_LEFT;
+			}
+			if (vy < 0) {
+				if (nx > 0) ani = SIMON_ANI_JUMP_RIGHT;
+				else ani = SIMON_ANI_JUMP_LEFT;
+			}
 		}
 	}
 	int alpha = 255;

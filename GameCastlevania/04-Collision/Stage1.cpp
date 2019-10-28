@@ -15,6 +15,7 @@ void CStage1::LoadStage1()
 	textures->Add(ID_ITEM, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_KNIFE, L"textures\\item\\item.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_LIGHT, L"textures\\other\\light_die_1.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_SIMON_EXTRA, L"textures\\Simon_extra.png", D3DCOLOR_XRGB(255, 0, 255));
 
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -208,6 +209,30 @@ void CStage1::LoadStage1()
 	animations->Add(15001, ani);
 
 	//LIGHT_DIE-END
+	//SIMON_EXTRA
+	LPDIRECT3DTEXTURE9 texSIMON_EXTRA = textures->Get(ID_TEX_SIMON_EXTRA);
+	sprites->Add(16001, 0, 0, 17, 31, texSIMON_EXTRA);
+	sprites->Add(16002, 23, 0, 39, 31, texSIMON_EXTRA);
+	sprites->Add(16003, 46, 0, 62, 31, texSIMON_EXTRA);
+	sprites->Add(16004, 70, 0, 86, 31, texSIMON_EXTRA);
+	sprites->Add(16005, 92, 0, 108, 31, texSIMON_EXTRA);
+	sprites->Add(16006, 115, 0, 132, 31, texSIMON_EXTRA);
+	sprites->Add(16007, 139, 0, 155, 31, texSIMON_EXTRA);
+	sprites->Add(16008, 161, 0, 177, 31, texSIMON_EXTRA);
+	ani = new CAnimation(70); //EXTRA LEFT
+	ani->Add(16004);
+	ani->Add(16003);
+	ani->Add(16002);
+	ani->Add(16001);
+	animations->Add(16001, ani);
+	ani = new CAnimation(70); //EXTRA RIGHT
+	ani->Add(16005);
+	ani->Add(16006);
+	ani->Add(16007);
+	ani->Add(16008);
+	animations->Add(16002, ani);
+	//SIMON_EXTRA-END
+
 
 
 	//SIMON-START
@@ -299,14 +324,40 @@ void CStage1::LoadStage1()
 	animations->Add(414, ani);
 
 	ani = new CAnimation(150);	// idle on stair left
-	ani->Add(10020);
-	ani->Add(10021);
+	ani->Add(10027);
+	ani->Add(10028);
 	animations->Add(415, ani);
 
 	ani = new CAnimation(150);	// idle on stair right
-	ani->Add(10027);
-	ani->Add(10028);
+	ani->Add(10020);
+	ani->Add(10021);
 	animations->Add(416, ani);
+
+	ani = new CAnimation(150);	// idle down stair left
+	ani->Add(10020);
+	ani->Add(10019);
+	animations->Add(417, ani);
+
+	ani = new CAnimation(150);	// idle down stair right
+	ani->Add(10029);
+	ani->Add(10030);
+	animations->Add(418, ani);
+
+	ani = new CAnimation(150);	// idle stay stair left down
+	ani->Add(10019);
+	animations->Add(419, ani);
+
+	ani = new CAnimation(150);	// idle stay stair left up
+	ani->Add(10028);
+	animations->Add(420, ani);
+
+	ani = new CAnimation(150);	// idle stay stair right down
+	ani->Add(10030);
+	animations->Add(421, ani);
+
+	ani = new CAnimation(150);	// idle stay stair right up
+	ani->Add(10021);
+	animations->Add(422, ani);
 
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
@@ -326,6 +377,14 @@ void CStage1::LoadStage1()
 	Simon->AddAnimation(414);		// attack disappear
 	Simon->AddAnimation(415);		// on stair left
 	Simon->AddAnimation(416);		// on stair right
+	Simon->AddAnimation(417);		// down stair left
+	Simon->AddAnimation(418);		// down stair right
+	Simon->AddAnimation(419);		// idle stay stair left down
+	Simon->AddAnimation(420);		// idle stay stair left up
+	Simon->AddAnimation(421);		// idle stay stair right down
+	Simon->AddAnimation(422);		// idle stay stair right up
+	Simon->AddAnimation(16001);		// idle stay extra left
+	Simon->AddAnimation(16002);		// idle stay extra right
 	Simon->SetPosition(40.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END

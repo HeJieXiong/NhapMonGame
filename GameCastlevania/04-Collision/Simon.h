@@ -30,6 +30,7 @@
 #define SIMON_STATE_ATTACK			600
 #define SIMON_STATE_DISAPPEAR		700
 #define SIMON_STATE_ON_STAIR		800
+#define SIMON_STATE_EXTRA			900
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
 #define SIMON_ANI_BIG_IDLE_LEFT		1
@@ -55,7 +56,9 @@
 #define SIMON_ANI_STAY_STAIR_LEFT_UP	20
 #define SIMON_ANI_STAY_STAIR_RIGHT_DOWN	21
 #define SIMON_ANI_STAY_STAIR_RIGHT_UP	22
-#define SIMON_ANI_DIE				23
+#define SIMON_ANI_STAY_EXTRA_LEFT	23
+#define SIMON_ANI_STAY_EXTRA_RIGHT	24
+#define SIMON_ANI_DIE				25
 #define SIMON_BIG_BBOX_WIDTH  14
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -65,6 +68,7 @@
 #define SIMON_ATTACK_TIME 300
 #define SIMON_JUMP_TIME 300
 #define SIMON_WALKING_TIME 400
+#define SIMON_TAKING_TIME 3000
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 260
 
@@ -72,11 +76,11 @@ class CSimon : public CGameObject
 {
 	int level;
 	int untouchable;
-	int attack_time = 0;
-	int walking_time = 0;
+	float attack_time = 0;
+	float walking_time = 0;
 	int attacking;
-	int jump_time = 0;
-	
+	float jump_time = 0;
+
 	DWORD untouchable_start;
 	DWORD attack_start;
 	DWORD walking_start;
@@ -104,6 +108,9 @@ public:
 	int nx_knife;
 	int on_jump;
 	int jump_walk = 0;
+	int state_extra = 0;
+	float take_item_start = 0;
+	float taking_time = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

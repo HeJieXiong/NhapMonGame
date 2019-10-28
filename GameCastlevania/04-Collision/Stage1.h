@@ -28,6 +28,7 @@
 #define ID_ITEM			60
 #define ID_TEX_KNIFE		70
 #define ID_TEX_LIGHT		80
+#define ID_TEX_SIMON_EXTRA		90
 
 class  CStage1 {
 
