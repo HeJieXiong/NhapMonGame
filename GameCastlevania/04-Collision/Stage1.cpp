@@ -211,25 +211,21 @@ void CStage1::LoadStage1()
 	//LIGHT_DIE-END
 	//SIMON_EXTRA
 	LPDIRECT3DTEXTURE9 texSIMON_EXTRA = textures->Get(ID_TEX_SIMON_EXTRA);
-	sprites->Add(16001, 0, 0, 17, 31, texSIMON_EXTRA);
-	sprites->Add(16002, 23, 0, 39, 31, texSIMON_EXTRA);
-	sprites->Add(16003, 46, 0, 62, 31, texSIMON_EXTRA);
-	sprites->Add(16004, 70, 0, 86, 31, texSIMON_EXTRA);
-	sprites->Add(16005, 92, 0, 108, 31, texSIMON_EXTRA);
-	sprites->Add(16006, 115, 0, 132, 31, texSIMON_EXTRA);
-	sprites->Add(16007, 139, 0, 155, 31, texSIMON_EXTRA);
-	sprites->Add(16008, 161, 0, 177, 31, texSIMON_EXTRA);
-	ani = new CAnimation(70); //EXTRA LEFT
-	ani->Add(16004);
+	sprites->Add(16001, 0, 130, 30, 160, texSIMON_EXTRA);
+	sprites->Add(16002, 30, 130, 60, 160, texSIMON_EXTRA);
+	sprites->Add(16003, 60, 130, 90, 160, texSIMON_EXTRA);
+	sprites->Add(16004, 0, 165, 30, 195, texSIMON_EXTRA);
+	sprites->Add(16005, 30, 165, 60, 195, texSIMON_EXTRA);
+	sprites->Add(16006, 60, 165, 90, 195, texSIMON_EXTRA);
+	ani = new CAnimation(200); //EXTRA LEFT
 	ani->Add(16003);
 	ani->Add(16002);
 	ani->Add(16001);
 	animations->Add(16001, ani);
-	ani = new CAnimation(70); //EXTRA RIGHT
+	ani = new CAnimation(200); //EXTRA RIGHT
+	ani->Add(16004);
 	ani->Add(16005);
 	ani->Add(16006);
-	ani->Add(16007);
-	ani->Add(16008);
 	animations->Add(16002, ani);
 	//SIMON_EXTRA-END
 
@@ -466,7 +462,7 @@ void CStage1::Update(DWORD dt)
 				item = new CItem();
 				int rand_no;
 				rand_no = rand() % 4 + 900;
-				item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, rand_no);
+				item->Item_setting(item, objects_weapons[i]->x, objects_weapons[i]->y, 900);
 				objects.push_back(item);
 				obejects_item.push_back(item);
 				objects_weapons[i]->tag = 5;
