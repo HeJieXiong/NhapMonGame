@@ -521,7 +521,7 @@ void CStage1::Render()
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-		headerbar->score_ = Simon->on_jump;
+		headerbar->score_ = Simon->y;
 		headerbar->DrawHeaderbar();
 		
 

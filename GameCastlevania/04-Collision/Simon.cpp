@@ -56,6 +56,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		on_jump = 0;
 		jump_walk = 0;
 		state = SIMON_STATE_IDLE;
+		
 	}
 	if (attacking == 1) {
 		if (GetTickCount() - attack_start > SIMON_ATTACK_TIME)
@@ -89,10 +90,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			state = SIMON_STATE_EXTRA;
 		}
 		if (taking_time > dt*25 ) {	
+			if (on_jump == 1) {
+				vy = -SIMON_JUMP_SPEED_Y;
+				state = SIMON_STATE_IDLE;
+			}
+			else
 			state = SIMON_STATE_IDLE;
 			taking_time = 0;
 			state_extra = 0;
 			take_item_start = 0;
+			
 		}
 		/*else {
 			state = SIMON_STATE_IDLE;
@@ -367,7 +374,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					}*/
 				}
 				else {
-					if (on_jump == 0 && state_extra == 0) {
+					if (on_jump == 0) {
 						if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
 						else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
 						walking_up = 0;
