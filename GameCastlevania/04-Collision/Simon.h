@@ -112,6 +112,7 @@ public:
 	float take_item_start = 0;
 	float taking_time = 0;
 	int taking_jump = 0;
+	int attack_then_walk = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

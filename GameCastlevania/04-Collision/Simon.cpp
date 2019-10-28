@@ -73,6 +73,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (attack_time > dt * 25) {
 		attacking = 0;
 		attack_time = 0;
+		if (attack_then_walk == 1) 
+			state = SIMON_STATE_WALKING_LEFT;
+		
+		if (attack_then_walk == 2)
+			state = SIMON_STATE_WALKING_RIGHT;
+			attack_then_walk = 0;
+		
 	}
 	if (is_walking == 1 && state == SIMON_STATE_DISAPPEAR) {
 		if (GetTickCount() - walking_start > SIMON_WALKING_TIME)
@@ -422,12 +429,14 @@ void CSimon::SetState(int state)
 	{
 		vx = SIMON_WALKING_SPEED;
 		nx = 1;
+		attack_then_walk = 0;
 		break;
 	}
 	case SIMON_STATE_WALKING_LEFT:
 	{
 		vx = -SIMON_WALKING_SPEED;
 		nx = -1;
+		attack_then_walk = 0;
 		break;
 	}
 	case SIMON_STATE_JUMP:
