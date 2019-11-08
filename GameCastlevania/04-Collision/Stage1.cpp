@@ -271,11 +271,11 @@ void CStage1::LoadStage1()
 	animations->Add(405, ani);
 
 	ani = new CAnimation(100);	// idle jump right
-	ani->Add(10012);
+	ani->Add(10055);
 	animations->Add(406, ani);
 
 	ani = new CAnimation(100);	// idle jump left
-	ani->Add(10005);
+	ani->Add(10056);
 	animations->Add(407, ani);
 
 	ani = new CAnimation(100);	// idle sit down left
@@ -521,7 +521,7 @@ void CStage1::Render()
 		float i = objects_weapons.size();
 		int v = Simon->nx;
 		//float i = count1;
-		headerbar->score_ = Simon->attack_then_walk;
+		headerbar->score_ = Simon->vy;
 		headerbar->DrawHeaderbar();
 		
 

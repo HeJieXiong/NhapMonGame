@@ -36,32 +36,65 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 
 	if (on_jump == 1) {
+		if (GetTickCount() - jump_start < SIMON_JUMP_TIME)
+		{
+			state = SIMON_STATE_JUMP;
+
+			vy = -SIMON_STAY_JUMP_SPEED_Y;
+		}
 		if (jump_walk == 1) {
 			vx = -SIMON_JUMP_SPEED_X;
 		}
 		if (jump_walk == 2) {
 			vx = SIMON_JUMP_SPEED_X;
 		}
-		if (GetTickCount() - jump_start > SIMON_JUMP_TIME)
-		{
-			//state = SIMON_STATE_JUMP;
+		
+		if (jump_walk == 0) {
+			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {
 
-			vy = SIMON_STAY_JUMP_SPEED_Y;
-			
-			jump_time += dt;
+				
+				vy = SIMON_STAY_JUMP_SPEED_Y;
+				state = SIMON_STATE_JUMP;
+			}
+			if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
+				on_jump = 0;
+				if (taking_jump == 0)
+					state = SIMON_STATE_IDLE;
+				else {
+
+					state = SIMON_STATE_EXTRA;
+				}
+			}
 		}
-	}
-	if (jump_time > dt*10) {
-		jump_time = 0;
-		on_jump = 0;
-		jump_walk = 0;
-		if(taking_jump==0)
-		state = SIMON_STATE_IDLE;
 		else {
-			
-			state = SIMON_STATE_EXTRA;
+			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {
+
+				if (jump_walk == 1) {
+					vx = -SIMON_JUMP_SPEED_X;
+					vy = SIMON_JUMP_SPEED_Y;
+				}
+				else
+					vx = SIMON_JUMP_SPEED_X;
+					vy = SIMON_JUMP_SPEED_Y;
+				
+			}
 		}
+		if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
+			on_jump = 0;
+			jump_walk = 0;
+			jump_start = 0;
+			vx = 0;
+			vy = 0;
+			if (taking_jump == 0)
+				state = SIMON_STATE_IDLE;
+			else {
+
+				state = SIMON_STATE_EXTRA;
+			}
+		}
+
 	}
+	
 	if (attacking == 1) {
 		if (GetTickCount() - attack_start > SIMON_ATTACK_TIME)
 		{

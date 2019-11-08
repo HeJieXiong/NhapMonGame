@@ -9,7 +9,7 @@
 #include "Brick.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
-#define SIMON_JUMP_SPEED_Y		0.4f
+#define SIMON_JUMP_SPEED_Y		0.1f
 #define SIMON_JUMP_SPEED_X		0.1f
 #define SIMON_STAY_JUMP_SPEED_Y		0.05f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
@@ -66,7 +66,8 @@
 
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 300
-#define SIMON_JUMP_TIME 300
+#define SIMON_JUMP_TIME 500
+#define SIMON_JUMP_DOWN_TIME 800
 #define SIMON_WALKING_TIME 400
 #define SIMON_TAKING_TIME 3000
 #define SCREEN_WIDTH 400
@@ -75,7 +76,7 @@
 class CSimon : public CGameObject
 {
 	int level;
-	int untouchable;
+	
 	float attack_time = 0;
 	float walking_time = 0;
 	int attacking;
@@ -106,13 +107,14 @@ public:
 	int walking_up = 0; // giá trị 1 là đang đi lên
 	int is_sit = 1;
 	int nx_knife;
-	int on_jump;
-	int jump_walk = 0;
 	int state_extra = 0;
 	float take_item_start = 0;
 	float taking_time = 0;
 	int taking_jump = 0;
 	int attack_then_walk = 0;
+	int untouchable;
+	int on_jump = 0;
+	int jump_walk = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

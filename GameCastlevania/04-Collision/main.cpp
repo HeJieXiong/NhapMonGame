@@ -75,7 +75,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN) {
+		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN ) {
 			Simon->SetState(SIMON_STATE_JUMP);
 			Simon->isFalling = 1;
 			break;
