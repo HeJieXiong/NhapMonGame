@@ -137,6 +137,7 @@
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HeaderBar.h" />
+    <ClInclude Include="ID_TEX.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Knife.h" />
     <ClInclude Include="Light_die.h" />

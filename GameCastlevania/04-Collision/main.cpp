@@ -32,7 +32,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "GameObject.h"
 #include "Textures.h"
 #include "Stage1.h"
-#include "Stage2.h"
+
 #include "Stage3.h"
 #include "Stage4.h"
 #include "Stage5.h"
@@ -47,7 +47,7 @@ CGame		*game;
 CSimon		*Simon;
 
 CStage1		*stage1;
-CStage2		*stage2;
+CStage1		*stage2;
 CStage3		*stage3;
 CStage4		*stage4;
 CStage5		*stage5;
@@ -251,7 +251,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 void  LoadStage1() {
 	
-	stage1->LoadStage1();
+	stage1->LoadStage();
 }
 
 void  Updatestage1(DWORD dt) {
@@ -264,8 +264,8 @@ void  Renderstage1() {
 }
 
 void  LoadStage2() {
-
-	stage2->LoadStage2();
+	stage2->stage_id = 2;
+	stage2->LoadStage();
 }
 
 void  Updatestage2(DWORD dt) {
@@ -601,19 +601,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	knife = new CKnife();
 	Simon = new CSimon(morningstar, headerbar, knife);
 	stage1 = new CStage1(Simon,morningstar, knife,i);
-	stage2 = new CStage2(Simon, morningstar, knife, i);
+	stage2 = new CStage1(Simon, morningstar, knife, i);
 	stage3 = new CStage3(Simon, morningstar, knife, i);
 	stage4 = new CStage4(Simon, morningstar, knife, i);
 	stage5 = new CStage5(Simon, morningstar, knife, i);
-	stage1->SetGame(game);
+	/*stage1->SetGame(game);
 	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
-	currentstage(stage1);
-	/*stage2->SetGame(game);
+	currentstage(stage1);*/
+	stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();*/
+	RunStage2();
 	/*stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
