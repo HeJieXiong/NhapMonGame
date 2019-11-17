@@ -90,6 +90,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_Z:
 		Simon->attack_wp = 0;
+		Simon->attack_start = GetTickCount() ;
 		morningstar->attack_start = GetTickCount();
 		Simon->Attack(morningstar, Simon->x, Simon->y);
 		

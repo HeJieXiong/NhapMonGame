@@ -31,6 +31,7 @@
 #define SIMON_STATE_DISAPPEAR		700
 #define SIMON_STATE_ON_STAIR		800
 #define SIMON_STATE_EXTRA			900
+#define SIMON_TIME_OF_LAST_FRAME 300
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
 #define SIMON_ANI_BIG_IDLE_LEFT		1
@@ -65,7 +66,7 @@
 #define SIMON_SIT_BBOX_HEIGHT 30
 
 #define SIMON_UNTOUCHABLE_TIME 1000
-#define SIMON_ATTACK_TIME 300
+#define SIMON_ATTACK_TIME 458
 #define SIMON_JUMP_TIME 500
 #define SIMON_JUMP_DOWN_TIME 800
 #define SIMON_WALKING_TIME 400
@@ -83,16 +84,17 @@ class CSimon : public CGameObject
 	float jump_time = 0;
 
 	DWORD untouchable_start;
-	DWORD attack_start;
+	
 	DWORD walking_start;
 	CMorningstar *morningstar;
 	CKnife	*knife;
 	CHeaderBar *headerbar;
 	DWORD jump_start;
-
+	
 
 public: 
 	vector<LPGAMEOBJECT> objects_weapons;
+	DWORD attack_start;
 	int attack_wp;
 	int combine_array = 0;
 	float test_val;
@@ -115,6 +117,8 @@ public:
 	int untouchable;
 	int on_jump = 0;
 	int jump_walk = 0;
+	int isLastFrame = 0;
+	float count = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

@@ -11,7 +11,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
+	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	// Simple fall down
 	if (has_g == 1) {
 		vy += SIMON_GRAVITY * dt;
@@ -96,11 +96,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	
 	if (attacking == 1) {
-		if (GetTickCount() - attack_start > SIMON_ATTACK_TIME)
+		if (GetTickCount() - attack_start < SIMON_ATTACK_TIME)
 		{
 			state = SIMON_STATE_ATTACK;
 			vx = 0;
+			
+			if ( GetTickCount() - attack_start > 300 )
+				isLastFrame = 1;
 			attack_time += dt;
+			
 		}
 	}
 	if (attack_time > dt * 25) {
@@ -290,12 +294,19 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		else ani = SIMON_ANI_SIT_DOWN_RIGHT;
 	}
 	else if (state == SIMON_STATE_ATTACK) {
+		
+			
+		morningstar->attack_start = GetTickCount();
 		if (level == 1) {
+			
 			if (nx < 0) {
 				ani = SIMON_ANI_SIT_ATTACK_LEFT;
 				if (attack_wp == 0) {
+					morningstar->attack_start = GetTickCount();
 					morningstar->state = 0;
 					morningstar->Render(xcam, ycam, x, y);
+
+					isLastFrame = 0;
 				}
 				else if (attack_wp == 1) {
 					knife->vx = -KNIFE_GRAVITY * dt;
@@ -306,6 +317,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			else {
 				ani = SIMON_ANI_SIT_ATTACK_RIGHT;
 				if (attack_wp == 0) {
+					morningstar->attack_start = GetTickCount();
 					morningstar->state = 1;
 					morningstar->Render(xcam, ycam, x, y);
 				}
@@ -317,11 +329,16 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			}
 		}
 		if (level == 0) {
+			
 			if (nx < 0) {
 				ani = SIMON_ANI_ATTACK_LEFT;
 				if (attack_wp == 0) {
+					morningstar->attack_start = GetTickCount();
 					morningstar->state = 2;
 					morningstar->Render(xcam, ycam, x, y);
+					if (isLastFrame == 1) {
+						morningstar->isLastFrame = 1;						
+					}
 				}
 				else if (attack_wp == 1 && knife->is_fly == 0) {
 					knife->is_fly = 1;
@@ -332,6 +349,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			else {
 				ani = SIMON_ANI_ATTACK_RIGHT;
 				if (attack_wp == 0) {
+					morningstar->attack_start = GetTickCount();
 					morningstar->state = 3;
 					morningstar->Render(xcam, ycam, x, y);
 				}

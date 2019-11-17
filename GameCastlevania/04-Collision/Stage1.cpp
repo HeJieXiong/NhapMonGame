@@ -685,9 +685,9 @@ void CStage1::LoadStage()
 				//panther->SetPosition(50, 50);
 				panther->SetState(PANTHER_STATE_SLEEP);
 				//objects.push_back(panther);
-				/*objects.push_back(panther);
+				objects.push_back(panther);
 				objects_morningstar.push_back(panther);
-				objects_weapons.push_back(panther);*/
+				//objects_weapons.push_back(panther); -- Hiện đang lỗi tự động chạy ở chỗ này
 				objects_panther.push_back(panther);
 			}
 		}
@@ -843,7 +843,7 @@ void CStage1::Render()
 			float i = objects_weapons.size();
 			int v = Simon->nx;
 			//float i = count1;
-			headerbar->score_ = Simon->vy;
+			headerbar->score_ = Simon->isLastFrame;
 			headerbar->DrawHeaderbar();
 
 		}
@@ -876,7 +876,8 @@ void CStage1::Render()
 			}
 			headerbar->score_ = Simon->state_direction_on_stair;
 
-			headerbar->stage_ = Simon->between_stair;
+			headerbar->stage_ = Simon->isLastFrame;
+			headerbar->score_ = Simon->isLastFrame;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
