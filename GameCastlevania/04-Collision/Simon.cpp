@@ -14,7 +14,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	// Simple fall down
 	if (has_g == 1) {
+		if (on_jump == 2) 
+			vy += SIMON_SPEED_JUMP_DOWN*dt;
+
+		else
 		vy += SIMON_GRAVITY * dt;
+	
 		between_stair = 0;
 	}
 
@@ -53,7 +58,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {
 
 				
-				vy = SIMON_STAY_JUMP_SPEED_Y;
+				vy = -SIMON_STAY_JUMP_SPEED_Y;
 				state = SIMON_STATE_JUMP;
 			}
 			if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
@@ -80,7 +85,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 		if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
-			on_jump = 0;
+			on_jump = 2;
 			jump_walk = 0;
 			jump_start = 0;
 			vx = 0;
@@ -181,6 +186,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				if (e->nx != 0 || e->ny < 0)
 				{
 					isFalling = 0;
+					on_jump = 0;
 				}
 			}
 
