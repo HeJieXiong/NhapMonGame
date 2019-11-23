@@ -123,7 +123,7 @@ void CStage1::LoadStage()
 	animations->Add(601, ani);
 	//BRICK2-START
 	LPDIRECT3DTEXTURE9 texMisc_2 = textures->Get(ID_TEX_MISC_2);
-	sprites->Add(20001, 0, 0, 16, 14, texMisc_2);
+	sprites->Add(20001, 0, 0, 16, 2, texMisc_2);
 	ani = new CAnimation(100);		// brick
 	ani->Add(20001);
 	animations->Add(601, ani);

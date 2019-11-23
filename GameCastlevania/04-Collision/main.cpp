@@ -142,12 +142,23 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState()==SIMON_STATE_JUMP||Simon->GetState()==SIMON_STATE_EXTRA) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
-			if (game->IsKeyDown(DIK_Z)) {
-				Simon->vx = 0;
-				Simon->attack_then_walk = 2;
+			if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C)) {
+
+				if (game->IsKeyDown(DIK_DOWN)) {
+					Simon->vx = 0;
+					Simon->SetState(SIMON_STATE_SIT_DOWN);
+				}
+				else {
+					Simon->vx = 0;
+					Simon->attack_then_walk = 2;
+					Simon->level = 0;
+				}
 			}
-			else
-				Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+			else if (game->IsKeyDown(DIK_DOWN)) {
+				Simon->vx = 0;
+				Simon->SetState(SIMON_STATE_SIT_DOWN);
+			}
+			else Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 		}
 		if (game->IsKeyDown(DIK_X)) {
 			Simon->jump_walk = 2;
@@ -159,8 +170,20 @@ void CSampleKeyHander::KeyState(BYTE *states)
 		
 		 if (Simon->has_g == 1) {
 			 if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C)) {
+				
+				if (game->IsKeyDown(DIK_DOWN)) {
+					Simon->vx = 0;
+					Simon->SetState(SIMON_STATE_SIT_DOWN);
+				}
+				else {
+					Simon->vx = 0;
+					Simon->attack_then_walk = 1;
+					Simon->level = 0;
+				}
+			 }
+			 else if (game->IsKeyDown(DIK_DOWN)) {
 				 Simon->vx = 0;
-				 Simon->attack_then_walk = 1;
+				 Simon->SetState(SIMON_STATE_SIT_DOWN);
 			 }
 			else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 		}

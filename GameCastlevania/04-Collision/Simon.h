@@ -68,8 +68,8 @@
 
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 458
-#define SIMON_JUMP_TIME 500
-#define SIMON_JUMP_DOWN_TIME 800
+#define SIMON_JUMP_TIME 300
+#define SIMON_JUMP_DOWN_TIME 500
 #define SIMON_WALKING_TIME 400
 #define SIMON_TAKING_TIME 3000
 #define SCREEN_WIDTH 400
@@ -77,7 +77,7 @@
 
 class CSimon : public CGameObject
 {
-	int level;
+	
 	
 	float attack_time = 0;
 	float walking_time = 0;
@@ -120,6 +120,7 @@ public:
 	int jump_walk = 0;
 	int isLastFrame = 0;
 	float count = 0;
+	int level=0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

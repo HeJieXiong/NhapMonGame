@@ -1,6 +1,6 @@
 ﻿#pragma once
 #include "GameObject.h"
-#define STAIR_HEIGHT 15;
+#define STAIR_HEIGHT 2;
 #define STAIR_WIDTH	 15;
 class CStair : public CGameObject
 {
