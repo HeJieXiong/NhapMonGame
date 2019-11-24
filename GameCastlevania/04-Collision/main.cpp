@@ -58,7 +58,7 @@ CHeaderBar	*headerbar;
 
 CKnife		*knife;
 vector<LPGAMEOBJECT> objects_weapons;
-int i ;
+int i;
 int current_stage;
 class CSampleKeyHander : public CKeyEventHandler
 {
@@ -75,25 +75,28 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN ) {
+		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN && Simon->between_stair !=1) {
 			Simon->SetState(SIMON_STATE_JUMP);
 			Simon->isFalling = 1;
+			
 			break;
 		}
-		if (Simon->state == SIMON_STATE_SIT_DOWN) {
+		
+		if (Simon->state == SIMON_STATE_SIT_DOWN || Simon->between_stair==1) {
 			Simon->vy = 0;
 			break;
 		}
+		break;
 	case DIK_A: // reset
 		Simon->SetState(SIMON_STATE_IDLE);
-		Simon->SetPosition(50.0f, 0.0f);
+		Simon->SetPosition(500.0f, 0.0f);
 		break;
 	case DIK_Z:
 		Simon->attack_wp = 0;
-		Simon->attack_start = GetTickCount() ;
+		Simon->attack_start = GetTickCount();
 		morningstar->attack_start = GetTickCount();
 		Simon->Attack(morningstar, Simon->x, Simon->y);
-		
+
 		break;
 	case DIK_C:
 		if (Simon->has_wp == 1) {
@@ -105,7 +108,7 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	/*case DIK_LEFT:
 		if (Simon->on_jump == 1) {
 			Simon->vx = 0;
-			
+
 			break;
 		}
 
@@ -118,8 +121,9 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_UP:
-		if (Simon->is_on_stair == 1&&Simon->has_g==0) {
-			Simon->vy = 0;	
+		
+		if (Simon->is_on_stair == 1 && Simon->has_g == 0) {
+			Simon->vy = 0;
 			//Simon->walking_up = 1;
 			break;
 		}
@@ -129,79 +133,63 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 			//Simon->walking_up = 2;
 			break;
 		}
-	/*case DIK_Z:
-		break;*/
+		/*case DIK_Z:
+			break;*/
 	}
-	
+
 }
 
 
 void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
-	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState()==SIMON_STATE_JUMP||Simon->GetState()==SIMON_STATE_EXTRA) return;
+	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA||Simon->on_jump==1 ||Simon->on_jump==2) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
-			if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C)) {
-
-				if (game->IsKeyDown(DIK_DOWN)) {
-					Simon->vx = 0;
-					Simon->SetState(SIMON_STATE_SIT_DOWN);
-				}
-				else {
-					Simon->vx = 0;
-					Simon->attack_then_walk = 2;
-					Simon->level = 0;
-				}
-			}
-			else if (game->IsKeyDown(DIK_DOWN)) {
+			if (game->IsKeyDown(DIK_Z)) {
 				Simon->vx = 0;
-				Simon->SetState(SIMON_STATE_SIT_DOWN);
+				Simon->attack_then_walk = 2;
 			}
-			else Simon->SetState(SIMON_STATE_WALKING_RIGHT);
+			else
+				Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 		}
 		if (game->IsKeyDown(DIK_X)) {
-			Simon->jump_walk = 2;
-			Simon->SetState(SIMON_STATE_JUMP);
+			if (Simon->between_stair != 1) {
+				Simon->jump_walk = 2;
+				Simon->SetState(SIMON_STATE_JUMP);
+			}
+			else Simon->vy = 0;
 
 		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
-		
-		 if (Simon->has_g == 1) {
-			 if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C)) {
-				
-				if (game->IsKeyDown(DIK_DOWN)) {
-					Simon->vx = 0;
-					Simon->SetState(SIMON_STATE_SIT_DOWN);
-				}
-				else {
-					Simon->vx = 0;
-					Simon->attack_then_walk = 1;
-					Simon->level = 0;
-				}
-			 }
-			 else if (game->IsKeyDown(DIK_DOWN)) {
-				 Simon->vx = 0;
-				 Simon->SetState(SIMON_STATE_SIT_DOWN);
-			 }
+
+		if (Simon->has_g == 1) {
+			if (game->IsKeyDown(DIK_Z) || game->IsKeyDown(DIK_C)) {
+				Simon->vx = 0;
+				Simon->attack_then_walk = 1;
+			}
 			else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 		}
-		 if (game->IsKeyDown(DIK_X)) {
-			 Simon->jump_walk = 1;
-			 Simon->SetState(SIMON_STATE_JUMP);
-			 
-		 }
+		if (game->IsKeyDown(DIK_X)) {
+			if (Simon->between_stair != 1) {
+				Simon->jump_walk = 1;
+				Simon->SetState(SIMON_STATE_JUMP);
+			}
+			else Simon->vy = 0;
 		
-		
+
+		}
+
+
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		if ((Simon->is_on_stair == 1&& (Simon->state_direction_on_stair==4|| Simon->state_direction_on_stair == 2))) {
+		if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 4 || Simon->state_direction_on_stair == 2))) {
 			Simon->Walking_down_stair();
 			Simon->SetState(SIMON_STATE_ON_STAIR);
 			Simon->walking_up = 2;
-			if(Simon->state_direction_on_stair == 2)
-			Simon->between_stair = 1;
+			if (Simon->state_direction_on_stair == 2)
+				Simon->between_stair = 1;
 			if (Simon->state_direction_on_stair == 4)
 				Simon->between_stair = 2;
 		}
@@ -215,32 +203,40 @@ void CSampleKeyHander::KeyState(BYTE *states)
 				Simon->between_stair = 2;
 		}
 		else {
-				Simon->SetState(SIMON_STATE_SIT_DOWN);
+			Simon->SetState(SIMON_STATE_SIT_DOWN);
 		}
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
-		if (Simon->is_on_stair ==1&& (Simon->state_direction_on_stair==1 || Simon->state_direction_on_stair == 3)) {
-			if (game->IsKeyDown(DIK_LEFT) || game->IsKeyDown(DIK_RIGHT)&&(Simon->between_stair==1||Simon->between_stair==2)) {
-				Simon->vy = 0;
-				
-			}
-			Simon->walking_up = 1;
-			Simon->SetState(SIMON_STATE_ON_STAIR);
-			Simon->Walking_on_stair();
 			
-		}
-		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 4)) && Simon->has_g == 0) {
-			Simon->walking_up = 1;
-			Simon->SetState(SIMON_STATE_ON_STAIR);
-			Simon->Walking_on_stair();
-			//Simon->vy = 0;
-		}
+			if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) {
+				Simon->walking_up = 1;
+				Simon->SetState(SIMON_STATE_ON_STAIR);
+				Simon->Walking_on_stair();
+				if (Simon->state_direction_on_stair == 2)
+					Simon->between_stair = 1;
+				if (Simon->state_direction_on_stair == 4)
+					Simon->between_stair = 2;
+
+
+			}
+			else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
+				Simon->Walking_down_stair();
+				Simon->SetState(SIMON_STATE_ON_STAIR);
+				Simon->walking_up = 2;
+				if (Simon->state_direction_on_stair == 1)
+					Simon->between_stair = 1;
+				if (Simon->state_direction_on_stair == 3)
+					Simon->between_stair = 2;
+			}
+			else {
+				Simon->SetState(SIMON_STATE_SIT_DOWN);
+			}
 		
 	}
-	
+
 	else {
 		if (Simon->walking_up == 1) {
-			if(Simon->state_direction_on_stair ==1 || Simon->state_direction_on_stair == 2)
+			if (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 2)
 				Simon->between_stair = 1;
 			if (Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 4)
 				Simon->between_stair = 2;
@@ -253,8 +249,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 				Simon->between_stair = 2;
 			Simon->SetState(SIMON_STATE_IDLE);
 		}
-		else  {
-			Simon->SetState(SIMON_STATE_IDLE);			
+		else {
+			Simon->SetState(SIMON_STATE_IDLE);
 		}
 	}
 }
@@ -274,7 +270,7 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 void  LoadStage1() {
-	
+
 	stage1->LoadStage();
 }
 
@@ -329,7 +325,7 @@ void  Renderstage4() {
 	stage4->Render();
 }
 
-void  LoadStage5() 
+void  LoadStage5()
 {
 	stage5->LoadStage5();
 }
@@ -384,7 +380,7 @@ HWND CreateGameWindow(HINSTANCE hInstance, int nCmdShow, int ScreenWidth, int Sc
 		return FALSE;
 	}
 
-	
+
 	ShowWindow(hWnd, nCmdShow);
 	UpdateWindow(hWnd);
 
@@ -550,7 +546,7 @@ int RunStage1()
 	MSG msg;
 	DWORD frameStart = GetTickCount();
 	DWORD tickPerFrame = 1000 / MAX_FRAME_RATE;
-	int done=0;
+	int done = 0;
 	while (!done)
 	{
 		if (PeekMessage(&msg, NULL, 0, 0, PM_REMOVE))
@@ -560,7 +556,7 @@ int RunStage1()
 			TranslateMessage(&msg);
 			DispatchMessage(&msg);
 		}
-		
+
 
 		DWORD now = GetTickCount();
 
@@ -584,7 +580,7 @@ int RunStage1()
 					Simon->nx = 1;
 					Simon->SetState(SIMON_STATE_IDLE);
 				}
-				if ((Simon->x <= 610||Simon ->x >=625) && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
+				if ((Simon->x <= 610 || Simon->x >= 625) && Simon->GetState() != SIMON_STATE_WALKING_LEFT) {
 					Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 					Simon->vx = 0.02;
 					Simon->is_walking = 1;
@@ -624,7 +620,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	morningstar = new CMorningstar();
 	knife = new CKnife();
 	Simon = new CSimon(morningstar, headerbar, knife);
-	stage1 = new CStage1(Simon,morningstar, knife,i);
+	stage1 = new CStage1(Simon, morningstar, knife, i);
 	stage2 = new CStage1(Simon, morningstar, knife, i);
 	stage3 = new CStage3(Simon, morningstar, knife, i);
 	stage4 = new CStage4(Simon, morningstar, knife, i);

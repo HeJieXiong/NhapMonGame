@@ -876,8 +876,8 @@ void CStage1::Render()
 			}
 			headerbar->score_ = Simon->state_direction_on_stair;
 
-			headerbar->stage_ = Simon->isLastFrame;
-			headerbar->score_ = Simon->isLastFrame;
+			headerbar->stage_ = Simon->x;
+			headerbar->score_ = Simon->x;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
