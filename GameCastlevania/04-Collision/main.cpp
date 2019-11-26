@@ -75,10 +75,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN && Simon->between_stair !=1) {
+		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN && Simon->between_stair !=1 && Simon->touch_stair_jump == 0) {
 			Simon->SetState(SIMON_STATE_JUMP);
-			Simon->isFalling = 1;
-			
+			Simon->isFalling = 1;			
 			break;
 		}
 		
@@ -143,7 +142,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
-	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA||Simon->on_jump==1 ||Simon->on_jump==2) return;
+	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA||Simon->on_jump==1 ||Simon->on_jump==2|| Simon->touch_stair_jump==1) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
 			if (game->IsKeyDown(DIK_Z)) {
@@ -208,7 +207,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
 			
-			if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) {
+			if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3|| Simon->state_direction_on_stair == 2)){
 				Simon->walking_up = 1;
 				Simon->SetState(SIMON_STATE_ON_STAIR);
 				Simon->Walking_on_stair();
@@ -219,7 +218,8 @@ void CSampleKeyHander::KeyState(BYTE *states)
 
 
 			}
-			else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
+			else if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 2))  {
+				
 				Simon->Walking_down_stair();
 				Simon->SetState(SIMON_STATE_ON_STAIR);
 				Simon->walking_up = 2;
@@ -229,7 +229,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 					Simon->between_stair = 2;
 			}
 			else {
-				Simon->SetState(SIMON_STATE_SIT_DOWN);
+				Simon->SetState(SIMON_STATE_IDLE);
 			}
 		
 	}

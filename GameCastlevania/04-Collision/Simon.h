@@ -60,7 +60,12 @@
 #define SIMON_ANI_STAY_STAIR_RIGHT_UP	22
 #define SIMON_ANI_STAY_EXTRA_LEFT	23
 #define SIMON_ANI_STAY_EXTRA_RIGHT	24
-#define SIMON_ANI_DIE				25
+#define SIMON_ANI_ATTACK_RIGHT_UP	25
+#define SIMON_ANI_ATTACK_LEFT_UP	26
+#define SIMON_ANI_ATTACK_RIGHT_DOWN	27
+#define SIMON_ANI_ATTACK_LEFT_DOWN	28
+
+#define SIMON_ANI_DIE				29
 #define SIMON_BIG_BBOX_WIDTH  14
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -121,6 +126,7 @@ public:
 	int isLastFrame = 0;
 	float count = 0;
 	int level=0;
+	int touch_stair_jump = 0; //Nhảy tại vị trí có stair cầu thang
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

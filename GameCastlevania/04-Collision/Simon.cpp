@@ -38,7 +38,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable_start = 0;
 		untouchable = 0;
 	}*/
-
+	//if (state != SIMON_STATE_JUMP)on_jump = 0;
 
 	if (on_jump == 1) {
 		if (GetTickCount() - jump_start < SIMON_JUMP_TIME)
@@ -187,6 +187,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				{
 					isFalling = 0;
 					on_jump = 0;
+					touch_stair_jump = 0;
 				}
 			}
 
@@ -237,14 +238,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_on_stair = 1;
 						has_g = 1;
 					}
-					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 0) {
-						has_g = 1;
-						x += dx;
-						//y += dy;
+					if (stair->type_stair == 2) {
+						if (is_on_stair == 1 &&  has_g == 0) {
+							has_g = 1;
+							is_on_stair = 0;
+							//x += dx;
+							//y += dy;
+						}
+						if (on_jump == 1) {																						
+								y += dy;
+								touch_stair_jump = 1;
+						}
+						if(on_jump==0)touch_stair_jump = 0;
 					}
 					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
 						is_on_stair = 1;
-						x += dx;
+						//x += dx;
 						//y += dy;
 					}
 					if (stair->type_stair == 3 && stair->stair_direction == 0) {
@@ -255,7 +264,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					{
 						has_g = 1;
 					}
-					on_jump = 0;
+					if (stair->type_stair != 2) {
+						on_jump = 0; 
+						
+					}
+					
 				}
 			}
 		}
@@ -338,6 +351,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		if (level == 0) {
 			
 			if (nx < 0) {
+				
 				ani = SIMON_ANI_ATTACK_LEFT;
 				if (attack_wp == 0) {
 					morningstar->attack_start = GetTickCount();

@@ -347,6 +347,32 @@ void CStage1::LoadStage()
 	ani->Add(10021);
 	animations->Add(422, ani);
 
+	ani = new CAnimation(150);	// idle attack stair right up
+	ani->Add(10043);
+	ani->Add(10042);
+	ani->Add(10041);
+	animations->Add(423, ani);
+
+
+	ani = new CAnimation(150);	// idle stay stair left up
+	ani->Add(10038);
+	ani->Add(10039);
+	ani->Add(10040);
+	animations->Add(424, ani);
+
+
+	ani = new CAnimation(150);	// idle stay stair right down
+	ani->Add(10035);
+	ani->Add(10036);
+	ani->Add(10037);
+	animations->Add(425, ani);
+
+	ani = new CAnimation(150);	// idle stay stair right down
+	ani->Add(10046);
+	ani->Add(10045);
+	ani->Add(10044);
+	animations->Add(426, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -373,6 +399,10 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(422);		// idle stay stair right up
 	Simon->AddAnimation(16001);		// idle stay extra left
 	Simon->AddAnimation(16002);		// idle stay extra right
+	Simon->AddAnimation(423);		// idle attack stair right up
+	Simon->AddAnimation(424);		// idle stay stair left up
+	Simon->AddAnimation(425);		// idle attack stair right down
+	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->SetPosition(640.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -876,8 +906,8 @@ void CStage1::Render()
 			}
 			headerbar->score_ = Simon->state_direction_on_stair;
 
-			headerbar->stage_ = Simon->x;
-			headerbar->score_ = Simon->x;
+			headerbar->stage_ = Simon->between_stair;
+			headerbar->score_ = Simon->walking_up;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
