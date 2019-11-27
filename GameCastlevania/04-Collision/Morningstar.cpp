@@ -117,6 +117,7 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}
+			attack_on_stair = 0;
 		}
 		if (state == 1) {//SIMON_ANI_SIT_ATTACK_RIGHT
 			x = x_simon;
@@ -126,24 +127,43 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}
+			attack_on_stair = 0;
 		}
 		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
-			int ani = 0;
-			x = x_simon - 30;
-			y = y_simon + 10;
-			animations[ani]->Render(x - xcam - 4, y - ycam - 10);
+			if (attack_on_stair == 0 || attack_on_stair == 1) {
+				x = x_simon - 30;
+				y = y_simon + 15;
+				int ani = 0;
+				animations[ani]->Render(x - xcam - 2, y - ycam - 10);
+			}
+			if (attack_on_stair == 2) {
+				x = x_simon;
+				y = y_simon + 15;
+				int ani = 1;
+				animations[ani]->Render(x - xcam - 15, y - ycam - 10);
+			}
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}
+			attack_on_stair = 0;
 		}
 		if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
-			x = x_simon;
-			y = y_simon + 10;
-			int ani = 1;
-			animations[ani]->Render(x - xcam - 15, y - ycam - 10);
+			if (attack_on_stair == 0 || attack_on_stair == 1) {
+				x = x_simon;
+				y = y_simon + 10;
+				int ani = 1;
+				animations[ani]->Render(x - xcam - 15, y - ycam - 10);
+			}
+			if (attack_on_stair == 2) {
+				x = x_simon - 30;
+				y = y_simon + 15;
+				int ani = 0;
+				animations[ani]->Render(x - xcam - 2, y - ycam - 10);
+			}
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}
+			attack_on_stair = 0;
 		}
 	}
 	if (type_morningstar == 1) {
@@ -168,19 +188,42 @@ void CMorningstar::Render(float &xcam, float &ycam, float &x_simon, float &y_sim
 			}
 		}
 		if (state == 2) {//SIMON_ANI_ATTACK_LEFT
-			int ani = 2;
-			x = x_simon - 30;
-			y = y_simon + 10;
-			animations[ani]->Render(x - xcam - 13, y - ycam - 5);
+			if (attack_on_stair == 0 || attack_on_stair == 1) {
+				int ani = 2;
+				x = x_simon - 30;
+				y = y_simon + 10;
+				animations[ani]->Render(x - xcam - 13, y - ycam - 5);
+			}
+			if (attack_on_stair == 2) {
+				x = x_simon;
+				y = y_simon + 10;
+				int ani = 3;
+				animations[ani]->Render(x - xcam - 16, y - ycam - 5);
+			}
+			if (isLastFrame == 1) {
+				RenderBoundingBox_MoringStar(xcam, ycam);
+			}
+			attack_on_stair = 0;
+
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}
 		}
 		if (state == 3) {//SIMON_ANI_ATTACK_RIGHT
-			x = x_simon;
-			y = y_simon + 10;
-			int ani = 3;
-			animations[ani]->Render(x - xcam - 16, y - ycam - 5);
+
+			if (attack_on_stair == 0 || attack_on_stair == 1) {
+				x = x_simon;
+				y = y_simon + 10;
+				int ani = 3;
+				animations[ani]->Render(x - xcam - 16, y - ycam - 5);
+			}
+			if (attack_on_stair == 2) {
+				int ani = 2;
+				x = x_simon - 30;
+				y = y_simon + 10;
+				animations[ani]->Render(x - xcam - 13, y - ycam - 5);
+			}
+		
 			if (isLastFrame == 1) {
 				RenderBoundingBox_MoringStar(xcam, ycam);
 			}

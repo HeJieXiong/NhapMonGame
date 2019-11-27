@@ -27,6 +27,7 @@ public:
 	int state;
 	int attacked=2;
 	int isLastFrame = 0;
+	int attack_on_stair = 0;
 	DWORD attack_start;
 	DWORD start_last_frame;
 	void Update_colison(vector<LPGAMEOBJECT> *coObjects);

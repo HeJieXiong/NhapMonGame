@@ -142,7 +142,8 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
-	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA||Simon->on_jump==1 ||Simon->on_jump==2|| Simon->touch_stair_jump==1) return;
+	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA
+		||Simon->on_jump==1 ||Simon->on_jump==2|| Simon->touch_stair_jump==1) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
 			if (game->IsKeyDown(DIK_Z)) {

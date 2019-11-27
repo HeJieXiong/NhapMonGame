@@ -351,9 +351,27 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		if (level == 0) {
 			
 			if (nx < 0) {
-				
-				ani = SIMON_ANI_ATTACK_LEFT;
+				if (is_on_stair == 1) {
+					if (walking_up == 2) {
+						ani = SIMON_ANI_ATTACK_LEFT_DOWN;
+						morningstar->attack_on_stair = 2;
+						
+					}
+					if (walking_up == 1) {
+						ani = SIMON_ANI_ATTACK_LEFT_UP;
+						morningstar->attack_on_stair = 1;
+					}
+					if (walking_up == 0) {
+						ani = SIMON_ANI_ATTACK_LEFT;
+						morningstar->attack_on_stair = 0;
+					}
+				}
+				else {
+					ani = SIMON_ANI_ATTACK_LEFT;
+					morningstar->attack_on_stair = 0;
+				}
 				if (attack_wp == 0) {
+					
 					morningstar->attack_start = GetTickCount();
 					morningstar->state = 2;
 					morningstar->Render(xcam, ycam, x, y);
@@ -368,7 +386,24 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 			}
 			else {
-				ani = SIMON_ANI_ATTACK_RIGHT;
+				if (is_on_stair == 1) {
+					if (walking_up == 2) {
+						ani = SIMON_ANI_ATTACK_RIGHT_DOWN;
+						morningstar->attack_on_stair = 2;
+					}
+					if (walking_up == 1) {
+						ani = SIMON_ANI_ATTACK_RIGHT_UP;
+						morningstar->attack_on_stair = 1;
+					}
+					if (walking_up == 0) {
+						ani = SIMON_ANI_ATTACK_RIGHT;
+						morningstar->attack_on_stair = 0;
+					}
+				}
+				else {
+					morningstar->attack_on_stair = 0;
+					ani = SIMON_ANI_ATTACK_RIGHT;
+				}
 				if (attack_wp == 0) {
 					morningstar->attack_start = GetTickCount();
 					morningstar->state = 3;
