@@ -12,6 +12,8 @@
 #define SIMON_JUMP_SPEED_Y		0.01f
 #define SIMON_JUMP_SPEED_X		0.1f
 #define SIMON_STAY_JUMP_SPEED_Y		0.05f
+#define SIMON_STAY_JUMP_HEART_Y		0.025f
+#define SIMON_STAY_JUMP_HEART_X		0.005f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
 #define SIMON_GRAVITY			0.002f
 #define SIMON_GRAVITY_ON_STAIR_Y			0.004f
@@ -32,6 +34,7 @@
 #define SIMON_STATE_DISAPPEAR		700
 #define SIMON_STATE_ON_STAIR		800
 #define SIMON_STATE_EXTRA			900
+#define SIMON_STATE_HEART			901
 #define SIMON_TIME_OF_LAST_FRAME 300
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
@@ -64,8 +67,10 @@
 #define SIMON_ANI_ATTACK_LEFT_UP	26
 #define SIMON_ANI_ATTACK_RIGHT_DOWN	27
 #define SIMON_ANI_ATTACK_LEFT_DOWN	28
+#define SIMON_ANI_STAY_HEART_RIGHT	29
+#define SIMON_ANI_STAY_HEART_LEFT	30
 
-#define SIMON_ANI_DIE				29
+#define SIMON_ANI_DIE				31
 #define SIMON_BIG_BBOX_WIDTH  14
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -77,6 +82,8 @@
 #define SIMON_JUMP_DOWN_TIME 500
 #define SIMON_WALKING_TIME 400
 #define SIMON_TAKING_TIME 3000
+#define SIMON_HEART_JUMP_TIME 800
+#define SIMON_HEART_TIME 1200
 #define SCREEN_WIDTH 400
 #define SCREEN_HEIGHT 260
 
@@ -120,13 +127,16 @@ public:
 	float taking_time = 0;
 	int taking_jump = 0;
 	int attack_then_walk = 0;
-	int untouchable;
+	int untouchable=0;
 	int on_jump = 0;
 	int jump_walk = 0;
 	int isLastFrame = 0;
 	float count = 0;
 	int level=0;
 	int touch_stair_jump = 0; //Nhảy tại vị trí có stair cầu thang
+	int is_heart = 0;
+	int check_state=0;
+	DWORD start_heart;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

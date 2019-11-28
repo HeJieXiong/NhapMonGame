@@ -75,33 +75,40 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN && Simon->between_stair !=1 && Simon->touch_stair_jump == 0) {
+		if (Simon->has_g != 0 && Simon->state != SIMON_STATE_SIT_DOWN && Simon->between_stair != 1 && Simon->touch_stair_jump == 0 || Simon->is_heart == 0) {
 			Simon->SetState(SIMON_STATE_JUMP);
-			Simon->isFalling = 1;			
+			Simon->isFalling = 1;
 			break;
 		}
-		
-		if (Simon->state == SIMON_STATE_SIT_DOWN || Simon->between_stair==1) {
+
+		if (Simon->state == SIMON_STATE_SIT_DOWN || Simon->between_stair == 1) {
 			Simon->vy = 0;
 			break;
 		}
 		break;
 	case DIK_A: // reset
-		Simon->SetState(SIMON_STATE_IDLE);
-		Simon->SetPosition(500.0f, 0.0f);
+		if (Simon->is_heart == 0){
+			Simon->SetState(SIMON_STATE_IDLE);
+			Simon->SetPosition(500.0f, 0.0f);
+			break;
+		}
 		break;
 	case DIK_Z:
-		Simon->attack_wp = 0;
-		Simon->attack_start = GetTickCount();
-		morningstar->attack_start = GetTickCount();
-		Simon->Attack(morningstar, Simon->x, Simon->y);
-
+		if (Simon->is_heart == 0) {
+			Simon->attack_wp = 0;
+			Simon->attack_start = GetTickCount();
+			morningstar->attack_start = GetTickCount();
+			Simon->Attack(morningstar, Simon->x, Simon->y);
+			break;
+		}
 		break;
 	case DIK_C:
-		if (Simon->has_wp == 1) {
-			Simon->attack_wp = 1;
-			Simon->Attack_Weapons();
-			break;
+		if (Simon->is_heart == 0) {
+			if (Simon->has_wp == 1) {
+				Simon->attack_wp = 1;
+				Simon->Attack_Weapons();
+				break;
+			}
 		}
 	}
 	/*case DIK_LEFT:
@@ -143,7 +150,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 {
 	// disable control key when SIMON die 
 	if (Simon->GetState() == SIMON_STATE_DIE || Simon->GetState() == SIMON_STATE_JUMP || Simon->GetState() == SIMON_STATE_EXTRA
-		||Simon->on_jump==1 ||Simon->on_jump==2|| Simon->touch_stair_jump==1) return;
+		|| Simon->on_jump == 1 || Simon->on_jump == 2 || Simon->touch_stair_jump == 1 || Simon->GetState() == SIMON_STATE_HEART) return;
 	if (game->IsKeyDown(DIK_RIGHT)) {
 		if (Simon->has_g == 1) {
 			if (game->IsKeyDown(DIK_Z)) {

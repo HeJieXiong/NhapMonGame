@@ -11,6 +11,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
+	
 	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	// Simple fall down
 	if (has_g == 1) {
@@ -157,6 +158,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			take_item_start = 0;
 		}*/
 	}
+	
 	if (coEvents.size() == 0)//new code
 	{
 		x += dx;
@@ -188,10 +190,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					isFalling = 0;
 					on_jump = 0;
 					touch_stair_jump = 0;
+					
 				}
 			}
 
-			if (dynamic_cast<CItem *>(e->obj))
+			else if (dynamic_cast<CItem *>(e->obj))
 			{
 				CItem *item = dynamic_cast<CItem *>(e->obj);
 
@@ -217,16 +220,25 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 			}
 
-			/*if (dynamic_cast<CGhost *>(e->obj))
+			else if (dynamic_cast<CGhost *>(e->obj))
 			{
 				CGhost *ghost = dynamic_cast<CGhost *>(e->obj);
 
-				if (e->nx != 0 || e->ny <0)
-				{
-					vx=-100;
+				if (e->nx < 0|| e->nx >0 || e->ny < 0 || e->ny>0)
+				{					
+					if (untouchable == 0) {
+						start_heart = GetTickCount();
+						is_heart = 1;
+						state =SIMON_STATE_HEART;
+						
+					}
+					else {					
+						ghost->x += dx;
+						
+					}
 				}
-			}*/
-			if (dynamic_cast<CStair *>(e->obj))
+			}
+			else if (dynamic_cast<CStair *>(e->obj))
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 				isFalling = 0;
@@ -273,6 +285,40 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 	}
+	if (is_heart ==1) {
+		
+			if (GetTickCount() - start_heart <= SIMON_HEART_JUMP_TIME) {
+				is_heart = 1;
+				
+				untouchable = 1;
+				
+				vy = -SIMON_STAY_JUMP_HEART_Y;
+				if(nx <0)
+					vx = SIMON_STAY_JUMP_HEART_X;
+				if (nx >0) 
+					vx = -SIMON_STAY_JUMP_HEART_X;
+				x += vx * dt;
+				state = SIMON_STATE_HEART;
+				
+			}
+			if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
+				untouchable = 1;
+				state = SIMON_STATE_IDLE;
+				is_heart = 1;
+			}
+			if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
+				start_heart = 0;
+				untouchable = 0;
+				count = GetTickCount() - start_heart;			
+				is_heart = 0;
+				state = SIMON_STATE_IDLE;
+			}
+			
+	}
+	if (state == SIMON_STATE_HEART) {
+		check_state = 1;
+	}
+	else check_state = 2;
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];
@@ -305,13 +351,14 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		else ani = SIMON_ANI_STAY_EXTRA_RIGHT;
 			
 	}
-	if (state == SIMON_STATE_DIE)
+	else if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
-	if (state == SIMON_STATE_SIT_DOWN) {
+	else if (state == SIMON_STATE_SIT_DOWN) {
 		if (nx < 0) {
 			ani = SIMON_ANI_SIT_DOWN_LEFT;
 		}
 		else ani = SIMON_ANI_SIT_DOWN_RIGHT;
+		
 	}
 	else if (state == SIMON_STATE_ATTACK) {
 		
@@ -480,6 +527,13 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			
 		}
 	}
+	else if (state == SIMON_STATE_HEART) {
+		if (nx > 0)
+			ani = SIMON_ANI_STAY_HEART_LEFT;
+		if(nx <0)
+			ani = SIMON_ANI_STAY_HEART_RIGHT;
+		
+	}
 	else {
 		if (state_extra == 0) {
 			if (vx == 0) {
@@ -593,7 +647,16 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_DIE:
 		vy = -SIMON_DIE_DEFLECT_SPEED;
 		break;
+	/*case SIMON_STATE_HEART:
+		if (is_heart == 0) {
+			start_heart = GetTickCount();
+			is_heart = 1;
+		}
+
+		break;*/
 	}
+	
+
 }
 
 void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom)
