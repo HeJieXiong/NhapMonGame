@@ -422,30 +422,44 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	else if (state == SIMON_STATE_ON_STAIR) {
 		//đi lên đi xuống cầu thang trái
-		if (state_direction_on_stair == 1 && between_stair == 0 )
+		if (state_direction_on_stair == 1 && between_stair == 0) {
 			ani = SIMON_ANI_ON_STAIR_LEFT;
-		if (state_direction_on_stair == 2 && between_stair == 0) {
-			if(walking_up==1)
-				ani = SIMON_ANI_ON_STAIR_LEFT;
-			else ani = SIMON_ANI_ON_STAIR_LEFT;
+			nx = 1;
 		}
-		if (state_direction_on_stair == 2 && between_stair == 1) {
-			if (walking_up == 1)
+		if (state_direction_on_stair == 2 && between_stair == 0) {
+			if (walking_up == 1) {
 				ani = SIMON_ANI_ON_STAIR_LEFT;
+				nx = 1;
+			}
 			else ani = SIMON_ANI_DOWN_STAIR_LEFT;
 		}
-		if (state_direction_on_stair == 1 && between_stair == 1) {
-			if (walking_up == 1)
+		if (state_direction_on_stair == 2 && between_stair == 1) {
+			if (walking_up == 1) {
+				nx = 1;
 				ani = SIMON_ANI_ON_STAIR_LEFT;
-			else
+			}
+			else {
 				ani = SIMON_ANI_DOWN_STAIR_LEFT;
+				
+			}
+		}
+		if (state_direction_on_stair == 1 && between_stair == 1) {
+			
+			if (walking_up == 1) {
+				ani = SIMON_ANI_ON_STAIR_LEFT;
+				nx = 1;
+			}
+			else {
+				ani = SIMON_ANI_DOWN_STAIR_LEFT;
+				
+			}
 		}
 
 		//đi xuống cầu thang phải
 		if (state_direction_on_stair == 3 && between_stair == 0) {
-			if (walking_up == 1)
-				ani = SIMON_ANI_ON_STAIR_RIGHT;
-			else ani = SIMON_ANI_DOWN_STAIR_RIGHT;
+			nx = -1;
+			ani = SIMON_ANI_ON_STAIR_RIGHT;
+			
 		}
 		if (state_direction_on_stair == 4 && between_stair == 0)
 			ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;
