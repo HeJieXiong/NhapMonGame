@@ -66,7 +66,7 @@ class  CStage1 {
 	CGrids		*gridsSys;
 	CPanther	*panther;
 	CDoor		*door;
-
+	CBat		*bat;
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> objects_morningstar;
@@ -76,6 +76,7 @@ class  CStage1 {
 	vector<LPGAMEOBJECT> objects_stair_1;
 	vector<LPGAMEOBJECT> objects_stair_2;
 	vector<LPGAMEOBJECT> objects_stair_3;
+	vector<LPGAMEOBJECT> objects_bat;
 	int count1;
 	int **stagemap;
 public:
@@ -92,6 +93,7 @@ public:
 	game = g;
 	}
 	int column, row;
-	float **location2;
+	float **location2; 
+	float **location3;
 	~CStage1();
 };
