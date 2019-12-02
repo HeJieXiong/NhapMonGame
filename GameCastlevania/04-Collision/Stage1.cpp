@@ -1210,7 +1210,7 @@ void CStage1::Render()
 			headerbar->score_ = Simon->state_direction_on_stair;
 
 			headerbar->stage_ = Simon->count;
-			headerbar->score_ = Simon->nx;
+			headerbar->score_ = Simon->between_stair;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
