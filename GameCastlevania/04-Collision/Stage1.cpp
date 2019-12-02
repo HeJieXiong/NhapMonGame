@@ -485,22 +485,22 @@ void CStage1::LoadStage()
 	//BIG-BRICK-END
 	//BAT-STAR
 	LPDIRECT3DTEXTURE9 texBAT = textures->Get(ID_TEX_BAT);
-	sprites->Add(12001, 48, 0, 64, 16, texBAT);
-	sprites->Add(12002, 32, 0, 48, 16, texBAT);
-	sprites->Add(12003, 16, 0, 32, 16, texBAT);
-	sprites->Add(12004, 64, 0, 80, 16, texBAT);
-	sprites->Add(12005, 80, 0, 96, 16, texBAT);
-	sprites->Add(12006, 96, 0, 112, 16, texBAT);
+	sprites->Add(18001, 48, 0, 64, 16, texBAT);
+	sprites->Add(18002, 32, 0, 48, 16, texBAT);
+	sprites->Add(18003, 16, 0, 32, 16, texBAT);
+	sprites->Add(18004, 64, 0, 80, 16, texBAT);
+	sprites->Add(18005, 80, 0, 96, 16, texBAT);
+	sprites->Add(18006, 96, 0, 112, 16, texBAT);
 	ani = new CAnimation(100);//FLY_LEFT
-	ani->Add(12001);
-	ani->Add(12002);
-	ani->Add(12003);
-	animations->Add(1203, ani);
+	ani->Add(18001);
+	ani->Add(18002);
+	ani->Add(18003);
+	animations->Add(1803, ani);
 	ani = new CAnimation(100);//FLY_RIGHT
-	ani->Add(12004);
-	ani->Add(12005);
-	ani->Add(12006);
-	animations->Add(1204, ani);
+	ani->Add(18004);
+	ani->Add(18005);
+	ani->Add(18006);
+	animations->Add(1804, ani);
 	
 	//BAT-END
 	if (stage_id == 1) {
@@ -1004,8 +1004,8 @@ void CStage1::LoadStage()
 		for (int i = 0; i < row; i++) {
 			if (location3[i][0] == 100006) {
 				bat = new CBat(Simon);
-				bat->AddAnimation(1203);
-				bat->AddAnimation(1204);
+				bat->AddAnimation(1803);
+				bat->AddAnimation(1804);
 				bat->SetPosition(location3[i][2], location3[i][3]);
 				bat->bat_x = location3[i][4];
 				bat->SetState(BAT_STATE_FLY_LEFT);
@@ -1210,7 +1210,7 @@ void CStage1::Render()
 			headerbar->score_ = Simon->state_direction_on_stair;
 
 			headerbar->stage_ = Simon->count;
-			headerbar->score_ = Simon->count;
+			headerbar->score_ = Simon->nx;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 

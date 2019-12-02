@@ -303,8 +303,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 			if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
 				untouchable = 1;
-				state = SIMON_STATE_IDLE;
+				vx = 0;
 				is_heart = 1;
+				state = SIMON_STATE_IDLE;
 			}
 			if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
 				start_heart = 0;
