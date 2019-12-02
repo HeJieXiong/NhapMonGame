@@ -123,10 +123,10 @@ void CStage1::LoadStage()
 	animations->Add(601, ani);
 	//BRICK2-START
 	LPDIRECT3DTEXTURE9 texMisc_2 = textures->Get(ID_TEX_MISC_2);
-	sprites->Add(20001, 0, 0, 16, 2, texMisc_2);
+	sprites->Add(20002, 0, 0, 16, 2, texMisc_2);
 	ani = new CAnimation(100);		// brick
-	ani->Add(20001);
-	animations->Add(601, ani);
+	ani->Add(20002);
+	animations->Add(602, ani);
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
 	sprites->Add(11000, 177, 40, 194, 48, textKnife);
@@ -428,7 +428,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(1400.0f, 0);
+	Simon->SetPosition(140.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -602,7 +602,7 @@ void CStage1::LoadStage()
 		for (int i = 0; i < 100; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(601);
+			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f, 203);
 			brick->tag = 1;
 			brick->type = 0;
@@ -614,7 +614,7 @@ void CStage1::LoadStage()
 		for (int i = 0; i < 3; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(601);
+			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f + 667, 141);
 			brick->tag = 1;
 			brick->type = 0;
@@ -625,7 +625,7 @@ void CStage1::LoadStage()
 		for (int i = 0; i < 10; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(601);
+			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f + 730, 110);
 			brick->tag = 1;
 			brick->type = 0;
@@ -637,7 +637,7 @@ void CStage1::LoadStage()
 		for (int i = 0; i < 6; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(601);
+			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f + 900, 141);
 			brick->tag = 1;
 			brick->type = 0;
@@ -649,7 +649,7 @@ void CStage1::LoadStage()
 		for (int i = 0; i < 9; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(601);
+			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f + 1350, 110);
 			brick->tag = 1;
 			brick->type = 0;

@@ -29,7 +29,7 @@
 
 #define ID_TEX_SIMON 0
 #define ID_TEX_MISC_1 10
-#define ID_TEX_MISC_2 10
+#define ID_TEX_MISC_2 20
 #define ID_TEX_FIRE 30
 #define ID_TEX_MORNINGSTAR 40
 #define ID_TEX_HEADERBAR 50
