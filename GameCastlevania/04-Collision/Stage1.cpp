@@ -19,7 +19,7 @@ void CStage1::LoadStage()
 	textures->Add(ID_TEX_CANDLE, L"textures\\ground\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_GHOST, L"textures\\enemy\\1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_PANTHER, L"textures\\enemy\\10.png", D3DCOLOR_XRGB(255, 0, 255));
-
+	textures->Add(ID_TEX_DOOR, L"textures\\ground\\Gate1.png", D3DCOLOR_XRGB(255, 0, 255));
 	
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
@@ -201,6 +201,21 @@ void CStage1::LoadStage()
 	ani->Add(11003);
 	ani->Add(11004);
 	animations->Add(1104, ani);
+	//CANLDE-START
+	LPDIRECT3DTEXTURE9 textDoor = textures->Get(ID_TEX_DOOR);
+	sprites->Add(13001, 0, 0, 10, 48, textDoor);
+	sprites->Add(13002, 22, 0, 40, 48, textDoor);
+	sprites->Add(13003, 48, 0, 88, 48, textDoor);
+	ani = new CAnimation(1000);		//door close	
+	ani->Add(13001);
+	animations->Add(1301, ani);
+	ani = new CAnimation(1000);		//door opening
+	ani->Add(13002);
+	ani->Add(13003);
+	animations->Add(1302, ani);
+	ani = new CAnimation(1000);		//door opened
+	ani->Add(13003);
+	animations->Add(1303, ani);
 	//SIMON_EXTRA
 	LPDIRECT3DTEXTURE9 texSIMON_EXTRA = textures->Get(ID_TEX_SIMON_EXTRA);
 	sprites->Add(16001, 0, 130, 30, 160, texSIMON_EXTRA);
@@ -413,7 +428,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(140.0f, 0);
+	Simon->SetPosition(1400.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -685,6 +700,7 @@ void CStage1::LoadStage()
 				candle = new CCandle();
 				candle->AddAnimation(903);
 				candle->SetPosition(location2[i][1], location2[i][2]);
+				
 				candle->tag = location2[i][3];
 				objects.push_back(candle);
 				objects_morningstar.push_back(candle);
@@ -709,7 +725,24 @@ void CStage1::LoadStage()
 			}
 		}
 		//GHOST-END
+		//DOOR-START
 
+		for (int i = 0; i < row; i++) {
+			if (location2[i][0] == 100007) {
+				door = new CDoor();
+				door->AddAnimation(1301);
+				door->AddAnimation(1301);
+				door->AddAnimation(1302);
+				door->SetPosition(location2[i][2], location2[i][3]);
+				door->tag = location2[i][4];
+				door->opened = 0;
+				door->state= DOOR_STATE_CLOSE;
+				objects.push_back(door);
+				/*objects_morningstar.push_back(ghost);
+				objects_weapons.push_back(ghost);*/
+			}
+		}
+		//DOOR-END
 
 		//SIMON-START
 		for (int i = 0; i < row; i++) {
@@ -762,9 +795,32 @@ void CStage1::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
 	vector<LPGAMEOBJECT> coObjects_panther;
+	if (Simon->next_stage == 2) {
+		
+		for (int i = 0; i < objects.size(); i++) {
+			if (objects[i]->tag == 10 && objects[i]->x != 1000) {
+				objects[i]->x = 1000;
+				CDoor		*door_open;
+				door_open = new CDoor();
+				door_open->AddAnimation(1301);
+				door_open->AddAnimation(1301);
+				door_open->AddAnimation(1302);
+				door_open->AddAnimation(1303);
+				door_open->SetPosition(1480, 62);
+				door_open->open_start = GetTickCount();
+				door_open->opened = 0;
+				door_open->state = DOOR_STATE_OPEN;
+				Simon->next_stage == 3;
+				objects.push_back(door_open);
+				
+				//[i]->x = 10000;
+			}
+		}
+	}
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->tag == 1 || objects[i]->tag == 5)
+		
+		if (objects[i]->tag == 1 || objects[i]->tag == 5 || objects[i]->tag==10)
 			coObjects.push_back(objects[i]);
 	}
 	for (int i = 0; i < objects_panther.size(); i++)
@@ -790,7 +846,7 @@ void CStage1::Update(DWORD dt)
 		
 		Simon->combine_array = 0;
 	}
-	morningstar->Update_colison(&coObjects_morningstar);
+	morningstar->Update(dt,&coObjects_morningstar);
 	for (int i = 0; i < objects_morningstar.size(); i++)
 	{
 		coObjects_morningstar.push_back(objects_morningstar[i]);
@@ -837,6 +893,7 @@ void CStage1::Update(DWORD dt)
 
 	for (int i = 0; i < objects.size(); i++)
 	{
+
 		objects[i]->Update(dt, &coObjects);
 	}
 	for (int i = 0; i < objects_panther.size(); i++)

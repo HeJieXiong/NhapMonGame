@@ -588,6 +588,27 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			}
 		}
 	}
+	if (is_walking == 2) {
+		walking_start = GetTickCount();
+		is_walking = 3;
+	}
+	if (is_walking==3){
+		count= walking_start;
+		if (GetTickCount() - walking_start < 2000) {
+			vx = 0;
+			is_walking = 3;
+		}
+		if (GetTickCount() - walking_start >= 2000 && GetTickCount() - walking_start <=3000) {
+			state = SIMON_STATE_WALKING_RIGHT;
+			vx = SIMON_WALKING_SPEED;
+			is_walking = 3;
+		}
+		if (GetTickCount() - walking_start > 3000) {
+			next_stage = 3;
+			is_walking = 0;
+		}
+		
+	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam - 7, y - ycam, alpha);
 	RenderBoundingBox(xcam, ycam);

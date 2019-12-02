@@ -39,7 +39,7 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #include "Simon.h"
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
-
+#define TIME_CHANGE_STATE_2 20000
 
 
 CGame		*game;
@@ -60,6 +60,8 @@ CKnife		*knife;
 vector<LPGAMEOBJECT> objects_weapons;
 int i;
 int current_stage;
+DWORD time_start;
+int is_start = 0;
 class CSampleKeyHander : public CKeyEventHandler
 {
 	virtual void KeyState(BYTE *states);
@@ -534,15 +536,33 @@ int RunStage2()
 		// dt: the time between (beginning of last frame) and now
 		// this frame: the frame we are about to render
 		DWORD dt = now - frameStart;
+		
 
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
+			if ((Simon->x < 1450) && (Simon->x > 80 ) && game->unablekeyboard == 0())
+			{
+				frameStart = now;
 
-			game->ProcessKeyboard();
-
-			Updatestage2(dt);
-			Renderstage2();
+				game->ProcessKeyboard();
+			}
+			else {
+				
+				is_start = 1;
+				
+			}
+			if (is_start == 1) {
+				
+				Simon->next_stage = 2;
+				game->unablekeyboard = 1;
+				if (Simon->is_walking != 3) {
+					Simon->is_walking = 2;
+				}
+			}
+				Updatestage2(dt);
+				Renderstage2();
+			
 		}
 		else
 			Sleep(tickPerFrame - dt);

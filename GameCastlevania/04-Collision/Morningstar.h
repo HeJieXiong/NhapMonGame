@@ -30,9 +30,10 @@ public:
 	int attack_on_stair = 0;
 	DWORD attack_start;
 	DWORD start_last_frame;
-	void Update_colison(vector<LPGAMEOBJECT> *coObjects);
+	//void Update_colison(vector<LPGAMEOBJECT> *coObjects);
 	virtual void SetType(int a);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 };
 

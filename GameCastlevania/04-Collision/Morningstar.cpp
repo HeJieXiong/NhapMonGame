@@ -3,6 +3,7 @@
 #include "Sprites.h"
 #include <chrono>
 #include <thread>
+#include "GameObject.h"
 
 
 CMorningstar::CMorningstar() {
@@ -21,7 +22,7 @@ CMorningstar *CMorningstar::GetInstance()
 	return _instance;
 }
 
-void CMorningstar::Update_colison(vector<LPGAMEOBJECT> *coObjects) {
+void CMorningstar::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 	float top = y;
 	float left = x;
 	float bottom;

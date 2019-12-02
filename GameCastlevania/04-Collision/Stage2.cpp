@@ -624,7 +624,7 @@ void CStage2::Update(DWORD dt)
 			objects_morningstar[i]->tag = 5;
 		}
 	}
-	morningstar->Update_colison(&coObjects_morningstar); //Xét va chạm của roi với các vật thể
+	//morningstar->Update_colison(&coObjects_morningstar); //Xét va chạm của roi với các vật thể
 	for (int i = 0; i < objects_weapons.size(); i++)
 	{
 		objects_weapons[i]->Update(dt, &coObjects_weapons);

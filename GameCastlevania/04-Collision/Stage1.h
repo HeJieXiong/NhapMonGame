@@ -21,9 +21,10 @@
 #include "Bat.h"
 #include "Fish.h"
 #include "Boss.h"
+#include "Door.h"
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 
-
+#define DOOR_STATE_OPEN 300
 #define MAX_FRAME_RATE 100
 
 #define ID_TEX_SIMON 0
@@ -43,6 +44,7 @@
 #define ID_TEX_BIG_BRICK 140
 #define ID_TEX_FISH 150
 #define ID_TEX_BOSS	160
+#define ID_TEX_DOOR 170
 #define MAP_LENGTH	4608
 class  CStage1 {
 	//Stage 1
@@ -63,7 +65,7 @@ class  CStage1 {
 	CStair		*stair;
 	CGrids		*gridsSys;
 	CPanther	*panther;
-	
+	CDoor		*door;
 
 
 	vector<LPGAMEOBJECT> objects;

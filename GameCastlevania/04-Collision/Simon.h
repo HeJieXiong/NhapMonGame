@@ -98,7 +98,7 @@ class CSimon : public CGameObject
 
 	DWORD untouchable_start;
 	
-	DWORD walking_start;
+
 	CMorningstar *morningstar;
 	CKnife	*knife;
 	CHeaderBar *headerbar;
@@ -107,6 +107,7 @@ class CSimon : public CGameObject
 
 public: 
 	vector<LPGAMEOBJECT> objects_weapons;
+	DWORD walking_start;
 	DWORD attack_start;
 	int attack_wp;
 	int combine_array = 0;
@@ -136,6 +137,8 @@ public:
 	int touch_stair_jump = 0; //Nhảy tại vị trí có stair cầu thang
 	int is_heart = 0;
 	int check_state=0;
+	int current_state = 1;
+	int next_stage = 1;
 	DWORD start_heart;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
