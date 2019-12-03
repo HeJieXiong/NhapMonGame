@@ -244,19 +244,31 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				isFalling = 0;
 				if (e->nx != 0 || e->ny < 0 || e->ny>0)
 				{
-					
+					if (on_jump == 2) {
+						on_jump = 0;
+					}
+					count = stair->type_stair;
 					state_direction_on_stair = stair->stair_direction;
 					if (is_on_stair == 0 && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {//Bật is_on_stair khi Simon vào chỗ cầu thang
 						is_on_stair = 1;
 						has_g = 1;
+						//if (state_direction_on_stair==2)
+						//x += 100;
+						
 					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 &&  has_g == 0) {
 							has_g = 1;
 							is_on_stair = 0;
+							
 							//x += dx;
 							//y += dy;
 						}
+						/*if (is_on_stair == 0 && has_g == 1 &&between_stair==0) {
+							is_on_stair = 1;
+							has_g = 0;
+						}*/
+						if (is_on_stair == 0) is_on_stair = 1;
 						if (on_jump == 1) {																						
 								y += dy;
 								touch_stair_jump = 1;

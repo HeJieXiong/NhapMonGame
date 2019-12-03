@@ -429,7 +429,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(140.0f, 0);
+	Simon->SetPosition(640.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -1209,8 +1209,8 @@ void CStage1::Render()
 			}
 			headerbar->score_ = Simon->state_direction_on_stair;
 
-			headerbar->stage_ = Simon->count;
-			headerbar->score_ = Simon->between_stair;
+			headerbar->stage_ = Simon->state_direction_on_stair;
+			headerbar->score_ = Simon->vx;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
