@@ -106,8 +106,9 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 		break;
 	case DIK_C:
 		if (Simon->is_heart == 0) {
-			if (Simon->has_wp == 1) {
+			if (Simon->has_wp == 0) {
 				Simon->attack_wp = 1;
+				Simon->attack_start = GetTickCount();
 				Simon->Attack_Weapons();
 				break;
 			}
