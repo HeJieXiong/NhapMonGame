@@ -32,7 +32,7 @@ public:
 	CPanther(CSimon *a) : CGameObject()
 	{
 		simon = a;
-		is_standing = 1;
+		is_standing = 0;
 		is_jump = 0;
 		point = 100;
 	}

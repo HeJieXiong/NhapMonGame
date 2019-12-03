@@ -518,7 +518,7 @@ void CStage4::LoadStage4()
 	Simon->AddAnimation(416);		// on stair right
 	Simon->AddAnimation(417);		// down stair left
 	Simon->AddAnimation(418);		// down stair right
-	Simon->SetPosition(40.0f, 0);
+	Simon->SetPosition(100.0f, 0);
 	objects.push_back(Simon);
 	//SIMON-END
 	//BAT-STAR
@@ -615,6 +615,7 @@ void CStage4::LoadStage4()
 		fish->SetState(FISH_STATE_HIDE);
 		//objects.push_back(fish);
 		objects_fish.push_back(fish);
+		//objects_weapons.push_back(fish);
 	}
 	//FISH-END
 	//GRID-STAR

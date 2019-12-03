@@ -429,7 +429,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(640.0f, 0);
+	Simon->SetPosition(600.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -579,7 +579,27 @@ void CStage1::LoadStage()
 	
 		//ITEM-END
 		//MORNING-STAR-START
-		
+		//PANHTER-START
+		for (int i = 0; i < row; i++) {
+			if (location2[i][0] == 100006) {
+				panther = new CPanther(Simon);
+				panther->AddAnimation(1202);
+				panther->AddAnimation(1204);
+				panther->AddAnimation(1203);
+				panther->AddAnimation(1205);
+				panther->AddAnimation(1201);
+				/*panther->SetPosition(670, 124);*/
+				panther->SetPosition(location2[i][2], location2[i][3]);
+				panther->tag = location2[i][4];
+				//panther->SetPosition(50, 50);
+				panther->SetState(PANTHER_STATE_SLEEP);
+				//objects.push_back(panther);
+				//objects.push_back(panther);
+				objects_morningstar.push_back(panther);
+				objects_weapons.push_back(panther); // Hiện đang lỗi tự động chạy ở chỗ này
+				objects_panther.push_back(panther);
+			}
+		}
 		//STAIR-1-STAR
 		for (int i = 0; i < row; i++) {
 			if (location2[i][0] == 100003) {
@@ -591,6 +611,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 1;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
+				//objects_panther.push_back(stair);
 			}
 		}
 
@@ -606,6 +627,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 2;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				//objects_panther.push_back(stair);
 			}
 		}
 
@@ -621,6 +643,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 3;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				//objects_panther.push_back(stair);
 			}
 		}
 
@@ -637,6 +660,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_panther.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 
 		for (int i = 0; i < 3; i++)
@@ -649,6 +673,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_panther.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		for (int i = 0; i < 10; i++)
 		{
@@ -660,6 +685,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_panther.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 
 		for (int i = 0; i < 6; i++)
@@ -672,6 +698,8 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_panther.push_back(brick);
+			objects_weapons.push_back(brick);
+			
 		}
 
 		for (int i = 0; i < 9; i++)
@@ -684,6 +712,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_panther.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		//BRICK-END
 		//KNIFE-STAR
@@ -766,32 +795,12 @@ void CStage1::LoadStage()
 				door->opened = 0;
 				door->state= DOOR_STATE_CLOSE;
 				objects.push_back(door);
-				/*objects_morningstar.push_back(ghost);
-				objects_weapons.push_back(ghost);*/
+				
 			}
 		}
 		//DOOR-END
 
-		//SIMON-START
-		for (int i = 0; i < row; i++) {
-			if (location2[i][0] == 100006) {
-				panther = new CPanther(Simon);
-				panther->AddAnimation(1202);
-				panther->AddAnimation(1204);
-				panther->AddAnimation(1203);
-				panther->AddAnimation(1205);
-				panther->AddAnimation(1201);
-				/*panther->SetPosition(670, 124);*/
-				panther->SetPosition(location2[i][2], location2[i][3]);
-				//panther->SetPosition(50, 50);
-				panther->SetState(PANTHER_STATE_SLEEP);
-				//objects.push_back(panther);
-				objects.push_back(panther);
-				objects_morningstar.push_back(panther);
-				//objects_weapons.push_back(panther); -- Hiện đang lỗi tự động chạy ở chỗ này
-				objects_panther.push_back(panther);
-			}
-		}
+		
 		//GRID-STAR
 		/*gridsSys = new CGrids();
 		int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
@@ -1132,10 +1141,10 @@ void CStage1::Update(DWORD dt)
 
 		objects[i]->Update(dt, &coObjects);
 	}
-	for (int i = 0; i < objects_panther.size(); i++)
+	/*for (int i = 0; i < objects_panther.size(); i++)
 	{
 		objects_panther[i]->Update(dt, &coObjects_panther);
-	}
+	}*/
 	headerbar->UpdateTime();
 }
 
