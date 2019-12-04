@@ -145,6 +145,7 @@ public:
 	int next_stage = 1;
 	DWORD start_heart;
 	int box_style = 1; // dùng để thay đổi box khi simon nhảy 1: box lớn 2: box nhảy
+	int can_jump = 1;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

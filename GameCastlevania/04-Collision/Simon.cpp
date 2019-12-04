@@ -40,7 +40,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		untouchable = 0;
 	}*/
 	//if (state != SIMON_STATE_JUMP)on_jump = 0;
-
+	if (jump_walk == 2 && can_jump == 0) {
+		state = SIMON_STATE_WALKING_RIGHT;
+	}
 	if (on_jump == 1) {
 		if (GetTickCount() - jump_start < SIMON_JUMP_TIME)
 		{
@@ -48,13 +50,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 			vy = -SIMON_STAY_JUMP_SPEED_Y;
 		}
-		if (jump_walk == 1) {
+		if (jump_walk == 1 && can_jump == 1) {
 			vx = -SIMON_JUMP_SPEED_X;
 			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
 		}
-		if (jump_walk == 2) {
+		if (jump_walk == 2 && can_jump ==1) {
 			vx = SIMON_JUMP_SPEED_X;
 			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
+			//can_jump = 0;
 		}
 		
 		if (jump_walk == 0) {
@@ -88,11 +91,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 		if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
+			if (jump_walk != 0) {
+				can_jump = 0;
+				
+			}
 			on_jump = 2;
 			jump_walk = 0;
 			jump_start = 0;
 			vx = 0;
 			vy = 0;
+			
 			if (taking_jump == 0)
 				state = SIMON_STATE_IDLE;
 			else {
@@ -194,6 +202,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					touch_stair_jump = 0;
 					state = SIMON_STATE_IDLE;
 					jump_start = 0;
+					if (jump_walk != 0) {
+						can_jump = 0;
+					}
 					jump_walk = 0;
 				}
 			}

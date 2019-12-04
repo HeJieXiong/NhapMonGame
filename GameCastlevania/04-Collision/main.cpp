@@ -168,13 +168,16 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			else
 				Simon->SetState(SIMON_STATE_WALKING_RIGHT);
 		}
-		if (game->IsKeyDown(DIK_X)) {
+		if (game->IsKeyDown(DIK_X) && Simon->can_jump == 1) {
 			if (Simon->between_stair != 1) {
 				Simon->jump_walk = 2;
 				Simon->SetState(SIMON_STATE_JUMP);
 			}
 			else Simon->vy = 0;
 
+		}
+		if (game->IsKeyDown(DIK_X) == false) {
+			Simon->can_jump = 1;
 		}
 	}
 	else if (game->IsKeyDown(DIK_LEFT)) {
@@ -186,16 +189,16 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			}
 			else Simon->SetState(SIMON_STATE_WALKING_LEFT);
 		}
-		if (game->IsKeyDown(DIK_X)) {
+		if (game->IsKeyDown(DIK_X) && Simon->can_jump == 1) {
 			if (Simon->between_stair != 1) {
 				Simon->jump_walk = 1;
 				Simon->SetState(SIMON_STATE_JUMP);
 			}
 			else Simon->vy = 0;
-		
-
 		}
-
+		if (game->IsKeyDown(DIK_X) == false) {
+			Simon->can_jump = 1;
+		}
 
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
@@ -664,18 +667,18 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage1();
 	//currentstage(stage1);
-	stage2->SetGame(game);
+	/*stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
+	RunStage2();*/
 	//stage3->SetGame(game);
 	//LoadStage3();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage3();
-	/*stage4->SetGame(game);
+	stage4->SetGame(game);
 	LoadStage4();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage4();*/
+	RunStage4();
 	/*stage5->SetGame(game);
 	LoadStage5();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
