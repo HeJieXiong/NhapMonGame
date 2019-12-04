@@ -189,10 +189,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 				if (e->nx != 0 || e->ny < 0)
 				{
-					isFalling = 0;
 					on_jump = 0;
+					isFalling = 0;
 					touch_stair_jump = 0;
-					
+					state = SIMON_STATE_IDLE;
+					jump_start = 0;
+					jump_walk = 0;
 				}
 			}
 
@@ -246,7 +248,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				isFalling = 0;
 				if (e->nx != 0 || e->ny < 0 || e->ny>0)
 				{
-					if (on_jump == 2) {
+					if (on_jump == 2 ) {
 						on_jump = 0;
 					}
 					count = stair->type_stair;
@@ -271,11 +273,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							has_g = 0;
 						}*/
 						if (is_on_stair == 0) is_on_stair = 1;
-						if (on_jump == 1) {																						
-								y += dy;
-								touch_stair_jump = 1;
+						if (on_jump == 1) {
+							y += dy;
+							touch_stair_jump = 1;
 						}
-						if(on_jump==0)touch_stair_jump = 0;
+						if(on_jump==0) touch_stair_jump = 0;
 					}
 					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
 						is_on_stair = 1;
@@ -705,6 +707,10 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 		bottom = y + SIMON_JUMP_BBOX_HEIGHT;
 	}
 	else {
+		right = x + SIMON_BIG_BBOX_WIDTH;
+		bottom = y + SIMON_BIG_BBOX_HEIGHT;
+	}
+	if (on_jump == 0) {
 		right = x + SIMON_BIG_BBOX_WIDTH;
 		bottom = y + SIMON_BIG_BBOX_HEIGHT;
 	}
