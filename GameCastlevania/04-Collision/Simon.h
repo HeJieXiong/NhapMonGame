@@ -12,6 +12,7 @@
 #define SIMON_JUMP_SPEED_Y		0.01f
 #define SIMON_JUMP_SPEED_X		0.1f
 #define SIMON_STAY_JUMP_SPEED_Y		0.05f
+#define SIMON_STAY_JUMP_WALK_SPEED_Y		0.11f
 #define SIMON_STAY_JUMP_HEART_Y		0.025f
 #define SIMON_STAY_JUMP_HEART_X		0.005f
 #define SIMON_JUMP_DEFLECT_SPEED 0.2f
@@ -75,11 +76,14 @@
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
 #define SIMON_SIT_BBOX_HEIGHT 30
+#define SIMON_JUMP_BBOX_WIDTH  14
+#define SIMON_JUMP_BBOX_HEIGHT 20
 
 #define SIMON_UNTOUCHABLE_TIME 1000
 #define SIMON_ATTACK_TIME 458
 #define SIMON_JUMP_TIME 300
-#define SIMON_JUMP_DOWN_TIME 500
+#define SIMON_JUMP_DOWN_TIME 520
+#define SIMON_BOX_CHANGE_TIME 530
 #define SIMON_WALKING_TIME 400
 #define SIMON_TAKING_TIME 3000
 #define SIMON_HEART_JUMP_TIME 800
@@ -140,6 +144,7 @@ public:
 	int current_state = 1;
 	int next_stage = 1;
 	DWORD start_heart;
+	int box_style = 1; // dùng để thay đổi box khi simon nhảy 1: box lớn 2: box nhảy
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

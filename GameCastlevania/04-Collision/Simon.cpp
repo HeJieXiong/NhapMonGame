@@ -50,9 +50,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 		if (jump_walk == 1) {
 			vx = -SIMON_JUMP_SPEED_X;
+			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
 		}
 		if (jump_walk == 2) {
 			vx = SIMON_JUMP_SPEED_X;
+			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
 		}
 		
 		if (jump_walk == 0) {
@@ -698,9 +700,14 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 
 	left = x;
 	top = y;
-	right = x + SIMON_BIG_BBOX_WIDTH;
-	bottom = y + SIMON_BIG_BBOX_HEIGHT;
-
+	if (state == SIMON_STATE_JUMP) {
+		right = x + SIMON_JUMP_BBOX_WIDTH;
+		bottom = y + SIMON_JUMP_BBOX_HEIGHT;
+	}
+	else {
+		right = x + SIMON_BIG_BBOX_WIDTH;
+		bottom = y + SIMON_BIG_BBOX_HEIGHT;
+	}
 }
 
 
