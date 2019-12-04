@@ -22,6 +22,7 @@ void CStage1::LoadStage()
 	textures->Add(ID_TEX_DOOR, L"textures\\ground\\Gate1.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BAT, L"textures\\enemy\\11.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_FISH, L"textures\\enemy\\12.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	//ITEM-START
@@ -429,7 +430,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(600.0f, 0);
+	Simon->SetPosition(60.0f, 0);
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -501,8 +502,37 @@ void CStage1::LoadStage()
 	ani->Add(18005);
 	ani->Add(18006);
 	animations->Add(1804, ani);
-	
 	//BAT-END
+
+	//FISH-STAR
+	LPDIRECT3DTEXTURE9 texFISH = textures->Get(ID_TEX_FISH);
+	sprites->Add(19001, 0, 0, 16, 32, texFISH);
+	sprites->Add(19002, 16, 0, 32, 32, texFISH);
+	sprites->Add(19003, 32, 0, 48, 32, texFISH);
+	sprites->Add(19004, 48, 0, 64, 32, texFISH);
+	sprites->Add(19005, 64, 0, 80, 32, texFISH);
+	sprites->Add(19006, 80, 0, 96, 32, texFISH);
+	ani = new CAnimation(100);//WALKING_LEFT
+	ani->Add(19003);
+	ani->Add(19002);
+	animations->Add(1903, ani);
+	ani = new CAnimation(100);//WALKING_RIGHT
+	ani->Add(19004);
+	ani->Add(19005);
+	animations->Add(1904, ani);
+	ani = new CAnimation(100);//JUMP_LEFT
+	ani->Add(19003);
+	animations->Add(1905, ani);
+	ani = new CAnimation(100);//JUMP_RIGHT
+	ani->Add(19004);
+	animations->Add(1906, ani);
+	ani = new CAnimation(100);//ATTACK_LEFT
+	ani->Add(19001);
+	animations->Add(1907, ani);
+	ani = new CAnimation(100);//ATTACK_RIGHT
+	ani->Add(19006);
+	animations->Add(1908, ani);
+	//FISH-END
 	if (stage_id == 1) {
 		map = new TileMap();
 
@@ -1027,7 +1057,126 @@ void CStage1::LoadStage()
 		//BAT-END
 		map->LoadMap(stagemap, 3);
 	}
+	if (stage_id == 4) {		
+		map = new TileMap();
+		column = 5;
+		row;
+		ifstream FILE;
+		string sLine;
+		FILE.open("location3.txt");
 
+
+		if (FILE.good())
+		{
+			getline(FILE, sLine);
+		}
+		row = stoi(sLine);
+		location3 = new float *[row];
+		for (int i = 0; i < row; i++) {
+			location3[i] = new float[column];
+		}
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> location3[i][j];
+			}
+		}
+		for (int i = 0; i < 2; i++) {
+			fish = new CFish(Simon);
+			fish->AddAnimation(1903);
+			fish->AddAnimation(1904);
+			fish->AddAnimation(1905);
+			fish->AddAnimation(1906);
+			fish->AddAnimation(1907);
+			fish->AddAnimation(1908);
+			fish->AddAnimation(1907);
+			//fish->SetPosition(location3[i][2], location3[i][3]);
+			//fish->bat_x = location3[i][4];
+			fish->SetPosition(180 + i * 50, 250);
+			fish->SetState(FISH_STATE_HIDE);
+			//objects.push_back(fish);
+			objects_fish.push_back(fish);
+			objects_weapons.push_back(fish);
+		}
+		//BRICK-START
+		LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC_2);
+		sprites->Add(20001, 0, 0, 16, 14, texMisc);
+		ani = new CAnimation(100);		// brick
+		ani->Add(20001);
+		animations->Add(601, ani);
+
+
+
+		for (int i = 0; i < 14; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f, 125);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 93, 94);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+		}
+		for (int i = 0; i < 2; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 249, 125);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+		}
+		for (int i = 0; i < 9; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f + 310, 125);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f + 466, 156);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f + 435, 187);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			//objects_fish.push_back(brick);
+		}
+		//BRICK-END
+		map->LoadMap(stagemap, 4);
+	}
 }
 
 void CStage1::Update(DWORD dt)
@@ -1259,8 +1408,40 @@ void CStage1::Render()
 				headerbar->DrawHeaderbar();
 
 			}
+		}
+		if (stage_id == 4) {
+			if (d3ddv->BeginScene())
+			{
+				// Clear back buffer with a color
+				d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
+				spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+				float x = Simon->x;
+				float y = 0;
 
+				if (x <= SCREEN_WIDTH / 2) {
+					x = 0;
+				}
+				else
+					x = Simon->x - SCREEN_WIDTH / 2;
+				map->DrawMap(stagemap, x, y);
+				float i = Simon->state_direction_on_stair;
+				int v = Simon->is_on_stair;
+				int k = Simon->has_g;
+
+				for (int i = 0; i < objects.size(); i++) {
+
+					if (objects[i]->tag != 3)
+						objects[i]->Render(x, y, Simon->x, Simon->y);
+				}
+				for (int i = 0; i < objects_weapons.size(); i++) {
+					objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+				}
+				for (int i = 0; i < objects_fish.size(); i++) {
+					objects_fish[i]->Render(x, y, Simon->x, Simon->y);
+				}
+				headerbar->DrawHeaderbar();
+			}
 		}
 		spriteHandler->End();
 		d3ddv->EndScene();

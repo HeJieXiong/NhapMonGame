@@ -67,6 +67,7 @@ class  CStage1 {
 	CPanther	*panther;
 	CDoor		*door;
 	CBat		*bat;
+	CFish		*fish;
 
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> objects_morningstar;
@@ -77,6 +78,7 @@ class  CStage1 {
 	vector<LPGAMEOBJECT> objects_stair_2;
 	vector<LPGAMEOBJECT> objects_stair_3;
 	vector<LPGAMEOBJECT> objects_bat;
+	vector<LPGAMEOBJECT> objects_fish;
 	int count1;
 	int **stagemap;
 public:
