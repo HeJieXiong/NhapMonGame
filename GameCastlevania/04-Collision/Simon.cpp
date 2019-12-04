@@ -197,10 +197,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 				if (e->nx != 0 || e->ny < 0)
 				{
+					if (on_jump != 0) {
+						state = SIMON_STATE_IDLE;
+					}
 					on_jump = 0;
 					isFalling = 0;
 					touch_stair_jump = 0;
-					state = SIMON_STATE_IDLE;
+					
 					jump_start = 0;
 					if (jump_walk != 0) {
 						can_jump = 0;

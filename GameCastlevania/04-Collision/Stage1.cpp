@@ -189,6 +189,7 @@ void CStage1::LoadStage()
 	ani->Add(9001);
 	ani->Add(9002);
 	animations->Add(903, ani);
+
 	//GHOST-START
 	LPDIRECT3DTEXTURE9 textGhost = textures->Get(ID_TEX_GHOST);
 	sprites->Add(11001, 0, 0, 17, 31, textGhost);
@@ -549,10 +550,11 @@ void CStage1::LoadStage()
 		//BRICK-END
 		
 		for (int i = 0; i < 5; i++) {  //fire
-			fire = new CFire();
+			fire = new CCandle();
 			fire->AddAnimation(603);
 			fire->SetPosition(i * 130 + 88, 156);
 			fire->tag = 0;
+			fire->state = FIRE_STATE;
 			objects.push_back(fire);
 			objects_morningstar.push_back(fire);
 			objects_weapons.push_back(fire);
@@ -752,10 +754,11 @@ void CStage1::LoadStage()
 		//FIRE-START
 		
 		for (int i = 0; i < 5; i++) {  //fire
-			fire = new CFire();
+			fire = new CCandle();
 			fire->AddAnimation(603);
 			fire->SetPosition(i * 130 + 88, 156);
 			fire->tag = 0;
+			fire->state = FIRE_STATE;
 			/*objects.push_back(fire);
 			objects_morningstar.push_back(fire);
 			objects_weapons.push_back(fire);*/
@@ -787,7 +790,7 @@ void CStage1::LoadStage()
 				candle = new CCandle();
 				candle->AddAnimation(903);
 				candle->SetPosition(location2[i][1], location2[i][2]);
-				
+				candle->state = CANDLE_STATE;
 				candle->tag = location2[i][3];
 				objects.push_back(candle);
 				objects_morningstar.push_back(candle);
@@ -1016,10 +1019,11 @@ void CStage1::LoadStage()
 		//BRICK-END
 		//FIRE-START
 		for (int i = 0; i < 5; i++) {  //fire
-			fire = new CFire();
+			fire = new CCandle();
 			fire->AddAnimation(603);
 			fire->SetPosition(i * 130 + 88, 156);
 			fire->tag = 0;
+			fire->state = FIRE_STATE;
 			/*objects.push_back(fire);
 			objects_morningstar.push_back(fire);
 			objects_weapons.push_back(fire);*/
@@ -1033,6 +1037,7 @@ void CStage1::LoadStage()
 				candle->AddAnimation(903);
 				candle->SetPosition(location3[i][1], location3[i][2]);
 				candle->tag = location3[i][3];
+				candle->state = CANDLE_STATE;
 				/*objects.push_back(candle);
 				objects_morningstar.push_back(candle);
 				objects_weapons.push_back(candle);*/

@@ -2,18 +2,16 @@
 #include "GameObject.h"
 #include "Item.h"
 #define CANDLE_STATE 100
-#define DOOR_STATE_CLOSE 200
-#define DOOR_STATE_OPEN 300
+#define FIRE_STATE 200
 
-#define CANDLE_ANI 0
-#define DOOR_CLOSE_ANI 1
-#define DOOR_OPEN_ANI 2
-#define DOOR_OPENED_ANI 3
+
+#define ANI 0
+
 
 #define CANDLE_BOX_WIDTH 7
 #define CANDLE_BOX_HEIGHT 15
-#define DOOR_BOX_WIDTH 5
-#define DOOR_BOX_HEIGHT 5
+#define FIRE_BOX_WIDTH 17
+#define FIRE_BOX_HEIGHT 31
 
 class CCandle : public CGameObject
 {

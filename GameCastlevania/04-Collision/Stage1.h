@@ -51,7 +51,7 @@ class  CStage1 {
 	CGame		*game;
 	CMorningstar*morningstar;
 	CSimon		*Simon;
-	CFire		*fire;
+	CCandle		*fire;
 	CHeaderBar	*headerbar;
 	CHeaderBar	*health;
 	CHeaderBar	*enemy;
