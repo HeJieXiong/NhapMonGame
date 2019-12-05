@@ -1055,7 +1055,7 @@ void CStage1::LoadStage()
 		row;
 		ifstream FILE;
 		string sLine;
-		FILE.open("location3.txt");
+		FILE.open("location4.txt");
 
 
 		if (FILE.good())
@@ -1073,6 +1073,7 @@ void CStage1::LoadStage()
 				FILE >> location3[i][j];
 			}
 		}
+		//FISH-START
 		for (int i = 0; i < 2; i++) {
 			fish = new CFish(Simon);
 			fish->AddAnimation(1903);
@@ -1090,6 +1091,66 @@ void CStage1::LoadStage()
 			objects_fish.push_back(fish);
 			objects_weapons.push_back(fish);
 		}
+		//FISH-END
+		//STAIR-1-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100003) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = 1;
+				objects.push_back(stair);
+				objects_stair_1.push_back(stair);
+			}
+		}
+
+		//STAIR-1-END
+		//STAIR-2-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100004) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = 2;
+				objects.push_back(stair);
+				objects_stair_2.push_back(stair);
+			}
+		}
+
+		//STAIR-2-END
+		//STAIR-3-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100005) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = 3;
+				objects.push_back(stair);
+				objects_stair_2.push_back(stair);
+			}
+		}
+
+		//STAIR-3-END
+		//STAIR-4-START
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100010) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = 5;
+				objects.push_back(stair);
+				objects_stair_1.push_back(stair);
+			}
+		}
+		//STAIR-4-END
 		//BRICK-START
 		LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC_2);
 		sprites->Add(20001, 0, 0, 16, 14, texMisc);
