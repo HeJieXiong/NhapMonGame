@@ -277,6 +277,20 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						//x += 100;
 						
 					}
+					if (stair->type_stair == 5) {
+						if (is_on_stair !=0 && state != SIMON_STATE_WALKING_LEFT && state!= SIMON_STATE_WALKING_RIGHT) {
+							y += dy;
+							//is_on_stair = 1;
+							//x = 100;
+							state_direction_on_stair = 4;
+							between_stair = 1;
+							state = SIMON_ANI_STAY_STAIR_LEFT_DOWN;
+						}
+						else {
+							is_on_stair = 0;
+							state = SIMON_STATE_IDLE;
+						}
+					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 &&  has_g == 0) {
 							has_g = 1;
