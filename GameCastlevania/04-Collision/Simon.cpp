@@ -284,7 +284,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							//x = 100;
 							state_direction_on_stair = 4;
 							between_stair = 1;
-							state = SIMON_ANI_STAY_STAIR_LEFT_DOWN;
+							ani = SIMON_ANI_STAY_STAIR_RIGHT_DOWN;
 						}
 						else {
 							is_on_stair = 0;
@@ -391,7 +391,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-	int ani;
+	
 	if (state == SIMON_STATE_EXTRA ) {
 		if (nx < 0) {
 			ani = SIMON_ANI_STAY_EXTRA_LEFT;
