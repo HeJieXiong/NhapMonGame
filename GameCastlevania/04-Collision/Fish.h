@@ -19,9 +19,9 @@
 #define FISH_ANI_HIDE				6
 
 
-#define FISH_JUMP_SPEED				0.3f
+#define FISH_JUMP_SPEED				0.1f
 #define FISH_GRAVITY				0.002f
-#define FISH_WALKING_SPEED			0.05f
+#define FISH_WALKING_SPEED			0.01f
 
 #define FISH_BBOX_WIDTH				15
 #define FISH_BBOX_HEIGHT			32
@@ -31,6 +31,7 @@
 #define FISH_DETECT_RANGE			134
 #define FISH_BULLET_SPEED_X			0.2f
 #define WATER_HEIGHT				64*5+32
+#define FISH_TIME_JUMP_DOWN			1000
 class CBullet : public CGameObject
 {
 public:
@@ -52,6 +53,10 @@ class CFish :
 	int hitWater;
 	int is_standing;
 	int is_walking;
+	DWORD start_jump;
+	DWORD fire_countdown;
+	int can_count = 1;
+	int is_jump = 0;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{
@@ -59,7 +64,10 @@ public:
 		bullet = NULL;
 		vy = 0;
 		is_standing = 0;
+		
+		
 	}
+	int can_fire = 0;
 	CFish();
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

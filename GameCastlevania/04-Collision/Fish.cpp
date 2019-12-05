@@ -7,15 +7,61 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (is_active == false) {
 		if (abs(simon->x - this->x) <= 50 && simon->x - this->x < 0)
 		{
-			SetState(FISH_STATE_JUMP_LEFT);
+			SetState(FISH_STATE_JUMP_LEFT);		
+			start_jump = GetTickCount();
+			is_jump = 1;
 			is_active = true;
 		}
 	}
-	if (this->y < 70) {
-		vy = FISH_JUMP_SPEED;
-		is_standing = 1;
-
+	if (is_active == true) {
+		if (GetTickCount() - start_jump <= FISH_TIME_JUMP_DOWN) {
+			vy = -FISH_JUMP_SPEED;
+		}
+		else {
+			vy = FISH_JUMP_SPEED;
+			is_standing = 1;
+			
+			if (can_count == 1 && is_jump==1) {
+				can_count = 0;
+				is_jump = 0;
+				fire_countdown = GetTickCount();
+			}
+		}
+		if (is_standing == 1) {
+			start_jump = 0;
+		}
 	}
+
+	if (can_count == 0) {	
+		if (GetTickCount() - fire_countdown <= 2000) {
+			state = FISH_STATE_WALKING_LEFT;
+		}
+		if (GetTickCount() - fire_countdown  > 2000 && GetTickCount()- fire_countdown < 4000) {
+			vx = 0;
+			if (nx < 0) {
+				state = FISH_STATE_ATK_LEFT;
+			}
+			if (nx > 0) {
+				state = FISH_STATE_ATK_RIGHT;
+			}
+			can_fire = 1;
+		}
+		if (GetTickCount() - fire_countdown >= 4000) {
+			state = FISH_STATE_WALKING_LEFT; 
+			fire_countdown = 0;
+			can_count = 1;
+			can_fire = 0;
+		}
+	}
+	if (state == FISH_STATE_WALKING_LEFT) {
+		vx = -FISH_WALKING_SPEED;
+		x += dx;
+	}
+	if (can_count == 1 && is_standing == 1) {
+		fire_countdown = GetTickCount();
+		can_count = 0;
+	}
+	
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	vector<LPCOLLISIONEVENT> coEvents;
 	coEvents.clear();
@@ -23,6 +69,7 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	CalcPotentialCollisions(coObjects, coEvents);
 	if (coEvents.size() == 0)
 	{
+		
 		x += dx;
 		y += dy;
 	}
@@ -48,12 +95,13 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				if (is_standing == 0) {
 					SetState(FISH_STATE_JUMP_LEFT);
 					y +=dy;
+					
 				}
 				
-				if (is_standing == 1&&is_walking==0) {
-					SetState(FISH_STATE_WALKING_LEFT);
-					is_walking = 1;
-				}
+			}
+			if (dynamic_cast<CBrick *>(e->obj)) {
+				CStair *stair = dynamic_cast<CStair *>(e->obj);
+				
 			}
 		}
 	}
@@ -78,6 +126,9 @@ void CFish::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	if (state == FISH_STATE_WALKING_RIGHT) {
 		ani = FISH_ANI_WALKING_RIGHT;
+	}
+	if (state == FISH_STATE_ATK_LEFT) {
+		ani = FISH_ANI_ATK_LEFT;
 	}
 	animations[ani]->Render(x - xcam, y - ycam);
 	RenderBoundingBox(xcam, ycam);
