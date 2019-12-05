@@ -468,6 +468,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					if (walking_up == 2) {
 						ani = SIMON_ANI_ATTACK_RIGHT_DOWN;
 						morningstar->attack_on_stair = 2;
+						
 					}
 					if (walking_up == 1) {
 						ani = SIMON_ANI_ATTACK_RIGHT_UP;
@@ -481,6 +482,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				else {
 					morningstar->attack_on_stair = 0;
 					ani = SIMON_ANI_ATTACK_RIGHT;
+
 				}
 				if (attack_wp == 0) {
 					morningstar->attack_start = GetTickCount();
