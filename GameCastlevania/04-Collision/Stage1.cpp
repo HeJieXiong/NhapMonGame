@@ -1170,6 +1170,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		for (int i = 0; i < 2; i++)
 		{
@@ -1180,6 +1181,8 @@ void CStage1::LoadStage()
 			brick->type = 0;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		for (int i = 0; i < 2; i++)
 		{
@@ -1191,6 +1194,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		for (int i = 0; i < 9; i++)
 		{
@@ -1202,6 +1206,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 
 		for (int i = 0; i < 2; i++)
@@ -1214,6 +1219,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 
 		for (int i = 0; i < 2; i++)
@@ -1225,7 +1231,8 @@ void CStage1::LoadStage()
 			brick->type = 0;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
-			//objects_fish.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
 		}
 		//BRICK-END
 		map->LoadMap(stagemap, 4);
@@ -1242,6 +1249,7 @@ void CStage1::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_item;
 	vector<LPGAMEOBJECT> coObjects_weapons;
 	vector<LPGAMEOBJECT> coObjects_panther;
+	vector<LPGAMEOBJECT> coObjects_fish;
 	if (Simon->next_stage == 2) {
 		
 		for (int i = 0; i < objects.size(); i++) {
@@ -1273,6 +1281,11 @@ void CStage1::Update(DWORD dt)
 	for (int i = 0; i < objects_panther.size(); i++)
 	{
 		coObjects_panther.push_back(objects_panther[i]);
+	}
+	Simon->count = objects_fish.size();
+	for (int i = 0; i < objects_fish.size(); i++)
+	{
+		coObjects_fish.push_back(objects_fish[i]);
 	}
 	for (int i = 0; i < obejects_item.size(); i++)
 	{
@@ -1342,6 +1355,10 @@ void CStage1::Update(DWORD dt)
 	{
 
 		objects[i]->Update(dt, &coObjects);
+	}
+	for (int i = 0; i < objects_fish.size(); i++)
+	{
+		objects_fish[i]->Update(dt, &coObjects_fish);
 	}
 	/*for (int i = 0; i < objects_panther.size(); i++)
 	{
@@ -1495,7 +1512,7 @@ void CStage1::Render()
 					objects_fish[i]->Render(x, y, Simon->x, Simon->y);
 				}
 				headerbar->stage_ = Simon->state_direction_on_stair;
-				headerbar->score_ = Simon->box_style;
+				headerbar->score_ = Simon->count;
 				headerbar->DrawHeaderbar();
 			}
 		}
