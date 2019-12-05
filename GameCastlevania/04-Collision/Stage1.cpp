@@ -1017,33 +1017,7 @@ void CStage1::LoadStage()
 			obejects_item.push_back(brick);
 		}
 		//BRICK-END
-		//FIRE-START
-		for (int i = 0; i < 5; i++) {  //fire
-			fire = new CCandle();
-			fire->AddAnimation(603);
-			fire->SetPosition(i * 130 + 88, 156);
-			fire->tag = 0;
-			fire->state = FIRE_STATE;
-			/*objects.push_back(fire);
-			objects_morningstar.push_back(fire);
-			objects_weapons.push_back(fire);*/
-		}
-		//FIRE-END
 
-		//CANLDE-START
-		for (int i = 0; i < row; i++) {
-			if (location3[i][0] == 100001) {
-				candle = new CCandle();
-				candle->AddAnimation(903);
-				candle->SetPosition(location3[i][1], location3[i][2]);
-				candle->tag = location3[i][3];
-				candle->state = CANDLE_STATE;
-				/*objects.push_back(candle);
-				objects_morningstar.push_back(candle);
-				objects_weapons.push_back(candle);*/
-			}
-		}
-		//CANLDE-END
 		//BAT-START
 		for (int i = 0; i < row; i++) {
 			if (location3[i][0] == 100006) {
@@ -1373,7 +1347,7 @@ void CStage1::Render()
 			headerbar->score_ = Simon->state_direction_on_stair;
 
 			headerbar->stage_ = Simon->state_direction_on_stair;
-			headerbar->score_ = Simon->between_stair;
+			headerbar->score_ = Simon->x;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
@@ -1409,7 +1383,8 @@ void CStage1::Render()
 				for (int i = 0; i < objects_weapons.size(); i++) {
 					objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 				}
-
+				headerbar->stage_ = Simon->state_direction_on_stair;
+				headerbar->score_ = Simon->is_on_stair;
 				headerbar->DrawHeaderbar();
 
 			}

@@ -226,7 +226,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 	}
 	else if (game->IsKeyDown(DIK_UP)) {
 			
-			if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3|| Simon->state_direction_on_stair == 2)){
+			if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3|| Simon->state_direction_on_stair == 2|| Simon->state_direction_on_stair == 4)){
 				Simon->walking_up = 1;
 				Simon->SetState(SIMON_STATE_ON_STAIR);
 				Simon->Walking_on_stair();
@@ -237,7 +237,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 
 
 			}
-			else if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 2))  {
+			else if (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3 || Simon->state_direction_on_stair == 2|| Simon->state_direction_on_stair == 4))  {
 				
 				Simon->Walking_down_stair();
 				Simon->SetState(SIMON_STATE_ON_STAIR);
@@ -667,14 +667,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage1();
 	//currentstage(stage1);
-	stage2->SetGame(game);
-	LoadStage2();
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
-	//stage3->SetGame(game);
-	//LoadStage3();
+	//stage2->SetGame(game);
+	//LoadStage2();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	//RunStage3();
+	//RunStage2();
+	stage3->SetGame(game);
+	LoadStage3();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage3();
 	/*stage4->SetGame(game);
 	LoadStage4();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
