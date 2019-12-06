@@ -1119,22 +1119,26 @@ void CStage1::LoadStage()
 			}
 		}
 		//FISH-START
-		for (int i = 0; i < 2; i++) {
-			fish = new CFish(Simon);
-			fish->AddAnimation(1903);
-			fish->AddAnimation(1904);
-			fish->AddAnimation(1905);
-			fish->AddAnimation(1906);
-			fish->AddAnimation(1907);
-			fish->AddAnimation(1908);
-			fish->AddAnimation(1907);
-			//fish->SetPosition(location3[i][2], location3[i][3]);
-			//fish->bat_x = location3[i][4];
-			fish->SetPosition(180 + i * 50, 250);
-			fish->SetState(FISH_STATE_HIDE);
-			//objects.push_back(fish);
-			objects_fish.push_back(fish);
-			objects_weapons.push_back(fish);
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100009) {
+				fish = new CFish(Simon);
+				fish->AddAnimation(1903);
+				fish->AddAnimation(1904);
+				fish->AddAnimation(1905);
+				fish->AddAnimation(1906);
+				fish->AddAnimation(1907);
+				fish->AddAnimation(1908);
+				fish->AddAnimation(1907);
+				fish->SetPosition(location3[i][2], location3[i][3]);
+				fish->code = location3[i][4];
+				//fish->SetPosition(location3[i][2], location3[i][3]);
+				//fish->bat_x = location3[i][4];
+
+				fish->SetState(FISH_STATE_HIDE);
+				//objects.push_back(fish);
+				objects_fish.push_back(fish);
+				objects_weapons.push_back(fish);
+			}
 		}
 		//FISH-END
 		//STAIR-1-STAR
@@ -1279,6 +1283,20 @@ void CStage1::LoadStage()
 			objects_fish.push_back(brick);
 			objects_weapons.push_back(brick);
 		}
+		//STAIR-FISH-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100008) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				objects.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+
+		//STAIR-FISH-END
 		//BRICK-END
 		map->LoadMap(stagemap, 4);
 	}
@@ -1556,8 +1574,8 @@ void CStage1::Render()
 				for (int i = 0; i < objects_fish.size(); i++) {
 					objects_fish[i]->Render(x, y, Simon->x, Simon->y);
 				}
-				headerbar->stage_ = Simon->state_direction_on_stair;
-				headerbar->score_ = Simon->count;
+				headerbar->stage_ = Simon->touch_wake;
+				headerbar->score_ = Simon->touch_wake;
 				headerbar->DrawHeaderbar();
 			}
 		}

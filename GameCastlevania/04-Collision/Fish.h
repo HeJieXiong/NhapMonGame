@@ -59,7 +59,7 @@ class CFish :
 	DWORD fire_countdown;
 	int can_count = 1;
 	int is_jump = 0;
-	
+	int falling_down = 1;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{
@@ -71,6 +71,7 @@ public:
 		
 	}
 	int can_fire = 0;
+	int code = 0;
 	CFish();
 	virtual void SetState(int state);
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

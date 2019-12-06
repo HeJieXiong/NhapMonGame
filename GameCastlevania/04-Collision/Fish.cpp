@@ -6,14 +6,18 @@ CFish::CFish()
 void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-	float a = abs(simon->x - this->x);
+
 	if (is_active == false) {
-		if (abs(simon->x - this->x) <= 50 && simon->x - this->x < 0)
+		if (simon->touch_wake==1)
 		{
-			SetState(FISH_STATE_JUMP_LEFT);		
-			start_jump = GetTickCount();
-			is_jump = 1;
-			is_active = true;
+			
+			if (code == 1) {
+				SetState(FISH_STATE_JUMP_LEFT);
+				start_jump = GetTickCount();
+				is_jump = 1;
+				is_active = true;
+			}
+			
 		}
 	}
 	if (is_active == true) {
@@ -58,7 +62,9 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (state == FISH_STATE_WALKING_LEFT) {
 		vx = -FISH_WALKING_SPEED;
-		x += dx;
+		if (falling_down == 0) {
+			x += dx;
+		}
 	}
 	if (can_count == 1 && is_standing == 1) {
 		fire_countdown = GetTickCount();
@@ -120,19 +126,20 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					y +=dy;
 					
 				}
+				if (is_standing == 1) {
+					falling_down = 0;
+				}
+
 				
 			}
-			if (dynamic_cast<CBrick *>(e->obj)) {
-				CStair *stair = dynamic_cast<CStair *>(e->obj);
-				
-			}
+			
 		}
 	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];
 	}
-	DebugOut(L"abs %d\n", a);
+	
 }
 
 void CFish::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)

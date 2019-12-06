@@ -98,5 +98,6 @@ public:
 	int column, row;
 	float **location2; 
 	float **location3;
+	float **location4;
 	~CStage1();
 };
