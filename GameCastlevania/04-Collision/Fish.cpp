@@ -66,9 +66,11 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	if (can_fire == 1) {
 		if (bullet == NULL) {
-			
+			float a, b;
+			a = x;
+			b = y;
 			bullet = new FishBullet();
-			bullet->SetPosition(50, 50);
+			bullet->SetPosition(a,b);
 			if (this->nx > 0) bullet->vx = FISH_BULLET_SPEED_X;
 			else bullet->vx = -FISH_BULLET_SPEED_X;
 			
@@ -77,10 +79,9 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (bullet != NULL) bullet->Update(dt, coObjects);
 	if (bullet != NULL)
 	{
-		if (abs(bullet->x - this->x) > FISH_ATTACK_RANGE)
-		{
+		if(can_fire==0)
 			bullet = NULL;
-		}
+		
 		/*else if (bullet->isHit == true)
 			bullet = NULL;*/
 	}
@@ -154,7 +155,7 @@ void CFish::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	}
 	if (bullet != NULL)
 	{
-		bullet->Render(x,y,x,y);
+		bullet->Render(xcam, ycam,x,y);
 	}
 	animations[ani]->Render(x - xcam, y - ycam);
 	RenderBoundingBox(xcam, ycam);
@@ -210,9 +211,14 @@ FishBullet::FishBullet()
 {
 	tag = 17;
 	is_active = true;
-	if(nx >0)
-	this->AddAnimation(2001);
-	if (nx < 0) this->AddAnimation(2002);
+	if (nx > 0) {
+		this->AddAnimation(2001);
+		ani_bullet = 1;
+	}
+	if (nx < 0) {
+		this->AddAnimation(2002);
+		ani_bullet = 0;
+	}
 }
 
 void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
@@ -226,11 +232,13 @@ void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void FishBullet::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {	
 		animations[0]->Render(x, y);
+		RenderBoundingBox(xcam, ycam);
 }
 void FishBullet::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
+
 	left = x;
 	top = y;
-	right = x + FISH_BBOX_WIDTH;
-	bottom = y + FISH_BBOX_HEIGHT;
+	right = x + BULLET_BBOX_WIDTH;
+	bottom = y + BULLET_BBOX_HEIGHT;
 }

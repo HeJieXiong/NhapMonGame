@@ -25,17 +25,19 @@
 
 #define FISH_BBOX_WIDTH				15
 #define FISH_BBOX_HEIGHT			32
-#define BULLET_BBOX_WIDTH			14
-#define BULLET_BBOX_HEIGHT			12
+#define BULLET_BBOX_WIDTH			7
+#define BULLET_BBOX_HEIGHT			6
 #define FISH_ATTACK_RANGE			400
 #define FISH_DETECT_RANGE			134
-#define FISH_BULLET_SPEED_X			0.2f
+#define FISH_BULLET_SPEED_X			0.02f
 #define WATER_HEIGHT				64*5+32
 #define FISH_TIME_JUMP_DOWN			1000
+#define FISH_ATTACK_RANGE			400
 class FishBullet : public CGameObject
 {
 public:
 	FishBullet();
+	int ani_bullet = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
