@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #include "Simon.h"
 
-#define PANTHER_WALKING_SPEED_X 0.07f
+#define PANTHER_WALKING_SPEED_X 0.1f
 #define PANTHER_WALKING_SPEED_Y 0.07f
 #define PANTHER_GRAVITY 0.002f
 

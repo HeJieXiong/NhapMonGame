@@ -17,7 +17,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	vy += PANTHER_GRAVITY * dt;
-	if (simon->touch_panther_wake ==1)
+	if (simon->touch_wake ==1)
 	{
 		if (code == 1) {
 			is_standing = false;
@@ -25,7 +25,7 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 		
 	}
-	if (simon->touch_panther_wake == 2)
+	if (simon->touch_wake == 2)
 	{
 		if (code == 2) {
 			simon->count_panther_code = code;

@@ -148,7 +148,7 @@ public:
 	int box_style = 1; // dùng để thay đổi box khi simon nhảy 1: box lớn 2: box nhảy
 	int can_jump = 1;
 	int ani =0;
-	int touch_panther_wake = 0;
+	int touch_wake = 0;
 	int count_panther_code = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{

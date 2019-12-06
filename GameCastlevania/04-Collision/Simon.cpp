@@ -329,11 +329,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						
 					}
 					if (stair->type_stair == 10) {
-						touch_panther_wake=1;
+						touch_wake=1;
 
 					}
 					if (stair->type_stair == 20) {
-						touch_panther_wake = 2;
+						touch_wake = 2;
 
 					}
 					

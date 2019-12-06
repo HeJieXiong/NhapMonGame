@@ -432,7 +432,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(270.0f, 0);
+	Simon->SetPosition(10.0f, 0);
 	
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -965,6 +965,21 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-4-END
+		//STAIR-BAT-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100008) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				objects.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+
+		//STAIR-BAT-END
 		//BIG_BRICK_STAR
 		LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
 		sprites->Add(130001, 0, 0, 62, 94, texMisc_big);
@@ -1467,8 +1482,8 @@ void CStage1::Render()
 			}
 			headerbar->score_ = Simon->state_direction_on_stair;
 
-			headerbar->stage_ = Simon->touch_panther_wake;
-			headerbar->score_ = Simon->touch_panther_wake;
+			headerbar->stage_ = Simon->touch_wake;
+			headerbar->score_ = Simon->touch_wake;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
@@ -1505,7 +1520,7 @@ void CStage1::Render()
 					objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
 				}
 				headerbar->stage_ = Simon->is_on_stair;
-				headerbar->score_ = Simon->state_direction_on_stair;
+				headerbar->score_ = Simon->count;
 				headerbar->DrawHeaderbar();
 
 			}
