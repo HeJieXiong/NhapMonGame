@@ -1,4 +1,4 @@
-#include "Panther.h"
+﻿#include "Panther.h"
 #include "Simon.h"
 
 //CPanther::CPanther()
@@ -17,10 +17,33 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
 	vy += PANTHER_GRAVITY * dt;
-	if (abs(simon->x - this->x) <= 100&& simon->x - this->x>0)
+	if (simon->touch_panther_wake ==1)
 	{
-		is_standing = false;
-		is_active = true;
+		if (code == 1) {
+			is_standing = false;
+			is_active = true;
+		}
+		
+	}
+	if (simon->touch_panther_wake == 2)
+	{
+		if (code == 2) {
+			simon->count_panther_code = code;
+			is_standing = false;
+			is_active = true;
+		}
+	}
+	// Xét va chạm của panther và Simon
+	if (x+ PANTHER_BBOX_WIDTH >= simon->x &&x + PANTHER_BBOX_WIDTH <= simon->x+ SIMON_SIT_BBOX_WIDTH && y+ PANTHER_BBOX_HEIGHT >= (simon-> y +SIMON_SIT_BBOX_HEIGHT)) {
+		if (simon->untouchable == 0&& simon->is_heart==0) {
+			simon->start_heart = GetTickCount();
+			simon->is_heart = 1;
+			simon->state = SIMON_STATE_HEART;
+		
+		}
+		else {
+			x += dx;
+		}
 	}
 	/*if (is_standing == false)
 	{*/

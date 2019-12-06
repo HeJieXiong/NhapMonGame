@@ -212,6 +212,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					jump_walk = 0;
 				}
 			}
+			
 
 			else if (dynamic_cast<CItem *>(e->obj))
 			{
@@ -327,6 +328,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						on_jump = 0; 
 						
 					}
+					if (stair->type_stair == 10) {
+						touch_panther_wake=1;
+
+					}
+					if (stair->type_stair == 20) {
+						touch_panther_wake = 2;
+
+					}
 					
 				}
 			}
@@ -372,7 +381,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		LPCOLLISIONEVENT e = coEventsResult[i];
 
 	}
-
+	/*if (x > 600) {
+		touch_panther_wake = 1;
+	}*/
 	// clean up collision events
 	for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 	//DebugOut(L"vy %f\n", this->vy);
@@ -643,7 +654,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		is_walking = 3;
 	}
 	if (is_walking==3){
-		count= walking_start;
+		
 		if (GetTickCount() - walking_start < 2000) {
 			vx = 0;
 			is_walking = 3;

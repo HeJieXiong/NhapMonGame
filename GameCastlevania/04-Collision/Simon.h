@@ -7,6 +7,7 @@
 #include "Ghost.h"
 #include"debug.h"
 #include "Brick.h"
+
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.01f
@@ -147,6 +148,8 @@ public:
 	int box_style = 1; // dùng để thay đổi box khi simon nhảy 1: box lớn 2: box nhảy
 	int can_jump = 1;
 	int ani =0;
+	int touch_panther_wake = 0;
+	int count_panther_code = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

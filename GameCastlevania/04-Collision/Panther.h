@@ -26,9 +26,10 @@ class CPanther : public CGameObject
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	int is_standing;
 	int is_jump;
+	
 	CSimon *simon;
 public:
-	
+	int code;
 	CPanther(CSimon *a) : CGameObject()
 	{
 		simon = a;
