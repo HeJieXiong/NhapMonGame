@@ -32,21 +32,21 @@
 #define FISH_BULLET_SPEED_X			0.2f
 #define WATER_HEIGHT				64*5+32
 #define FISH_TIME_JUMP_DOWN			1000
-class CBullet : public CGameObject
+class FishBullet : public CGameObject
 {
 public:
-	CBullet();
+	FishBullet();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
-	virtual void Render();
+	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
-	~CBullet();
+	~FishBullet();
 };
 class CFish :
 	public CGameObject
 {
 	CSimon *simon;
 	bool isAttacking;
-	CBullet *bullet;
+	FishBullet *bullet;
 	LPGAMEOBJECT heart;
 	DWORD attackTime;
 	int attackStart;
@@ -57,6 +57,7 @@ class CFish :
 	DWORD fire_countdown;
 	int can_count = 1;
 	int is_jump = 0;
+	
 public:
 	CFish(CSimon *a) : CGameObject()
 	{

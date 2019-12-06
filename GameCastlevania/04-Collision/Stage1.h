@@ -45,6 +45,7 @@
 #define ID_TEX_FISH 150
 #define ID_TEX_BOSS	160
 #define ID_TEX_DOOR 170
+#define ID_TEX_BULLET 180
 #define MAP_LENGTH	4608
 class  CStage1 {
 	//Stage 1

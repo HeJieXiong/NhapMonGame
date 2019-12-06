@@ -1,5 +1,8 @@
 #include "Fish.h"
-
+CFish::CFish()
+{
+	bullet = NULL;
+}
 void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt, coObjects);
@@ -61,7 +64,26 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		fire_countdown = GetTickCount();
 		can_count = 0;
 	}
-	
+	if (can_fire == 1) {
+		if (bullet == NULL) {
+			
+			bullet = new FishBullet();
+			bullet->SetPosition(50, 50);
+			if (this->nx > 0) bullet->vx = FISH_BULLET_SPEED_X;
+			else bullet->vx = -FISH_BULLET_SPEED_X;
+			
+		}
+	}
+	if (bullet != NULL) bullet->Update(dt, coObjects);
+	if (bullet != NULL)
+	{
+		if (abs(bullet->x - this->x) > FISH_ATTACK_RANGE)
+		{
+			bullet = NULL;
+		}
+		/*else if (bullet->isHit == true)
+			bullet = NULL;*/
+	}
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	vector<LPCOLLISIONEVENT> coEvents;
 	coEvents.clear();
@@ -130,6 +152,10 @@ void CFish::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 	if (state == FISH_STATE_ATK_LEFT) {
 		ani = FISH_ANI_ATK_LEFT;
 	}
+	if (bullet != NULL)
+	{
+		bullet->Render(x,y,x,y);
+	}
 	animations[ani]->Render(x - xcam, y - ycam);
 	RenderBoundingBox(xcam, ycam);
 }
@@ -180,20 +206,31 @@ void CFish::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 	bottom = y + FISH_BBOX_HEIGHT;
 }
 
-void CBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+FishBullet::FishBullet()
 {
-	CGameObject::Update(dt, coObjects);
-	x += dx;
+	tag = 17;
+	is_active = true;
+	if(nx >0)
+	this->AddAnimation(2001);
+	if (nx < 0) this->AddAnimation(2002);
 }
 
-void CBullet::Render()
+void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	animations[0]->Render(x, y);
+	
+		CGameObject::Update(dt, coObjects);
+		x += dx;
+	
 }
 
-void CBullet::GetBoundingBox(float &left, float &top, float &right, float &bottom){
+void FishBullet::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
+{	
+		animations[0]->Render(x, y);
+}
+void FishBullet::GetBoundingBox(float &left, float &top, float &right, float &bottom)
+{
 	left = x;
 	top = y;
-	right = x + BULLET_BBOX_WIDTH;
-	bottom = y + BULLET_BBOX_HEIGHT;
+	right = x + FISH_BBOX_WIDTH;
+	bottom = y + FISH_BBOX_HEIGHT;
 }

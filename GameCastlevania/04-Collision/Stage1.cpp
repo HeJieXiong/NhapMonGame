@@ -23,6 +23,7 @@ void CStage1::LoadStage()
 	textures->Add(ID_TEX_BAT, L"textures\\enemy\\11.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_FISH, L"textures\\enemy\\12.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_BULLET, L"textures\\fireball.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	//ITEM-START
@@ -534,6 +535,17 @@ void CStage1::LoadStage()
 	ani->Add(19006);
 	animations->Add(1908, ani);
 	//FISH-END
+	//BULLET START
+	LPDIRECT3DTEXTURE9 texBullet = textures->Get(ID_TEX_BULLET);
+	sprites->Add(20001, 0, 0, 7, 5, texBullet); //BULLET LEFT
+	sprites->Add(20002, 7, 0, 13, 5, texBullet); //BULLET RIGHT
+	ani = new CAnimation(100);//BULLET LEFT
+	ani->Add(20001);
+	animations->Add(2001, ani);
+	ani = new CAnimation(100);//BULLET RIGHT
+	ani->Add(20002);
+	animations->Add(2002, ani);
+	//BULLET END
 	if (stage_id == 1) {
 		map = new TileMap();
 
