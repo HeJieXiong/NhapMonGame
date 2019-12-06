@@ -38,7 +38,14 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			start_jump = 0;
 		}
 	}
-
+	if (vx > 0) {
+		if (x > 450) {
+			SetState(FISH_STATE_WALKING_LEFT);
+		}
+		else SetState(FISH_STATE_WALKING_RIGHT);
+	}
+	
+	
 	if (can_count == 0) {	
 		if (GetTickCount() - fire_countdown <= 2000) {
 			state = FISH_STATE_WALKING_LEFT;
@@ -60,12 +67,14 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			can_fire = 0;
 		}
 	}
+	
 	if (state == FISH_STATE_WALKING_LEFT) {
 		vx = -FISH_WALKING_SPEED;
 		if (falling_down == 0) {
 			x += dx;
 		}
 	}
+	
 	if (can_count == 1 && is_standing == 1) {
 		fire_countdown = GetTickCount();
 		can_count = 0;
