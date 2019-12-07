@@ -4,13 +4,10 @@
 #include "Textures.h"
 class TileMap:public CSprites {
 private:
-	
 	CTextures * textures;
 	CSprites *sprites;
-	
 public:
 	int column, row;
-	
 	int level;
 	TileMap();
 	void LoadMap(int **&map, int level);

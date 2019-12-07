@@ -97,9 +97,7 @@ void TileMap::LoadMap(int **&map, int level) {
 void TileMap::DrawMap(int **map, float &xcam, float &ycam)
 {
 	int a = int(xcam);
-	int b = int(ycam);
-	
-	
+	int b = int(ycam);	
 		for (int i = 0; i < row; i++) {
 			for (int j = 0; j < column; j++) {
 				CSprite *tile = sprites->Get(map[i][j]);
