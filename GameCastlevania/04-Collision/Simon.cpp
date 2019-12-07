@@ -76,40 +76,57 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					state = SIMON_STATE_EXTRA;
 				}
 			}
+			if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
+				if (jump_walk == 0) {
+					on_jump = 2;
+					jump_walk = 0;
+					jump_start = 0;
+					vx = 0;
+					vy = 0;
+				}
+				if (taking_jump == 0)
+					state = SIMON_STATE_IDLE;
+				else {
+
+					state = SIMON_STATE_EXTRA;
+				}
+			}
 		}
 		else {
-			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {
+			if (GetTickCount() - jump_start >= SIMON_JUMP_WALK_TIME && GetTickCount() - jump_start <= SIMON_JUMP_WALK_DOWN_TIME) {
 
 				if (jump_walk == 1) {
 					vx = -SIMON_JUMP_SPEED_X;
-					vy = SIMON_JUMP_SPEED_Y;
+					vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
 				}
-				else
+				if (jump_walk == 2) {
 					vx = SIMON_JUMP_SPEED_X;
-					vy = SIMON_JUMP_SPEED_Y;
-				
+					vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
+
+				}
+			}
+				if (GetTickCount() - jump_start > SIMON_JUMP_WALK_DOWN_TIME) {
+					if (jump_walk != 0) {
+						can_jump = 0;
+						vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
+						jump_walk = 0;
+						jump_start = 0;
+						//vx = 0;
+						//vy = 0;
+						on_jump = 0;
+						
+					}
+					if (taking_jump == 0)
+						state = SIMON_STATE_IDLE;
+					else {
+
+						state = SIMON_STATE_EXTRA;
+					}
+				}
 			}
 		}
-		if (GetTickCount() - jump_start > SIMON_JUMP_DOWN_TIME) {
-			if (jump_walk != 0) {
-				can_jump = 0;
-				
-			}
-			on_jump = 2;
-			jump_walk = 0;
-			jump_start = 0;
-			vx = 0;
-			vy = 0;
-			
-			if (taking_jump == 0)
-				state = SIMON_STATE_IDLE;
-			else {
+		
 
-				state = SIMON_STATE_EXTRA;
-			}
-		}
-
-	}
 	
 	if (attacking == 1) {
 		if (GetTickCount() - attack_start < SIMON_ATTACK_TIME)
