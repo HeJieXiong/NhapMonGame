@@ -11,7 +11,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-	
+	count = vy;
 	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	// Simple fall down
 	if (has_g == 1) {
@@ -23,7 +23,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	
 		between_stair = 0;
 	}
-
+	
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -244,7 +244,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				CGhost *ghost = dynamic_cast<CGhost *>(e->obj);
 
-				if (e->nx < 0|| e->nx >0 || e->ny < 0 || e->ny>0)
+				/*if (e->nx < 0|| e->nx >0 || e->ny < 0 || e->ny>0)
 				{					
 					if (untouchable == 0) {
 						start_heart = GetTickCount();
@@ -256,7 +256,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						ghost->x += dx;
 						
 					}
-				}
+				}*/
 			}
 			else if (dynamic_cast<CStair *>(e->obj))
 			{

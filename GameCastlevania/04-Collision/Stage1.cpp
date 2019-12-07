@@ -1501,7 +1501,7 @@ void CStage1::Render()
 			headerbar->score_ = Simon->state_direction_on_stair;
 
 			headerbar->stage_ = Simon->touch_wake;
-			headerbar->score_ = Simon->touch_wake;
+			headerbar->score_ = Simon->count;
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
