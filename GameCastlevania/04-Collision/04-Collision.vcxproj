@@ -128,6 +128,7 @@
     <ClInclude Include="Brick.h" />
     <ClInclude Include="Candle.h" />
     <ClInclude Include="debug.h" />
+    <ClInclude Include="Define.h" />
     <ClInclude Include="Door.h" />
     <ClInclude Include="Fire.h" />
     <ClInclude Include="Fish.h" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Light_die.h" />
     <ClInclude Include="Morningstar.h" />
     <ClInclude Include="Panther.h" />
+    <ClInclude Include="Scenes.h" />
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stage1.h" />
@@ -175,6 +177,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Morningstar.cpp" />
     <ClCompile Include="Panther.cpp" />
+    <ClCompile Include="Scenes.cpp" />
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stage1.cpp" />
