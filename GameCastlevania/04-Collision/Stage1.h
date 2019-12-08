@@ -22,6 +22,7 @@
 #include "Fish.h"
 #include "Boss.h"
 #include "Door.h"
+#include "Scenes.h"
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0,0,0)
 
 #define DOOR_STATE_OPEN 300
@@ -48,6 +49,7 @@
 #define ID_TEX_BULLET 180
 #define MAP_LENGTH	4608
 class  CStage1 {
+	Scenes *scenes;
 	//Stage 1
 	CGame		*game;
 	CMorningstar*morningstar;

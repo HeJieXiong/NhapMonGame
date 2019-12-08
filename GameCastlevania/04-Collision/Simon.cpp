@@ -13,7 +13,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	count = vy;
 	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	if (has_g == 1) {
-		if (vy >)
 		if (on_jump == 2) 
 			vy += SIMON_SPEED_JUMP_DOWN*dt;
 		else

@@ -1,5 +1,6 @@
 ﻿#pragma once
 #include <d3dx9.h>
+#include <iostream>
 #include "Game.h"
 #include "Grid.h"
 #include "GameObject.h"
@@ -33,8 +34,10 @@ public:
 	float **mapspr;
 	float **mapani;
 	Scenes();
-	void LoadTextureAndSprite(int id,LPCWSTR tex, LPDIRECT3DTEXTURE9 texname);
+	void LoadTextureAndSprite(int texid, LPCWSTR link, string texName);
+	void LoadPerTex(int texid, LPCWSTR link, LPDIRECT3DTEXTURE9 texName);
 	void LoadAnimation(int timeperframe, int aniamount, string filelocation, int id);
+	wstring s2ws(const std::string& s);//Convert string to LPCWSTR
 	CSprite *GETTILE(int ID) { return sprites->Get(ID); };
 	~Scenes();
 
