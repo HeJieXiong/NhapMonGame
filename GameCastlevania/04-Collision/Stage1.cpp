@@ -4,9 +4,26 @@
 void CStage1::LoadStage()
 {
 	scenes = new Scenes();
+	//CAnimations * animations = CAnimations::GetInstance();
 	scenes->LoadTextureAndSprite(0, L"textures\\simon2.png", "texSIMON");
+	//scenes->LoadTextureAndSprite(10, L"textures\\ground\\2.png", "texMisc_1");
+	//scenes->LoadTextureAndSprite(20, L"textures\\ground\\2-4.png", "texMisc_2");
+	/*scenes->LoadTextureAndSprite(30, L"textures\\fire.png", "textFire");
+	scenes->LoadTextureAndSprite(190, L"textures\\bbox.png", "texBox");
+	scenes->LoadTextureAndSprite(40, L"textures\\whip.png", "textmorningstar");
+	scenes->LoadTextureAndSprite(50, L"textures\\ItemBoard.png", "texHeaderBar");
 	scenes->LoadTextureAndSprite(60, L"textures\\item\\item.png", "textItem");
-
+	scenes->LoadTextureAndSprite(70, L"textures\\item\\item.png", "textKnife");
+	scenes->LoadTextureAndSprite(80, L"textures\\other\\light_die_1.png", "texLightDie");
+	scenes->LoadTextureAndSprite(90, L"textures\\Simon_extra.png", "texLightDie");
+	scenes->LoadTextureAndSprite(100, L"textures\\ground\\1.png", "textCandle");
+	scenes->LoadTextureAndSprite(110, L"textures\\ground\\1.png", "textGhost");
+	scenes->LoadTextureAndSprite(120, L"textures\\enemy\\10.png", "texPan");
+	scenes->LoadTextureAndSprite(170, L"textures\\ground\\Gate1.png", "textDoor");
+	scenes->LoadTextureAndSprite(130, L"textures\\enemy\\11.png", "textBat");
+	scenes->LoadTextureAndSprite(140, L"textures\\ground\\16.png", "texMisc_big");
+	scenes->LoadTextureAndSprite(150, L"textures\\enemy\\12.png", "texFISH");
+	scenes->LoadTextureAndSprite(180, L"textures\\fireball.png", "texBullet");*/
 	/*CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -115,12 +132,7 @@ void CStage1::LoadStage()
 	//ani->Add(5008);
 	//ani->Add(5009);
 	//animations->Add(704, ani);
-	////morningstar = new CMorningstar();
-	//morningstar->AddAnimation(701);
-	//morningstar->AddAnimation(702);
-	//morningstar->AddAnimation(703);
-	//morningstar->AddAnimation(704);
-	////objects.push_back(morningstar);
+	
 	////MORNING-STAR-END
 	////BRICK1-START
 	//LPDIRECT3DTEXTURE9 texMisc_1 = textures->Get(ID_TEX_MISC_1);
@@ -170,11 +182,7 @@ void CStage1::LoadStage()
 	//ani = new CAnimation(100);//enemy
 	//ani->Add(8003);
 	//animations->Add(803, ani);
-	//headerbar = new CHeaderBar(game->GetDirect3DDevice());
-	//headerbar->AddAnimation(801);
-	//headerbar->tag = 3;
-	//headerbar->SetPosition(200, 15);
-	//objects.push_back(headerbar);
+	
 	////LIGHT_DIE-START
 	//LPDIRECT3DTEXTURE9 texLightDie = textures->Get(ID_TEX_LIGHT);
 	//sprites->Add(15001, 0, 0, 8, 19, texLightDie);
@@ -403,7 +411,17 @@ void CStage1::LoadStage()
 	//ani = new CAnimation(150);	// idle stay heart left 
 	//ani->Add(10017);
 	//animations->Add(428, ani);
-
+	morningstar = new CMorningstar();
+	morningstar->AddAnimation(701);
+	morningstar->AddAnimation(702);
+	morningstar->AddAnimation(703);
+	morningstar->AddAnimation(704);
+	objects.push_back(morningstar);
+	headerbar = new CHeaderBar(game->GetDirect3DDevice());
+	headerbar->AddAnimation(801);
+	headerbar->tag = 3;
+	headerbar->SetPosition(200, 15);
+	objects.push_back(headerbar);
 	Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -437,7 +455,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
 	Simon->SetPosition(10.0f, 0);
-	
+	objects.push_back(Simon);
 	////PANTHER-STAR
 	//LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	//sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -1440,41 +1458,41 @@ void CStage1::Render()
 	LPDIRECT3DSURFACE9 bb = game->GetBackBuffer();
 	LPD3DXSPRITE spriteHandler = game->GetSpriteHandler();
 	if (d3ddv->BeginScene()) {
-		if (stage_id == 1) {
+		//if (stage_id == 1) {
 
-			// Clear back buffer with a color
-			d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		//	// Clear back buffer with a color
+		//	d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
-			spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-			float x = Simon->x;
-			float y = 0;
+		//	spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		//	float x = Simon->x;
+		//	float y = 0;
 
-			if (x <= SCREEN_WIDTH / 2) {
-				x = 0;
-			}
-			else if (x > 550) {
-				x = 350;
-			}
-			else
-				x = Simon->x - SCREEN_WIDTH / 2;
-			int a = 1;
-			map->DrawMap(stagemap, x, y);
-			for (int i = 0; i < objects.size(); i++) {
+		//	if (x <= SCREEN_WIDTH / 2) {
+		//		x = 0;
+		//	}
+		//	else if (x > 550) {
+		//		x = 350;
+		//	}
+		//	else
+		//		x = Simon->x - SCREEN_WIDTH / 2;
+		//	int a = 1;
+		//	map->DrawMap(stagemap, x, y);
+		//	for (int i = 0; i < objects.size(); i++) {
 
-				if (objects[i]->tag != 3)
-					objects[i]->Render(x, y, Simon->x, Simon->y);
-			}
-			for (int i = 0; i < objects_weapons.size(); i++) {
-				objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
-			}
+		//		if (objects[i]->tag != 3)
+		//			objects[i]->Render(x, y, Simon->x, Simon->y);
+		//	}
+		//	for (int i = 0; i < objects_weapons.size(); i++) {
+		//		objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+		//	}
 
-			float i = objects_weapons.size();
-			int v = Simon->nx;
-			//float i = count1;
-			headerbar->score_ = Simon->isLastFrame;
-			headerbar->DrawHeaderbar();
+		//	float i = objects_weapons.size();
+		//	int v = Simon->nx;
+		//	//float i = count1;
+		//	headerbar->score_ = Simon->isLastFrame;
+		//	headerbar->DrawHeaderbar();
 
-		}
+		//}
 		if (stage_id == 2) {
 			d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
@@ -1502,10 +1520,10 @@ void CStage1::Render()
 			for (int i = 0; i < objects_panther.size(); i++) {
 				objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 			}
-			headerbar->score_ = Simon->state_direction_on_stair;
+			headerbar->score_ = objects.size();
 
 			headerbar->stage_ = Simon->touch_wake;
-			headerbar->score_ = Simon->count;
+			headerbar->score_ = objects.size();
 			headerbar->DrawHeaderbar();
 			//float i = count1;
 
@@ -1513,76 +1531,76 @@ void CStage1::Render()
 
 
 		}
-		if (stage_id == 3) {
-			if (d3ddv->BeginScene())
-			{
-				// Clear back buffer with a color
-				d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		//if (stage_id == 3) {
+		//	if (d3ddv->BeginScene())
+		//	{
+		//		// Clear back buffer with a color
+		//		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
-				spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-				float x = Simon->x;
-				float y = 0;
+		//		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		//		float x = Simon->x;
+		//		float y = 0;
 
-				if (x <= SCREEN_WIDTH / 2) {
-					x = 0;
-				}
-				else
-					x = Simon->x - SCREEN_WIDTH / 2;
-				map->DrawMap(stagemap, x, y);
-				float i = Simon->state_direction_on_stair;
-				int v = Simon->is_on_stair;
-				int k = Simon->has_g;
+		//		if (x <= SCREEN_WIDTH / 2) {
+		//			x = 0;
+		//		}
+		//		else
+		//			x = Simon->x - SCREEN_WIDTH / 2;
+		//		map->DrawMap(stagemap, x, y);
+		//		float i = Simon->state_direction_on_stair;
+		//		int v = Simon->is_on_stair;
+		//		int k = Simon->has_g;
 
-				for (int i = 0; i < objects.size(); i++) {
+		//		for (int i = 0; i < objects.size(); i++) {
 
-					if (objects[i]->tag != 3)
-						objects[i]->Render(x, y, Simon->x, Simon->y);
-				}
-				for (int i = 0; i < objects_weapons.size(); i++) {
-					objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
-				}
-				headerbar->stage_ = Simon->is_on_stair;
-				headerbar->score_ = Simon->count;
-				headerbar->DrawHeaderbar();
+		//			if (objects[i]->tag != 3)
+		//				objects[i]->Render(x, y, Simon->x, Simon->y);
+		//		}
+		//		for (int i = 0; i < objects_weapons.size(); i++) {
+		//			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+		//		}
+		//		headerbar->stage_ = Simon->is_on_stair;
+		//		headerbar->score_ = Simon->count;
+		//		headerbar->DrawHeaderbar();
 
-			}
-		}
-		if (stage_id == 4) {
-			if (d3ddv->BeginScene())
-			{
-				// Clear back buffer with a color
-				d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
+		//	}
+		//}
+		//if (stage_id == 4) {
+		//	if (d3ddv->BeginScene())
+		//	{
+		//		// Clear back buffer with a color
+		//		d3ddv->ColorFill(bb, NULL, BACKGROUND_COLOR);
 
-				spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
-				float x = Simon->x;
-				float y = 0;
+		//		spriteHandler->Begin(D3DXSPRITE_ALPHABLEND);
+		//		float x = Simon->x;
+		//		float y = 0;
 
-				if (x <= SCREEN_WIDTH / 2) {
-					x = 0;
-				}
-				else
-					x = Simon->x - SCREEN_WIDTH / 2;
-				map->DrawMap(stagemap, x, y);
-				float i = Simon->state_direction_on_stair;
-				int v = Simon->is_on_stair;
-				int k = Simon->has_g;
+		//		if (x <= SCREEN_WIDTH / 2) {
+		//			x = 0;
+		//		}
+		//		else
+		//			x = Simon->x - SCREEN_WIDTH / 2;
+		//		map->DrawMap(stagemap, x, y);
+		//		float i = Simon->state_direction_on_stair;
+		//		int v = Simon->is_on_stair;
+		//		int k = Simon->has_g;
 
-				for (int i = 0; i < objects.size(); i++) {
+		//		for (int i = 0; i < objects.size(); i++) {
 
-					if (objects[i]->tag != 3)
-						objects[i]->Render(x, y, Simon->x, Simon->y);
-				}
-				for (int i = 0; i < objects_weapons.size(); i++) {
-					objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
-				}
-				for (int i = 0; i < objects_fish.size(); i++) {
-					objects_fish[i]->Render(x, y, Simon->x, Simon->y);
-				}
-				headerbar->stage_ = Simon->touch_wake;
-				headerbar->score_ = Simon->touch_wake;
-				headerbar->DrawHeaderbar();
-			}
-		}
+		//			if (objects[i]->tag != 3)
+		//				objects[i]->Render(x, y, Simon->x, Simon->y);
+		//		}
+		//		for (int i = 0; i < objects_weapons.size(); i++) {
+		//			objects_weapons[i]->Render(x, y, Simon->x, Simon->y);
+		//		}
+		//		for (int i = 0; i < objects_fish.size(); i++) {
+		//			objects_fish[i]->Render(x, y, Simon->x, Simon->y);
+		//		}
+		//		headerbar->stage_ = Simon->touch_wake;
+		//		headerbar->score_ = Simon->touch_wake;
+		//		headerbar->DrawHeaderbar();
+		//	}
+		//}
 		spriteHandler->End();
 		d3ddv->EndScene();
 		// Display back buffer content to the screen

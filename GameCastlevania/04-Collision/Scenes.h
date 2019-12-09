@@ -2,33 +2,44 @@
 #include <d3dx9.h>
 #include <iostream>
 #include "Game.h"
-#include "Grid.h"
 #include "GameObject.h"
-#include "TileMap.h"
-#include "Candle.h"
-#include "Morningstar.h"
-#include "Knife.h"
+#include "Textures.h"
+
 #include "Simon.h"
+#include "Brick.h"
+#include "BackGround.h"
+#include "Goomba.h"
+#include "Fire.h"
+#include "Morningstar.h"
+#include "HeaderBar.h"
 #include "Item.h"
-#include "Door.h"
-#include "Stair.h"
+#include "TileMap.h"
+#include "Knife.h"
+#include "Light_die.h"
+#include "Candle.h"
 #include "Ghost.h"
+#include "Stair.h"
+#include "Grid.h"
 #include "Panther.h"
 #include "Bat.h"
 #include "Fish.h"
+#include "Boss.h"
+#include "Door.h"
+#include "Scenes.h"
 using namespace std;
 
 class Scenes
 {
 private:
+	
+public:	
 	CTextures * textures = CTextures::GetInstance();
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
-public:	
 	int columntex, rowtex, columsprite, colani, rowsprite, rowani;
 	int level;
-	float **maptex;
+	string **maptex;
 	float **mapspr;
 	float **mapani;
 	Scenes();
