@@ -661,7 +661,7 @@ void CStage5::Update(DWORD dt)
 	{
 		objects_boss[i]->Update(dt, &coObjects_boss);
 	}
-	DebugOut(L"size %d\n", objects_panther.size());
+	/*DebugOut(L"size %d\n", objects_panther.size());*/
 }
 
 void CStage5::Render()

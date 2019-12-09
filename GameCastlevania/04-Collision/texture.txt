@@ -1,4 +1,4 @@
-19 0
+19
 0 L"textures\\simon2.png"
 10 L"textures\\ground\\2.png"
 20 L"textures\\ground\\2-4.png"

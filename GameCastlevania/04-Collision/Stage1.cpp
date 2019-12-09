@@ -3,7 +3,10 @@
 #include <fstream>
 void CStage1::LoadStage()
 {
+	scenes = new Scenes();
+	scenes->LoadTextureAndSprite(0, L"textures\\simon2.png", "texSIMON");
 	scenes->LoadTextureAndSprite(60, L"textures\\item\\item.png", "textItem");
+
 	/*CTextures * textures = CTextures::GetInstance();
 	LPANIMATION ani;
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
@@ -401,40 +404,40 @@ void CStage1::LoadStage()
 	//ani->Add(10017);
 	//animations->Add(428, ani);
 
-	////Simon = new CSimon(morningstar, headerbar, knife);
-	//Simon->AddAnimation(400);		// idle right big
-	//Simon->AddAnimation(401);		// idle left big
-	//Simon->AddAnimation(402);		// idle right small
-	//Simon->AddAnimation(403);		// idle left small
-	//Simon->AddAnimation(404);		// walk right big
-	//Simon->AddAnimation(405);		// walk left big
-	//Simon->AddAnimation(406);		// jump right
-	//Simon->AddAnimation(407);		// jump left
-	//Simon->AddAnimation(408);		// sit down left
-	//Simon->AddAnimation(409);		// sit down right
-	//Simon->AddAnimation(410);		// attack left
-	//Simon->AddAnimation(411);		// attack right
-	//Simon->AddAnimation(412);		// attack sit left
-	//Simon->AddAnimation(413);		// attack sit right
-	//Simon->AddAnimation(414);		// attack disappear
-	//Simon->AddAnimation(415);		// on stair left
-	//Simon->AddAnimation(416);		// on stair right
-	//Simon->AddAnimation(417);		// down stair left
-	//Simon->AddAnimation(418);		// down stair right
-	//Simon->AddAnimation(419);		// idle stay stair left down
-	//Simon->AddAnimation(420);		// idle stay stair left up
-	//Simon->AddAnimation(421);		// idle stay stair right down
-	//Simon->AddAnimation(422);		// idle stay stair right up
-	//Simon->AddAnimation(16001);		// idle stay extra left
-	//Simon->AddAnimation(16002);		// idle stay extra right
-	//Simon->AddAnimation(423);		// idle attack stair right up
-	//Simon->AddAnimation(424);		// idle stay stair left up
-	//Simon->AddAnimation(425);		// idle attack stair right down
-	//Simon->AddAnimation(426);		// idle stay stair left down
-	//Simon->AddAnimation(427);		// idle stay heart right 
-	//Simon->AddAnimation(428);		// idle stay heart left
-	//Simon->SetPosition(10.0f, 0);
-	//
+	Simon = new CSimon(morningstar, headerbar, knife);
+	Simon->AddAnimation(400);		// idle right big
+	Simon->AddAnimation(401);		// idle left big
+	Simon->AddAnimation(402);		// idle right small
+	Simon->AddAnimation(403);		// idle left small
+	Simon->AddAnimation(404);		// walk right big
+	Simon->AddAnimation(405);		// walk left big
+	Simon->AddAnimation(406);		// jump right
+	Simon->AddAnimation(407);		// jump left
+	Simon->AddAnimation(408);		// sit down left
+	Simon->AddAnimation(409);		// sit down right
+	Simon->AddAnimation(410);		// attack left
+	Simon->AddAnimation(411);		// attack right
+	Simon->AddAnimation(412);		// attack sit left
+	Simon->AddAnimation(413);		// attack sit right
+	Simon->AddAnimation(414);		// attack disappear
+	Simon->AddAnimation(415);		// on stair left
+	Simon->AddAnimation(416);		// on stair right
+	Simon->AddAnimation(417);		// down stair left
+	Simon->AddAnimation(418);		// down stair right
+	Simon->AddAnimation(419);		// idle stay stair left down
+	Simon->AddAnimation(420);		// idle stay stair left up
+	Simon->AddAnimation(421);		// idle stay stair right down
+	Simon->AddAnimation(422);		// idle stay stair right up
+	Simon->AddAnimation(16001);		// idle stay extra left
+	Simon->AddAnimation(16002);		// idle stay extra right
+	Simon->AddAnimation(423);		// idle attack stair right up
+	Simon->AddAnimation(424);		// idle stay stair left up
+	Simon->AddAnimation(425);		// idle attack stair right down
+	Simon->AddAnimation(426);		// idle stay stair left down
+	Simon->AddAnimation(427);		// idle stay heart right 
+	Simon->AddAnimation(428);		// idle stay heart left
+	Simon->SetPosition(10.0f, 0);
+	
 	////PANTHER-STAR
 	//LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
 	//sprites->Add(12001, 0, 0, 32, 16, texPan);//STANDING
@@ -982,11 +985,11 @@ void CStage1::LoadStage()
 
 		//STAIR-BAT-END
 		//BIG_BRICK_STAR
-		LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
-		sprites->Add(130001, 0, 0, 62, 94, texMisc_big);
-		ani = new CAnimation(100);		// brick
-		ani->Add(130001);
-		animations->Add(1301, ani);
+		//LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
+		//sprites->Add(130001, 0, 0, 62, 94, texMisc_big);
+		//ani = new CAnimation(100);		// brick
+		//ani->Add(130001);
+		//animations->Add(1301, ani);
 		for (int i = 0; i < row; i++)
 		{
 			if (location3[i][0] == 100007) {
@@ -1201,12 +1204,12 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-4-END
-		//BRICK-START
-		LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC_2);
-		sprites->Add(20001, 0, 0, 16, 14, texMisc);
-		ani = new CAnimation(100);		// brick
-		ani->Add(20001);
-		animations->Add(601, ani);
+		////BRICK-START
+		//LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC_2);
+		//sprites->Add(20001, 0, 0, 16, 14, texMisc);
+		//ani = new CAnimation(100);		// brick
+		//ani->Add(20001);
+		//animations->Add(601, ani);
 
 
 

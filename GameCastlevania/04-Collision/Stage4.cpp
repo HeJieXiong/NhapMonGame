@@ -726,7 +726,7 @@ void CStage4::Update(DWORD dt)
 	{
 		objects_fish[i]->Update(dt, &coObjects_fish);
 	}
-	DebugOut(L"size %d\n", objects_fish.size());
+	/*DebugOut(L"size %d\n", objects_fish.size());*/
 }
 
 void CStage4::Render()

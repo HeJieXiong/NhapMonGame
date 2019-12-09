@@ -657,7 +657,7 @@ void CStage2::Update(DWORD dt)
 	{
 		objects_panther[i]->Update(dt, &coObjects_panther);
 	}
-	DebugOut(L"size %d\n", objects_panther.size());
+	/*DebugOut(L"size %d\n", objects_panther.size());*/
 	headerbar->UpdateTime();
 }
 

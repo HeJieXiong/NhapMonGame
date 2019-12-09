@@ -16,20 +16,26 @@ wstring s2ws(const std::string& s)
 	delete[] buf;
 	return r;
 }
+Scenes::Scenes()
+{
 
+	columntex = 6;
+	columsprite = 6;
+	colani = 4;
+}
 void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 {
+	
 	ifstream FILE;
 	ifstream FILESPRITE;
 	ifstream FILEANI;
 	FILE.open("texture.txt");
 	FILESPRITE.open("sprite.txt");
-	FILEANI.open("animtion.txt");
+	FILEANI.open("animation.txt");
 	string sLinetex;
 	string sLinesprite;
 	string sLineAni;
-	columntex = 6;
-	columsprite = 6;
+	
 	if (FILE.good())
 	{
 		getline(FILE, sLinetex);
@@ -63,10 +69,10 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 	rowani = stoi(sLineAni);
 	mapani = new float *[rowani];
 	for (int i = 0; i < rowani; i++) {
-		mapani[i] = new float[columsprite];
+		mapani[i] = new float[colani];
 	}
 	for (int i = 0; i < rowsprite; i++) {
-		for (int j = 0; j < columsprite; j++) {
+		for (int j = 0; j < colani; j++) {
 			FILEANI >> mapani[i][j];
 		}
 	}
@@ -75,33 +81,50 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 			textures->Add(maptex[i][0], link, D3DCOLOR_XRGB(0, 0, 0));
 		}
 		LPDIRECT3DTEXTURE9 texName = textures->Get(maptex[i][0]);
-		for (int i = 1; i < rowsprite; i++) {
-			if (texid == mapspr[i][0]) {
-				sprites->Add(mapspr[i][1], mapspr[i][2], mapspr[i][3], mapspr[i][4], mapspr[i][5], texName);
+		if (texid != 0) {
+			for (int i = 1; i < rowsprite; i++) {
+				if (texid == mapspr[i][0]) {
+					sprites->Add(mapspr[i][1], mapspr[i][2], mapspr[i][3], mapspr[i][4], mapspr[i][5], texName);
+				}
+			}
+		}
+		if (texid == 0) { // Only for Simon
+			int top_simon = 0;
+			int bottom_simon = 33;
+			int id_simon = 10001;
+			for (int i = 0; i < 4; i++) {
+				int left = 0;
+				int right = 30;
+				for (int j = 0; j < 16; j++) {
+					sprites->Add(id_simon, left, top_simon, right, bottom_simon, texName);
+					id_simon++;
+					left += 30;
+					right += 30;
+				}
+				top_simon += 33;
+				bottom_simon += 33;
 			}
 		}
 	}
 	for (int i = 1; i < rowani; i++) { //LoadAni
 		if (texid == mapani[i][0]) {
-			int curRow = i;
-			for (int j = curRow; j < rowani; j++) {
-				if (mapani[j][5] == 0) { //Head
-					ani = new CAnimation(mapani[i][2]);
-					ani->Add(mapani[i][1]);
-				}
-				if (mapani[j][5] == 1) { //Body
-					ani->Add(mapani[i][1]);
-				}
-				if (mapani[j][5] == 2) { //Tail
-					ani->Add(mapani[i][1]);
-					animations->Add(mapani[i][4], ani);
-				}
-				if (mapani[j][5] == 3) {//only 1
-					ani = new CAnimation(mapani[i][2]);
-					ani->Add(mapani[i][1]);
-					animations->Add(mapani[i][4], ani);
-				}
+			if (mapani[i][4] == 0) { //Head
+				ani = new CAnimation(mapani[i][2]);
+				ani->Add(mapani[i][1]);
 			}
+			if (mapani[i][4] == 1) { //Body
+				ani->Add(mapani[i][1]);
+			}
+			if (mapani[i][4] == 2) { //Tail
+				ani->Add(mapani[i][1]);
+				animations->Add(mapani[i][4], ani);
+			}
+			if (mapani[i][4] == 3) {//only 1
+				ani = new CAnimation(mapani[i][2]);
+				ani->Add(mapani[i][1]);
+				animations->Add(mapani[i][4], ani);
+			}
+
 		}
 	}
 }
@@ -124,7 +147,7 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 			sprites->Add(mapspr[i][1], mapspr[i][2], mapspr[i][3], mapspr[i][4], mapspr[i][5], texname);
 		}
 	}*/
-}
+
 //void Scenes::LoadAnimation(int timeperframe, int aniid, string filelocation, int id) {
 //	ifstream FILE;
 //	FILE.open(filelocation);
@@ -151,6 +174,3 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 //	}
 //	animations->Add(id, ani);
 //}
-void Scenes::LoadPerTex(int texid, LPCWSTR link, LPDIRECT3DTEXTURE9 texName) {
-	LoadTextureAndSprite();
-}

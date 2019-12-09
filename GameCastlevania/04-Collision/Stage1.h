@@ -49,7 +49,7 @@
 #define ID_TEX_BULLET 180
 #define MAP_LENGTH	4608
 class  CStage1 {
-	Scenes *scenes;
+
 	//Stage 1
 	CGame		*game;
 	CMorningstar*morningstar;
@@ -61,7 +61,7 @@ class  CStage1 {
 	CKnife		*knife;
 	CLight		*light;
 	TileMap		*map;
-
+	Scenes		*scenes;
 	//Stage 2
 	CCandle		*candle;
 	CGhost		*ghost;

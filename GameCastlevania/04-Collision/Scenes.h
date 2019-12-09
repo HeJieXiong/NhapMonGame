@@ -21,14 +21,12 @@ using namespace std;
 class Scenes
 {
 private:
-	CTextures * textures;
-	CSprites *sprites;
 	CTextures * textures = CTextures::GetInstance();
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	LPANIMATION ani;
 public:	
-	int columntex, rowtex, columsprite, rowsprite, rowani;
+	int columntex, rowtex, columsprite, colani, rowsprite, rowani;
 	int level;
 	float **maptex;
 	float **mapspr;
