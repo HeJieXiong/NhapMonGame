@@ -1417,8 +1417,8 @@ void CStage1::Render()
 		}
 		headerbar->score_ = Simon->state_direction_on_stair;
 
-		headerbar->stage_ = Simon->count;
-		headerbar->score_ = Simon->x;
+		headerbar->stage_ = Simon->between_stair;
+		headerbar->score_ = Simon->is_on_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

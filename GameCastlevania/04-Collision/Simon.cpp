@@ -236,8 +236,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				state_direction_on_stair = stair->stair_direction;
 				if (e->nx != 0 || e->ny < 0 || e->ny>0)
 				{
-					if (on_jump !=0||walking_up!=0) {
-						y += dy;
+					if (is_touch_center_stair == 1 && between_stair !=0) {
+						is_touch_center_stair = 0;
+					}
+					if ((on_jump !=0||walking_up!=0)) {					
+							y += dy;				
 					}
 					if (nx > 0) {				
 						x += dx;
@@ -249,11 +252,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						on_jump = 0;
 						state = SIMON_STATE_IDLE;
 					}
-					if (is_on_stair == 0 && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {
-						count_stair_center = stair->center;
-						stair_center = stair->center;						
-						is_on_stair = 1;
-						has_g = 1;
+					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {
+							if (x - stair->center<=2 && x - stair->center >=-2) {
+								is_touch_center_stair = 1;
+							}
+							stair_center = stair->center;
+							is_on_stair = 1;
+							has_g = 1;
 					}
 					if (stair->type_stair == 5) {
 						if (is_on_stair !=0 && state != SIMON_STATE_WALKING_LEFT && state!= SIMON_STATE_WALKING_RIGHT) {
@@ -700,12 +705,13 @@ void CSimon::Attack_Weapons()
 
 void CSimon::Walking_on_stair()
 {
-	if (is_touch_center_stair == 0) {
+	if (is_touch_center_stair == 0 && stair_center!=-99999) {
 		do_walking();
 	}
 	if (is_touch_center_stair == 1) {
+		stair_center = -99999;
 		if (!walking_on) {
-			walking_on = 1;
+			walking_on = 1;		
 			start_walking = GetTickCount();
 			animations[SIMON_ANI_ON_STAIR_LEFT]->Reset();
 			animations[SIMON_ANI_ON_STAIR_RIGHT]->Reset();
@@ -736,6 +742,7 @@ void CSimon::Walking_on_stair()
 void CSimon::Walking_down_stair()
 {
 	if (is_touch_center_stair == 1) {
+		stair_center = -99999;
 		if (!walking_on) {
 			walking_on = 1;
 			start_walking = GetTickCount();
@@ -780,8 +787,7 @@ void CSimon::do_walking() {
 			state = SIMON_STATE_WALKING_LEFT;
 		}
 		if ( x -stair_center<2 && x-stair_center >-2) {
-			is_touch_center_stair = 1;
-			
+			is_touch_center_stair = 1;			
 		}
 	}
 }
