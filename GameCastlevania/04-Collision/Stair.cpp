@@ -6,6 +6,7 @@ void CStair::GetBoundingBox(float & left, float & top, float & right, float & bo
 	top = y;
 	right = x + STAIR_WIDTH;
 	bottom = y + STAIR_HEIGHT;
+	center = x +(right-x)/2;
 }
 
 void CStair::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)

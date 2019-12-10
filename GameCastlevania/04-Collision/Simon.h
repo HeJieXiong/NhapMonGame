@@ -152,6 +152,11 @@ public:
 	int ani =0;
 	int touch_wake = 0;
 	int count_panther_code = 0;
+	int walking_on =0;
+	DWORD start_walking; //Dùng để xét cho mỗi frame đi lên cầu thang
+	int is_touch_center_stair = 0;
+	float count_stair_center=0;
+	float stair_center = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
@@ -170,4 +175,5 @@ public:
 	void Attack_Weapons();
 	void Walking_on_stair();
 	void Walking_down_stair();
+	void do_walking();
 };

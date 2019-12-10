@@ -233,15 +233,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 				isFalling = 0;
+				state_direction_on_stair = stair->stair_direction;
 				if (e->nx != 0 || e->ny < 0 || e->ny>0)
 				{
+					if (on_jump !=0||walking_up!=0) {
+						y += dy;
+					}
+					if (nx > 0) {				
+						x += dx;
+					}
+					if (nx < 0) {
+						x += dx;
+					}
 					if (on_jump !=0 ) {
 						on_jump = 0;
 						state = SIMON_STATE_IDLE;
 					}
 					if (is_on_stair == 0 && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {
+						count_stair_center = stair->center;
+						stair_center = stair->center;						
 						is_on_stair = 1;
-						has_g = 1;					
+						has_g = 1;
 					}
 					if (stair->type_stair == 5) {
 						if (is_on_stair !=0 && state != SIMON_STATE_WALKING_LEFT && state!= SIMON_STATE_WALKING_RIGHT) {
@@ -277,6 +289,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{
 						has_g = 1;
+						
 					}
 					if (stair->type_stair != 2) {
 						on_jump = 0; 	
@@ -312,7 +325,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
 				start_heart = 0;
 				untouchable = 0;
-				count = GetTickCount() - start_heart;			
 				is_heart = 0;
 				state = SIMON_STATE_IDLE;
 			}		
@@ -321,6 +333,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		check_state = 1;
 	}
 	else check_state = 2;
+	if (walking_on == 1) {
+		if (GetTickCount() - start_walking > 300) {
+			walking_on = 0; 
+			start_walking = 0;
+		}
+	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];
@@ -484,8 +502,8 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
 			
 		}
-		if (state_direction_on_stair == 4 && between_stair == 0)
-			ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;
+		/*if (state_direction_on_stair == 4 && between_stair == 0)
+			ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;*/
 		if (state_direction_on_stair == 3 && between_stair == 2)
 			if (walking_up == 1)
 				ani = SIMON_ANI_ON_STAIR_RIGHT;
@@ -668,7 +686,6 @@ void CSimon::Attack(CMorningstar *monringstar, float &x_cam, float &y_cam) {
 
 void CSimon::Attack_Weapons()
 {
-
 	if (!attacking) {
 		attacking = 1;
 		animations[SIMON_ANI_ATTACK_RIGHT]->Reset();
@@ -676,66 +693,96 @@ void CSimon::Attack_Weapons()
 		animations[SIMON_ANI_SIT_ATTACK_RIGHT]->Reset();
 		animations[SIMON_ANI_SIT_ATTACK_LEFT]->Reset();
 		knife = new CKnife();
-
 		objects_weapons.push_back(knife);
 		combine_array = 1;
 	}
-
 }
 
 void CSimon::Walking_on_stair()
 {
+	if (is_touch_center_stair == 0) {
+		do_walking();
+	}
+	if (is_touch_center_stair == 1) {
+		if (!walking_on) {
+			walking_on = 1;
+			start_walking = GetTickCount();
+			animations[SIMON_ANI_ON_STAIR_LEFT]->Reset();
+			animations[SIMON_ANI_ON_STAIR_RIGHT]->Reset();
+		}
+		if (state_direction_on_stair == 1) {
+			vx = +SIMON_GRAVITY_ON_STAIR_X * dt;
+			has_g = 0;
+			vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
+		}
+		if (state_direction_on_stair == 3) {
+			vx = -SIMON_GRAVITY_ON_STAIR_X * dt;
+			has_g = 0;
+			vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
+		}
+		if (state_direction_on_stair == 4) {
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
+			has_g = 0;
+			vy = -SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+		}
+		if (state_direction_on_stair == 2) {
+			vx = +SIMON_GRAVITY_DOWN_STAIR_X * dt;
 
-	if (state_direction_on_stair == 1) {
-		vx = +SIMON_GRAVITY_ON_STAIR_X * dt;
-		has_g = 0;
-		vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
+			vy = -SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			has_g = 0;
+		}
 	}
-	if (state_direction_on_stair == 3) {
-		vx = -SIMON_GRAVITY_ON_STAIR_X * dt;
-		has_g = 0;
-		vy = -SIMON_GRAVITY_ON_STAIR_Y * dt;
-	}
-	if (state_direction_on_stair == 4) {
-		vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-		has_g = 0;
-		vy = -SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-	}
-	if (state_direction_on_stair == 2) {
-		vx = +SIMON_GRAVITY_DOWN_STAIR_X * dt;
-		
-		vy = -SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-		has_g = 0;
-	}
-
 }
 void CSimon::Walking_down_stair()
 {
+	if (is_touch_center_stair == 1) {
+		if (!walking_on) {
+			walking_on = 1;
+			start_walking = GetTickCount();
+			animations[SIMON_ANI_DOWN_STAIR_LEFT]->Reset();
+			animations[SIMON_ANI_DOWN_STAIR_RIGHT]->Reset();
+		}
+		if (state_direction_on_stair == 4) {
+			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
 
-	if (state_direction_on_stair == 4) {
-		vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			has_g = 0;
+		}
+		if (state_direction_on_stair == 2) {
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
 
-		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-		has_g = 0;
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			has_g = 0;
+		}
+		if (state_direction_on_stair == 1) {
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
+			has_g = 0;
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			between_stair = 1;
+		}
+		if (state_direction_on_stair == 3) {
+			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
+
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			has_g = 0;
+			between_stair = 2;
+		}
 	}
-	if (state_direction_on_stair == 2) {
-		vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
-		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-		has_g = 0;
-	}
-	if (state_direction_on_stair == 1) {
-		vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-		has_g = 0;
-		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-		between_stair = 1;
-	}
-	if (state_direction_on_stair == 3) {
-		vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
-		vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-		has_g = 0;
-		between_stair = 2;
+}
+void CSimon::do_walking() {
+	if (is_touch_center_stair == 0) {
+		if (x - stair_center <= -2) {
+			vx = SIMON_WALKING_SPEED;
+			state = SIMON_STATE_WALKING_RIGHT;
+		}
+		if (x - stair_center >= 2) {
+			vx = -SIMON_WALKING_SPEED;
+			state = SIMON_STATE_WALKING_LEFT;
+		}
+		if ( x -stair_center<2 && x-stair_center >-2) {
+			is_touch_center_stair = 1;
+			
+		}
 	}
 }
 
