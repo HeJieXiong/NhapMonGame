@@ -76,38 +76,38 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 			FILEANI >> mapani[i][j];
 		}
 	}
-	for (int i = 1; i < rowtex; i++) { //LoadTexture and Sprite
-		if (maptex[i][0] != "") {
-			if (texid == stoi(maptex[i][0])) {
-				textures->Add(stoi(maptex[i][0]), link, D3DCOLOR_XRGB(0, 0, 0));
-			}
-			LPDIRECT3DTEXTURE9 texName = textures->Get(stoi(maptex[i][0]));
-			if (texid != 0) {
-				for (int i = 1; i < rowsprite; i++) {
-					if (texid == mapspr[i][0]) {
-						sprites->Add(mapspr[i][1], mapspr[i][2], mapspr[i][3], mapspr[i][4], mapspr[i][5], texName);
-					}
-				}
-			}
-			if (texid == 0) { // Only for Simon
-				int top_simon = 0;
-				int bottom_simon = 33;
-				int id_simon = 10001;
-				for (int i = 0; i < 4; i++) {
-					int left = 0;
-					int right = 30;
-					for (int j = 0; j < 16; j++) {
-						sprites->Add(id_simon, left, top_simon, right, bottom_simon, texName);
-						id_simon++;
-						left += 30;
-						right += 30;
-					}
-					top_simon += 33;
-					bottom_simon += 33;
-				}
-			}
-		}
-	}
+	//for (int i = 0; i < rowtex; i++) { //LoadTexture and Sprite
+	//	if (maptex[i][0] != "") {
+	//		if (texid == stoi(maptex[i][0])) {
+	//			textures->Add(stoi(maptex[i][0]), link, D3DCOLOR_XRGB(0, 0, 0));
+	//		}
+	//		LPDIRECT3DTEXTURE9 texName = textures->Get(stoi(maptex[i][0]));
+	//		if (texid != 0 && texid == mapspr[i][0]) {
+	//			for (int i = 1; i < rowsprite; i++) {
+	//				if (texid == mapspr[i][0]) {
+	//					sprites->Add(mapspr[i][1], mapspr[i][2], mapspr[i][3], mapspr[i][4], mapspr[i][5], texName);
+	//				}
+	//			}
+	//		}
+	//		if (texid == 0) { // Only for Simon
+	//			int top_simon = 0;
+	//			int bottom_simon = 33;
+	//			int id_simon = 10001;
+	//			for (int i = 0; i < 4; i++) {
+	//				int left = 0;
+	//				int right = 30;
+	//				for (int j = 0; j < 16; j++) {
+	//					sprites->Add(id_simon, left, top_simon, right, bottom_simon, texName);
+	//					id_simon++;
+	//					left += 30;
+	//					right += 30;
+	//				}
+	//				top_simon += 33;
+	//				bottom_simon += 33;
+	//			}
+	//		}
+	//	}
+	//}
 	for (int i = 1; i < rowani; i++) { //LoadAni
 		if (texid == mapani[i][0]) {
 			if (mapani[i][4] == 0) { //Head
@@ -129,6 +129,7 @@ void Scenes::LoadTextureAndSprite(int texid, LPCWSTR link, string texName)
 
 		}
 	}
+
 }
 	/*LPDIRECT3DTEXTURE9 texname = textures->Get(id);
 	if (FILESPRITE.good()) {
