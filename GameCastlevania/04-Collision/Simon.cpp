@@ -240,9 +240,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (is_touch_center_stair == 1 && between_stair !=0) {
 						is_touch_center_stair = 0;
 					}
-					if (on_jump !=0||e->ny< 0 || e->ny>0) {
-						
-							y += 0.5;				
+					if (on_jump !=0||e->ny< 0 || e->ny>0) 
+					{
+							y += 0.5;
+							if (stair->special_stair == 0) {
+								wanna_go_up = 0;
+								stair_center = stair->center;
+							}
 					}
 					if (nx > 0) {				
 						x += dx;
