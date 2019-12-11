@@ -2,6 +2,8 @@
 #include "GameObject.h"
 #include "Fire.h"
 #include "Candle.h"
+#include "Brick.h"
+#include "Stair.h"
 
 #define KNIFE_NORMAL_LEFT		0
 #define KNIFE_NORMAL_RIGHT	1

@@ -350,43 +350,43 @@ void CStage1::LoadStage()
 	ani->Add(10030);
 	animations->Add(418, ani);
 
-	ani = new CAnimation(50);	// idle stay stair left down
+	ani = new CAnimation(150);	// idle stay stair left down
 	ani->Add(10019);
 	animations->Add(419, ani);
 
-	ani = new CAnimation(50);	// idle stay stair left up
+	ani = new CAnimation(150);	// idle stay stair left up
 	ani->Add(10028);
 	animations->Add(420, ani);
 
-	ani = new CAnimation(50);	// idle stay stair right down
+	ani = new CAnimation(150);	// idle stay stair right down
 	ani->Add(10030);
 	animations->Add(421, ani);
 
-	ani = new CAnimation(50);	// idle stay stair right up
+	ani = new CAnimation(150);	// idle stay stair right up
 	ani->Add(10021);
 	animations->Add(422, ani);
 
-	ani = new CAnimation(50);	// idle attack stair right up
+	ani = new CAnimation(150);	// idle attack stair right up
 	ani->Add(10043);
 	ani->Add(10042);
 	ani->Add(10041);
 	animations->Add(423, ani);
 
 
-	ani = new CAnimation(50);	// idle stay stair left up
+	ani = new CAnimation(150);	// idle stay stair left up
 	ani->Add(10038);
 	ani->Add(10039);
 	ani->Add(10040);
 	animations->Add(424, ani);
 
 
-	ani = new CAnimation(50);	// idle stay stair right down
+	ani = new CAnimation(150);	// idle stay stair right down
 	ani->Add(10035);
 	ani->Add(10036);
 	ani->Add(10037);
 	animations->Add(425, ani);
 
-	ani = new CAnimation(50);	// idle stay stair right down
+	ani = new CAnimation(150);	// idle stay stair right down
 	ani->Add(10046);
 	ani->Add(10045);
 	ani->Add(10044);
@@ -657,6 +657,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 1;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
+				objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -673,6 +674,7 @@ void CStage1::LoadStage()
 				stair->special_stair = location2[i][6];
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -688,6 +690,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 3;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -899,6 +902,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 1;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
+				objects_weapons.push_back(stair);
 			}
 		}
 		//STAIR-1-END
@@ -1122,6 +1126,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 1;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
+				objects_weapons.push_back(stair);
 			}
 		}
 		//STAIR-1-END
@@ -1136,6 +1141,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 2;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				objects_weapons.push_back(stair);
 			}
 		}
 		//STAIR-2-END
@@ -1150,6 +1156,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 3;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
+				objects_weapons.push_back(stair);
 			}
 		}
 
@@ -1165,6 +1172,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 5;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
+				objects_weapons.push_back(stair);
 			}
 		}
 		//STAIR-4-END

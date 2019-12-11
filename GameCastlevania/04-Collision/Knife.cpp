@@ -1,4 +1,4 @@
-#include "Knife.h"
+﻿#include "Knife.h"
 #include "Textures.h"
 #include "Sprites.h"
 #include <chrono>
@@ -75,6 +75,16 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					y = -9999;
 				}
 			}
+			if (dynamic_cast<CBrick *>(e->obj))
+			{
+				CBrick *Brick= dynamic_cast<CBrick *>(e->obj);
+
+				if (e->nx != 0 || e->ny < 0)
+				{
+					x = 9999;
+				}
+			}
+		
 		}
 
 		// clean up collision events
