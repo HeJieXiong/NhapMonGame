@@ -244,6 +244,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					{
 							y += 0.5;
 							if (stair->special_stair == 0) {
+								is_touch_special_stair = 0;
 								wanna_go_up = 0;
 								stair_center = stair->center;
 							}
@@ -277,7 +278,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							if (stair->type_stair == 2 || stair->type_stair==4) {
 								if (stair->special_stair == 1) {
 									is_touch_special_stair = 1;
-									stair_center = stair->center;
+									//stair_center = stair->center;
+									stair_tail= stair->center;
 									stair_head = stair->head;
 								}
 								if (stair->special_stair == 0) {
@@ -320,6 +322,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 3 && stair->stair_direction == 0) {
 						has_g = 1;
 						is_on_stair = 0;
+						stair_center = -99999;
+						is_touch_special_stair = 0;
+						//stair_head = -99999;
+						//stair_tail = -99999;
 					}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{
@@ -630,7 +636,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		
 	}
 	if (wanna_go_up == 1) {
-		stair_center = stair_center;
+		stair_center = stair_tail;
 	}
 	if (wanna_go_up == 2) {
 		stair_center = stair_head;
