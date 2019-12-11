@@ -16,5 +16,6 @@ public:
 	int is_big;
 	int center;
 	int head;
+	int special_stair;
 	virtual void Render(float &xcam, float &ycam, float &x_, float &y_);
 };

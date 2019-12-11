@@ -257,18 +257,31 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 1) {
 						go_up = 1;
 					}
-					if (stair->type_stair == 2) {
-						go_up = 0;
+					if (stair->type_stair == 2){
+						if (stair->special_stair == 0) {
+							go_up = 0;
+						}
+						if (stair->special_stair == 1) {
+							go_up = 1;
+						}
 					}
-					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {
-							if (x - stair->center<=2 && x - stair->center >=-2) {
-								is_touch_center_stair = 1;
-							}
+					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2 || stair->type_stair==4) && stair->stair_direction != 0) {
+						
 							if (stair->type_stair == 1) {
 								stair_center = stair->center;
 							}
-							if (stair->type_stair == 2) {
-								stair_center = stair->head;
+							if (stair->type_stair == 2 || stair->type_stair==4) {
+								if (stair->special_stair == 1) {
+									is_touch_special_stair = 1;
+									stair_center = stair->center;
+									stair_head = stair->head;
+								}
+								if (stair->special_stair == 0) {
+									stair_center = stair->head;
+								}
+							}
+							if (x - stair->center <= 2 && x - stair->center >= -2) {
+								is_touch_center_stair = 1;
 							}
 							is_on_stair = 1;
 							has_g = 1;
@@ -612,6 +625,12 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		}
 		
 	}
+	if (wanna_go_up == 1) {
+		stair_center = stair_center;
+	}
+	if (wanna_go_up == 2) {
+		stair_center = stair_head;
+	}
 	int alpha = 255;
 	animations[ani]->Render(x - xcam - 7, y - ycam, alpha);
 	RenderBoundingBox(xcam, ycam);
@@ -795,10 +814,12 @@ void CSimon::Walking_down_stair()
 void CSimon::do_walking() {
 	if (is_touch_center_stair == 0) {
 		if (x - stair_center <= -2) {
+			nx = 1;
 			vx = SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_RIGHT;
 		}
 		if (x - stair_center >= 2) {
+			nx = -1;
 			vx = -SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_LEFT;
 		}

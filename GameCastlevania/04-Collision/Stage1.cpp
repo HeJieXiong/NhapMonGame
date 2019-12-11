@@ -432,7 +432,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(750.0f, 0);
+	Simon->SetPosition(780.0f, 0);
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -597,7 +597,7 @@ void CStage1::LoadStage()
 	}
 	if (stage_id == 2) {
 		map = new TileMap();
-		column = 5;
+		column = 7;
 		row;
 		ifstream FILE;
 		string sLine;
@@ -669,7 +669,8 @@ void CStage1::LoadStage()
 				stair->SetPosition(location2[i][2], location2[i][3]);
 				stair->stair_direction = location2[i][4];
 				stair->tag = 1;
-				stair->type_stair = 2;
+				stair->type_stair = location2[i][5];
+				stair->special_stair = location2[i][6];
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
 				//objects_panther.push_back(stair);
@@ -1418,7 +1419,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->state_direction_on_stair;
 
 		headerbar->stage_ = Simon->between_stair;
-		headerbar->score_ = Simon->vy;
+		headerbar->score_ = Simon->stair_center;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
