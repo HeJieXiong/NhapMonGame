@@ -151,6 +151,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			taking_jump = 0;
 		}
 	}
+
 	if (coEvents.size() == 0)
 	{
 		x += dx;
@@ -239,8 +240,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (is_touch_center_stair == 1 && between_stair !=0) {
 						is_touch_center_stair = 0;
 					}
-					if ((on_jump !=0||walking_up!=0)) {					
-							y += dy;				
+					if (on_jump !=0||e->ny< 0 || e->ny>0) {
+						
+							y += 0.5;				
 					}
 					if (nx > 0) {				
 						x += dx;
@@ -252,11 +254,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						on_jump = 0;
 						state = SIMON_STATE_IDLE;
 					}
+					if (stair->type_stair == 1) {
+						go_up = 1;
+					}
+					if (stair->type_stair == 2) {
+						go_up = 0;
+					}
 					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2) && stair->stair_direction != 0) {
 							if (x - stair->center<=2 && x - stair->center >=-2) {
 								is_touch_center_stair = 1;
 							}
-							stair_center = stair->center;
+							if (stair->type_stair == 1) {
+								stair_center = stair->center;
+							}
+							if (stair->type_stair == 2) {
+								stair_center = stair->head;
+							}
 							is_on_stair = 1;
 							has_g = 1;
 					}
@@ -741,6 +754,9 @@ void CSimon::Walking_on_stair()
 }
 void CSimon::Walking_down_stair()
 {
+	if (is_touch_center_stair == 0 && stair_center != -99999) {
+		do_walking();
+	}
 	if (is_touch_center_stair == 1) {
 		stair_center = -99999;
 		if (!walking_on) {

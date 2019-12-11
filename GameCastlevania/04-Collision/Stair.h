@@ -15,5 +15,6 @@ public:
 	int stair_direction; //Dùng để kiểm tra hướng cầu thang mà Simon đang đứng: 1 là phải lên 2 là phải xuống 3 trái lên 4 trái xuống 
 	int is_big;
 	int center;
+	int head;
 	virtual void Render(float &xcam, float &ycam, float &x_, float &y_);
 };

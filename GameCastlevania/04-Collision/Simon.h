@@ -157,6 +157,7 @@ public:
 	int is_touch_center_stair = 0;
 	float count_stair_center=0;
 	float stair_center = 0;
+	int go_up;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
