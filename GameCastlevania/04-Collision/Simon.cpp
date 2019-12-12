@@ -262,7 +262,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 1) {
 						go_up = 1;
 					}
-					if (stair->type_stair == 2|| stair->type_stair == 4){
+					if (stair->type_stair == 2){
 						if (stair->special_stair == 0) {
 							go_up = 0;
 						}
@@ -270,7 +270,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							go_up = 1;
 						}
 					}
-					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2 || stair->type_stair == 4) && stair->stair_direction != 0) {
+					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2 || stair->type_stair==4) && stair->stair_direction != 0) {
 						
 							if (stair->type_stair == 1) {
 								stair_center = stair->center;
@@ -304,7 +304,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							state = SIMON_STATE_IDLE;
 						}
 					}
-					if (stair->type_stair == 2 || stair->type_stair == 4) {
+					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 &&  has_g == 0) {
 							has_g = 1;
 							is_on_stair = 0;
@@ -316,7 +316,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 						if(on_jump==0) touch_stair_jump = 0;
 					}
-					if (is_on_stair == 1 && (stair->type_stair == 2 || stair->type_stair == 4) && has_g == 1) {
+					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
 						is_on_stair = 1;
 					}
 					if (stair->type_stair == 3 && stair->stair_direction == 0) {
@@ -329,8 +329,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{
-						has_g = 1;
-						
+						has_g = 1;		
 					}
 					if (stair->type_stair != 2) {
 						on_jump = 0; 	
@@ -775,7 +774,6 @@ void CSimon::Walking_on_stair()
 		}
 		if (state_direction_on_stair == 2) {
 			vx = +SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
 			vy = -SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			has_g = 0;
 		}
@@ -795,28 +793,31 @@ void CSimon::Walking_down_stair()
 			animations[SIMON_ANI_DOWN_STAIR_RIGHT]->Reset();
 		}
 		if (state_direction_on_stair == 4) {
+			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
 
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-			has_g = 0;
+			
 		}
 		if (state_direction_on_stair == 2) {
-			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
-			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			has_g = 0;
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
+			
 		}
 		if (state_direction_on_stair == 1) {
-			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
 			has_g = 0;
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
+			
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			between_stair = 1;
 		}
 		if (state_direction_on_stair == 3) {
+			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
 
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-			has_g = 0;
+			
 			between_stair = 2;
 		}
 	}
@@ -834,7 +835,7 @@ void CSimon::do_walking() {
 			state = SIMON_STATE_WALKING_LEFT;
 		}
 		if ( x -stair_center<2 && x-stair_center >-2) {
-			is_touch_center_stair = 1;			
+			is_touch_center_stair = 1;	
 		}
 	}
 }

@@ -432,7 +432,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(780.0f, 0);
+	Simon->SetPosition(10.0f, 0);
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -549,7 +549,28 @@ void CStage1::LoadStage()
 	//BULLET END
 	if (stage_id == 1) {
 		map = new TileMap();
+		column = 5;
+		row;
+		ifstream FILE;
+		string sLine;
+		FILE.open("location2.txt");
 
+
+		if (FILE.good())
+		{
+			getline(FILE, sLine);
+		}
+		row = stoi(sLine);
+		location2 = new float *[row];
+		for (int i = 0; i < row; i++) {
+			location2[i] = new float[column];
+		}
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> location2[i][j];
+			}
+		}
 		for (int i = 0; i < 48; i++)
 		{
 			CBrick *brick = new CBrick();
@@ -1426,8 +1447,8 @@ void CStage1::Render()
 		}
 		headerbar->score_ = Simon->state_direction_on_stair;
 
-		headerbar->stage_ = Simon->between_stair;
-		headerbar->score_ = Simon->x;
+		headerbar->stage_ = Simon->go_up;
+		headerbar->score_ = Simon->check_state;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
