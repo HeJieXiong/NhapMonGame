@@ -794,7 +794,7 @@ void CStage1::LoadStage()
 			objects_weapons.push_back(brick);
 
 		}
-		for (int i = 0; i < 9; i++)
+		for (int i = 0; i < 17; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
@@ -882,6 +882,19 @@ void CStage1::LoadStage()
 			}
 		}
 		//DOOR-END
+		//STAIR-3-STAR
+		for (int i = 0; i < row; i++) {
+			if (location2[i][0] == 100009) {
+				stair = new CStair();
+				stair->id = location2[i][1];
+				stair->SetPosition(location2[i][2], location2[i][3]);
+				stair->tag = 1;
+				stair->type_stair = location2[i][5];
+				objects.push_back(stair);
+				//objects_stair_2.push_back(stair);
+			}
+		}
+		//STAIR-3-END
 		//GRID-STAR
 		/*gridsSys = new CGrids();
 		int numOfCell = MAP_LENGTH / SCREEN_WIDTH;
@@ -1315,7 +1328,7 @@ void CStage1::Update(DWORD dt)
 	vector<LPGAMEOBJECT> coObjects_weapons;
 	vector<LPGAMEOBJECT> coObjects_panther;
 	vector<LPGAMEOBJECT> coObjects_fish;
-	if (Simon->next_stage == 2) {
+	if (Simon->open_door == 1) {
 		for (int i = 0; i < objects.size(); i++) {
 			if (objects[i]->tag == 10 && objects[i]->x != 1000) {
 				objects[i]->x = 1000;
@@ -1329,8 +1342,9 @@ void CStage1::Update(DWORD dt)
 				door_open->open_start = GetTickCount();
 				door_open->opened = 0;
 				door_open->state = DOOR_STATE_OPEN;
-				Simon->next_stage == 3;
 				objects.push_back(door_open);
+				//Simon->next_stage = 3;
+				Simon->open_door = 0;
 				//[i]->x = 10000;
 			}
 		}
@@ -1460,7 +1474,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->state_direction_on_stair;
 
 		headerbar->stage_ = Simon->go_up;
-		headerbar->score_ = Simon->x;
+		headerbar->score_ = Simon->next_stage;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

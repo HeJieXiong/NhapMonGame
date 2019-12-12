@@ -334,6 +334,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						stair_center = stair->x;
 						stair_tail = stair->tail;
 					}
+					if (stair->type_stair == 200) {
+						next_stage = 3;
+					}
 				}
 			}
 		}
@@ -834,22 +837,31 @@ void CSimon::do_walking() {
 	}
 }
 void CSimon::do_change_stair() {
-	if (can_turn == 0) {
-		if (x - stair_center >= 2) {
-			nx = -1;
-			vx = -SIMON_WALKING_SPEED;
-			state = SIMON_STATE_WALKING_LEFT;
+	if (next_stage == 1) {
+		if (can_turn == 0) {
+			if (x - stair_center >= 2) {
+				nx = -1;
+				vx = -SIMON_WALKING_SPEED;
+				state = SIMON_STATE_WALKING_LEFT;
+			}
+		}
+		if (x - stair_center<15 && x - stair_center >-15) {
+			can_turn = 1;
+			nx = 1;
+			vx = SIMON_WALKING_SPEED;
+			state = SIMON_STATE_WALKING_RIGHT;
+		}
+		if (x - stair_tail<2 && x - stair_tail >-2 && can_turn == 1) {
+			next_stage = 2;
 		}
 	}
-	if (x - stair_center<15 && x - stair_center >-15) {
-		can_turn = 1;
+}
+void CSimon::do_change_stair_2() {
+	if (next_stage == 2) {
 		nx = 1;
 		vx = SIMON_WALKING_SPEED;
 		state = SIMON_STATE_WALKING_RIGHT;
-	}
-	if (x - stair_tail<2 && x - stair_tail >-2 && can_turn==1) {
-		next_stage = 2;
+		open_door = 1;
 	}
 }
-
 

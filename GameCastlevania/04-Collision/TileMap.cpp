@@ -38,7 +38,7 @@ void TileMap::LoadMap(int **&map, int level) {
 		}
 	}
 	if (level == 2) {
-		column = 48;
+		column = 56;
 		row = 6;
 		map = new int *[row];
 		for (int i = 0; i < row; i++) {
