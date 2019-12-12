@@ -657,7 +657,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 1;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
-				objects_weapons.push_back(stair);
+				//objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -674,7 +674,7 @@ void CStage1::LoadStage()
 				stair->special_stair = location2[i][6];
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
-				objects_weapons.push_back(stair);
+				//objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -690,7 +690,7 @@ void CStage1::LoadStage()
 				stair->type_stair = 3;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
-				objects_weapons.push_back(stair);
+				//objects_weapons.push_back(stair);
 				//objects_panther.push_back(stair);
 			}
 		}
@@ -1427,7 +1427,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->state_direction_on_stair;
 
 		headerbar->stage_ = Simon->between_stair;
-		headerbar->score_ = Simon->stair_center;
+		headerbar->score_ = Simon->x;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
