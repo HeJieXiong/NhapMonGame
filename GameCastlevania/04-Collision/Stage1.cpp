@@ -553,7 +553,7 @@ void CStage1::LoadStage()
 		row;
 		ifstream FILE;
 		string sLine;
-		FILE.open("location2.txt");
+		FILE.open("location1.txt");
 
 
 		if (FILE.good())
@@ -583,15 +583,17 @@ void CStage1::LoadStage()
 		}
 		//BRICK-END
 
-		for (int i = 0; i < 5; i++) {  //fire
-			fire = new CCandle();
-			fire->AddAnimation(603);
-			fire->SetPosition(i * 130 + 88, 156);
-			fire->tag = 0;
-			fire->state = FIRE_STATE;
-			objects.push_back(fire);
-			objects_morningstar.push_back(fire);
-			objects_weapons.push_back(fire);
+		for (int i = 0; i < row; i++) { //fire
+			if (location2[i][0] == 100001) {
+				fire = new CCandle();
+				fire->AddAnimation(603);
+				fire->SetPosition(location2[i][1], location2[i][2]);
+				fire->tag = 0;
+				fire->state = FIRE_STATE;
+				objects.push_back(fire);
+				objects_morningstar.push_back(fire);
+				objects_weapons.push_back(fire);
+			}
 		}
 		//FIRE-END
 
@@ -609,9 +611,19 @@ void CStage1::LoadStage()
 			objects.push_back(enemy);
 		}
 		//HEAD-BAR-END
-
-		//SIMON-END
-
+		//STAIR-CHANGE-STAR
+		for (int i = 0; i < row; i++) {
+			if (location2[i][0] == 100002) {
+				stair = new CStair();
+				stair->SetPosition(location2[i][1], location2[i][2]);
+				stair->tag = 1;
+				stair->type_stair = location2[i][4];
+				objects.push_back(stair);
+				//objects_weapons.push_back(stair);
+				//objects_panther.push_back(stair);
+			}
+		}
+		//STAIR-CHANGE-END
 
 		//LOAD-MAP
 		map->LoadMap(stagemap, 1);
@@ -1448,7 +1460,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->state_direction_on_stair;
 
 		headerbar->stage_ = Simon->go_up;
-		headerbar->score_ = Simon->check_state;
+		headerbar->score_ = Simon->x;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

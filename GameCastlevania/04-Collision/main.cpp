@@ -610,8 +610,21 @@ int RunStage1()
 		if (dt >= tickPerFrame)
 		{
 			frameStart = now;
-			if ((Simon->next_stage == 1)) {
+			if (Simon->is_touch_change_stage_stair == 0 && game->unablekeyboard == 0) {
 				game->ProcessKeyboard();
+			}
+			if (Simon->is_touch_change_stage_stair == 1) {
+				game->unablekeyboard = 1;
+				Simon->do_change_stair();
+			}
+			if (Simon->next_stage == 2) {
+				game->unablekeyboard = 0;
+				current_stage = 2;
+				stage2->SetGame(game);
+				LoadStage2();
+				RunStage2();
+
+				done = 1;
 			}
 			Updatestage1(dt);
 			Renderstage1();
@@ -651,10 +664,10 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
 	currentstage(stage1);
-	/*stage2->SetGame(game);
+	stage2->SetGame(game);
 	LoadStage2();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();*/
+	RunStage2();
 	/*stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

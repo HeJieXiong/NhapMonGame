@@ -162,6 +162,8 @@ public:
 	int go_up;
 	int is_touch_special_stair;
 	int wanna_go_up = 0;
+	int is_touch_change_stage_stair;
+	int can_turn = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;
@@ -181,4 +183,5 @@ public:
 	void Walking_on_stair();
 	void Walking_down_stair();
 	void do_walking();
+	void do_change_stair();
 };
