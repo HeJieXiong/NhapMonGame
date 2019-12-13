@@ -306,8 +306,9 @@ LRESULT CALLBACK WinProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
 
 void  LoadStage1() {
-
+	
 	stage1->LoadStage();
+	Simon->SetPosition(10.0f, 0);
 }
 
 void  Updatestage1(DWORD dt) {
@@ -322,6 +323,7 @@ void  Renderstage1() {
 void  LoadStage2() {
 	stage2->stage_id = 2;
 	stage2->LoadStage();
+	Simon->SetPosition(10.0f, 0);
 }
 
 void  Updatestage2(DWORD dt) {
@@ -336,6 +338,7 @@ void  Renderstage2() {
 void  LoadStage3() {
 	stage3->stage_id = 3;
 	stage3->LoadStage();
+	Simon->SetPosition(10.0f, 50);
 }
 
 void  Updatestage3(DWORD dt) {
@@ -674,14 +677,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage1();
 	//currentstage(stage1);
-	stage2->SetGame(game);
-	LoadStage2();
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage2();
-	/*stage3->SetGame(game);
+	//stage2->SetGame(game);
+	//LoadStage2();
+	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	//RunStage2();
+	stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage3();*/
+	RunStage3();
 	//stage4->SetGame(game);
 	//LoadStage4();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

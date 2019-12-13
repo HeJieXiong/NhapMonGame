@@ -432,7 +432,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(850.0f, 0);
+	
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -915,7 +915,7 @@ void CStage1::LoadStage()
 	}
 	if (stage_id == 3) {
 		map = new TileMap();
-		column = 5;
+		column = 7;
 		row;
 		ifstream FILE;
 		string sLine;
@@ -980,20 +980,6 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-3-END
-		//STAIR-4-START
-		for (int i = 0; i < row; i++) {
-			if (location3[i][0] == 100010) {
-				stair = new CStair();
-				stair->id = location3[i][1];
-				stair->SetPosition(location3[i][2], location3[i][3]);
-				stair->stair_direction = location3[i][4];
-				stair->tag = 1;
-				stair->type_stair = 5;
-				objects.push_back(stair);
-				objects_stair_1.push_back(stair);
-			}
-		}
-		//STAIR-4-END
 		//STAIR-BAT-STAR
 		for (int i = 0; i < row; i++) {
 			if (location3[i][0] == 100008) {
@@ -1032,7 +1018,7 @@ void CStage1::LoadStage()
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
-			brick->SetPosition(i * 15.5f, 203);
+			brick->SetPosition(i * 15.0f, 203);
 			brick->tag = 1;
 			brick->type = 0;
 			objects.push_back(brick);
@@ -1063,7 +1049,7 @@ void CStage1::LoadStage()
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
-			brick->SetPosition(i * 15.5f + 124, 141);
+			brick->SetPosition(i * 15.0f + 124, 141);
 			brick->tag = 1;
 			brick->type = 0;
 			objects.push_back(brick);
@@ -1471,10 +1457,10 @@ void CStage1::Render()
 		for (int i = 0; i < objects_panther.size(); i++) {
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		headerbar->score_ = Simon->state_direction_on_stair;
+		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->go_up;
-		headerbar->score_ = Simon->between_stair;
+		headerbar->score_ = Simon->stair_center;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

@@ -145,7 +145,7 @@ public:
 	int is_heart = 0;
 	int check_state=0;
 	int current_state = 1;
-	int next_stage = 2;
+	int next_stage = 1;
 	DWORD start_heart;
 	int box_style = 1; // dùng để thay đổi box khi simon nhảy 1: box lớn 2: box nhảy
 	int can_jump = 1;

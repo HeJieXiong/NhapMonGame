@@ -46,7 +46,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	// Xét va chạm của bat và Simon
 	
-	if (nx>0){
+	/*if (nx>0){
 		if (x + BAT_BBOX_WIDTH >= simon->x &&x <= simon->x && y+ BAT_BBOX_HEIGHT >= simon->y && y <= simon->y) {
 			if (simon->untouchable == 0 && simon->is_heart == 0) {
 				simon->start_heart = GetTickCount();
@@ -70,7 +70,7 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				x += dx;
 			}
 		}
-	}
+	}*/
 	DebugOut(L"Bat_y %d\n", this->y);
 	DebugOut(L"Bat_x %d\n", this->x);
 	DebugOut(L"Bat_f %d\n", this->flying_coordinate);

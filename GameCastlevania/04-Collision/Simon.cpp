@@ -293,6 +293,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 &&  has_g == 0) {
+							x = 100;
 							has_g = 1;
 							is_on_stair = 0;
 						}
