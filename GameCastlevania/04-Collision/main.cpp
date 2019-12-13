@@ -229,6 +229,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			if (Simon->state_direction_on_stair == 3)
 				Simon->between_stair = 2;
 		}
+		else if (Simon->between_stair != 0) {
+			Simon->go_down = 1;
+		}
 		else {
 			Simon->SetState(SIMON_STATE_SIT_DOWN);
 		}
@@ -257,6 +260,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 			}
 			else if (Simon->between_stair != 0) {
 				Simon->go_up = 1;
+			}
+			else if (Simon->between_stair == 0) {
+				Simon->go_up = 0;
 			}
 			else {
 				Simon->SetState(SIMON_STATE_IDLE);
