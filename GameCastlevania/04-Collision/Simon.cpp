@@ -232,11 +232,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (on_jump !=0||e->ny< 0 || e->ny>0) 
 					{
 							y += 0.5;
-							if (stair->special_stair == 0) {
-								is_touch_special_stair = 0;
-								wanna_go_up = 0;
-								stair_center = stair->center;
-							}
 					}
 					if (nx > 0) {				
 						x += dx;
@@ -268,11 +263,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 								if (stair->special_stair == 1) {
 									is_touch_special_stair = 1;
 									//stair_center = stair->center;
-									stair_tail= stair->center;
+									stair_tail = stair->center;
 									stair_head = stair->head;
 								}
 								if (stair->special_stair == 0) {
-									stair_center = stair->head;
+									stair_center = 100;
 								}
 							}
 							if (x - stair->center <= 2 && x - stair->center >= -2) {
@@ -308,7 +303,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
 						is_on_stair = 1;
 					}
-					if (stair->type_stair == 3 && stair->stair_direction == 0) {
+					if (stair->type_stair == 3 ) {
 						has_g = 1;
 						is_on_stair = 0;
 						stair_center = -99999;
@@ -337,9 +332,19 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 200) {
 						next_stage = 3;
 					}
+					if (stair->type_stair == 2 && stair->special_stair == 0) {
+						wanna_go_up = 0;
+						stair_center = stair->x;
+					}
 				}
 			}
 		}
+	}
+	if (wanna_go_up == 1) {
+		stair_center = stair_tail;
+	}
+	if (wanna_go_up == 2) {
+		stair_center = stair_head;
 	}
 	if (is_heart ==1) {	
 			if (GetTickCount() - start_heart <= SIMON_HEART_JUMP_TIME) {
@@ -631,12 +636,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		}
 		
 	}
-	if (wanna_go_up == 1) {
-		stair_center = stair_tail;
-	}
-	if (wanna_go_up == 2) {
-		stair_center = stair_head;
-	}
+
 	int alpha = 255;
 	animations[ani]->Render(x - xcam - 7, y - ycam, alpha);
 	RenderBoundingBox(xcam, ycam);

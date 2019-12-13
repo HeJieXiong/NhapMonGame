@@ -703,7 +703,7 @@ void CStage1::LoadStage()
 				stair->SetPosition(location2[i][2], location2[i][3]);
 				stair->stair_direction = location2[i][4];
 				stair->tag = 1;
-				stair->type_stair = location2[i][5];
+				stair->type_stair = 2;
 				stair->special_stair = location2[i][6];
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
@@ -1474,7 +1474,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->state_direction_on_stair;
 
 		headerbar->stage_ = Simon->go_up;
-		headerbar->score_ = Simon->next_stage;
+		headerbar->score_ = Simon->stair_center;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
