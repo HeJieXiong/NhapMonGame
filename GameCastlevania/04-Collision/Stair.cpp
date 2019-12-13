@@ -9,6 +9,7 @@ void CStair::GetBoundingBox(float & left, float & top, float & right, float & bo
 	center = x +(right-x)/2;
 	if (type_stair == 2|| type_stair == 10 || type_stair == 100) {
 		head = x;
+		tail = right;
 	}
 	if (type_stair == 4) {
 		head = right;

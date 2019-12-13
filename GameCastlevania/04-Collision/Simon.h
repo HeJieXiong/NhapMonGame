@@ -165,6 +165,7 @@ public:
 	int is_touch_change_stage_stair;
 	int can_turn = 0;
 	int open_door = 0;
+	int go_down = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

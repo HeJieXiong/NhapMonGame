@@ -432,7 +432,7 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	Simon->SetPosition(10.0f, 0);
+	Simon->SetPosition(850.0f, 0);
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);

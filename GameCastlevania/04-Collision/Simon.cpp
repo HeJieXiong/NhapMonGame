@@ -245,8 +245,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (stair->type_stair == 1) {
 						go_up = 1;
+						go_down = 0;
+						stair_center = stair->center;
 					}
 					if (stair->type_stair == 2){
+						go_down = 1;
 						if (stair->special_stair == 0) {
 							go_up = 0;
 						}
@@ -308,6 +311,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_on_stair = 0;
 						stair_center = -99999;
 						is_touch_special_stair = 0;
+						wanna_go_up = 0;
 						//stair_head = -99999;
 						//stair_tail = -99999;
 					}
@@ -336,14 +340,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						wanna_go_up = 0;
 						stair_center = stair->x;
 					}
+					if (stair->type_stair == 2 && stair->special_stair == 0) {
+						wanna_go_up = 0;
+						if (stair->stair_direction == 2) {
+							stair_center = stair->x;
+							stair_tail = -99999;
+							stair_head = -99999;
+						}
+						if (stair->stair_direction == 4) {
+							stair_center = stair->tail;
+							stair_tail = -99999;
+							stair_head = -99999;
+						}
+					}
 				}
 			}
 		}
 	}
-	if (wanna_go_up == 1) {
+	if (wanna_go_up == 1 && stair_tail != -99999) {
 		stair_center = stair_tail;
 	}
-	if (wanna_go_up == 2) {
+	if (wanna_go_up == 2 && stair_head != -99999) {
 		stair_center = stair_head;
 	}
 	if (is_heart ==1) {	
@@ -792,29 +809,24 @@ void CSimon::Walking_down_stair()
 		if (state_direction_on_stair == 4) {
 			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			
 		}
 		if (state_direction_on_stair == 2) {
 			has_g = 0;
 			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-			
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;	
 		}
 		if (state_direction_on_stair == 1) {
 			has_g = 0;
-			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-			
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;	
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			between_stair = 1;
 		}
 		if (state_direction_on_stair == 3) {
 			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
-
-			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-			
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;			
 			between_stair = 2;
 		}
 	}

@@ -202,7 +202,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 
 	}
 	else if (game->IsKeyDown(DIK_DOWN)) {
-		if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 4 || Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 3))) {
+		if (Simon->go_down != 0 && (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 4 || Simon->state_direction_on_stair == 2 || Simon->state_direction_on_stair == 3))) {
 			if (Simon->is_touch_special_stair == 1) {
 				Simon->wanna_go_up = 2;
 			}
@@ -211,12 +211,14 @@ void CSampleKeyHander::KeyState(BYTE *states)
 				Simon->SetState(SIMON_STATE_ON_STAIR);
 			}
 			Simon->walking_up = 2;
-			if (Simon->state_direction_on_stair == 2)
+			if (Simon->state_direction_on_stair == 2) {
 				Simon->between_stair = 1;
-			if (Simon->state_direction_on_stair == 4)
+			}		
+			if (Simon->state_direction_on_stair == 4) {
 				Simon->between_stair = 2;
+			}
 		}
-		else if ((Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
+		else if (Simon->go_down != 0 && (Simon->is_on_stair == 1 && (Simon->state_direction_on_stair == 1 || Simon->state_direction_on_stair == 3)) && Simon->has_g == 0) {
 			Simon->walking_up = 2;
 			if (Simon->is_touch_center_stair == 1) {
 				Simon->SetState(SIMON_STATE_ON_STAIR);
@@ -252,6 +254,9 @@ void CSampleKeyHander::KeyState(BYTE *states)
 					Simon->between_stair = 1;
 				if (Simon->state_direction_on_stair == 3)
 					Simon->between_stair = 2;
+			}
+			else if (Simon->between_stair != 0) {
+				Simon->go_up = 1;
 			}
 			else {
 				Simon->SetState(SIMON_STATE_IDLE);
