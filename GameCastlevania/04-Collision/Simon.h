@@ -166,6 +166,7 @@ public:
 	int can_turn = 0;
 	int open_door = 0;
 	int go_down = 0;
+	int wanna_go_down = 0;
 	CSimon(CMorningstar *a, CHeaderBar *b, CKnife *c) : CGameObject()
 	{
 		morningstar = a;

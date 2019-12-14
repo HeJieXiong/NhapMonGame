@@ -223,23 +223,40 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 				isFalling = 0;
-				state_direction_on_stair = stair->stair_direction;
-				if (e->nx != 0 || e->ny < 0 || e->ny>0)
+				if (stair->stair_direction != 25) {
+					state_direction_on_stair = stair->stair_direction;
+				}
+				if (e->nx < 0|| e->nx > 0 || e->ny < 0 || e->ny>0)
 				{
-					if (is_touch_center_stair == 1 && between_stair !=0) {
+					
+					if (stair->type_stair == 15) {
+						is_touch_change_stage_stair = 1;
+						next_stage=4;
+					}
+					if (is_touch_center_stair == 1 && between_stair != 0) {
 						is_touch_center_stair = 0;
 					}
-					if (on_jump !=0||e->ny< 0 || e->ny>0) 
+					if (on_jump != 0 || e->ny < 0 || e->ny>0)
 					{
+						if (stair->type_stair == 25) {
+							if (wanna_go_down == 0) {
+								y -= 0.5;
+							}
+							if (wanna_go_down == 1) {
+								y += 0.5;
+							}
+						}
+						if (stair->type_stair != 25) {
 							y += 0.5;
+						}
 					}
-					if (nx > 0) {				
+					if (nx > 0) {
 						x += dx;
 					}
 					if (nx < 0) {
 						x += dx;
 					}
-					if (on_jump !=0 ) {
+					if (on_jump != 0) {
 						on_jump = 0;
 						state = SIMON_STATE_IDLE;
 					}
@@ -248,7 +265,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						go_down = 0;
 						stair_center = stair->center;
 					}
-					if (stair->type_stair == 2){
+					if (stair->type_stair == 2) {
 						go_down = 1;
 						if (stair->special_stair == 0) {
 							go_up = 0;
@@ -257,30 +274,30 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							go_up = 1;
 						}
 					}
-					if ((is_on_stair == 0||is_on_stair==1) && (stair->type_stair == 1 || stair->type_stair == 2 || stair->type_stair==4) && stair->stair_direction != 0) {
-						
-							if (stair->type_stair == 1) {
-								stair_center = stair->center;
+					if ((is_on_stair == 0 || is_on_stair == 1) && (stair->type_stair == 1 || stair->type_stair == 2 || stair->type_stair == 4) && stair->stair_direction != 0) {
+
+						if (stair->type_stair == 1) {
+							stair_center = stair->center;
+						}
+						if (stair->type_stair == 2 || stair->type_stair == 4) {
+							if (stair->special_stair == 1) {
+								is_touch_special_stair = 1;
+								//stair_center = stair->center;
+								stair_tail = stair->center;
+								stair_head = stair->head;
 							}
-							if (stair->type_stair == 2 || stair->type_stair==4) {
-								if (stair->special_stair == 1) {
-									is_touch_special_stair = 1;
-									//stair_center = stair->center;
-									stair_tail = stair->center;
-									stair_head = stair->head;
-								}
-								if (stair->special_stair == 0) {
-									stair_center = 100;
-								}
+							if (stair->special_stair == 0) {
+								stair_center = 100;
 							}
-							if (x - stair->center <= 2 && x - stair->center >= -2) {
-								is_touch_center_stair = 1;
-							}
-							is_on_stair = 1;
-							has_g = 1;
+						}
+						if (x - stair->center <= 2 && x - stair->center >= -2) {
+							is_touch_center_stair = 1;
+						}
+						is_on_stair = 1;
+						has_g = 1;
 					}
 					if (stair->type_stair == 5) {
-						if (is_on_stair !=0 && state != SIMON_STATE_WALKING_LEFT && state!= SIMON_STATE_WALKING_RIGHT) {
+						if (is_on_stair != 0 && state != SIMON_STATE_WALKING_LEFT && state != SIMON_STATE_WALKING_RIGHT) {
 							y += dy;
 							state_direction_on_stair = 4;
 							between_stair = 1;
@@ -292,7 +309,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 					}
 					if (stair->type_stair == 2) {
-						if (is_on_stair == 1 &&  has_g == 0) {
+						if (is_on_stair == 1 && has_g == 0) {
 							x = 100;
 							has_g = 1;
 							is_on_stair = 0;
@@ -302,26 +319,27 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							y += dy;
 							touch_stair_jump = 1;
 						}
-						if(on_jump==0) touch_stair_jump = 0;
+						if (on_jump == 0) touch_stair_jump = 0;
 					}
 					if (is_on_stair == 1 && stair->type_stair == 2 && has_g == 1) {
 						is_on_stair = 1;
 					}
-					if (stair->type_stair == 3 ) {
+					if (stair->type_stair == 3) {
 						has_g = 1;
 						is_on_stair = 0;
 						stair_center = -99999;
 						is_touch_special_stair = 0;
 						wanna_go_up = 0;
+						wanna_go_down = 0;
 						//stair_head = -99999;
 						//stair_tail = -99999;
 					}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{
-						has_g = 1;		
+						has_g = 1;
 					}
 					if (stair->type_stair != 2) {
-						on_jump = 0; 	
+						on_jump = 0;
 					}
 					if (stair->type_stair == 10) {
 						touch_wake = 1;
@@ -798,6 +816,7 @@ void CSimon::Walking_down_stair()
 {
 	if (is_touch_center_stair == 0 && stair_center != -99999) {
 		do_walking();
+		wanna_go_down = 1;
 	}
 	if (is_touch_center_stair == 1) {
 		stair_center = -99999;

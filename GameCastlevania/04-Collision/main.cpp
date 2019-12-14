@@ -352,7 +352,22 @@ void  Renderstage3() {
 
 void  LoadStage4() {
 	stage4->stage_id = 4;
+	
 	stage4->LoadStage();
+	if (current_stage == 4) {
+		Simon->SetPosition(60.0f, 30);
+		Simon->has_g = 0;
+		Simon->nx = 1;
+		Simon->state_direction_on_stair = 4;
+		Simon->is_touch_center_stair = 1;
+		Simon->between_stair = 0;
+		Simon->walking_up = 0;
+		Simon->is_on_stair = 1;
+		Simon->go_up = 1;
+		Simon->go_down = 1;
+		Simon->state = SIMON_STATE_ON_STAIR;
+		//Simon->ani = SIMON_ANI_ON_STAIR_LEFT;
+	}
 }
 
 void  Updatestage4(DWORD dt) {
@@ -531,7 +546,21 @@ int RunStage3()
 		{
 			frameStart = now;
 
-			game->ProcessKeyboard();
+			if (Simon->is_touch_change_stage_stair == 0 && game->unablekeyboard == 0) {
+				game->ProcessKeyboard();
+			}
+			if (Simon->is_touch_change_stage_stair == 1) {
+				game->unablekeyboard = 1;
+			}
+			if (Simon->next_stage == 4) {
+				game->unablekeyboard = 0;
+				Simon->is_touch_change_stage_stair = 0;
+				current_stage = 4;
+				stage4->SetGame(game);
+				LoadStage4();
+				RunStage4();
+				done = 1;
+			}
 
 			Updatestage3(dt);
 			Renderstage3();

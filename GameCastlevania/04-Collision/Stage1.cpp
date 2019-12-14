@@ -432,7 +432,6 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
-	
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -994,6 +993,34 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-BAT-END
+		//STAIR-CHANGE-EFFECT1
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100011) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				objects.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+		//END-CHANGE-EFFECT1
+		//STAIR-PUSH
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100012) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				objects.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+		//END-PUSH
 		//BIG_BRICK_STAR
 		LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
 		sprites->Add(130001, 0, 0, 62, 94, texMisc_big);
@@ -1459,8 +1486,8 @@ void CStage1::Render()
 		}
 		headerbar->score_ = Simon->stair_center;
 
-		headerbar->stage_ = Simon->go_up;
-		headerbar->score_ = Simon->stair_center;
+		headerbar->stage_ = Simon->is_on_stair;
+		headerbar->score_ = Simon->state_direction_on_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
