@@ -354,8 +354,13 @@ void  LoadStage4() {
 	stage4->stage_id = 4;
 	
 	stage4->LoadStage();
-	if (current_stage == 4) {
-		Simon->SetPosition(60.0f, 30);
+	if (Simon->next_stage == 4|| Simon->next_stage==5) {
+		if (Simon->next_stage == 4) {
+			Simon->SetPosition(55.0f, 30);
+		}
+		if (Simon->next_stage == 5) {
+			Simon->SetPosition(363.0f, 30);
+		}
 		Simon->has_g = 0;
 		Simon->nx = 1;
 		Simon->state_direction_on_stair = 4;
@@ -552,7 +557,7 @@ int RunStage3()
 			if (Simon->is_touch_change_stage_stair == 1) {
 				game->unablekeyboard = 1;
 			}
-			if (Simon->next_stage == 4) {
+			if (Simon->next_stage == 4|| Simon->next_stage==5) {
 				game->unablekeyboard = 0;
 				Simon->is_touch_change_stage_stair = 0;
 				current_stage = 4;
@@ -710,14 +715,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//LoadStage2();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage2();
-	stage3->SetGame(game);
+	/*stage3->SetGame(game);
 	LoadStage3();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage3();
-	//stage4->SetGame(game);
-	//LoadStage4();
-	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	//RunStage4();
+	RunStage3();*/
+	stage4->SetGame(game);
+	LoadStage4();
+	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	RunStage4();
 	/*stage5->SetGame(game);
 	LoadStage5();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);

@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #define STAIR_HEIGHT 5;
 #define STAIR_WIDTH	 40;
+#define STAIR_WIDTH_SMALL 30;
 #define STAIR_BIG_HEIGHT 5;
 #define STAIR_BIG_WIDHT 80;
 class CStair : public CGameObject
@@ -13,7 +14,7 @@ public:
 	bool check_stair;
 	int type_stair; //Dùng để kiểm tra xem nếu là stair 1 sẽ là đi lên còn stair 2 sẽ là đi xuống
 	int stair_direction; //Dùng để kiểm tra hướng cầu thang mà Simon đang đứng: 1 là phải lên 2 là phải xuống 3 trái lên 4 trái xuống 
-	int is_big;
+	int is_big =0;
 	float center;
 	float head;
 	float tail;

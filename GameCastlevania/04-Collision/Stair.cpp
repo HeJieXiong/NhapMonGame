@@ -4,7 +4,13 @@ void CStair::GetBoundingBox(float & left, float & top, float & right, float & bo
 {
 	left = x;
 	top = y;
-	right = x + STAIR_WIDTH;
+	if (is_big == 1) {
+		right = x + STAIR_WIDTH;
+		
+	}
+	if (is_big == 0) {
+		right = x + STAIR_WIDTH_SMALL;
+	}
 	bottom = y + STAIR_HEIGHT;
 	center = x +(right-x)/2;
 	if (type_stair == 2|| type_stair == 10 || type_stair == 100) {

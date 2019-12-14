@@ -233,10 +233,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_touch_change_stage_stair = 1;
 						next_stage=4;
 					}
+					if (stair->type_stair == 20) {
+						is_touch_change_stage_stair = 1;
+						next_stage = 5;
+					}
 					if (is_touch_center_stair == 1 && between_stair != 0) {
 						is_touch_center_stair = 0;
 					}
-					if (on_jump != 0 || e->ny < 0 || e->ny>0)
+					if (on_jump != 0 || e->ny < 0 || e->ny > 0|| e->nx < 0 || e->nx > 0)
 					{
 						if (stair->type_stair == 25) {
 							if (wanna_go_down == 0) {
@@ -247,7 +251,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							}
 						}
 						if (stair->type_stair != 25) {
-							y += 0.5;
+							if (on_jump == 0) {
+								y += 0.5;
+							}
+							if (on_jump != 0) {
+								y -=5 ;
+							}
 						}
 					}
 					if (nx > 0) {
@@ -310,7 +319,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 && has_g == 0) {
-							x = 100;
 							has_g = 1;
 							is_on_stair = 0;
 						}
@@ -331,8 +339,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_touch_special_stair = 0;
 						wanna_go_up = 0;
 						wanna_go_down = 0;
-						//stair_head = -99999;
-						//stair_tail = -99999;
 					}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{

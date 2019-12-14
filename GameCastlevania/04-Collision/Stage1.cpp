@@ -1132,7 +1132,7 @@ void CStage1::LoadStage()
 	}
 	if (stage_id == 4) {
 		map = new TileMap();
-		column = 5;
+		column = 7;
 		row;
 		ifstream FILE;
 		string sLine;
@@ -1183,6 +1183,7 @@ void CStage1::LoadStage()
 				stair->stair_direction = location3[i][4];
 				stair->tag = 1;
 				stair->type_stair = 1;
+				stair->is_big = 0;
 				objects.push_back(stair);
 				objects_stair_1.push_back(stair);
 				objects_weapons.push_back(stair);
@@ -1198,6 +1199,7 @@ void CStage1::LoadStage()
 				stair->stair_direction = location3[i][4];
 				stair->tag = 1;
 				stair->type_stair = 2;
+				stair->is_big = 0;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
 				objects_weapons.push_back(stair);
@@ -1213,6 +1215,7 @@ void CStage1::LoadStage()
 				stair->stair_direction = location3[i][4];
 				stair->tag = 1;
 				stair->type_stair = 3;
+				stair->is_big = 0;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
 				objects_weapons.push_back(stair);
@@ -1487,7 +1490,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->state_direction_on_stair;
+		headerbar->score_ = Simon->on_jump;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
