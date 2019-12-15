@@ -2,7 +2,7 @@
 #include "GameObject.h"
 #define STAIR_HEIGHT 5;
 #define STAIR_WIDTH	 40;
-#define STAIR_WIDTH_SMALL 30;
+#define STAIR_WIDTH_SMALL 10;
 #define STAIR_BIG_HEIGHT 5;
 #define STAIR_BIG_WIDHT 80;
 class CStair : public CGameObject

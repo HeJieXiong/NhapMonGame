@@ -251,7 +251,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							}
 						}
 						if (stair->type_stair != 25) {
-							if (on_jump == 0) {
+							if (on_jump == 0&& is_on_stair !=0) {
 								y += 0.5;
 							}
 							if (on_jump != 0) {
