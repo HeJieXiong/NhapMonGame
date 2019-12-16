@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 #define BRICK_BBOX_WIDTH  16
-#define BRICK_BBOX_HEIGHT 2
+#define BRICK_BBOX_HEIGHT 1
 
 #define BIG_BRICK_BBOX_WIDTH  62
 #define BIG_BRICK_BBOX_HEIGHT 94

@@ -239,16 +239,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (on_jump != 0 || e->ny < 0 || e->ny>0)
 					{
-						if (stair->type_stair == 25) {
+						if (stair->type_stair == 25 && & on_jump == 0) {
 							if (wanna_go_down == 0) {
-								y -= 0.5;
+								y -= PUSH_UP_STAIR;
 							}
 							if (wanna_go_down == 1) {
-								y += 0.5;
+								y += PUSH_UP_STAIR;
 							}
 						}
-						if (stair->type_stair != 25) {
-							y += 0.5;
+						if (stair->type_stair != 25 && on_jump==0) {
+							y += PUSH_UP_STAIR;
 						}
 					}
 					if (nx > 0) {
@@ -311,7 +311,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 && has_g == 0) {
-							x = 100;
 							has_g = 1;
 							is_on_stair = 0;
 						}
@@ -374,7 +373,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						}
 					}
 					if (jump_walk != 0) {
-						y -= dy;
+						y -= PUSH_UP_STAIR_SPECIAL;
+						jump_walk = 0;
+						jump_start = 0;
+						on_jump=0;
+						can_jump = 0;
 					}
 				}
 			}
