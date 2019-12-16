@@ -173,6 +173,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						can_jump = 0;
 					}
 					jump_walk = 0;
+					
 				}
 			}
 			else if (dynamic_cast<CItem *>(e->obj))
@@ -371,6 +372,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							stair_tail = -99999;
 							stair_head = -99999;
 						}
+					}
+					if (jump_walk != 0) {
+						y -= dy;
 					}
 				}
 			}

@@ -1215,7 +1215,7 @@ void CStage1::LoadStage()
 				stair->stair_direction = location3[i][4];
 				stair->tag = 1;
 				stair->type_stair = 3;
-				stair->is_big = 0;
+				stair->is_big = 1;
 				objects.push_back(stair);
 				objects_stair_2.push_back(stair);
 				objects_weapons.push_back(stair);
