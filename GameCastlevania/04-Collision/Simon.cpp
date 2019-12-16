@@ -13,14 +13,14 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	count = vy;
 	if (state != SIMON_STATE_ATTACK)isLastFrame = 0;
 	if (has_g == 1) {
-		if (on_jump == 2) 
-			vy += SIMON_SPEED_JUMP_DOWN*dt;
+		if (on_jump == 2)
+			vy += SIMON_SPEED_JUMP_DOWN * dt;
 		else
-		vy += SIMON_GRAVITY * dt;
-	
+			vy += SIMON_GRAVITY * dt;
+
 		between_stair = 0;
 	}
-	
+
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;
 
@@ -42,12 +42,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			vx = -SIMON_JUMP_SPEED_X;
 			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
 		}
-		if (jump_walk == 2 && can_jump ==1) {
+		if (jump_walk == 2 && can_jump == 1) {
 			vx = SIMON_JUMP_SPEED_X;
 			vy = -SIMON_STAY_JUMP_WALK_SPEED_Y;
-		}	
+		}
 		if (jump_walk == 0) {
-			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {	
+			if (GetTickCount() - jump_start >= SIMON_JUMP_TIME && GetTickCount() - jump_start <= SIMON_JUMP_DOWN_TIME) {
 				vy = -SIMON_STAY_JUMP_SPEED_Y;
 				state = SIMON_STATE_JUMP;
 			}
@@ -85,54 +85,54 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
 				}
 			}
-				if (GetTickCount() - jump_start > SIMON_JUMP_WALK_DOWN_TIME) {
-					if (jump_walk != 0) {
-						can_jump = 0;
-						vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
-						jump_walk = 0;
-						jump_start = 0;
-						on_jump = 0;
-					}
-					if (taking_jump == 0)
-						state = SIMON_STATE_IDLE;
-					else {
+			if (GetTickCount() - jump_start > SIMON_JUMP_WALK_DOWN_TIME) {
+				if (jump_walk != 0) {
+					can_jump = 0;
+					vy = SIMON_STAY_JUMP_WALK_SPEED_Y;
+					jump_walk = 0;
+					jump_start = 0;
+					on_jump = 0;
+				}
+				if (taking_jump == 0)
+					state = SIMON_STATE_IDLE;
+				else {
 
-						state = SIMON_STATE_EXTRA;
-					}
+					state = SIMON_STATE_EXTRA;
 				}
 			}
 		}
+	}
 	if (attacking == 1) {
 		if (GetTickCount() - attack_start < SIMON_ATTACK_TIME)
 		{
 			state = SIMON_STATE_ATTACK;
 			vx = 0;
-			
-			if ( GetTickCount() - attack_start > 300 )
+
+			if (GetTickCount() - attack_start > 300)
 				isLastFrame = 1;
 			attack_time += dt;
-			
+
 		}
 	}
 	if (attack_time > dt * 25) {
 		attacking = 0;
 		attack_time = 0;
-		if (attack_then_walk == 1) 
+		if (attack_then_walk == 1)
 			state = SIMON_STATE_WALKING_LEFT;
-		
+
 		if (attack_then_walk == 2)
 			state = SIMON_STATE_WALKING_RIGHT;
-			attack_then_walk = 0;	
+		attack_then_walk = 0;
 	}
-	if (state==SIMON_STATE_EXTRA && on_jump==0) {
+	if (state == SIMON_STATE_EXTRA && on_jump == 0) {
 		vx = 0;
 		if (GetTickCount() - take_item_start < SIMON_TAKING_TIME)
-		{	
-			state_extra = 1;	
+		{
+			state_extra = 1;
 			taking_time += dt;
 			state = SIMON_STATE_EXTRA;
 		}
-		if (taking_time > dt*25 ) {	
+		if (taking_time > dt * 25) {
 			state = SIMON_STATE_IDLE;
 			taking_time = 0;
 			state_extra = 0;
@@ -150,7 +150,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		float min_tx, min_ty, nx = 0, ny;
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		x += min_tx * dx + nx * 0.4f;		
+		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 		if (nx != 0) vx = 0;
 		if (ny != 0) vy = 0;
@@ -163,11 +163,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				if (e->nx != 0 || e->ny < 0)
 				{
 					if (on_jump != 0) {
-						state = SIMON_STATE_IDLE;						
+						state = SIMON_STATE_IDLE;
 					}
 					on_jump = 0;
 					isFalling = 0;
-					touch_stair_jump = 0;		
+					touch_stair_jump = 0;
 					jump_start = 0;
 					if (jump_walk != 0) {
 						can_jump = 0;
@@ -189,10 +189,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (item->ani == 900) {
 						morningstar->SetType(1);
 						take_item_start = GetTickCount();
-						if(on_jump==0)
-						state = SIMON_STATE_EXTRA;
+						if (on_jump == 0)
+							state = SIMON_STATE_EXTRA;
 						else taking_jump = 1;
-						
+
 					}
 					if (item->ani == 903) {
 						has_wp = 1;
@@ -206,16 +206,16 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				CGhost *ghost = dynamic_cast<CGhost *>(e->obj);
 
 				/*if (e->nx < 0|| e->nx >0 || e->ny < 0 || e->ny>0)
-				{					
+				{
 					if (untouchable == 0) {
 						start_heart = GetTickCount();
 						is_heart = 1;
 						state =SIMON_STATE_HEART;
-						
+
 					}
-					else {					
+					else {
 						ghost->x += dx;
-						
+
 					}
 				}*/
 			}
@@ -226,21 +226,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				if (stair->stair_direction != 25) {
 					state_direction_on_stair = stair->stair_direction;
 				}
-				if (e->nx < 0|| e->nx > 0 || e->ny < 0 || e->ny>0)
+				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0)
 				{
-					
+
 					if (stair->type_stair == 15) {
 						is_touch_change_stage_stair = 1;
-						next_stage=4;
-					}
-					if (stair->type_stair == 20) {
-						is_touch_change_stage_stair = 1;
-						next_stage = 5;
+						next_stage = 4;
 					}
 					if (is_touch_center_stair == 1 && between_stair != 0) {
 						is_touch_center_stair = 0;
 					}
-					if (on_jump != 0 || e->ny < 0 || e->ny > 0|| e->nx < 0 || e->nx > 0)
+					if (on_jump != 0 || e->ny < 0 || e->ny>0)
 					{
 						if (stair->type_stair == 25) {
 							if (wanna_go_down == 0) {
@@ -251,12 +247,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 							}
 						}
 						if (stair->type_stair != 25) {
-							if (on_jump == 0&& is_on_stair !=0) {
-								y += 0.5;
-							}
-							if (on_jump != 0) {
-								y -=5 ;
-							}
+							y += 0.5;
 						}
 					}
 					if (nx > 0) {
@@ -319,6 +310,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					}
 					if (stair->type_stair == 2) {
 						if (is_on_stair == 1 && has_g == 0) {
+							x = 100;
 							has_g = 1;
 							is_on_stair = 0;
 						}
@@ -339,6 +331,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_touch_special_stair = 0;
 						wanna_go_up = 0;
 						wanna_go_down = 0;
+						//stair_head = -99999;
+						//stair_tail = -99999;
 					}
 					if ((state_direction_on_stair == 1 || state_direction_on_stair == 3) && has_g == 0 && stair->type_stair == 1)
 					{
@@ -388,30 +382,30 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (wanna_go_up == 2 && stair_head != -99999) {
 		stair_center = stair_head;
 	}
-	if (is_heart ==1) {	
-			if (GetTickCount() - start_heart <= SIMON_HEART_JUMP_TIME) {
-				is_heart = 1;				
-				untouchable = 1;				
-				vy = -SIMON_STAY_JUMP_HEART_Y;
-				if(nx <0)
-					vx = SIMON_STAY_JUMP_HEART_X;
-				if (nx >0) 
-					vx = -SIMON_STAY_JUMP_HEART_X;
-				x += vx * dt;
-				state = SIMON_STATE_HEART;				
-			}
-			if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
-				untouchable = 1;
-				vx = 0;
-				is_heart = 1;
-				state = SIMON_STATE_IDLE;
-			}
-			if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
-				start_heart = 0;
-				untouchable = 0;
-				is_heart = 0;
-				state = SIMON_STATE_IDLE;
-			}		
+	if (is_heart == 1) {
+		if (GetTickCount() - start_heart <= SIMON_HEART_JUMP_TIME) {
+			is_heart = 1;
+			untouchable = 1;
+			vy = -SIMON_STAY_JUMP_HEART_Y;
+			if (nx < 0)
+				vx = SIMON_STAY_JUMP_HEART_X;
+			if (nx > 0)
+				vx = -SIMON_STAY_JUMP_HEART_X;
+			x += vx * dt;
+			state = SIMON_STATE_HEART;
+		}
+		if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
+			untouchable = 1;
+			vx = 0;
+			is_heart = 1;
+			state = SIMON_STATE_IDLE;
+		}
+		if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
+			start_heart = 0;
+			untouchable = 0;
+			is_heart = 0;
+			state = SIMON_STATE_IDLE;
+		}
 	}
 	if (state == SIMON_STATE_HEART) {
 		check_state = 1;
@@ -419,7 +413,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	else check_state = 2;
 	if (walking_on == 1) {
 		if (GetTickCount() - start_walking > 300) {
-			walking_on = 0; 
+			walking_on = 0;
 			start_walking = 0;
 		}
 	}
@@ -431,11 +425,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 }
 void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {
-	if (state == SIMON_STATE_EXTRA ) {
+	if (state == SIMON_STATE_EXTRA) {
 		if (nx < 0) {
 			ani = SIMON_ANI_STAY_EXTRA_LEFT;
 		}
-		else ani = SIMON_ANI_STAY_EXTRA_RIGHT;		
+		else ani = SIMON_ANI_STAY_EXTRA_RIGHT;
 	}
 	else if (state == SIMON_STATE_DIE)
 		ani = SIMON_ANI_DIE;
@@ -443,12 +437,12 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		if (nx < 0) {
 			ani = SIMON_ANI_SIT_DOWN_LEFT;
 		}
-		else ani = SIMON_ANI_SIT_DOWN_RIGHT;	
+		else ani = SIMON_ANI_SIT_DOWN_RIGHT;
 	}
-	else if (state == SIMON_STATE_ATTACK) {		
+	else if (state == SIMON_STATE_ATTACK) {
 		morningstar->attack_start = GetTickCount();
 		if (level == 1) {
-			
+
 			if (nx < 0) {
 				ani = SIMON_ANI_SIT_ATTACK_LEFT;
 				if (attack_wp == 0) {
@@ -477,13 +471,13 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 			}
 		}
-		if (level == 0) {	
+		if (level == 0) {
 			if (nx < 0) {
 				if (is_on_stair == 1) {
 					if (walking_up == 2) {
 						ani = SIMON_ANI_ATTACK_LEFT_DOWN;
 						morningstar->attack_on_stair = 2;
-						
+
 					}
 					if (walking_up == 1) {
 						ani = SIMON_ANI_ATTACK_LEFT_UP;
@@ -499,12 +493,12 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					morningstar->attack_on_stair = 0;
 				}
 				if (attack_wp == 0) {
-					
+
 					morningstar->attack_start = GetTickCount();
 					morningstar->state = 2;
 					morningstar->Render(xcam, ycam, x, y);
 					if (isLastFrame == 1) {
-						morningstar->isLastFrame = 1;						
+						morningstar->isLastFrame = 1;
 					}
 				}
 				else if (attack_wp == 1 && knife->is_fly == 0) {
@@ -518,7 +512,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					if (walking_up == 2) {
 						ani = SIMON_ANI_ATTACK_RIGHT_DOWN;
 						morningstar->attack_on_stair = 2;
-						
+
 					}
 					if (walking_up == 1) {
 						ani = SIMON_ANI_ATTACK_RIGHT_UP;
@@ -539,7 +533,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 					morningstar->state = 3;
 					morningstar->Render(xcam, ycam, x, y);
 				}
-				else if (attack_wp == 1 && knife->is_fly==0) {
+				else if (attack_wp == 1 && knife->is_fly == 0) {
 					knife->is_fly = 1;
 					knife->vx = KNIFE_GRAVITY * dt;
 					knife->AddAnimation(1100);
@@ -568,23 +562,23 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				ani = SIMON_ANI_ON_STAIR_LEFT;
 			}
 			else {
-				ani = SIMON_ANI_DOWN_STAIR_LEFT;	
+				ani = SIMON_ANI_DOWN_STAIR_LEFT;
 			}
 		}
 		if (state_direction_on_stair == 1 && between_stair == 1) {
-			
+
 			if (walking_up == 1) {
 				ani = SIMON_ANI_ON_STAIR_LEFT;
 				nx = 1;
 			}
 			else {
-				ani = SIMON_ANI_DOWN_STAIR_LEFT;	
+				ani = SIMON_ANI_DOWN_STAIR_LEFT;
 			}
 		}
 		if (state_direction_on_stair == 3 && between_stair == 0) {
 			nx = -1;
 			ani = SIMON_ANI_ON_STAIR_RIGHT;
-			
+
 		}
 		/*if (state_direction_on_stair == 4 && between_stair == 0)
 			ani = SIMON_ANI_STAY_STAIR_RIGHT_UP;*/
@@ -593,20 +587,20 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				ani = SIMON_ANI_ON_STAIR_RIGHT;
 			else ani = SIMON_ANI_DOWN_STAIR_RIGHT;
 		if (state_direction_on_stair == 4 && between_stair == 2) {
-			if(walking_up==1)
+			if (walking_up == 1)
 				ani = SIMON_ANI_ON_STAIR_RIGHT;
 			else ani = SIMON_ANI_DOWN_STAIR_RIGHT;
 		}
 		if (state_direction_on_stair == 0) {
 			if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
-			else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;	
+			else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
 		}
 	}
 	else if (state == SIMON_STATE_HEART) {
 		if (nx > 0)
 			ani = SIMON_ANI_STAY_HEART_LEFT;
-		if(nx <0)
-			ani = SIMON_ANI_STAY_HEART_RIGHT;	
+		if (nx < 0)
+			ani = SIMON_ANI_STAY_HEART_RIGHT;
 	}
 	else {
 		if (state_extra == 0) {
@@ -661,13 +655,13 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		walking_start = GetTickCount();
 		is_walking = 3;
 	}
-	if (is_walking==3){
-		
+	if (is_walking == 3) {
+
 		if (GetTickCount() - walking_start < 2000) {
 			vx = 0;
 			is_walking = 3;
 		}
-		if (GetTickCount() - walking_start >= 2000 && GetTickCount() - walking_start <=3000) {
+		if (GetTickCount() - walking_start >= 2000 && GetTickCount() - walking_start <= 3000) {
 			state = SIMON_STATE_WALKING_RIGHT;
 			vx = SIMON_WALKING_SPEED;
 			is_walking = 3;
@@ -676,7 +670,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 			next_stage = 3;
 			is_walking = 0;
 		}
-		
+
 	}
 
 	int alpha = 255;
@@ -706,17 +700,17 @@ void CSimon::SetState(int state)
 		break;
 	}
 	case SIMON_STATE_JUMP:
-		if (isFalling != 1){
+		if (isFalling != 1) {
 			vy = -SIMON_JUMP_SPEED_Y;
 			on_jump = 1;
 			jump_start = GetTickCount();
-			
+
 		}
 	case SIMON_STATE_IDLE:
 		vx = 0;
 		level = 0;
 		break;
-	case SIMON_STATE_SIT_DOWN: 
+	case SIMON_STATE_SIT_DOWN:
 		vx = 0;
 		level = 1;
 		break;
@@ -729,7 +723,7 @@ void CSimon::SetState(int state)
 		vy = -SIMON_DIE_DEFLECT_SPEED;
 		break;
 	}
-	
+
 
 }
 
@@ -785,13 +779,13 @@ void CSimon::Attack_Weapons()
 
 void CSimon::Walking_on_stair()
 {
-	if (is_touch_center_stair == 0 && stair_center!=-99999) {
+	if (is_touch_center_stair == 0 && stair_center != -99999) {
 		do_walking();
 	}
 	if (is_touch_center_stair == 1) {
 		stair_center = -99999;
 		if (!walking_on) {
-			walking_on = 1;		
+			walking_on = 1;
 			start_walking = GetTickCount();
 			animations[SIMON_ANI_ON_STAIR_LEFT]->Reset();
 			animations[SIMON_ANI_ON_STAIR_RIGHT]->Reset();
@@ -836,23 +830,23 @@ void CSimon::Walking_down_stair()
 			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
-			
+
 		}
 		if (state_direction_on_stair == 2) {
 			has_g = 0;
 			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
-			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;	
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 		}
 		if (state_direction_on_stair == 1) {
 			has_g = 0;
-			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;	
+			vx = -SIMON_GRAVITY_DOWN_STAIR_X * dt;
 			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			between_stair = 1;
 		}
 		if (state_direction_on_stair == 3) {
 			has_g = 0;
 			vx = SIMON_GRAVITY_DOWN_STAIR_X * dt;
-			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;			
+			vy = SIMON_GRAVITY_DOWN_STAIR_Y * dt;
 			between_stair = 2;
 		}
 	}
@@ -869,8 +863,8 @@ void CSimon::do_walking() {
 			vx = -SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_LEFT;
 		}
-		if ( x -stair_center<2 && x-stair_center >-2) {
-			is_touch_center_stair = 1;	
+		if (x - stair_center<2 && x - stair_center >-2) {
+			is_touch_center_stair = 1;
 		}
 	}
 }
