@@ -40,12 +40,8 @@ Sau khi tạo item thì item sẽ được lưu vào mảng (A2), tại đây s�
 #define WINDOW_CLASS_NAME L"SampleWindow"
 #define MAIN_WINDOW_TITLE L"04 - Collision"
 #define TIME_CHANGE_STATE_2 20000
-
-
 CGame		*game;
-
 CSimon		*Simon;
-
 CStage1		*stage1;
 CStage1		*stage2;
 CStage1		*stage3;
@@ -58,6 +54,7 @@ CHeaderBar	*headerbar;
 
 CKnife		*knife;
 vector<LPGAMEOBJECT> objects_weapons;
+vector<LPSTAGE> stages;
 int i;
 int current_stage;
 DWORD time_start;
@@ -513,7 +510,15 @@ int RunStage4()
 			frameStart = now;
 
 			game->ProcessKeyboard();
-
+			if (Simon->next_stage == 4 || Simon->next_stage == 5) {
+				game->unablekeyboard = 0;
+				Simon->is_touch_change_stage_stair = 0;
+				current_stage = 4;
+				stage3->SetGame(game);
+				LoadStage3();
+				RunStage3();
+				done = 1;
+			}
 			Updatestage4(dt);
 			Renderstage4();
 		}

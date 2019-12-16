@@ -103,3 +103,4 @@ public:
 	float **location4;
 	~CStage1();
 };
+typedef CStage1 * LPSTAGE;

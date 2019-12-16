@@ -229,18 +229,29 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				}
 				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0)
 				{
-
 					if (stair->type_stair == 15) {
 						is_touch_change_stage_stair = 1;
 						next_stage = 4;
+					}
+					if (stair->type_stair == 20) {
+						is_touch_change_stage_stair = 1;
+						next_stage = 5;
+					}
+					if (stair->type_stair == 35) {
+						is_touch_change_stage_stair = 1;
+						go_back_stage = 1;
+					}
+					if (stair->type_stair == 30) {
+						is_touch_change_stage_stair = 1;
+						go_back_stage = 2;
 					}
 					if (is_touch_center_stair == 1 && between_stair != 0) {
 						is_touch_center_stair = 0;
 					}
 					if (on_jump != 0 || e->ny < 0 || e->ny>0)
 					{
-						if (stair->type_stair == 25 && & on_jump == 0) {
-							if (wanna_go_down == 0) {
+						if (stair->type_stair == 25 && on_jump == 0) {
+							if (wanna_go_down == 0) {					
 								y -= PUSH_UP_STAIR;
 							}
 							if (wanna_go_down == 1) {
