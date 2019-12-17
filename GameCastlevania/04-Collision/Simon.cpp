@@ -233,7 +233,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						is_touch_change_stage_stair = 1;
 						next_stage = 4;
 					}
-					if (stair->type_stair == 20) {
+					if (stair->type_stair == 40) {
 						is_touch_change_stage_stair = 1;
 						next_stage = 5;
 					}
