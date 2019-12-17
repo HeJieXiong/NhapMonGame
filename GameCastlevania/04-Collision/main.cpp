@@ -336,10 +336,23 @@ void  Renderstage2() {
 }
 
 void  LoadStage3(int a) {
-	stage3->loaded = a;
+	if (a != 0) {
+		stage3->loaded = 1;
+	}
+	if (a == 0) {
+		stage3->loaded = 0;
+	}
 	stage3->stage_id = 3;
 	stage3->LoadStage();
-	Simon->SetPosition(10.0f, 50);
+	if (a == 0) {
+		Simon->SetPosition(10.0f, 50);
+	}
+	if (a == 1) {
+		Simon->SetPosition(50.0f, 200);
+	}
+	if (a == 2) {
+		Simon->SetPosition(360.0f, 200);
+	}
 }
 
 void  Updatestage3(DWORD dt) {
@@ -683,18 +696,34 @@ int RunStage1()
 			if (Simon->next_stage == 3) {
 				if (Simon->go_back_stage == 1) {
 					LoadStage3(1);
-					Simon->has_g = 1;
+					Simon->has_g = 0;
+					Simon->is_touch_center_stair = 1;
+					Simon->state_direction_on_stair = 3;
 					Simon->is_touch_change_stage_stair = 0;
-					Simon->go_down = 0;
-					Simon->go_up = 0;
-					Simon->is_on_stair = 0;
+					Simon->go_down = 1;
+					Simon->go_up = 1;
+					Simon->is_on_stair = 1;
 					Simon->between_stair = 0;
-					Simon->wanna_go_down = 0;
-					Simon->wanna_go_up = 0;
+					Simon->wanna_go_down = 1;
+					Simon->wanna_go_up = 1;
 					Simon->go_back_stage = 0;
 					load = 5;
 				}
-
+				if (Simon->go_back_stage == 2) {
+					LoadStage3(2);
+					Simon->has_g = 0;
+					Simon->is_touch_center_stair = 1;
+					Simon->state_direction_on_stair = 3;
+					Simon->is_touch_change_stage_stair = 0;
+					Simon->go_down = 1;
+					Simon->go_up = 1;
+					Simon->is_on_stair = 1;
+					Simon->between_stair = 0;
+					Simon->wanna_go_down = 1;
+					Simon->wanna_go_up = 1;
+					Simon->go_back_stage = 0;
+					load = 5;
+				}
 				game->unablekeyboard = 0;
 				Simon->is_touch_change_stage_stair = 0;
 				current_stage = 3;
