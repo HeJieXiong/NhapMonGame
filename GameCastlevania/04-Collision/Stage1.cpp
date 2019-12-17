@@ -744,6 +744,20 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-1-PANTHER
+		//STAIR-CHANGE-FOR-GHOST
+		for (int i = 0; i < row; i++) {
+			if (location2[i][0] == 100013) {
+				stair = new CStair();
+				stair->id = location2[i][1];
+				stair->SetPosition(location2[i][2], location2[i][3]);
+				stair->tag = 1;
+				stair->type_stair = location2[i][4];
+				objects.push_back(stair);
+				objects_morningstar.push_back(stair);
+				objects_weapons.push_back(stair);
+			}
+		}
+		//END-CHANGE-FOR-GHOST
 		//BRICK-START
 		for (int i = 0; i < 100; i++)
 		{
@@ -845,7 +859,7 @@ void CStage1::LoadStage()
 				candle->SetPosition(location2[i][1], location2[i][2]);
 				candle->state = CANDLE_STATE;
 				candle->tag = location2[i][3];
-				objects.push_back(candle);
+				//objects.push_back(candle);
 				objects_morningstar.push_back(candle);
 				objects_weapons.push_back(candle);
 			}
@@ -859,7 +873,8 @@ void CStage1::LoadStage()
 				ghost->AddAnimation(1104);
 				ghost->SetPosition(location2[i][1], location2[i][2]);
 				ghost->tag = location2[i][3];
-				ghost->SetState(GHOST_STATE_WALKING);
+				ghost->change_way = 1;
+				ghost->state=GHOST_STATE_WALKING;
 				objects.push_back(ghost);
 				objects_morningstar.push_back(ghost);
 				objects_weapons.push_back(ghost);
@@ -1506,7 +1521,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->go_back_stage;
+		headerbar->score_ = Simon->x;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

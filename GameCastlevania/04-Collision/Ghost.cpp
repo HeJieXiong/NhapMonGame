@@ -1,5 +1,6 @@
-#include "Ghost.h"
+﻿#include "Ghost.h"
 #include "GameObject.h"
+#include "Simon.h"
 
 void CGhost::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 {
@@ -12,22 +13,86 @@ void CGhost::GetBoundingBox(float &left, float &top, float &right, float &bottom
 void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	CGameObject::Update(dt, coObjects);
-
-	x += dx;
-	y += dy;
-
-	if (vx < 0 && x < 0) {
-		x = 0; vx = -vx;
+	vy += GHOST_GRAVITY * dt;
+	// Xét va chạm của panther và Simon
+	/*if (is_standing == false)
+	{*/
+	//if(is_jump==1)
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+	//simon->point += this->point;
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
 	}
-	if (vx > 0 && x > 290) {
-		x = 290; vx = -vx;
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;
+		// Collision logic with Goombas
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			/*if (dynamic_cast<StartPoint *>(e->obj))
+			{
+				StartPoint *start = dynamic_cast<StartPoint *>(e->obj);
+				if (jumped != true)
+				{
+					SetState(DOG_STATE_JUMP);
+					return;
+				}
+			}*/
+			if (dynamic_cast<CStair *>(e->obj))
+			{
+				CStair *stair = dynamic_cast<CStair *>(e->obj);
+				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0) {
+					if (stair->type_stair == 50) {
+						if (state == GHOST_STATE_WALKING_RIGHT && change_way == 0) {
+							change_way = 1;
+						}
+						if (state == GHOST_STATE_WALKING && change_way == 0) {
+							change_way = 2;
+						}
+					}
+				}
+			}
+			if (dynamic_cast<CCandle *>(e->obj))
+			{
+				CCandle *candle = dynamic_cast<CCandle *>(e->obj);
+				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0) {
+					x += dx;
+				}
+			}
+		}
 	}
-	if (x == 0) {
-		state = GHOST_STATE_WALKING_RIGHT;
-	}
-	if (x == 290) {
+	if (change_way == 1) {
 		state = GHOST_STATE_WALKING;
+		change_way = 0;
 	}
+	if (change_way == 2) {
+		state = GHOST_STATE_WALKING_RIGHT;
+		change_way = 0;
+	}
+	if (state == GHOST_STATE_WALKING) {		
+			vx = -1*GHOST_WALKING_SPEED;
+	}
+	if (state == GHOST_STATE_WALKING_RIGHT) {
+		vx = GHOST_WALKING_SPEED;
+	}
+
+	for (UINT i = 0; i < coEventsResult.size(); i++)
+	{
+		LPCOLLISIONEVENT e = coEventsResult[i];
+
+	}
+
 }
 
 void CGhost::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
@@ -47,10 +112,5 @@ void CGhost::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 void CGhost::SetState(int state)
 {
 	CGameObject::SetState(state);
-	switch (state)
-	{
-	case GHOST_STATE_WALKING:
-		vx = -GHOST_WALKING_SPEED;
-	}
 
 }

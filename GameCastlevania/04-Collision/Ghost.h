@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "Simon.h"
 
 #define GHOST_WALKING_SPEED 0.05f;
 
@@ -12,6 +13,7 @@
 
 #define GHOST_ANI_WALKING 0
 #define GHOST_ANI_WALKING_RIGHT 1
+#define GHOST_GRAVITY 0.002f
 class CGhost : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
@@ -20,5 +22,6 @@ class CGhost : public CGameObject
 
 
 public:
+	int change_way;
 	virtual void SetState(int state);
 };
