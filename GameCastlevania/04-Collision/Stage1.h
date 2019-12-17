@@ -101,6 +101,7 @@ public:
 	float **location2; 
 	float **location3;
 	float **location4;
+	int loaded = 0;
 	~CStage1();
 };
 typedef CStage1 * LPSTAGE;

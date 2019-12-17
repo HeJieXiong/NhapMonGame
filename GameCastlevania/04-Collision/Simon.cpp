@@ -240,10 +240,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 35) {
 						is_touch_change_stage_stair = 1;
 						go_back_stage = 1;
+						next_stage = 3;
 					}
 					if (stair->type_stair == 30) {
 						is_touch_change_stage_stair = 1;
 						go_back_stage = 2;
+						next_stage = 3;
 					}
 					if (is_touch_center_stair == 1 && between_stair != 0) {
 						is_touch_center_stair = 0;

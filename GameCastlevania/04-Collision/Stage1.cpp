@@ -478,7 +478,9 @@ void CStage1::LoadStage()
 			}
 		}*/
 		//GRID-END
-	objects.push_back(Simon);
+	if (loaded == 0) {
+		objects.push_back(Simon);
+	}
 	//BIG_BRICK_STAR
 	LPDIRECT3DTEXTURE9 texMisc_big = textures->Get(ID_TEX_BIG_BRICK);
 	sprites->Add(170001, 0, 0, 62, 94, texMisc_big);
@@ -912,7 +914,7 @@ void CStage1::LoadStage()
 		//GRID-END
 		map->LoadMap(stagemap, 2);
 	}
-	if (stage_id == 3) {
+	if (stage_id == 3 && loaded ==0) {
 		map = new TileMap();
 		column = 7;
 		row;
@@ -1130,7 +1132,7 @@ void CStage1::LoadStage()
 		//BAT-END
 		map->LoadMap(stagemap, 3);
 	}
-	if (stage_id == 4) {
+	if (stage_id == 4 && loaded==0) {
 		map = new TileMap();
 		column = 7;
 		row;
@@ -1238,6 +1240,20 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-4-END
+			//STAIR-CHANGE-EFFECT1
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100011) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->stair_direction = location3[i][4];
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				objects.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+		//END-CHANGE-EFFECT1
 		//BRICK-START
 		LPDIRECT3DTEXTURE9 texMisc = textures->Get(ID_TEX_MISC_2);
 		sprites->Add(20001, 0, 0, 16, 14, texMisc);
@@ -1490,7 +1506,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->jump_walk;
+		headerbar->score_ = Simon->wanna_go_down;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
