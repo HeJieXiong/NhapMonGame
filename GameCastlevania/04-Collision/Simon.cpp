@@ -904,6 +904,7 @@ void CSimon::do_change_stair() {
 			state = SIMON_STATE_WALKING_RIGHT;
 		}
 		if (x - stair_tail<2 && x - stair_tail >-2 && can_turn == 1) {
+			is_touch_change_stage_stair = 0;
 			next_stage = 2;
 		}
 	}

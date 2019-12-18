@@ -664,14 +664,15 @@ int RunStage1()
 			if (Simon->is_touch_change_stage_stair == 0 && game->unablekeyboard == 0) {
 				game->ProcessKeyboard();
 			}
-			if (Simon->is_touch_change_stage_stair == 1) {
-				game->unablekeyboard = 1;
-				Simon->do_change_stair();
-			}
 			if (Simon->next_stage == 1) {
 				game->unablekeyboard = 0;
-				Simon->is_touch_change_stage_stair = 0;
-				current_stage = 1;
+				if (Simon->is_touch_change_stage_stair != 1) {
+					Simon->is_touch_change_stage_stair = 0;
+					current_stage = 1;
+				}
+				if (Simon->is_touch_change_stage_stair == 1) {
+					Simon->do_change_stair();
+				}
 				stage1->SetGame(game);
 				if (load == 1) {
 					for (i; i < 1; i++)
@@ -683,8 +684,13 @@ int RunStage1()
 			}
 			if (Simon->next_stage == 2) {
 				game->unablekeyboard = 0;
-				Simon->is_touch_change_stage_stair = 0;
-				current_stage = 2;
+				if (Simon->is_touch_change_stage_stair != 1) {
+					Simon->is_touch_change_stage_stair = 0;
+					current_stage = 2;
+				}
+				if (Simon->is_touch_change_stage_stair == 1) {
+					Simon->do_change_stair_2();
+				}
 				stage2->SetGame(game);
 				if (load == 2) {
 					LoadStage2();
