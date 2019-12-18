@@ -34,7 +34,8 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		}
 	}
 	// Xét va chạm của panther và Simon
-	if (x+ PANTHER_BBOX_WIDTH >= simon->x &&x + PANTHER_BBOX_WIDTH <= simon->x+ SIMON_SIT_BBOX_WIDTH && y+ PANTHER_BBOX_HEIGHT >= (simon-> y +SIMON_SIT_BBOX_HEIGHT)) {
+	if (x+ PANTHER_BBOX_WIDTH >= simon->x && x + PANTHER_BBOX_WIDTH <= simon->x+ SIMON_SIT_BBOX_WIDTH && y+ PANTHER_BBOX_HEIGHT >= (simon-> y +SIMON_SIT_BBOX_HEIGHT)
+		&& y <= (simon->y + SIMON_SIT_BBOX_HEIGHT)) {
 		if (simon->untouchable == 0&& simon->is_heart==0) {
 			simon->start_heart = GetTickCount();
 			simon->is_heart = 1;
@@ -99,6 +100,11 @@ void CPanther::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						SetState(PANTHER_STATE_WALKING_LEFT);
 					}
 					else SetState(PANTHER_STATE_WALKING_RIGHT);
+					if (stair->type_stair == 50) {
+						x = -9999;
+						vy = 0;
+						vx = 0;
+					}
 				}
 			}
 		}

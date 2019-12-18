@@ -1141,7 +1141,8 @@ void CStage1::LoadStage()
 				bat->SetState(BAT_STATE_FLY_LEFT);
 				objects.push_back(bat);
 				objects_bat.push_back(bat);
-				//objects_weapons.push_back(ghost);
+				objects_weapons.push_back(bat);
+				objects_morningstar.push_back(bat);
 			}
 		}
 		//BAT-END
