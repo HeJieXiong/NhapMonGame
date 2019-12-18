@@ -73,24 +73,10 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<CKnife *>(e->obj))
 			{
 				CKnife *knife = dynamic_cast<CKnife *>(e->obj);	
-				
-					
 						y = 1000;
 						vy = 0;
-
 						knife->y = 1000;
-						knife->vx = 0;
-					
-					
-				
-					/*if (knife->x + KNIFE_BOX_WIDTH >= x) {
-						y = 1000;
-						vx = 0;
-						vy = 0;
-						knife->y = 1000;
-						knife->vx = 0;
-					}*/
-					
+						knife->vx = 0;						
 			}
 		}
 	}

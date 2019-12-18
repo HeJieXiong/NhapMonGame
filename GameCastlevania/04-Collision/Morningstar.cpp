@@ -52,7 +52,6 @@ void CMorningstar::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 
 		for (INT i = 0; i < coObjects->size(); i++)
 		{
-
 			coObjects->at(i);
 			float top_co;
 			float left_co;

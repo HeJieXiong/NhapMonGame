@@ -5,7 +5,7 @@
 #include "HeaderBar.h"
 #include "Stair.h"
 #include "Brick.h"
-
+#include "Ghost.h"
 #define SIMON_WALKING_SPEED		0.1f 
 //0.1f
 #define SIMON_JUMP_SPEED_Y		0.15f

@@ -111,7 +111,7 @@ void CKnife::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		x = x_simon;
 		if(attack_sit==0)
 			y = y_simon+3;
-		else y = y_simon+10;
+		else y = y_simon+15;
 		
 		state = 1;
 	}
