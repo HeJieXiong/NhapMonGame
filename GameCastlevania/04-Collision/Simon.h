@@ -4,7 +4,6 @@
 #include "Knife.h"
 #include "HeaderBar.h"
 #include "Stair.h"
-#include "Ghost.h"
 #include "Brick.h"
 
 #define SIMON_WALKING_SPEED		0.1f 

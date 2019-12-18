@@ -1,6 +1,7 @@
 #pragma once
 #include "GameObject.h"
 #include "Simon.h"
+#include "Knife.h"
 
 #define GHOST_WALKING_SPEED 0.05f;
 

@@ -32,7 +32,7 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 		CalcPotentialCollisions(coObjects, coEvents);
 		if (coEvents.size() == 0)//new code
 		{
-
+			int a;
 			x += dx;
 			
 		}
@@ -46,8 +46,8 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 			x += min_tx * dx + nx * 0.4f;		// nx*0.4f : need to push out a bit to avoid overlapping next frame
 			y += min_ty * dy + ny * 0.4f;
 
-			if (nx != 0) vx = 0;
-			if (ny != 0) vy = 0;
+			//if (nx != 0) vx = 0;
+			//if (ny != 0) vy = 0;
 		}
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -64,7 +64,7 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					y = -9999;
 				}
 			}
-			if (dynamic_cast<CCandle *>(e->obj))
+			else if (dynamic_cast<CCandle *>(e->obj))
 			{
 				CCandle *Candle = dynamic_cast<CCandle *>(e->obj);
 
@@ -75,7 +75,7 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					y = -9999;
 				}
 			}
-			if (dynamic_cast<CBrick *>(e->obj))
+			else if (dynamic_cast<CBrick *>(e->obj))
 			{
 				CBrick *Brick= dynamic_cast<CBrick *>(e->obj);
 
@@ -84,9 +84,12 @@ void CKnife::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					x = 9999;
 				}
 			}
+			else x += dx;
 		
 		}
-
+		if (vx == 0) {
+			x = 1000;
+		}
 		// clean up collision events
 		for (UINT i = 0; i < coEvents.size(); i++) delete coEvents[i];
 }

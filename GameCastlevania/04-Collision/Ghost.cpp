@@ -70,6 +70,28 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					x += dx;
 				}
 			}
+			if (dynamic_cast<CKnife *>(e->obj))
+			{
+				CKnife *knife = dynamic_cast<CKnife *>(e->obj);	
+				
+					
+						y = 1000;
+						vy = 0;
+
+						knife->y = 1000;
+						knife->vx = 0;
+					
+					
+				
+					/*if (knife->x + KNIFE_BOX_WIDTH >= x) {
+						y = 1000;
+						vx = 0;
+						vy = 0;
+						knife->y = 1000;
+						knife->vx = 0;
+					}*/
+					
+			}
 		}
 	}
 	if (change_way == 1) {
@@ -80,11 +102,14 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		state = GHOST_STATE_WALKING_RIGHT;
 		change_way = 0;
 	}
-	if (state == GHOST_STATE_WALKING) {		
-			vx = -1*GHOST_WALKING_SPEED;
+	if (state == GHOST_STATE_WALKING) {	
+		nx = -1;
+		vx = -1*GHOST_WALKING_SPEED;
 	}
 	if (state == GHOST_STATE_WALKING_RIGHT) {
+		nx = 1;
 		vx = GHOST_WALKING_SPEED;
+		
 	}
 
 	for (UINT i = 0; i < coEventsResult.size(); i++)

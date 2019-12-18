@@ -201,25 +201,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 				}
 			}
-
-			else if (dynamic_cast<CGhost *>(e->obj))
-			{
-				CGhost *ghost = dynamic_cast<CGhost *>(e->obj);
-
-				/*if (e->nx < 0|| e->nx >0 || e->ny < 0 || e->ny>0)
-				{
-					if (untouchable == 0) {
-						start_heart = GetTickCount();
-						is_heart = 1;
-						state =SIMON_STATE_HEART;
-
-					}
-					else {
-						ghost->x += dx;
-
-					}
-				}*/
-			}
 			else if (dynamic_cast<CStair *>(e->obj))
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
