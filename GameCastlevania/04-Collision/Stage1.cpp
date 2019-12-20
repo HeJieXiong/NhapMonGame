@@ -1182,10 +1182,7 @@ void CStage1::LoadStage()
 				fish->AddAnimation(1907);
 				fish->SetPosition(location3[i][2], location3[i][3]);
 				fish->code = location3[i][4];
-				//fish->SetPosition(location3[i][2], location3[i][3]);
-				//fish->bat_x = location3[i][4];
-
-				fish->SetState(FISH_STATE_HIDE);
+				fish->state=FISH_STATE_HIDE;
 				//objects.push_back(fish);
 				objects_fish.push_back(fish);
 				objects_weapons.push_back(fish);
@@ -1336,12 +1333,36 @@ void CStage1::LoadStage()
 			objects_fish.push_back(brick);
 			objects_weapons.push_back(brick);
 		}
-		for (int i = 0; i < 10; i++)
+		for (int i = 0; i < 1; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 310, 125);
+			brick->tag = 10;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
+		}
+		for (int i = 1; i < 9; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.5f + 310, 125);
 			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
+		}
+		for (int i = 9; i < 10; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 310, 125);
+			brick->tag = 20;
 			brick->type = 0;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
@@ -1380,6 +1401,7 @@ void CStage1::LoadStage()
 				stair->SetPosition(location3[i][2], location3[i][3]);
 				stair->tag = 1;
 				stair->type_stair = location3[i][4];
+				stair->is_big = 1;
 				objects.push_back(stair);
 				//objects_stair_1.push_back(stair);
 			}
@@ -1545,7 +1567,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->is_touch_change_stage_stair;
+		headerbar->score_ = Simon->count_panther_code;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

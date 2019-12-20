@@ -9,6 +9,7 @@
 #define FISH_STATE_ATK_LEFT			500
 #define FISH_STATE_ATK_RIGHT		600
 #define FISH_STATE_HIDE				700
+#define FISH_STATE_JUMP_DOWN		800
 
 #define FISH_ANI_WALKING_LEFT		0
 #define FISH_ANI_WALKING_RIGHT		1
@@ -31,7 +32,7 @@
 #define FISH_DETECT_RANGE			134
 #define FISH_BULLET_SPEED_X			0.02f
 #define WATER_HEIGHT				64*5+32
-#define FISH_TIME_JUMP_DOWN			1000
+#define FISH_TIME_JUMP_DOWN			1100
 #define FISH_ATTACK_RANGE			400
 class FishBullet : public CGameObject
 {
@@ -61,8 +62,9 @@ class CFish :
 	int is_jump = 0;
 	int falling_down = 1;
 	int first_touch = 0;
-	int change_way = 1;
+	int change_way = 0;
 	int jump_down = 0;
+	int touch_ground = 0;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{
