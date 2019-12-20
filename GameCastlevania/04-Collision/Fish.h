@@ -22,9 +22,9 @@
 #define FISH_JUMP_SPEED				0.1f
 #define FISH_GRAVITY				0.002f
 #define FISH_WALKING_SPEED			0.01f
-
+#define FISH_WALKING_SPEED_HIGH			0.5f
 #define FISH_BBOX_WIDTH				15
-#define FISH_BBOX_HEIGHT			32
+#define FISH_BBOX_HEIGHT			29.5
 #define BULLET_BBOX_WIDTH			7
 #define BULLET_BBOX_HEIGHT			6
 #define FISH_ATTACK_RANGE			400
@@ -60,6 +60,9 @@ class CFish :
 	int can_count = 1;
 	int is_jump = 0;
 	int falling_down = 1;
+	int first_touch = 0;
+	int change_way = 1;
+	int jump_down = 0;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{

@@ -1276,12 +1276,36 @@ void CStage1::LoadStage()
 		ani = new CAnimation(100);		// brick
 		ani->Add(20001);
 		animations->Add(601, ani);
-		for (int i = 0; i < 14; i++)
+		for (int i = 0; i < 1; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f, 125);
+			brick->tag = 10;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
+		}
+		for (int i = 1; i < 13; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(601);
 			brick->SetPosition(i * 15.5f, 125);
 			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_fish.push_back(brick);
+			objects_weapons.push_back(brick);
+		}
+		for (int i = 13; i < 14; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(601);
+			brick->SetPosition(i * 15.5f, 125);
+			brick->tag = 20;
 			brick->type = 0;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
@@ -1361,7 +1385,6 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-FISH-END
-		//BRICK-END
 		map->LoadMap(stagemap, 4);
 	}
 }

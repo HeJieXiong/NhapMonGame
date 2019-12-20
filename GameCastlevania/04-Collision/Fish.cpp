@@ -9,8 +9,7 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	if (is_active == false) {
 		if (simon->touch_wake==1)
-		{
-			
+		{		
 			if (code == 1) {
 				SetState(FISH_STATE_JUMP_LEFT);
 				start_jump = GetTickCount();
@@ -23,26 +22,22 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (is_active == true) {
 		if (GetTickCount() - start_jump <= FISH_TIME_JUMP_DOWN) {
 			vy = -FISH_JUMP_SPEED;
+			vx = 0;
+			jump_down = 1;
 		}
 		else {
 			vy = FISH_JUMP_SPEED;
-			is_standing = 1;
-			
-			if (can_count == 1 && is_jump==1) {
+			vx = 0;
+			is_standing = 1;	
+			/*if (can_count == 1 && is_jump==1) {
 				can_count = 0;
 				is_jump = 0;
 				fire_countdown = GetTickCount();
-			}
+			}*/
 		}
 		if (is_standing == 1) {
 			start_jump = 0;
 		}
-	}
-	if (vx > 0) {
-		if (x > 450) {
-			SetState(FISH_STATE_WALKING_LEFT);
-		}
-		else SetState(FISH_STATE_WALKING_RIGHT);
 	}
 	
 	
@@ -69,15 +64,12 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	
 	if (state == FISH_STATE_WALKING_LEFT) {
-		vx = -FISH_WALKING_SPEED;
-		if (falling_down == 0) {
-			x += dx;
+		if (first_touch != 0) {
+			vx = -FISH_WALKING_SPEED;
 		}
-	}
-	
-	if (can_count == 1 && is_standing == 1) {
-		fire_countdown = GetTickCount();
-		can_count = 0;
+		if (first_touch == 0) {
+			vx = 0;
+		}
 	}
 	if (can_fire == 1) {
 		if (bullet == NULL) {
@@ -132,17 +124,53 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				CBrick *ground = dynamic_cast<CBrick *>(e->obj);
 				if (is_standing == 0) {
 					SetState(FISH_STATE_JUMP_LEFT);
-					y +=dy;
+					y += dy;
+				}
+				if (jump_down == 1 && is_standing == 1) {
+					fire_countdown = GetTickCount();
+					can_count = 0;
+					jump_down = 2;
+				}
+				if (jump_down == 2 && is_standing == 1 && ground->tag == 10) {
+					change_way = 2;
+					vy = 0;
+				}
+				if (jump_down == 2 && is_standing == 1 && ground->tag == 20) {
+					change_way = 1;
+					vy = 0;
+				}
+				if(ground->tag==1)  x += dx;
+			}
+			if (dynamic_cast<CStair *>(e->obj))
+			{
+				CStair *stair = dynamic_cast<CStair *>(e->obj);
+				x += dx;
+				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0) {
+					if (is_standing == 1 && stair->type_stair == 3 && first_touch == 0 && stair->type_stair != 50 && jump_down != 2) {
+						y += dy;
+					}
 					
 				}
-				if (is_standing == 1) {
-					falling_down = 0;
-				}
+			}			
+		}			
+	}
+	if (change_way == 1) {
+		state = FISH_STATE_WALKING_LEFT;
+		x += dx;
+		change_way = 0;
+	}
+	if (change_way == 2) {
+		state = FISH_STATE_WALKING_RIGHT;
+		x += dx;
+		change_way = 0;
+	}
+	if (state == FISH_STATE_WALKING_LEFT) {
+		nx = -1;
+		vx = -1 * FISH_WALKING_SPEED;
+	}
+	if (state == FISH_STATE_WALKING_RIGHT) {
+		vx = FISH_WALKING_SPEED;
 
-				
-			}
-			
-		}
 	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
@@ -197,14 +225,6 @@ void CFish::SetState(int state)
 		break;
 	case FISH_STATE_JUMP_RIGHT:
 		vy = -FISH_JUMP_SPEED;
-		nx = 1;
-		break;
-	case FISH_STATE_WALKING_LEFT:
-		vx = -FISH_WALKING_SPEED;
-		nx = -1;
-		break;
-	case FISH_STATE_WALKING_RIGHT:
-		vx = FISH_WALKING_SPEED;
 		nx = 1;
 		break;
 	case FISH_STATE_HIDE:
