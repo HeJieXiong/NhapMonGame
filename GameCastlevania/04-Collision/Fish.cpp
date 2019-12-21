@@ -50,14 +50,7 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (is_standing == 1) {
 			start_jump = 0;
 		}
-		if (change_way == 1) {
-			state = FISH_STATE_WALKING_LEFT;
-			change_way = 0;
-		}
-		if (change_way == 2) {
-			state = FISH_STATE_WALKING_RIGHT;
-			change_way = 0;
-		}
+		
 		if (state == FISH_STATE_WALKING_LEFT) {
 			nx = -1;
 			vx = -FISH_WALKING_SPEED;
@@ -137,7 +130,7 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		float min_tx, min_ty, nx = 0, ny;
 
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
-		//x += min_tx * dx + nx * 0.4f;
+		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
 
 		//if (nx != 0) vx = 0;
@@ -160,41 +153,52 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 					can_count = 0;
 					jump_down = 2;
 				}
-				if (ground->tag == 10) {				
-					change_way = 2;
-					vy = 0;
-					simon->count_panther_code = change_way;
-				}
-				if (ground->tag == 20) {
-					change_way = 1;
-					vy = 0;
-					simon->count_panther_code = change_way;
-				}
 				if (touch_ground == 0 && is_standing == 1) {
 					state = FISH_STATE_WALKING_LEFT;
 					touch_ground = 1;
 					change_way=1;
-				}
-				if (ground->tag == 1) {
-					x += dx;
 				}
 			}
 			if (dynamic_cast<CStair *>(e->obj))
 			{
 				CStair *stair = dynamic_cast<CStair *>(e->obj);
 				if (e->nx < 0 || e->nx > 0 || e->ny < 0 || e->ny>0) {
-					if (is_standing == 1 && stair->type_stair == 3 && first_touch == 0 && stair->type_stair != 50 && jump_down != 2) {
-						y += dy;
+					simon->count_panther_code = state;
+					if (stair->type_stair != 50) {
+						if (is_standing == 1 && first_touch == 0 && jump_down != 2) {
+							y += dy;
+						}
+						if (is_standing == 0) {
+							y -= dy;
+						}
+						x += dx;
 					}
-					if (is_standing == 0) {
-						y -= dy;
+					if (stair->type_stair == 50) {
+						
+						if (state == FISH_STATE_WALKING_LEFT) {
+							change_way = 2;
+							simon->count_panther_code = state;
+						}
+						if (state != FISH_STATE_WALKING_LEFT) {
+							change_way = 1;
+							simon->count_panther_code = state;
+						}
 					}
-					x += dx;
 				}
 			}			
 		}			
 	}
-	
+	if (change_way == 2) {
+		state = FISH_STATE_WALKING_RIGHT;
+		change_way = 0;
+		simon->count_panther_code = state;
+	}
+	simon->count_panther_code = state;
+	if (change_way == 1) {
+		state = FISH_STATE_WALKING_LEFT;
+		change_way = 0;
+	}
+
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];

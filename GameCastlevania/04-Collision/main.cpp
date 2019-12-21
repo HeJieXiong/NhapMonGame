@@ -384,6 +384,7 @@ void  LoadStage4(int a) {
 		Simon->is_on_stair = 1;
 		Simon->go_up = 1;
 		Simon->go_down = 1;
+		Simon->touch_wake = 0;
 		Simon->state = SIMON_STATE_ON_STAIR;
 		//Simon->ani = SIMON_ANI_ON_STAIR_LEFT;
 	}
@@ -713,6 +714,7 @@ int RunStage1()
 					Simon->wanna_go_down = 1;
 					Simon->wanna_go_up = 1;
 					Simon->go_back_stage = 0;
+					Simon->touch_wake = 0;
 					load = 5;
 				}
 				if (Simon->go_back_stage == 2) {
@@ -728,6 +730,7 @@ int RunStage1()
 					Simon->wanna_go_down = 1;
 					Simon->wanna_go_up = 1;
 					Simon->go_back_stage = 0;
+					Simon->touch_wake = 0;
 					load = 5;
 				}
 				game->unablekeyboard = 0;

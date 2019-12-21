@@ -1407,6 +1407,21 @@ void CStage1::LoadStage()
 			}
 		}
 		//STAIR-FISH-END
+		//STAIR-FISH-STAR
+		for (int i = 0; i < row; i++) {
+			if (location3[i][0] == 100013) {
+				stair = new CStair();
+				stair->id = location3[i][1];
+				stair->SetPosition(location3[i][2], location3[i][3]);
+				stair->tag = 1;
+				stair->type_stair = location3[i][4];
+				stair->is_big = 0;
+				objects.push_back(stair);
+				objects_fish.push_back(stair);
+				//objects_stair_1.push_back(stair);
+			}
+		}
+		//STAIR-FISH-END
 		map->LoadMap(stagemap, 4);
 	}
 }
