@@ -26,8 +26,8 @@
 #define FISH_WALKING_SPEED_HIGH			0.5f
 #define FISH_BBOX_WIDTH				15
 #define FISH_BBOX_HEIGHT			29.5
-#define BULLET_BBOX_WIDTH			7
-#define BULLET_BBOX_HEIGHT			6
+#define BULLET_BBOX_WIDTH			10
+#define BULLET_BBOX_HEIGHT			10
 #define FISH_ATTACK_RANGE			400
 #define FISH_DETECT_RANGE			134
 #define FISH_BULLET_SPEED_X			0.02f
@@ -38,7 +38,16 @@
 class FishBullet : public CGameObject
 {
 public:
-	FishBullet();
+	CSimon *simon;
+	FishBullet(CSimon *a) : CGameObject()
+	{
+		simon = a;
+		tag = 17;
+		is_active = true;
+		this->AddAnimation(2001);
+		this->AddAnimation(2002);
+		ani_bullet = 0;
+	}
 	int ani_bullet = 0;
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects);
 	virtual void Render(float &xcam, float &ycam, float &x_simon, float &y_simon);

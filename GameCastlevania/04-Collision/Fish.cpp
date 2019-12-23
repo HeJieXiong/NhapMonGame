@@ -1,4 +1,4 @@
-#include "Fish.h"
+﻿#include "Fish.h"
 CFish::CFish()
 {
 	bullet = NULL;
@@ -112,7 +112,7 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			a = x;
 			x_bullet = a;
 			b = y;
-			bullet = new FishBullet();
+			bullet = new FishBullet(simon);
 			bullet->SetPosition(a,b);
 			bullet->way = bullet_way;
 			if (this->nx > 0) bullet->vx = FISH_BULLET_SPEED_X;
@@ -211,6 +211,32 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			can_count = 0;
 		}
 	}
+	// Xét va chạm của bat và Simon
+	if (nx > 0) {
+		if (x + FISH_BBOX_WIDTH >= simon->x &&x <= simon->x && y + FISH_BBOX_HEIGHT >= simon->y && y <= simon->y) {
+			if (simon->untouchable == 0 && simon->is_heart == 0) {
+				simon->start_heart = GetTickCount();
+				simon->is_heart = 1;
+				simon->state = SIMON_STATE_HEART;
+			}
+			else {
+				x += dx;
+			}
+		}
+	}
+	if (nx < 0) {
+		if (x + FISH_BBOX_WIDTH >= simon->x + SIMON_BIG_BBOX_WIDTH && x <= simon->x + SIMON_BIG_BBOX_WIDTH
+			&& y <= simon->y + SIMON_BIG_BBOX_WIDTH && y + FISH_BBOX_HEIGHT >= simon->y + SIMON_BIG_BBOX_WIDTH) {
+			if (simon->untouchable == 0 && simon->is_heart == 0) {
+				simon->start_heart = GetTickCount();
+				simon->is_heart = 1;
+				simon->state = SIMON_STATE_HEART;
+			}
+			else {
+				x += dx;
+			}
+		}
+	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];
@@ -275,17 +301,6 @@ void CFish::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 	right = x + FISH_BBOX_WIDTH;
 	bottom = y + FISH_BBOX_HEIGHT;
 }
-
-FishBullet::FishBullet()
-{
-	tag = 17;
-	is_active = true;
-	this->AddAnimation(2001);
-	this->AddAnimation(2002);
-	ani_bullet = 0;
-	
-}
-
 void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 		CGameObject::Update(dt, coObjects);
@@ -295,8 +310,32 @@ void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		if (way == 2) {
 			x -= dx;
 		}
-		
-	
+		// Xét va chạm của bat và Simon
+		if (vx > 0) {
+			if (x + BULLET_BBOX_WIDTH >= simon->x &&x <= simon->x && y + BULLET_BBOX_HEIGHT >= simon->y && y <= simon->y) {
+				if (simon->untouchable == 0 && simon->is_heart == 0) {
+					simon->start_heart = GetTickCount();
+					simon->is_heart = 1;
+					simon->state = SIMON_STATE_HEART;
+				}
+				else {
+					x += dx;
+				}
+			}
+		}
+		if (vx < 0) {
+			if (x + BULLET_BBOX_WIDTH >= simon->x + SIMON_BIG_BBOX_WIDTH && x <= simon->x + SIMON_BIG_BBOX_WIDTH
+				&& y <= simon->y + SIMON_BIG_BBOX_WIDTH && y + BULLET_BBOX_HEIGHT >= simon->y + SIMON_BIG_BBOX_WIDTH) {
+				if (simon->untouchable == 0 && simon->is_heart == 0) {
+					simon->start_heart = GetTickCount();
+					simon->is_heart = 1;
+					simon->state = SIMON_STATE_HEART;
+				}
+				else {
+					x += dx;
+				}
+			}
+		}
 }
 
 void FishBullet::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
