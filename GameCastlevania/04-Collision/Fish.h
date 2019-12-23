@@ -34,7 +34,7 @@
 #define WATER_HEIGHT				64*5+32
 #define FISH_TIME_JUMP_DOWN			1100
 #define FISH_ATTACK_RANGE			400
-#define STATE_FOR_CHANGE 70
+#define STATE_FOR_CHANGE			70
 class FishBullet : public CGameObject
 {
 public:
@@ -66,7 +66,8 @@ class CFish :
 	int change_way = 0;
 	int jump_down = 0;
 	int touch_ground = 0;
-	
+	float x_bullet;
+	int bullet_way = 0;
 public:
 	CFish(CSimon *a) : CGameObject()
 	{

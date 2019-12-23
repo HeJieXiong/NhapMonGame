@@ -16,7 +16,6 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				is_jump = 1;
 				is_active = true;
 			}
-
 		}
 		if (simon->touch_wake == 2)
 		{
@@ -26,7 +25,15 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				is_jump = 1;
 				is_active = true;
 			}
-
+		}
+		if (simon->touch_wake == 3)
+		{
+			if (code == 3) {
+				state = FISH_STATE_JUMP_LEFT;
+				start_jump = GetTickCount();
+				is_jump = 1;
+				is_active = true;
+			}
 		}
 	}
 	if (is_active == true) {
@@ -41,11 +48,11 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				state = FISH_STATE_JUMP_DOWN;
 			}
 
-			/*if (can_count == 1 && is_jump==1) {
-				can_count = 0;
-				is_jump = 0;
-				fire_countdown = GetTickCount();
-			}*/
+			//if (can_count == 1) {
+			//	can_count = 0;
+			//	is_jump = 0;
+			//	//fire_countdown = GetTickCount();
+			//}
 		}
 		if (is_standing == 1) {
 			start_jump = 0;
@@ -73,34 +80,41 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 
 	
 	
-	/*if (can_count == 0) {	
-		if (GetTickCount() - fire_countdown <= 2000) {
-			state = FISH_STATE_WALKING_LEFT;
-		}
+	if (can_count == 0) {	
 		if (GetTickCount() - fire_countdown  > 2000 && GetTickCount()- fire_countdown < 4000) {
-			vx = 0;
-			if (nx < 0) {
+			
+			if (vx < 0) {
+				vx = 0;
 				state = FISH_STATE_ATK_LEFT;
+				bullet_way = 1;
 			}
-			if (nx > 0) {
+			if (vx > 0) {
+				vx = 0;
 				state = FISH_STATE_ATK_RIGHT;
+				bullet_way = 2;
 			}
 			can_fire = 1;
 		}
-		if (GetTickCount() - fire_countdown >= 4000) {
-			state = FISH_STATE_WALKING_LEFT; 
-			fire_countdown = 0;
+		if (GetTickCount() - fire_countdown > 4000) {
+			if (nx < 0) {
+				state = FISH_STATE_WALKING_LEFT;
+			}
+			if (nx > 0) {
+				state = FISH_STATE_WALKING_RIGHT;
+			}
 			can_count = 1;
 			can_fire = 0;
 		}
-	}*/
+	}
 	if (can_fire == 1) {
 		if (bullet == NULL) {
 			float a, b;
 			a = x;
+			x_bullet = a;
 			b = y;
 			bullet = new FishBullet();
 			bullet->SetPosition(a,b);
+			bullet->way = bullet_way;
 			if (this->nx > 0) bullet->vx = FISH_BULLET_SPEED_X;
 			else bullet->vx = -FISH_BULLET_SPEED_X;
 			
@@ -150,7 +164,6 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 				}
 				if (jump_down == 1 && is_standing == 1) {
 					fire_countdown = GetTickCount();
-					can_count = 0;
 					jump_down = 2;
 				}
 				if (touch_ground == 0 && is_standing == 1) {
@@ -177,21 +190,26 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			}			
 		}			
 	}
-	if (change_way == 2) {
-		state = FISH_STATE_WALKING_RIGHT;
-		change_way = 0;
-		
-	}
-	simon->count_panther_code = state;
-	if (change_way == 1) {
-		state = FISH_STATE_WALKING_LEFT;
-		change_way = 0;
-	}
-	if (x - center < -1*STATE_FOR_CHANGE ) {
-		change_way = 2;
-	}
-	if (x - center > STATE_FOR_CHANGE) {
-		change_way = 1;
+	if (code != 3) {
+		if (change_way == 2) {
+			state = FISH_STATE_WALKING_RIGHT;
+			change_way = 0;
+		}
+		simon->count_panther_code = state;
+		if (change_way == 1) {
+			state = FISH_STATE_WALKING_LEFT;
+			change_way = 0;
+		}
+		if (x - center < -1 * STATE_FOR_CHANGE) {
+			change_way = 2;
+		}
+		if (x - center > STATE_FOR_CHANGE) {
+			change_way = 1;
+		}
+		if (x - center > -2 && x - center < 2) {
+			fire_countdown = GetTickCount();
+			can_count = 0;
+		}
 	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
@@ -262,27 +280,36 @@ FishBullet::FishBullet()
 {
 	tag = 17;
 	is_active = true;
-	if (nx > 0) {
-		this->AddAnimation(2001);
-		ani_bullet = 1;
-	}
-	if (nx < 0) {
-		this->AddAnimation(2002);
-		ani_bullet = 0;
-	}
+	this->AddAnimation(2001);
+	this->AddAnimation(2002);
+	ani_bullet = 0;
+	
 }
 
 void FishBullet::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
-	
 		CGameObject::Update(dt, coObjects);
-		x += dx;
+		if (way == 1) {
+			x += dx;
+		}
+		if (way == 2) {
+			x -= dx;
+		}
+		
 	
 }
 
 void FishBullet::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 {	
-		animations[0]->Render(x, y);
+	int ani;
+	if (way == 1) {
+		ani = 0;
+		animations[ani]->Render(x - xcam, y - ycam);
+	}
+	if (way == 2) {
+		ani = 1;
+		animations[ani]->Render(x - xcam, y - ycam);
+	}
 		RenderBoundingBox(xcam, ycam);
 }
 void FishBullet::GetBoundingBox(float &left, float &top, float &right, float &bottom)

@@ -359,6 +359,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					if (stair->type_stair == 20) {
 						touch_wake = 2;
 					}
+					if (stair->type_stair == 300) {
+						touch_wake = 3;
+					}
 					if (stair->type_stair == 100) {
 						is_touch_change_stage_stair = 1;
 						stair_center = stair->x;

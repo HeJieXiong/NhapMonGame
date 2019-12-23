@@ -45,6 +45,7 @@ public:
 	int tag;
 	bool is_active;
 	int point;
+	int way;
 	DWORD dt; 
 
 	vector<LPANIMATION> animations;
