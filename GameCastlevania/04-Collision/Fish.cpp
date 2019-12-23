@@ -173,17 +173,6 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 						}
 						x += dx;
 					}
-					if (stair->type_stair == 50) {
-						
-						if (state == FISH_STATE_WALKING_LEFT) {
-							change_way = 2;
-							simon->count_panther_code = state;
-						}
-						if (state != FISH_STATE_WALKING_LEFT) {
-							change_way = 1;
-							simon->count_panther_code = state;
-						}
-					}
 				}
 			}			
 		}			
@@ -191,14 +180,19 @@ void CFish::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (change_way == 2) {
 		state = FISH_STATE_WALKING_RIGHT;
 		change_way = 0;
-		simon->count_panther_code = state;
+		
 	}
 	simon->count_panther_code = state;
 	if (change_way == 1) {
 		state = FISH_STATE_WALKING_LEFT;
 		change_way = 0;
 	}
-
+	if (x - center < -1*STATE_FOR_CHANGE ) {
+		change_way = 2;
+	}
+	if (x - center > STATE_FOR_CHANGE) {
+		change_way = 1;
+	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];

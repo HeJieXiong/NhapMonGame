@@ -1183,6 +1183,7 @@ void CStage1::LoadStage()
 				fish->SetPosition(location3[i][2], location3[i][3]);
 				fish->code = location3[i][4];
 				fish->state=FISH_STATE_HIDE;
+				fish->center = location3[i][5];
 				//objects.push_back(fish);
 				objects_fish.push_back(fish);
 				objects_weapons.push_back(fish);
@@ -1582,7 +1583,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->count_panther_code;
+		headerbar->score_ = Simon->x;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
