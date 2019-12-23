@@ -8,6 +8,8 @@ void CStage1::LoadStage()
 	textures->Add(ID_TEX_SIMON, L"textures\\simon2.png", D3DCOLOR_XRGB(0, 0, 0));
 	textures->Add(ID_TEX_MISC_1, L"textures\\ground\\2.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MISC_2, L"textures\\ground\\2-4.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_MISC_3, L"textures\\ground\\2-5.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_MISC_4, L"textures\\ground\\2-6.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_FIRE, L"textures\\fire.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BBOX, L"textures\\bbox.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_MORNINGSTAR, L"textures\\whip.png", D3DCOLOR_XRGB(255, 0, 255));
@@ -130,6 +132,18 @@ void CStage1::LoadStage()
 	ani = new CAnimation(100);		// brick
 	ani->Add(20002);
 	animations->Add(602, ani);
+	//BRICK3-START
+	LPDIRECT3DTEXTURE9 texMisc_3 = textures->Get(ID_TEX_MISC_3);
+	sprites->Add(20003, 0, 0, 15, 14, texMisc_3);
+	ani = new CAnimation(100);		// brick
+	ani->Add(20003);
+	animations->Add(690, ani);
+	//BRICK4-START
+	LPDIRECT3DTEXTURE9 texMisc_4 = textures->Get(ID_TEX_MISC_4);
+	sprites->Add(20004, 0, 0, 15, 14, texMisc_4);
+	ani = new CAnimation(100);		// brick
+	ani->Add(20004);
+	animations->Add(695, ani);
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
 	sprites->Add(11000, 177, 40, 194, 48, textKnife);
@@ -539,8 +553,8 @@ void CStage1::LoadStage()
 	//FISH-END
 	//BULLET START
 	LPDIRECT3DTEXTURE9 texBullet = textures->Get(ID_TEX_BULLET);
-	sprites->Add(20001, 0, 0, 7, 5, texBullet); //BULLET LEFT
-	sprites->Add(20002, 7, 0, 13, 5, texBullet); //BULLET RIGHT
+	sprites->Add(20001, 0, 0, 8, 7, texBullet); //BULLET LEFT
+	sprites->Add(20002, 8, 0, 17, 7, texBullet); //BULLET RIGHT
 	ani = new CAnimation(100);//BULLET LEFT
 	ani->Add(20001);
 	animations->Add(2001, ani);
@@ -1068,7 +1082,7 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 		}
-		for (int i = 0; i < 97; i++)
+		for (int i = 0; i < 50; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
@@ -1128,6 +1142,31 @@ void CStage1::LoadStage()
 			brick->type = 0;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(690);
+			brick->SetPosition(248.0f, 171);
+			brick->tag = 1;
+			brick->type = 10;
+			objects.push_back(brick);
+			objects_morningstar.push_back(brick);
+			objects_weapons.push_back(brick);
+			obejects_item.push_back(brick);
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(695);
+			brick->SetPosition(248.0f, 186);
+			brick->tag = 0;
+			brick->type = 10;
+			objects.push_back(brick);
+			objects_morningstar.push_back(brick);
+			objects_weapons.push_back(brick);
+			obejects_item.push_back(brick);
+		
 		}
 		//BRICK-END
 		//BAT-START
