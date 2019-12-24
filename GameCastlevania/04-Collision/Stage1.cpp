@@ -26,6 +26,7 @@ void CStage1::LoadStage()
 	textures->Add(ID_TEX_BIG_BRICK, L"textures\\ground\\16.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_FISH, L"textures\\enemy\\12.png", D3DCOLOR_XRGB(255, 0, 255));
 	textures->Add(ID_TEX_BULLET, L"textures\\fireball.png", D3DCOLOR_XRGB(255, 0, 255));
+	textures->Add(ID_TEX_BOSS, L"textures\\boss\\0.png", D3DCOLOR_XRGB(255, 0, 255));
 	CSprites * sprites = CSprites::GetInstance();
 	CAnimations * animations = CAnimations::GetInstance();
 	//ITEM-START
@@ -569,6 +570,20 @@ void CStage1::LoadStage()
 	ani->Add(20002);
 	animations->Add(2002, ani);
 	//BULLET END
+	//BOSS-START
+	LPDIRECT3DTEXTURE9 textBoss = textures->Get(ID_TEX_BOSS);
+	sprites->Add(15001, 16, 0, 32, 23, textBoss);
+	sprites->Add(15002, 48, 0, 96, 23, textBoss);
+	sprites->Add(15003, 105, 0, 138, 23, textBoss);
+	ani = new CAnimation(100);
+	ani->Add(15001);
+	animations->Add(1501, ani);
+	ani = new CAnimation(100);
+	ani->Add(15002);
+	ani->Add(15003);
+	animations->Add(1502, ani);
+
+	//BOSS-END
 	if (stage_id == 1) {
 		map = new TileMap();
 		column = 5;
@@ -1473,6 +1488,109 @@ void CStage1::LoadStage()
 		//STAIR-FISH-END
 		map->LoadMap(stagemap, 4);
 	}
+	if (stage_id == 6 && loaded == 0) {
+		map = new TileMap();
+		column = 7;
+		row;
+		ifstream FILE;
+		string sLine;
+		FILE.open("location5.txt");
+
+
+		if (FILE.good())
+		{
+			getline(FILE, sLine);
+		}
+		row = stoi(sLine);
+		location3 = new float *[row];
+		for (int i = 0; i < row; i++) {
+			location3[i] = new float[column];
+		}
+
+		for (int i = 0; i < row; i++) {
+			for (int j = 0; j < column; j++) {
+				FILE >> location3[i][j];
+			}
+		}
+		boss = new CBoss(Simon);
+		boss->AddAnimation(1501);
+		boss->AddAnimation(1502);
+		boss->SetState(BOSS_STATE_STANDING);
+		boss->SetPosition(600, 50);
+		objects.push_back(boss);
+		//objects_boss.push_back(boss);
+		map->LoadMap(stagemap, 5);
+
+		for (int i = 0; i < 49; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f, 203);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_panther.push_back(brick);
+		}
+
+		for (int i = 0; i < 7; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f, 110);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_panther.push_back(brick);
+		}
+		for (int i = 0; i < 11; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 124, 141);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_panther.push_back(brick);
+		}
+
+		for (int i = 0; i < 3; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 700, 141);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_panther.push_back(brick);
+		}
+
+		for (int i = 0; i < 2; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 651, 171);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+			objects_panther.push_back(brick);
+		}
+		//BRICK-END
+		for (int i = 0; i < 5; i++) {  //fire
+			fire = new CCandle();
+			fire->AddAnimation(603);
+			fire->SetPosition(i * 130 + 88, 156);
+			fire->tag = 0;
+			/*objects.push_back(fire);
+			objects_morningstar.push_back(fire);
+			objects_weapons.push_back(fire);*/
+		}
+		//FIRE-END
+	}
 }
 void CStage1::Update(DWORD dt)
 {
@@ -1631,7 +1749,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->x;
+		headerbar->score_ = Simon->next_stage;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

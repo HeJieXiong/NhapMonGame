@@ -46,7 +46,7 @@ CStage1		*stage1;
 CStage1		*stage2;
 CStage1		*stage3;
 CStage1		*stage4;
-CStage5		*stage5;
+CStage1		*stage5;
 CMorningstar*morningstar;
 
 
@@ -401,7 +401,8 @@ void  Renderstage4() {
 
 void  LoadStage5()
 {
-	stage5->LoadStage5();
+	stage5->stage_id = 6;
+	stage5->LoadStage();
 }
 
 void  Updatestage5(DWORD dt) {
@@ -760,6 +761,15 @@ int RunStage1()
 				Updatestage4(dt);
 				Renderstage4();
 			}
+			if (Simon->next_stage == 6) {
+				stage5->SetGame(game);
+				if (load == 4 || load ==3 || load == 6) {
+					LoadStage5();
+					load = 7;
+				}
+				Updatestage5(dt);
+				Renderstage5();
+			}
 
 		}
 		else
@@ -790,12 +800,12 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	stage2 = new CStage1(Simon, morningstar, knife, i);
 	stage3 = new CStage1(Simon, morningstar, knife, i);
 	stage4 = new CStage1(Simon, morningstar, knife, i);
-	stage5 = new CStage5(Simon, morningstar, knife, i);
+	stage5 = new CStage1(Simon, morningstar, knife, i);
 	stage1->SetGame(game);
 	LoadStage1();
 	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	RunStage1();
-	//currentstage(stage1);
+	currentstage(stage1);
 	//stage2->SetGame(game);
 	//LoadStage2();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
@@ -808,9 +818,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 	//LoadStage4();
 	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
 	//RunStage4();
-	/*stage5->SetGame(game);
-	LoadStage5();
-	SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
-	RunStage5();*/
+	//stage5->SetGame(game);
+	//LoadStage5();
+	//SetWindowPos(hWnd, 0, 0, 0, SCREEN_WIDTH * 2, SCREEN_HEIGHT * 2, SWP_NOMOVE | SWP_NOOWNERZORDER | SWP_NOZORDER);
+	//RunStage5();
 	return 0;
 }

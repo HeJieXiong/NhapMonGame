@@ -73,7 +73,7 @@ class  CStage1 {
 	CDoor		*door;
 	CBat		*bat;
 	CFish		*fish;
-
+	CBoss		*boss;
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> objects_morningstar;
 	vector<LPGAMEOBJECT> obejects_item;
