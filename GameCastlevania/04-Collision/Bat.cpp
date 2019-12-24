@@ -30,19 +30,17 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				SetState(BAT_STATE_FLY_LEFT);
 			}
 		}
-	
-
 		if (vx > 0 ) {
 			if (x > 450) {
 				SetState(BAT_STATE_FLY_LEFT);
 			}
 			else SetState(BAT_STATE_FLY_RIGHT);
+		}	
+		if (y != BAT_Y_DIS) {
+			y = 10 * sin(flying_coordinate* PI / 180) + bat_x;
+			x += dx;
+			flying_coordinate += 5;
 		}
-		
-		
-		y = 10 * sin(flying_coordinate* PI / 180) + bat_x;
-		x += dx;
-		flying_coordinate += 5;
 	}
 	// Xét va chạm của bat và Simon
 	
@@ -71,9 +69,47 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 	}
-	DebugOut(L"Bat_y %d\n", this->y);
-	DebugOut(L"Bat_x %d\n", this->x);
-	DebugOut(L"Bat_f %d\n", this->flying_coordinate);
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+	//simon->point += this->point;
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
+		x += min_tx * dx + nx * 0.4f;
+		y += min_ty * dy + ny * 0.4f;
+		if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;
+		// Collision logic with Goombas
+		for (UINT i = 0; i < coEventsResult.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coEventsResult[i];
+			/*if (dynamic_cast<StartPoint *>(e->obj))
+			{
+				StartPoint *start = dynamic_cast<StartPoint *>(e->obj);
+				if (jumped != true)
+				{
+					SetState(DOG_STATE_JUMP);
+					return;
+				}
+			}*/
+			if (dynamic_cast<CKnife *>(e->obj))
+			{
+				CKnife *knife = dynamic_cast<CKnife *>(e->obj);
+				y = BAT_Y_DIS;
+				vy = 0;
+				knife->y = 1000;
+				knife->vx = 0;
+			}
+		}
+	}
 }
 
 void CBat::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)

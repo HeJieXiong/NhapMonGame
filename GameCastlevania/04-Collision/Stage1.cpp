@@ -1178,8 +1178,8 @@ void CStage1::LoadStage()
 				bat->SetPosition(location3[i][2], location3[i][3]);
 				bat->bat_x = location3[i][4];
 				bat->SetState(BAT_STATE_FLY_LEFT);
-				objects.push_back(bat);
-				objects_bat.push_back(bat);
+				//objects.push_back(bat);
+				//objects_bat.push_back(bat);
 				objects_weapons.push_back(bat);
 				objects_morningstar.push_back(bat);
 			}

@@ -13,6 +13,7 @@
 #define BAT_ANI_FLY_LEFT 0
 #define BAT_ANI_FLY_RIGHT 1
 #define PI 3.14
+#define BAT_Y_DIS -9850
 class CBat : public CGameObject
 {
 	int point;

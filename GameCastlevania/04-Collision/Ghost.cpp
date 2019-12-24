@@ -73,7 +73,7 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (dynamic_cast<CKnife *>(e->obj))
 			{
 				CKnife *knife = dynamic_cast<CKnife *>(e->obj);	
-						y = 1000;
+						y = GHOST_Y_DIS;
 						vy = 0;
 						knife->y = 1000;
 						knife->vx = 0;						
@@ -97,7 +97,9 @@ void CGhost::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		vx = GHOST_WALKING_SPEED;
 		
 	}
-
+	if (y == GHOST_Y_DIS) {
+		vy = 0;
+	}
 	for (UINT i = 0; i < coEventsResult.size(); i++)
 	{
 		LPCOLLISIONEVENT e = coEventsResult[i];

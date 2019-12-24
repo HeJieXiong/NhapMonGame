@@ -15,6 +15,7 @@
 #define GHOST_ANI_WALKING 0
 #define GHOST_ANI_WALKING_RIGHT 1
 #define GHOST_GRAVITY 0.002f
+#define GHOST_Y_DIS -9850
 class CGhost : public CGameObject
 {
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
