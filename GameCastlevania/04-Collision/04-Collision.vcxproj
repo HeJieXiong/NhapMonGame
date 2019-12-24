@@ -148,9 +148,6 @@
     <ClInclude Include="Simon.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Stage1.h" />
-    <ClInclude Include="Stage2.h" />
-    <ClInclude Include="Stage3.h" />
-    <ClInclude Include="Stage4.h" />
     <ClInclude Include="Stage5.h" />
     <ClInclude Include="Stair.h" />
     <ClInclude Include="Textures.h" />
@@ -181,9 +178,6 @@
     <ClCompile Include="Simon.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Stage1.cpp" />
-    <ClCompile Include="Stage2.cpp" />
-    <ClCompile Include="Stage3.cpp" />
-    <ClCompile Include="Stage4.cpp" />
     <ClCompile Include="Stage5.cpp" />
     <ClCompile Include="Stair.cpp" />
     <ClCompile Include="Textures.cpp" />

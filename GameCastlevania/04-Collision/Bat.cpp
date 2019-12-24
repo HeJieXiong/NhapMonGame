@@ -62,7 +62,9 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (simon->untouchable == 0 && simon->is_heart == 0) {
 				simon->start_heart = GetTickCount();
 				simon->is_heart = 1;
-				simon->state = SIMON_STATE_HEART;
+				if (simon->between_stair == 0) {
+					simon->state = SIMON_STATE_HEART;
+				}
 			}
 			else {
 				x += dx;
@@ -85,8 +87,8 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny);
 		x += min_tx * dx + nx * 0.4f;
 		y += min_ty * dy + ny * 0.4f;
-		if (nx != 0) vx = 0;
-		if (ny != 0) vy = 0;
+		/*if (nx != 0) vx = 0;
+		if (ny != 0) vy = 0;*/
 		// Collision logic with Goombas
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -107,6 +109,16 @@ void CBat::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				vy = 0;
 				knife->y = 1000;
 				knife->vx = 0;
+			}
+			if (dynamic_cast<CBrick *>(e->obj))
+			{
+				CBrick *brick = dynamic_cast<CBrick *>(e->obj);
+				x += dx;
+			}
+			if (dynamic_cast<CStair *>(e->obj))
+			{
+				CStair *stair = dynamic_cast<CStair *>(e->obj);
+				x += dx;
 			}
 		}
 	}

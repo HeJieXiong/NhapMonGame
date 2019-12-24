@@ -408,13 +408,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (GetTickCount() - start_heart <= SIMON_HEART_JUMP_TIME) {
 			is_heart = 1;
 			untouchable = 1;
-			vy = -SIMON_STAY_JUMP_HEART_Y;
-			if (nx < 0)
-				vx = SIMON_STAY_JUMP_HEART_X;
-			if (nx > 0)
-				vx = -SIMON_STAY_JUMP_HEART_X;
-			x += vx * dt;
-			state = SIMON_STATE_HEART;
+			if (between_stair == 0) {
+				vy = -SIMON_STAY_JUMP_HEART_Y;
+				if (nx < 0)
+					vx = SIMON_STAY_JUMP_HEART_X;
+				if (nx > 0)
+					vx = -SIMON_STAY_JUMP_HEART_X;
+				x += vx * dt;
+				state = SIMON_STATE_HEART;
+			}
 		}
 		if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
 			untouchable = 1;
@@ -429,7 +431,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			state = SIMON_STATE_IDLE;
 		}
 	}
-	if (state == SIMON_STATE_HEART) {
+	if (state == SIMON_STATE_HEART || state == SIMON_STATE_HEART_ON_STAIR) {
 		check_state = 1;
 	}
 	else check_state = 2;
@@ -875,12 +877,12 @@ void CSimon::Walking_down_stair()
 }
 void CSimon::do_walking() {
 	if (is_touch_center_stair == 0) {
-		if (x - stair_center <= -2) {
+		if (x - stair_center <= -1) {
 			nx = 1;
 			vx = SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_RIGHT;
 		}
-		if (x - stair_center >= 2) {
+		if (x - stair_center >= 1) {
 			nx = -1;
 			vx = -SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_LEFT;
@@ -905,7 +907,7 @@ void CSimon::do_change_stair() {
 			vx = SIMON_WALKING_SPEED;
 			state = SIMON_STATE_WALKING_RIGHT;
 		}
-		if (x - stair_tail<2 && x - stair_tail >-2 && can_turn == 1) {
+		if (x - stair_tail<1 && x - stair_tail >-1 && can_turn == 1) {
 			is_touch_change_stage_stair = 0;
 			next_stage = 2;
 		}
