@@ -144,6 +144,13 @@ void CStage1::LoadStage()
 	ani = new CAnimation(100);		// brick
 	ani->Add(20004);
 	animations->Add(695, ani);
+	//BRICK5-START
+	//BRICK2-START
+	LPDIRECT3DTEXTURE9 texMisc_5 = textures->Get(ID_TEX_MISC_2);
+	sprites->Add(20005, 0, 0, 16, 14, texMisc_5);
+	ani = new CAnimation(100);		// brick
+	ani->Add(20005);
+	animations->Add(691, ani);
 	//KNIFE-STAR
 	LPDIRECT3DTEXTURE9 textKnife = textures->Get(ID_TEX_KNIFE);
 	sprites->Add(11000, 177, 40, 194, 48, textKnife);
@@ -1226,6 +1233,7 @@ void CStage1::LoadStage()
 				//objects.push_back(fish);
 				objects_fish.push_back(fish);
 				objects_weapons.push_back(fish);
+				objects_morningstar.push_back(fish);
 			}
 		}
 		//FISH-END
@@ -1400,14 +1408,15 @@ void CStage1::LoadStage()
 		for (int i = 9; i < 10; i++)
 		{
 			CBrick *brick = new CBrick();
-			brick->AddAnimation(602);
+			brick->AddAnimation(691);
 			brick->SetPosition(i * 15.5f + 310, 125);
-			brick->tag = 20;
-			brick->type = 0;
+			brick->tag = 1;
+			brick->type = 10 ;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 			objects_fish.push_back(brick);
 			objects_weapons.push_back(brick);
+			objects_morningstar.push_back(brick);
 		}
 		for (int i = 0; i < 2; i++)
 		{
