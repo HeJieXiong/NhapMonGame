@@ -1094,17 +1094,21 @@ void CStage1::LoadStage()
 		}
 		//BIG_BRICK_END
 		//BRICK-START
-		for (int i = 0; i < 3; i++)
+		for (int i = 0; i < 4; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
 			brick->SetPosition(i * 15.0f, 203);
 			brick->tag = 1;
-			brick->type = 0;
+			if(i!=3)
+				brick->type = 0;
+			if (i == 3)
+				brick->type = 15;
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 		}
-		for (int i = 0; i < 50; i++)
+
+		for (int i = 0; i < 19; i++)
 		{
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(602);
@@ -1114,7 +1118,26 @@ void CStage1::LoadStage()
 			objects.push_back(brick);
 			obejects_item.push_back(brick);
 		}
-
+		for (int i = 19; i < 20; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 63, 203);
+			brick->tag = 1;
+			brick->type = 15;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+		}
+		for (int i = 20; i < 28; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(602);
+			brick->SetPosition(i * 15.5f + 63, 203);
+			brick->tag = 1;
+			brick->type = 0;
+			objects.push_back(brick);
+			obejects_item.push_back(brick);
+		}
 		for (int i = 0; i < 8; i++)
 		{
 			CBrick *brick = new CBrick();

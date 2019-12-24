@@ -173,7 +173,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 						can_jump = 0;
 					}
 					jump_walk = 0;
-					
+					if (brick->type == 15 && wanna_go_down != 0 && has_g == 0 ) {
+						y += dy;
+					}
 				}
 			}
 			else if (dynamic_cast<CItem *>(e->obj))
