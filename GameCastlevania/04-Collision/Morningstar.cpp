@@ -63,8 +63,13 @@ void CMorningstar::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 					|| (left < left_co) && (right > right_co)) && ((top > top_co&& top < bottom_co)
 						|| (bottom > top_co &&bottom < bottom_co))) {
 					//coObjects->at(i)->SetState(200);
-					coObjects->at(i)->y = -9850;
 					coObjects->at(i)->vy = 0;
+					coObjects->at(i)->vx = 0;
+					if (coObjects->at(i)->get_item != 1) {
+						coObjects->at(i)->y = -9850;
+					}
+					else coObjects->at(i)->y = -9800;
+					
 				}
 			}
 			if (coObjects->at(i)->y == -9850) {

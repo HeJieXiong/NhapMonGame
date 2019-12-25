@@ -755,6 +755,7 @@ void CStage1::LoadStage()
 				panther->SetPosition(location2[i][1], location2[i][2]);
 				panther->tag = location2[i][3];
 				panther->code = location2[i][4];
+				panther->get_item = 1;
 				//panther->SetPosition(50, 50);
 				panther->SetState(PANTHER_STATE_SLEEP);
 				//objects.push_back(panther);
@@ -1826,10 +1827,10 @@ void CStage1::Render()
 		for (int i = 0; i < objects_panther.size(); i++) {
 			objects_panther[i]->Render(x, y, Simon->x, Simon->y);
 		}
-		headerbar->score_ = Simon->stair_center;
+		headerbar->score_ = Simon->is_touch_special_stair;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->is_sit;
+		headerbar->score_ = Simon->is_touch_special_stair;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

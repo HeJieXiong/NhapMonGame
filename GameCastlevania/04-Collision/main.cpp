@@ -248,7 +248,7 @@ void CSampleKeyHander::KeyState(BYTE *states)
 					Simon->wanna_go_up = 1;
 				}
 				Simon->walking_up = 1;
-				Simon->SetState(SIMON_STATE_ON_STAIR);
+				Simon->SetState(SIMON_STATE_ON_STAIR);				
 				Simon->Walking_on_stair();
 				if (Simon->state_direction_on_stair == 2)
 					Simon->between_stair = 1;
