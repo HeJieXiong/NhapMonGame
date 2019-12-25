@@ -422,6 +422,36 @@ void CStage1::LoadStage()
 	ani->Add(10017);
 	animations->Add(428, ani);
 
+	ani = new CAnimation(40);	// idle stay effect left 
+	ani->Add(10057);
+	ani->Add(10001);
+	animations->Add(429, ani);
+
+	ani = new CAnimation(40);	// idle stay effect right 
+	ani->Add(10060);
+	ani->Add(10016);
+	animations->Add(430, ani);
+
+	ani = new CAnimation(40);	// idle sit effect left 
+	ani->Add(10059);
+	ani->Add(10005);
+	animations->Add(431, ani);
+
+	ani = new CAnimation(40);	// idle sit effect right
+	ani->Add(10062);
+	ani->Add(10012);
+	animations->Add(432, ani);
+
+	ani = new CAnimation(40);	// idle on stair effect left 
+	ani->Add(10058);
+	ani->Add(10021);
+	animations->Add(433, ani);
+
+	ani = new CAnimation(40);	// idle on stair effect right
+	ani->Add(10061);
+	ani->Add(10028);
+	animations->Add(434, ani);
+
 	//Simon = new CSimon(morningstar, headerbar, knife);
 	Simon->AddAnimation(400);		// idle right big
 	Simon->AddAnimation(401);		// idle left big
@@ -454,6 +484,12 @@ void CStage1::LoadStage()
 	Simon->AddAnimation(426);		// idle stay stair left down
 	Simon->AddAnimation(427);		// idle stay heart right 
 	Simon->AddAnimation(428);		// idle stay heart left
+	Simon->AddAnimation(429);		// idle stay efft left
+	Simon->AddAnimation(430);		// idle stay efft right
+	Simon->AddAnimation(431);		// idle sit efft left
+	Simon->AddAnimation(432);		// idle sit efft right
+	Simon->AddAnimation(433);		// idle on stair efft left
+	Simon->AddAnimation(434);		// idle on stair efft right
 
 	//PANTHER-STAR
 	LPDIRECT3DTEXTURE9 texPan = textures->Get(ID_TEX_PANTHER);
@@ -1772,7 +1808,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->wanna_go_down;
+		headerbar->score_ = Simon->is_sit;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();

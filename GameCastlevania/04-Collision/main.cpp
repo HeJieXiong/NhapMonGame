@@ -116,7 +116,12 @@ void CSampleKeyHander::OnKeyDown(int KeyCode)
 	case DIK_Q:
 		Simon->next_stage += 1;
 		break;
-	
+	case DIK_DOWN:
+		if (Simon->between_stair == 0){
+			Simon->is_sit = 1;
+		}
+		else Simon->is_sit = 0;
+		break;
 	
 }
 	/*case DIK_LEFT:
@@ -147,6 +152,7 @@ void CSampleKeyHander::OnKeyUp(int KeyCode)
 			//Simon->walking_up = 2;
 			break;
 		}
+		Simon->is_sit = 0;
 		/*case DIK_Z:
 			break;*/
 	}

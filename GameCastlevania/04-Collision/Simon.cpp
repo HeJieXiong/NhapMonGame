@@ -433,7 +433,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			state = SIMON_STATE_IDLE;
 		}
 	}
-	if (state == SIMON_STATE_HEART || state == SIMON_STATE_HEART_ON_STAIR) {
+	if (state == SIMON_STATE_HEART || state == SIMON_STATE_EFFECT_ON_STAIR_LEFT || state == SIMON_STATE_EFFECT_ON_STAIR_RIGHT) {
 		check_state = 1;
 	}
 	else check_state = 2;

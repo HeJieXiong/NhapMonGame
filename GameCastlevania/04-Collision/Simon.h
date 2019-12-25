@@ -37,7 +37,12 @@
 #define SIMON_STATE_ON_STAIR		800
 #define SIMON_STATE_EXTRA			900
 #define SIMON_STATE_HEART			901
-#define SIMON_STATE_HEART_ON_STAIR	902
+#define SIMON_STATE_EFFECT_ON_STAIR_LEFT		902
+#define SIMON_STATE_EFFECT_ON_STAIR_RIGHT	903
+#define SIMON_STATE_EFFECT_ON_SIT_LEFT		904
+#define SIMON_STATE_EFFECT_ON_SIT_RIGHT		905
+#define SIMON_STATE_EFFECT_ON_IDLE_LEFT		906
+#define SIMON_STATE_EFFECT_ON_IDLE_RIGHT		907
 #define SIMON_TIME_OF_LAST_FRAME 300
 
 #define SIMON_ANI_BIG_IDLE_RIGHT	0
@@ -72,8 +77,13 @@
 #define SIMON_ANI_ATTACK_LEFT_DOWN	28
 #define SIMON_ANI_STAY_HEART_RIGHT	29
 #define SIMON_ANI_STAY_HEART_LEFT	30
-
-#define SIMON_ANI_DIE				31
+#define SIMON_ANI_STAY_EFFECT_LEFT	31
+#define SIMON_ANI_STAY_EFFECT_RIGHT	32
+#define SIMON_ANI_SIT_EFFECT_LEFT	33
+#define SIMON_ANI_SIT_EFFECT_RIGHT	34
+#define SIMON_ANI_ON_STAIR_EFFECT_LEFT	35
+#define SIMON_ANI_ON_STAIR_EFFECT_RIGHT	36
+#define SIMON_ANI_DIE				37
 #define SIMON_BIG_BBOX_WIDTH  14
 #define SIMON_BIG_BBOX_HEIGHT 32
 #define SIMON_SIT_BBOX_WIDTH  20
@@ -129,7 +139,7 @@ public:
 	int between_stair = 0;
 	int point=0;
 	int walking_up = 0; // giá trị 1 là đang đi lên
-	int is_sit = 1;
+	int is_sit = 0;
 	int nx_knife;
 	int state_extra = 0;
 	float take_item_start = 0;
