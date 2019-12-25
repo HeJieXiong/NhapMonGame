@@ -419,6 +419,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				x += vx * dt;
 				state = SIMON_STATE_HEART;
 			}
+			if (between_stair != 0) {
+				state = SIMON_STATE_EFFECT_ON_STAIR_LEFT;
+			}
 		}
 		if (GetTickCount() - start_heart >= SIMON_HEART_JUMP_TIME && GetTickCount() - start_heart <= SIMON_HEART_TIME) {
 			untouchable = 1;
@@ -648,7 +651,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 				else {
 					if (on_jump == 0 && state_extra == 0) {
-						if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
+						if (nx > 0) ani = SIMON_ANI_DOWN_STAIR_EFFECT_RIGHT;
 						else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
 						walking_up = 0;
 					}
