@@ -18,6 +18,10 @@ void CBrick::GetBoundingBox(float &l, float &t, float &r, float &b)
 		r = x + BRICK_BBOX_WIDTH;
 		b = y + BRICK_EFECT_BBOX_HEIGHT;
 	}
+	else if (type == 30) {
+		r = x + BIG_BRICK_BBOX_WIDTH_STAIR_3;
+		b = y + BIG_BRICK_BBOX_HEIGHT_STAIR_3;
+	}
 	else {
 		r = x + BIG_BRICK_BBOX_WIDTH;
 		b = y + BIG_BRICK_BBOX_HEIGHT;

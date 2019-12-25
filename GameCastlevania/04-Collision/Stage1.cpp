@@ -1253,13 +1253,22 @@ void CStage1::LoadStage()
 			CBrick *brick = new CBrick();
 			brick->AddAnimation(695);
 			brick->SetPosition(248.0f, 186);
-			brick->tag = 0;
+			brick->tag = 1;
 			brick->type = 10;
 			objects.push_back(brick);
 			objects_morningstar.push_back(brick);
 			objects_weapons.push_back(brick);
 			obejects_item.push_back(brick);
 		
+		}
+		for (int i = 0; i < 1; i++)
+		{
+			CBrick *brick = new CBrick();
+			brick->AddAnimation(1301);
+			brick->SetPosition(265.0f, 162);
+			brick->tag = 1;
+			brick->type = 30;
+			objects.push_back(brick);
 		}
 		//BRICK-END
 		//BAT-START

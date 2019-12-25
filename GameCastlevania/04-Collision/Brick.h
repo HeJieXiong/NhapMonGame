@@ -5,8 +5,9 @@
 #define BRICK_BBOX_HEIGHT 1
 #define BRICK_EFECT_BBOX_HEIGHT 14
 #define BIG_BRICK_BBOX_WIDTH  62
-#define BIG_BRICK_BBOX_HEIGHT 94
-
+#define BIG_BRICK_BBOX_HEIGHT 45
+#define BIG_BRICK_BBOX_WIDTH_STAIR_3  45
+#define BIG_BRICK_BBOX_HEIGHT_STAIR_3 40
 class CBrick : public CGameObject
 {
 public:
