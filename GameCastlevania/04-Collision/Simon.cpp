@@ -427,13 +427,22 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			untouchable = 1;
 			vx = 0;
 			is_heart = 1;
-			state = SIMON_STATE_IDLE;
+			if (is_sit == 0)
+				state = SIMON_STATE_IDLE;
+			if (is_sit != 0)
+				state = SIMON_STATE_SIT_DOWN;
 		}
-		if (GetTickCount() - start_heart > SIMON_HEART_TIME) {
+		if (GetTickCount() - start_heart > SIMON_HEART_TIME && GetTickCount() - start_heart < SIMON_EFFECT_TIME) {
+			state = SIMON_STATE_EFFECT;
+		}
+		if (GetTickCount() - start_heart > SIMON_EFFECT_TIME) {
 			start_heart = 0;
 			untouchable = 0;
 			is_heart = 0;
+			if(is_sit==0)
 			state = SIMON_STATE_IDLE;
+			if (is_sit != 0)
+				state = SIMON_STATE_SIT_DOWN;
 		}
 	}
 	if (state == SIMON_STATE_HEART || state == SIMON_STATE_EFFECT_ON_STAIR_LEFT || state == SIMON_STATE_EFFECT_ON_STAIR_RIGHT) {
@@ -631,6 +640,28 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 		if (nx < 0)
 			ani = SIMON_ANI_STAY_HEART_RIGHT;
 	}
+	else if (state == SIMON_STATE_EFFECT) {
+		if (nx < 0) {
+			if (is_sit == 0) {
+				if(between_stair==0)
+					ani = SIMON_ANI_STAY_EFFECT_LEFT;
+				else ani = SIMON_ANI_ON_STAIR_EFFECT_LEFT;
+			}
+			if (is_sit == 1) {
+				ani = SIMON_ANI_SIT_EFFECT_LEFT;
+			}
+		}
+		if (nx > 0) {
+			if (is_sit == 0) {
+				if (between_stair == 0)
+					ani = SIMON_ANI_STAY_EFFECT_RIGHT;
+				else ani = SIMON_ANI_ON_STAIR_EFFECT_RIGHT;
+			}
+			if (is_sit == 1) {
+				ani = SIMON_ANI_SIT_EFFECT_RIGHT;
+			}
+		}
+	}
 	else {
 		if (state_extra == 0) {
 			if (vx == 0) {
@@ -651,7 +682,7 @@ void CSimon::Render(float &xcam, float &ycam, float &x_simon, float &y_simon)
 				}
 				else {
 					if (on_jump == 0 && state_extra == 0) {
-						if (nx > 0) ani = SIMON_ANI_DOWN_STAIR_EFFECT_RIGHT;
+						if (nx > 0) ani = SIMON_ANI_BIG_IDLE_RIGHT;
 						else if (nx < 0) ani = SIMON_ANI_BIG_IDLE_LEFT;
 						walking_up = 0;
 					}

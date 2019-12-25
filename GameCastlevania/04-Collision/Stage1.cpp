@@ -422,17 +422,17 @@ void CStage1::LoadStage()
 	ani->Add(10017);
 	animations->Add(428, ani);
 
-	ani = new CAnimation(40);	// idle stay effect left 
+	ani = new CAnimation(20);	// idle stay effect left 
 	ani->Add(10057);
-	ani->Add(10001);
+	ani->Add(10003);
 	animations->Add(429, ani);
 
-	ani = new CAnimation(40);	// idle stay effect right 
+	ani = new CAnimation(20);	// idle stay effect right 
 	ani->Add(10060);
-	ani->Add(10016);
+	ani->Add(10014);
 	animations->Add(430, ani);
 
-	ani = new CAnimation(40);	// idle sit effect left 
+	ani = new CAnimation(20);	// idle sit effect left 
 	ani->Add(10059);
 	ani->Add(10005);
 	animations->Add(431, ani);
@@ -1820,7 +1820,7 @@ void CStage1::Render()
 		headerbar->score_ = Simon->stair_center;
 
 		headerbar->stage_ = Simon->is_on_stair;
-		headerbar->score_ = Simon->nx;
+		headerbar->score_ = Simon->is_sit;
 		headerbar->DrawHeaderbar();
 		//float i = count1;
 		spriteHandler->End();
